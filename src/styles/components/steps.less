@@ -2,7 +2,7 @@
 @import '../mixins/size.less';
 
 @steps-tag-name: r-steps;
-@steps-step-tag-name: r-step;
+@step-tag-name: r-step;
 @steps-prefix-cls: ~'@{css-prefix}steps';
 @steps-wait-icon-color: #ccc;
 @steps-wait-title-color: #999;
@@ -160,11 +160,8 @@
         }
     }
 
-    &[size='small']
-        @{steps-step-tag-name}
-        .@{steps-prefix-cls}-custom
-        .@{steps-prefix-cls}-head-inner,
-    @{steps-step-tag-name} .@{steps-prefix-cls}-custom .@{steps-prefix-cls}-head-inner {
+    &[size='small'] @{step-tag-name} .@{steps-prefix-cls}-custom .@{steps-prefix-cls}-head-inner,
+    @{step-tag-name} .@{steps-prefix-cls}-custom .@{steps-prefix-cls}-head-inner {
         .square(inherit);
         line-height: inherit;
         border-radius: 0;
@@ -173,7 +170,7 @@
     }
 }
 
-@{steps-step-tag-name} {
+@{step-tag-name} {
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -322,7 +319,7 @@
     &[direction='vertical'] {
         display: block;
 
-        @{steps-step-tag-name} {
+        @{step-tag-name} {
             display: block;
             overflow: visible;
         }
@@ -407,7 +404,7 @@
             padding-left: 35px;
         }
 
-        @{steps-step-tag-name}:not(:first-child) .@{steps-prefix-cls}-head {
+        @{step-tag-name}:not(:first-child) .@{steps-prefix-cls}-head {
             padding-left: 10px;
             margin-left: -10px;
         }

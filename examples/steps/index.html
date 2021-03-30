@@ -25,6 +25,7 @@
             <r-step title="待进行" content="这里是该步骤的描述信息"></r-step>
         </r-steps>
     </div>
+
     <div class="example">
         <r-steps current="2" size="small">
             <r-step title="已完成"></r-step>
@@ -33,6 +34,7 @@
             <r-step title="待进行"></r-step>
         </r-steps>
     </div>
+
     <div class="example">
         <r-steps current="1">
             <r-step title="注册" icon="ios-person"></r-step>
@@ -40,16 +42,18 @@
             <r-step title="验证邮箱" icon="ios-mail"></r-step>
         </r-steps>
     </div>
+
     <div class="example">
-        <r-steps current="0" id="a">
+        <r-steps current="0" id="test">
             <r-step title="步骤1"></r-step>
             <r-step title="步骤2"></r-step>
             <r-step title="步骤3"></r-step>
             <r-step title="步骤4"></r-step>
         </r-steps>
         <br />
-        <button class="rab-btn rab-btn-primary" onclick="next()">下一步</button>
+        <button class="rab-btn rab-btn-primary" onclick="handlClick()">下一步</button>
     </div>
+
     <div class="example">
         <r-steps current="2" direction="vertical">
             <r-step title="已完成" content="这里是该步骤的描述信息"></r-step>
@@ -58,6 +62,7 @@
             <r-step title="待进行" content="这里是该步骤的描述信息"></r-step>
         </r-steps>
     </div>
+
     <div class="example">
         <r-steps current="1" status="error">
             <r-step title="已完成" content="这里是该步骤的描述信息"></r-step>
@@ -66,7 +71,6 @@
             <r-step title="待进行" content="这里是该步骤的描述信息"></r-step>
         </r-steps>
     </div>
-
     <!-- <div class="example">
         <r-steps direction="horizontal">
             <r-step status="finish">
