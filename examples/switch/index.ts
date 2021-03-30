@@ -1,16 +1,18 @@
 import Rabbit from '../../src';
+
 export default function switchTest(): void {
-    const $switch = new Rabbit.Switch();
-    const textBox = document.querySelector('#status')!;
+    const Switch = new Rabbit.Switch();
 
-    // 使用单个参数
-    // $switch.onChange('#a', ([status]: [Element]) => {
-    //   textBox.textContent = `${status}`;
-    // });
-
-    // 使用多个参数
-    $switch.onChange('#a', ([status, $this]) => {
-        textBox.textContent = `${status}`;
-        console.log($this);
+    Switch.config('#test').events({
+        onChange: (checked) => {
+            Rabbit.Message.info(`开关状态: ${checked}`);
+        }
     });
+
+    let flag = true;
+    // @ts-ignore
+    window.handlClick = () => {
+        flag ? (flag = !flag) : (flag = !flag);
+        Switch.config('#testDis').disabled = flag;
+    };
 }

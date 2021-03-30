@@ -11,7 +11,7 @@ class Time {
     public locale: (str: string) => string;
 
     constructor() {
-        this.VERSION = 'v2.0';
+        this.VERSION = 'v1.0';
         this.COMPONENTS = $el('r-time', { all: true });
 
         // 配置默认语言 (全局)

@@ -17,41 +17,38 @@
 
 <body>
     <div class="example">
-        <r-switch id="a"></r-switch>
-        开关状态：<span id="status">false</span>
+        <r-switch id="test"></r-switch>
     </div>
+
     <div class="example">
         <r-switch size="large"></r-switch>
         <r-switch></r-switch>
         <r-switch size="small"></r-switch>
     </div>
+
     <div class="example">
-        <r-switch open="开" close="关"></r-switch>
+        <r-switch checked="true" open="开" close="关"></r-switch>
         <r-switch open="<i class='rab-icon rab-icon-md-checkmark'></i>" close="<i class='rab-icon rab-icon-md-close'></i>"></r-switch>
-    </div>
-    <div class="example">
+        <br>
+        <br>
         <r-switch size="large" open="开启" close="关闭"></r-switch>
         <r-switch size="large" open="ON" close="OFF"></r-switch>
     </div>
+
     <div class="example">
-        <r-switch disabled="disabled" id="switch"></r-switch>
-        <button class="rab-btn rab-btn-primary" onclick="Toggle()">切换禁用</button>
+        <r-switch disabled="true" id="testDis"></r-switch>
+        <button class="rab-btn rab-btn-primary" onclick="handlClick()">切换禁用</button>
     </div>
+
     <div class="example">
         <r-switch loading="true" checked="true"></r-switch>
         <r-switch loading="true" size="small"></r-switch>
     </div>
+
     <div class="example">
-        <r-switch true-color="#13ce66" false-color="#ff4949"></r-switch>
+        <r-switch true-color="#52c41a" false-color="#ff4d4f"></r-switch>
     </div>
 </body>
-<script>
-    const sw = document.querySelector('#switch');
-    Toggle = () => {
-        sw.getAttribute('disabled') ?
-            sw.removeAttribute('disabled') :
-            sw.setAttribute('disabled', 'disabled');
-    };
-</script>
+
 
 </html>

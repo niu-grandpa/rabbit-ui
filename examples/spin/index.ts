@@ -2,11 +2,13 @@ import Rabbit from '../../src';
 
 export default function spinTest(): void {
     const spin = new Rabbit.Spin();
+    const Switch = new Rabbit.Switch();
 
-    const _switch = new Rabbit.Switch();
-    _switch.onChange('r-switch', ([status]) => {
-        // @ts-ignore
-        document.querySelector('#abcd').style.display = status ? 'none' : '';
+    Switch.config('r-switch').events({
+        onChange: (checked) => {
+            // @ts-ignore
+            document.querySelector('#abcd').style.display = checked ? 'none' : '';
+        }
     });
 
     // @ts-ignore

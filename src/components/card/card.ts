@@ -48,14 +48,14 @@ class Card implements Config {
                 return setHtml(CardHead);
             },
             set title(newVal: string) {
-                if (!type.isStr(newVal)) return;
+                if (newVal && !type.isStr(newVal)) return;
                 setHtml(CardHead, newVal);
             },
             get extra() {
                 return setHtml(CardExtra);
             },
             set extra(newVal: string) {
-                if (!type.isStr(newVal)) return;
+                if (newVal && !type.isStr(newVal)) return;
                 setHtml(CardExtra, newVal);
             }
         };

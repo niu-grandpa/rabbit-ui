@@ -1,9 +1,29 @@
-import { $el, bind, setCss, setHtml } from '../../dom-utils';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import {
+    $el,
+    bind,
+    getBooleanTypeAttr,
+    getStrTypeAttr,
+    removeAttrs,
+    setCss,
+    setHtml
+} from '../../dom-utils';
 import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
 interface Config {
-    onChange(elem: string, cb: ([status, $this]: [boolean, Element]) => void): void;
+    config(
+        el: string
+    ): {
+        checked: boolean;
+        disabled: boolean;
+        loading: boolean;
+        events({ onChange }: SwitchEvent): void;
+    };
+}
+
+interface SwitchEvent {
+    onChange?: (checked: boolean) => void;
 }
 
 class Switch implements Config {
@@ -16,136 +36,220 @@ class Switch implements Config {
         this._create(this.COMPONENTS);
     }
 
-    public onChange(elem: string, cb: ([status, $this]: [boolean, Element]) => void): void {
-        const target = $el(elem);
+    public config(
+        el: string
+    ): {
+        checked: boolean;
+        disabled: boolean;
+        loading: boolean;
+        events({ onChange }: SwitchEvent): void;
+    } {
+        const target = $el(el) as HTMLElement;
 
         validComps(target, 'switch');
 
-        // 将当前选中的组件作为参数返回出去
-        const $this = target;
+        const Input = target.querySelector('input[type="hidden"]') as HTMLInputElement;
+        const isChecked: boolean = Input.value === 'true';
+        const isDisabled: boolean = target.classList.contains(`${PREFIX.switch}-disabled`);
+        const isLoading: boolean = target.classList.contains(`${PREFIX.switch}-loading`);
 
-        bind(target, 'click', () => {
-            const status = this._getStatus(target);
-            type.isFn(cb, [status, $this]);
-        });
+        const changeState = (flag: boolean, state: boolean, cls: string) => {
+            if (flag && !type.isBol(flag)) return;
+
+            if (flag && state) return;
+            else target.classList.add(`${PREFIX.switch}-${cls}`);
+
+            if (flag == false) target.classList.remove(`${PREFIX.switch}-${cls}`);
+        };
+
+        return {
+            get checked() {
+                return isChecked;
+            },
+            set checked(newVal: boolean) {
+                changeState(newVal, isChecked, 'checked');
+            },
+
+            get disabled() {
+                return isDisabled;
+            },
+            set disabled(newVal: boolean) {
+                changeState(newVal, isDisabled, 'disabled');
+            },
+
+            get loading() {
+                return isLoading;
+            },
+            set loading(newVal: boolean) {
+                changeState(newVal, isLoading, 'loading');
+            },
+
+            events({ onChange }: SwitchEvent) {
+                let checked: boolean;
+                const handler = () => {
+                    checked = JSON.parse(Input.value);
+                    onChange && type.isFn(onChange, checked);
+                };
+                bind(target, 'click', handler);
+            }
+        };
     }
 
-    private _create(COMPONENTS: NodeListOf<Element>): void {
+    private _create(COMPONENTS: NodeListOf<Element>) {
         COMPONENTS.forEach((node) => {
-            this._init(node);
-            this._handleChange(node, this._getStatus(node));
+            node.setAttribute('tabindex', '0');
+
+            const {
+                checked,
+                loading,
+                disabled,
+                size,
+                open,
+                close,
+                trueColor,
+                falseColor
+            } = this._attrs(node);
+
+            this._setSize(node, size);
+            this._setMainTemplate(node);
+            this._setDisabled(node, disabled);
+            this._setLoading(node, loading);
+            this._setStatusBgc(node, checked, trueColor, falseColor);
+
+            const SwitchInner = node.querySelector(`.${PREFIX.switch}-inner`)!;
+            const HiddenInput = node.querySelector('input[type="hidden"]') as HTMLInputElement;
+
+            this._setChecked(node, HiddenInput, checked);
+            this._setStatusText(SwitchInner, checked, open, close);
+
+            this._handleChange(node, HiddenInput, SwitchInner, {
+                open,
+                close,
+                trueColor,
+                falseColor
+            });
+
+            removeAttrs(node, [
+                'checked',
+                'loading',
+                'disabled',
+                'size',
+                'open',
+                'close',
+                'true-color',
+                'false-color'
+            ]);
         });
     }
 
-    private _init(node: Element): void {
-        // 初始化按键切换索引
-        node.setAttribute('tabindex', '0');
-        // 初始化未选中状态的开关
-        if (node.getAttribute('checked') !== 'true') {
-            node.setAttribute('checked', 'false');
-        }
-        this._setStatusText(node, this._getStatus(node));
-        this._setStatusColor(node, this._getStatus(node));
+    private _setDisabled(node: Element, disabled: boolean) {
+        if (!disabled) return;
+        node.classList.add(`${PREFIX.switch}-disabled`);
     }
 
-    // 设置自定义的状态文本
-    private _setStatusText(node: Element, status: boolean): void {
-        const { openText, closeText } = this._getStatusText(node);
-
-        if (!openText || !closeText) return;
-
-        // 创建文本容器
-        const TextBox = document.createElement('span');
-
-        TextBox.className = `${PREFIX.switch}-inner`;
-
-        node.appendChild(TextBox);
-
-        status ? setHtml(TextBox, openText) : setHtml(TextBox, closeText);
+    private _setLoading(node: Element, loading: boolean): void {
+        if (!loading) return;
+        node.classList.add(`${PREFIX.switch}-loading`);
     }
 
-    // 设置自定义的状态颜色
-    private _setStatusColor(node: any, status: boolean): void {
-        const { trueColor, falseColor } = this._getColor(node);
-
-        if (!trueColor || !falseColor) return;
-
-        if (status) {
-            setCss(node, 'borderColor', trueColor);
-            setCss(node, 'backgroundColor', trueColor);
-        } else {
-            setCss(node, 'borderColor', falseColor);
-            setCss(node, 'backgroundColor', falseColor);
-        }
+    private _setSize(node: Element, size: string): void {
+        if (!size || size === 'default') return;
+        node.classList.add(`${PREFIX.switch}-${size}`);
     }
 
-    private _handleChange(node: Element, status: boolean): void {
-        const ev_change = () => {
-            if (this._isDisabled(node)) return false;
-            if (this._isLoading(node)) return false;
+    private _setMainTemplate(node: Element): void {
+        const template = `
+        <input type="hidden" /> 
+        <span class="${PREFIX.switch}-inner"></span>
+        `;
 
-            status ? (status = false) : (status = true);
+        setHtml(node, template);
+    }
 
-            node.setAttribute('checked', `${status}`);
+    private _handleChange(
+        node: Element,
+        input: HTMLInputElement,
+        textContainer: Element,
+        options: { open: string; close: string; trueColor: string; falseColor: string }
+    ): void {
+        const handler = () => {
+            const isLoading: boolean = node.classList.contains(`${PREFIX.switch}-loading`);
+            const isDisabled: boolean = node.classList.contains(`${PREFIX.switch}-disabled`);
 
-            const { openText, closeText } = this._getStatusText(node);
+            if (isDisabled || isLoading) return false;
 
-            this._changeStatusText(node, status, openText, closeText);
+            const isChecked: boolean = node.classList.contains(`${PREFIX.switch}-checked`);
 
-            this._setStatusColor(node, status);
+            let flag = false;
+            if (isChecked) {
+                node.classList.remove(`${PREFIX.switch}-checked`);
+            } else {
+                flag = !flag;
+                node.classList.add(`${PREFIX.switch}-checked`);
+            }
+
+            this._setChecked(node, input, flag);
+            this._setStatusBgc(node, flag, options.trueColor, options.falseColor);
+            this._setStatusText(textContainer, flag, options.open, options.close);
         };
 
-        node.addEventListener('click', ev_change);
+        bind(node, 'click', handler);
     }
 
-    private _changeStatusText(node: Element, status: boolean, openText: any, closeText: any): void {
-        // 获取当前开关下的文本容器
-        const TextBox = node.querySelector(`.${PREFIX.switch}-inner`);
+    private _setChecked(node: Element, input: HTMLInputElement, checked: boolean): void {
+        if (checked) {
+            node.classList.add(`${PREFIX.switch}-checked`);
+        }
 
-        if (TextBox) {
-            status ? setHtml(TextBox, openText) : setHtml(TextBox, closeText);
+        input.value = `${checked}`;
+    }
+
+    private _setStatusText(elem: Element, checked: boolean, open: string, close: string): void {
+        const changeText = (text: string, flag: boolean) => {
+            if (text) {
+                if (flag) {
+                    setHtml(elem, text);
+                } else {
+                    setHtml(elem, text);
+                }
+            }
+        };
+        changeText(open, checked);
+        changeText(close, !checked);
+
+        checked ? setHtml(elem, open) : setHtml(elem, close);
+    }
+
+    private _setStatusBgc(
+        node: Element,
+        checked: boolean,
+        trueColor: string,
+        falseColor: string
+    ): void {
+        if (trueColor) {
+            if (checked) {
+                setCss(node, 'backgroundColor', trueColor);
+                setCss(node, 'borderColor', trueColor);
+            }
+        }
+        if (falseColor) {
+            if (!checked) {
+                setCss(node, 'backgroundColor', falseColor);
+                setCss(node, 'borderColor', falseColor);
+            }
         }
     }
 
-    private _getStatus(node: Element): boolean {
-        // 转换为真实布尔类型
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return JSON.parse(node.getAttribute('checked')!);
-    }
-
-    private _isDisabled(node: Element): boolean {
-        return (
-            node.getAttribute('disabled') === 'disabled' ||
-            node.getAttribute('disabled') === 'true' ||
-            node.getAttribute('disabled') === ''
-        );
-    }
-
-    private _isLoading(node: Element): boolean {
-        return node.getAttribute('rb-loading') === 'true';
-    }
-
-    private _getStatusText(
-        node: Element
-    ): {
-        openText: string | null;
-        closeText: string | null;
-    } {
+    private _attrs(node: Element) {
         return {
-            openText: node.getAttribute('rb-open'),
-            closeText: node.getAttribute('rb-close')
-        };
-    }
-
-    private _getColor(
-        node: Element
-    ): {
-        trueColor: string | null;
-        falseColor: string | null;
-    } {
-        return {
-            trueColor: node.getAttribute('rb-true-color'),
-            falseColor: node.getAttribute('rb-false-color')
+            checked: getBooleanTypeAttr(node, 'checked'),
+            loading: getBooleanTypeAttr(node, 'loading'),
+            disabled: getBooleanTypeAttr(node, 'disabled'),
+            size: getStrTypeAttr(node, 'size', 'default'),
+            open: getStrTypeAttr(node, 'open', ''),
+            close: getStrTypeAttr(node, 'close', ''),
+            trueColor: getStrTypeAttr(node, 'true-color', ''),
+            falseColor: getStrTypeAttr(node, 'false-color', '')
         };
     }
 }

@@ -59,10 +59,10 @@ __webpack_require__.d(__webpack_exports__, {
   "default": function() { return /* binding */ build_umd; }
 });
 
-// NAMESPACE OBJECT: ./src/rabbit-design.ts
-var rabbit_design_namespaceObject = {};
-__webpack_require__.r(rabbit_design_namespaceObject);
-__webpack_require__.d(rabbit_design_namespaceObject, {
+// NAMESPACE OBJECT: ./src/rabbit-simple-ui.ts
+var rabbit_simple_ui_namespaceObject = {};
+__webpack_require__.r(rabbit_simple_ui_namespaceObject);
+__webpack_require__.d(rabbit_simple_ui_namespaceObject, {
   "Alert": function() { return components_alert; },
   "Avatar": function() { return components_avatar; },
   "BackTop": function() { return components_back_top; },
@@ -3167,7 +3167,7 @@ var Breadcrumb = /** @class */ (function () {
 
 var Button = /** @class */ (function () {
     function Button() {
-        this.VERSION = '1.0.2';
+        this.VERSION = '1.0';
         this.COMPONENTS = (0,dom_utils.$el)("." + prefix.default.button, { all: true });
         this._getAllBtns(this.COMPONENTS);
     }
@@ -3182,7 +3182,6 @@ var Button = /** @class */ (function () {
                 if (!isBol(newVal))
                     return;
                 var loadingIcon = target.querySelector("." + prefix.default.icon + "-loading-solid");
-                // v1.0.1 修复加载中图标重复追加
                 if (newVal) {
                     if (!loadingIcon) {
                         target.classList.add(prefix.default.button + "-loading");
@@ -3269,7 +3268,7 @@ var Card = /** @class */ (function () {
                 return (0,dom_utils.setHtml)(CardHead);
             },
             set title(newVal) {
-                if (!isStr(newVal))
+                if (newVal && !isStr(newVal))
                     return;
                 (0,dom_utils.setHtml)(CardHead, newVal);
             },
@@ -3277,7 +3276,7 @@ var Card = /** @class */ (function () {
                 return (0,dom_utils.setHtml)(CardExtra);
             },
             set extra(newVal) {
-                if (!isStr(newVal))
+                if (newVal && !isStr(newVal))
                     return;
                 (0,dom_utils.setHtml)(CardExtra, newVal);
             }
@@ -6706,6 +6705,7 @@ var Steps = /** @class */ (function () {
 /* harmony default export */ var components_steps = (steps);
 
 ;// CONCATENATED MODULE: ./src/components/switch/switch.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
@@ -6715,104 +6715,171 @@ var Switch = /** @class */ (function () {
         this.COMPONENTS = (0,dom_utils.$el)('r-switch', { all: true });
         this._create(this.COMPONENTS);
     }
-    Switch.prototype.onChange = function (elem, cb) {
-        var _this = this;
-        var target = (0,dom_utils.$el)(elem);
+    Switch.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
         validComps(target, 'switch');
-        // 将当前选中的组件作为参数返回出去
-        var $this = target;
-        (0,dom_utils.bind)(target, 'click', function () {
-            var status = _this._getStatus(target);
-            isFn(cb, [status, $this]);
-        });
+        var Input = target.querySelector('input[type="hidden"]');
+        var isChecked = Input.value === 'true';
+        var isDisabled = target.classList.contains(prefix.default.switch + "-disabled");
+        var isLoading = target.classList.contains(prefix.default.switch + "-loading");
+        var changeState = function (flag, state, cls) {
+            if (flag && !isBol(flag))
+                return;
+            if (flag && state)
+                return;
+            else
+                target.classList.add(prefix.default.switch + "-" + cls);
+            if (flag == false)
+                target.classList.remove(prefix.default.switch + "-" + cls);
+        };
+        return {
+            get checked() {
+                return isChecked;
+            },
+            set checked(newVal) {
+                changeState(newVal, isChecked, 'checked');
+            },
+            get disabled() {
+                return isDisabled;
+            },
+            set disabled(newVal) {
+                changeState(newVal, isDisabled, 'disabled');
+            },
+            get loading() {
+                return isLoading;
+            },
+            set loading(newVal) {
+                changeState(newVal, isLoading, 'loading');
+            },
+            events: function (_a) {
+                var onChange = _a.onChange;
+                var checked;
+                var handler = function () {
+                    checked = JSON.parse(Input.value);
+                    onChange && isFn(onChange, checked);
+                };
+                (0,dom_utils.bind)(target, 'click', handler);
+            }
+        };
     };
     Switch.prototype._create = function (COMPONENTS) {
         var _this = this;
         COMPONENTS.forEach(function (node) {
-            _this._init(node);
-            _this._handleChange(node, _this._getStatus(node));
+            node.setAttribute('tabindex', '0');
+            var _a = _this._attrs(node), checked = _a.checked, loading = _a.loading, disabled = _a.disabled, size = _a.size, open = _a.open, close = _a.close, trueColor = _a.trueColor, falseColor = _a.falseColor;
+            _this._setSize(node, size);
+            _this._setMainTemplate(node);
+            _this._setDisabled(node, disabled);
+            _this._setLoading(node, loading);
+            _this._setStatusBgc(node, checked, trueColor, falseColor);
+            var SwitchInner = node.querySelector("." + prefix.default.switch + "-inner");
+            var HiddenInput = node.querySelector('input[type="hidden"]');
+            _this._setChecked(node, HiddenInput, checked);
+            _this._setStatusText(SwitchInner, checked, open, close);
+            _this._handleChange(node, HiddenInput, SwitchInner, {
+                open: open,
+                close: close,
+                trueColor: trueColor,
+                falseColor: falseColor
+            });
+            (0,dom_utils.removeAttrs)(node, [
+                'checked',
+                'loading',
+                'disabled',
+                'size',
+                'open',
+                'close',
+                'true-color',
+                'false-color'
+            ]);
         });
     };
-    Switch.prototype._init = function (node) {
-        // 初始化按键切换索引
-        node.setAttribute('tabindex', '0');
-        // 初始化未选中状态的开关
-        if (node.getAttribute('checked') !== 'true') {
-            node.setAttribute('checked', 'false');
-        }
-        this._setStatusText(node, this._getStatus(node));
-        this._setStatusColor(node, this._getStatus(node));
-    };
-    // 设置自定义的状态文本
-    Switch.prototype._setStatusText = function (node, status) {
-        var _a = this._getStatusText(node), openText = _a.openText, closeText = _a.closeText;
-        if (!openText || !closeText)
+    Switch.prototype._setDisabled = function (node, disabled) {
+        if (!disabled)
             return;
-        // 创建文本容器
-        var TextBox = document.createElement('span');
-        TextBox.className = prefix.default.switch + "-inner";
-        node.appendChild(TextBox);
-        status ? (0,dom_utils.setHtml)(TextBox, openText) : (0,dom_utils.setHtml)(TextBox, closeText);
+        node.classList.add(prefix.default.switch + "-disabled");
     };
-    // 设置自定义的状态颜色
-    Switch.prototype._setStatusColor = function (node, status) {
-        var _a = this._getColor(node), trueColor = _a.trueColor, falseColor = _a.falseColor;
-        if (!trueColor || !falseColor)
+    Switch.prototype._setLoading = function (node, loading) {
+        if (!loading)
             return;
-        if (status) {
-            (0,dom_utils.setCss)(node, 'borderColor', trueColor);
-            (0,dom_utils.setCss)(node, 'backgroundColor', trueColor);
-        }
-        else {
-            (0,dom_utils.setCss)(node, 'borderColor', falseColor);
-            (0,dom_utils.setCss)(node, 'backgroundColor', falseColor);
-        }
+        node.classList.add(prefix.default.switch + "-loading");
     };
-    Switch.prototype._handleChange = function (node, status) {
+    Switch.prototype._setSize = function (node, size) {
+        if (!size || size === 'default')
+            return;
+        node.classList.add(prefix.default.switch + "-" + size);
+    };
+    Switch.prototype._setMainTemplate = function (node) {
+        var template = "\n        <input type=\"hidden\" /> \n        <span class=\"" + prefix.default.switch + "-inner\"></span>\n        ";
+        (0,dom_utils.setHtml)(node, template);
+    };
+    Switch.prototype._handleChange = function (node, input, textContainer, options) {
         var _this = this;
-        var ev_change = function () {
-            if (_this._isDisabled(node))
+        var handler = function () {
+            var isLoading = node.classList.contains(prefix.default.switch + "-loading");
+            var isDisabled = node.classList.contains(prefix.default.switch + "-disabled");
+            if (isDisabled || isLoading)
                 return false;
-            if (_this._isLoading(node))
-                return false;
-            status ? (status = false) : (status = true);
-            node.setAttribute('checked', "" + status);
-            var _a = _this._getStatusText(node), openText = _a.openText, closeText = _a.closeText;
-            _this._changeStatusText(node, status, openText, closeText);
-            _this._setStatusColor(node, status);
+            var isChecked = node.classList.contains(prefix.default.switch + "-checked");
+            var flag = false;
+            if (isChecked) {
+                node.classList.remove(prefix.default.switch + "-checked");
+            }
+            else {
+                flag = !flag;
+                node.classList.add(prefix.default.switch + "-checked");
+            }
+            _this._setChecked(node, input, flag);
+            _this._setStatusBgc(node, flag, options.trueColor, options.falseColor);
+            _this._setStatusText(textContainer, flag, options.open, options.close);
         };
-        node.addEventListener('click', ev_change);
+        (0,dom_utils.bind)(node, 'click', handler);
     };
-    Switch.prototype._changeStatusText = function (node, status, openText, closeText) {
-        // 获取当前开关下的文本容器
-        var TextBox = node.querySelector("." + prefix.default.switch + "-inner");
-        if (TextBox) {
-            status ? (0,dom_utils.setHtml)(TextBox, openText) : (0,dom_utils.setHtml)(TextBox, closeText);
+    Switch.prototype._setChecked = function (node, input, checked) {
+        if (checked) {
+            node.classList.add(prefix.default.switch + "-checked");
+        }
+        input.value = "" + checked;
+    };
+    Switch.prototype._setStatusText = function (elem, checked, open, close) {
+        var changeText = function (text, flag) {
+            if (text) {
+                if (flag) {
+                    (0,dom_utils.setHtml)(elem, text);
+                }
+                else {
+                    (0,dom_utils.setHtml)(elem, text);
+                }
+            }
+        };
+        changeText(open, checked);
+        changeText(close, !checked);
+        checked ? (0,dom_utils.setHtml)(elem, open) : (0,dom_utils.setHtml)(elem, close);
+    };
+    Switch.prototype._setStatusBgc = function (node, checked, trueColor, falseColor) {
+        if (trueColor) {
+            if (checked) {
+                (0,dom_utils.setCss)(node, 'backgroundColor', trueColor);
+                (0,dom_utils.setCss)(node, 'borderColor', trueColor);
+            }
+        }
+        if (falseColor) {
+            if (!checked) {
+                (0,dom_utils.setCss)(node, 'backgroundColor', falseColor);
+                (0,dom_utils.setCss)(node, 'borderColor', falseColor);
+            }
         }
     };
-    Switch.prototype._getStatus = function (node) {
-        // 转换为真实布尔类型
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return JSON.parse(node.getAttribute('checked'));
-    };
-    Switch.prototype._isDisabled = function (node) {
-        return (node.getAttribute('disabled') === 'disabled' ||
-            node.getAttribute('disabled') === 'true' ||
-            node.getAttribute('disabled') === '');
-    };
-    Switch.prototype._isLoading = function (node) {
-        return node.getAttribute('rb-loading') === 'true';
-    };
-    Switch.prototype._getStatusText = function (node) {
+    Switch.prototype._attrs = function (node) {
         return {
-            openText: node.getAttribute('rb-open'),
-            closeText: node.getAttribute('rb-close')
-        };
-    };
-    Switch.prototype._getColor = function (node) {
-        return {
-            trueColor: node.getAttribute('rb-true-color'),
-            falseColor: node.getAttribute('rb-false-color')
+            checked: (0,dom_utils.getBooleanTypeAttr)(node, 'checked'),
+            loading: (0,dom_utils.getBooleanTypeAttr)(node, 'loading'),
+            disabled: (0,dom_utils.getBooleanTypeAttr)(node, 'disabled'),
+            size: (0,dom_utils.getStrTypeAttr)(node, 'size', 'default'),
+            open: (0,dom_utils.getStrTypeAttr)(node, 'open', ''),
+            close: (0,dom_utils.getStrTypeAttr)(node, 'close', ''),
+            trueColor: (0,dom_utils.getStrTypeAttr)(node, 'true-color', ''),
+            falseColor: (0,dom_utils.getStrTypeAttr)(node, 'false-color', '')
         };
     };
     return Switch;
@@ -7496,7 +7563,7 @@ var Tooltip = /** @class */ (function () {
 
 /* harmony default export */ var components_tooltip = (tooltip);
 
-;// CONCATENATED MODULE: ./src/rabbit-design.ts
+;// CONCATENATED MODULE: ./src/rabbit-simple-ui.ts
 
 
 
@@ -7543,7 +7610,7 @@ var Tooltip = /** @class */ (function () {
 
 
 // @ts-ignore
-/* harmony default export */ var build_umd = (window.Rabbit = rabbit_design_namespaceObject);
+/* harmony default export */ var build_umd = (window.Rabbit = rabbit_simple_ui_namespaceObject);
 
 
 /***/ }),
@@ -7622,7 +7689,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var Time = /** @class */ (function () {
     function Time() {
-        this.VERSION = 'v2.0';
+        this.VERSION = 'v1.0';
         this.COMPONENTS = (0,_dom_utils__WEBPACK_IMPORTED_MODULE_3__.$el)('r-time', { all: true });
         // 配置默认语言 (全局)
         dayjs__WEBPACK_IMPORTED_MODULE_0___default().locale('zh-cn');
@@ -7757,7 +7824,6 @@ function setText(node, value) {
         return node.textContent || '';
     }
 }
-// 2021-01-17 新增，在此后的开发才使用，此前的暂不修改
 // 通用的标签属性获取方法
 // 获取后的值由原先的字符串类型转换成对应类型
 // Return String type

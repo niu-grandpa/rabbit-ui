@@ -3,10 +3,10 @@
 @import '../custom.less';
 @import '../mixins/close.less';
 
-@message-prefix-cls: ~"@{css-prefix}message";
-@icon-prefix-cls: ~"@{css-prefix}icon";
+@message-prefix-cls: ~'@{css-prefix}message';
+@icon-prefix-cls: ~'@{css-prefix}icon';
 
-@message-timing-function: cubic-bezier(0.23, 1, 0.320, 1);
+@message-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 
 .@{message-prefix-cls} {
     font-size: @font-size-base;
@@ -78,14 +78,13 @@
 
     .@{icon-prefix-cls} {
         margin-right: 8px;
-        font-size: 18px;
+        font-size: 16px;
         position: relative;
-        top: 1.5px;
+        top: 0.5px;
 
         // 修复 loading 图标旋转左右晃动
         &-loading-solid {
-            height: 22px;
-            top: 1px;
+            height: 5px;
         }
     }
 
@@ -97,27 +96,27 @@
             }
 
             &-info {
-                background:~`colorPalette("@{primary-color}", .6)`;
-                color:~`colorPalette("@{primary-color}", 6)`;
-                border: 1px solid~`colorPalette("@{primary-color}", 1.5)`;
+                background: ~`colorPalette('@{primary-color}', 0.6) `;
+                color: ~`colorPalette('@{primary-color}', 6) `;
+                border: 1px solid~`colorPalette('@{primary-color}', 1.5) `;
             }
 
             &-success {
-                background:~`colorPalette("@{success-color}", 1.2)`;
-                color:~`colorPalette("@{success-color}", 6)`;
-                border: 1px solid~`colorPalette("@{success-color}", 2)`;
+                background: ~`colorPalette('@{success-color}', 1.2) `;
+                color: ~`colorPalette('@{success-color}', 6) `;
+                border: 1px solid~`colorPalette('@{success-color}', 2) `;
             }
 
             &-warning {
-                background:~`colorPalette("@{warning-color}", 1)`;
-                color:~`colorPalette("@{warning-color}", 6)`;
-                border: 1px solid~`colorPalette("@{warning-color}", 2)`;
+                background: ~`colorPalette('@{warning-color}', 1) `;
+                color: ~`colorPalette('@{warning-color}', 6) `;
+                border: 1px solid~`colorPalette('@{warning-color}', 2) `;
             }
 
             &-error {
-                background:~`colorPalette("@{error-color}", 1)`;
-                color:~`colorPalette("@{error-color}", 6)`;
-                border: 1px solid~`colorPalette("@{error-color}", 2)`;
+                background: ~`colorPalette('@{error-color}', 1) `;
+                color: ~`colorPalette('@{error-color}', 6) `;
+                border: 1px solid~`colorPalette('@{error-color}', 2) `;
             }
         }
     }

@@ -25,7 +25,7 @@ interface Config {
 
 interface CarouselEvents {
     // 点击幻灯片时触发，返回索引值
-    onClick?: (index?: number) => void;
+    onClick?: (index: number) => void;
     // 幻灯片切换时触发，目前激活的幻灯片的索引，原幻灯片的索引
     onChange?: ([oldValue, value]: [number, number]) => void;
 }

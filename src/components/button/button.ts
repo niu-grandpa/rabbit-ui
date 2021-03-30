@@ -15,7 +15,7 @@ class Button implements Config {
     readonly COMPONENTS: NodeListOf<Element>;
 
     constructor() {
-        this.VERSION = '1.0.2';
+        this.VERSION = '1.0';
         this.COMPONENTS = $el(`.${PREFIX.button}`, { all: true });
         this._getAllBtns(this.COMPONENTS);
     }
@@ -38,7 +38,6 @@ class Button implements Config {
 
                 const loadingIcon = target.querySelector(`.${PREFIX.icon}-loading-solid`);
 
-                // v1.0.1 修复加载中图标重复追加
                 if (newVal) {
                     if (!loadingIcon) {
                         target.classList.add(`${PREFIX.button}-loading`);
