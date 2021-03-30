@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 480px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+    
+    .example2 {
+        width: 480px;
+        height: 200px;
+        margin: 20px auto;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #ebedf0;
+        border-radius: 2px;
+        padding: 48px;
+        text-align: center;
+        background: #fafafa;
+    }
+</style>
+
+<body style="height: 1000px">
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="Op1()">Open</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="handleTop()">Top</button>
+        <button class="rab-btn" onclick="handleLeft()">Left</button>
+        <button class="rab-btn" onclick="handleBottom()">Bottom</button>
+        <button class="rab-btn" onclick="handleRight()">Right</button>
+    </div>
+
+    <div class="example2">
+        <button class="rab-btn rab-btn-primary" onclick="handleOpenInner()">Open Inner</button>
+        <r-drawer title="Basic Drawer" id="test6" inner="true">
+            <p>Some contents...</p>
+        </r-drawer>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="multilayerDrawer()">多层抽屉</button>
+    </div>
+
+    <r-drawer title="Basic Drawer" id="test1">
+        <div>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </div>
+    </r-drawer>
+
+    <r-drawer id="test2" title="Basic Drawer" placement="top">
+        <div>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </div>
+    </r-drawer>
+
+    <r-drawer id="test3" title="Basic Drawer" placement="left">
+        <div>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </div>
+    </r-drawer>
+
+    <r-drawer id="test4" title="Basic Drawer" placement="bottom">
+        <div>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </div>
+    </r-drawer>
+
+    <r-drawer id="test5" title="Basic Drawer">
+        <div>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </div>
+    </r-drawer>
+
+    <r-drawer id="test7" title="多层抽屉" width="512px">
+        <button class="rab-btn rab-btn-primary" onclick="secondDrawer()">打开第二层抽屉</button>
+    </r-drawer>
+
+    <r-drawer id="test8" title="第二层抽屉">
+        <p>这是第二层抽屉。</p>
+    </r-drawer>
+
+    <!-- <r-drawer>
+        <div class="rab-drawer-mask"></div>
+        <div class="rab-drawer-wrap">
+            <div class="rab-drawer rab-drawer-right" style="width: 256px">
+                <div class="rab-drawer-content">
+                    <a class="rab-drawer-close"><i class="rab-icon rab-icon-ios-close"></i></a>
+                    <div class="rab-drawer-header">
+                        <div class="rab-drawer-header-inner">Basic Drawer</div>
+                    </div>
+                    <div class="rab-drawer-body">
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </r-drawer> -->
+</body>
+
+</html>

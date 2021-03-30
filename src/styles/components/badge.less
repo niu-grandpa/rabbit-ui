@@ -1,0 +1,190 @@
+@import '../custom.less';
+@import '../mixins/size.less';
+@import '../color/colors.less';
+
+@badge-tag-name: r-badge;
+@badge-prefix-cls: ~'@{css-prefix}badge';
+
+@{badge-tag-name} {
+    position: relative;
+    display: inline-block;
+
+    &[type='primary'] {
+        .@{badge-prefix-cls}-count {
+            background: @primary-color;
+        }
+    }
+
+    &[type='success'] {
+        .@{badge-prefix-cls}-count {
+            background: @success-color;
+        }
+    }
+
+    &[type='error'] {
+        .@{badge-prefix-cls}-count {
+            background: @error-color;
+        }
+    }
+
+    &[type='warning'] {
+        .@{badge-prefix-cls}-count {
+            background: @warning-color;
+        }
+    }
+
+    &[type='info'] {
+        .@{badge-prefix-cls}-count {
+            background: @info-color;
+        }
+    }
+
+    &[type='normal'] {
+        .@{badge-prefix-cls}-count {
+            background: @normal-color;
+            color: @subsidiary-color;
+        }
+    }
+}
+
+.@{badge-prefix-cls} {
+    &-count {
+        font-family: 'Monospaced Number';
+        line-height: 1;
+        vertical-align: middle;
+        position: absolute;
+        transform: translateX(50%);
+        top: -10px;
+        right: 0;
+        height: 20px;
+        border-radius: 10px;
+        min-width: 20px;
+        background: @error-color;
+        border: @border-width-base @border-style-base transparent;
+        color: @white;
+        line-height: 17px;
+        text-align: center;
+        padding: 0 6px;
+        font-size: @font-size-small;
+        white-space: nowrap;
+        transform-origin: -10% center;
+        z-index: 10;
+        box-shadow: 0 0 0 1px @white;
+
+        &-custom {
+            background: transparent;
+            color: inherit;
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        a,
+        a:hover {
+            color: @white;
+        }
+
+        &-alone {
+            top: auto;
+            display: block;
+            position: relative;
+            transform: translateX(0);
+        }
+    }
+
+    &-dot {
+        position: absolute;
+        transform: translateX(-50%);
+        transform-origin: 0 center;
+        top: -4px;
+        right: -8px;
+        .square(8px);
+        border-radius: 100%;
+        background: @error-color;
+        z-index: 10;
+        box-shadow: 0 0 0 1px @white;
+    }
+
+    &-status {
+        line-height: inherit;
+        vertical-align: baseline;
+
+        &-dot {
+            .square(6px);
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        &-success {
+            background-color: @success-color;
+        }
+
+        &-processing {
+            background-color: @processing-color;
+            position: relative;
+
+            &:after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                .square(100%);
+                border-radius: 50%;
+                border: @border-width-base @border-style-base @processing-color;
+                content: '';
+                animation: rabStatusProcessing 1.2s infinite ease-in-out;
+            }
+        }
+
+        &-default {
+            background-color: @normal-color;
+        }
+
+        &-error {
+            background-color: @error-color;
+        }
+
+        &-warning {
+            background-color: @warning-color;
+        }
+
+        &-text {
+            display: inline-block;
+            color: @text-color;
+            font-size: @font-size-base;
+            margin-left: 6px;
+        }
+
+        // 状态点预设颜色
+
+        @colors: pink, magenta, red, volcano, orange, yellow, gold, cyan, lime, green, blue,
+            geekblue, purple;
+
+        // 生成状态点颜色类名
+
+        .make-color-classes(@i: length(@colors)) when (@i > 0) {
+            .make-color-classes(@i - 1);
+            @color: extract(@colors, @i);
+            @darkColor: '@{color}-6';
+
+            &-@{color} {
+                background-color: @@darkColor;
+            }
+        }
+
+        .make-color-classes();
+    }
+}
+
+@keyframes rabStatusProcessing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+}

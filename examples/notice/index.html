@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="normal()">打开提醒</button>
+        <button class="rab-btn" onclick="onlyTitle()">打开提醒 (仅标题)</button>
+    </div>
+    <div class="example">
+        <p>带描述信息</p>
+        <button class="rab-btn" onclick="getInfo()">消息</button>
+        <button class="rab-btn" onclick="getSuccess()">成功</button>
+        <button class="rab-btn" onclick="getWarning()">警告</button>
+        <button class="rab-btn" onclick="getError()">错误</button>
+        <br /><br />
+        <p>仅标题</p>
+        <button class="rab-btn" onclick="getInfoNodesc()">消息</button>
+        <button class="rab-btn" onclick="getSuccessNodesc()">成功</button>
+        <button class="rab-btn" onclick="getWarningNodesc()">警告</button>
+        <button class="rab-btn" onclick="getErrorNodesc()">错误</button>
+    </div>
+    <div class="example">
+        <button class="rab-btn" onclick="multipleNotice()">显示顺序通知</button>
+    </div>
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="customTime()">自定义时长</button>
+        <button class="rab-btn rab-btn-primary" onclick="customStyle()">自定义样式</button>
+    </div>
+    <div class="example">
+        <button class="rab-btn" onclick="useHTML()">使用HTML片段</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+@import '../custom.less';
+@import '../mixins/content.less';
+
+@card-tag-name: r-card;
+@card-prefix-cls: ~'@{css-prefix}card';
+
+@{card-tag-name} {
+    display: block;
+    background: @white;
+    border: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base;
+    font-size: @font-size-base;
+    position: relative;
+    transition: all @transition-time @ease-in-out;
+
+    &:not(.@{card-prefix-cls}-shadow) {
+        &:hover {
+            box-shadow: @shadow-base;
+            border-color: #eee;
+        }
+    }
+}
+
+.@{card-prefix-cls} {
+    &-no-border {
+        border: none !important;
+    }
+
+    &-shadow {
+        box-shadow: @shadow-card;
+    }
+
+    &-dis-hover {
+        &:hover {
+            box-shadow: none !important;
+            border-color: @border-color-split !important;
+        }
+    }
+
+    &-dis-hover&-bordered {
+        &:hover {
+            border-color: @border-color-split !important;
+        }
+    }
+
+    &-head {
+        .content-header();
+    }
+
+    &-extra {
+        position: absolute;
+        right: 16px;
+        top: 14px;
+    }
+
+    &-body {
+        padding: @padding-md;
+    }
+}

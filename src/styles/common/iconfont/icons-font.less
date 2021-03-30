@@ -1,0 +1,31 @@
+@font-face {
+    font-family: @icons-font-family;
+    src: url('@{icons-font-path}/iconfont.eot');
+    src: url('@{icons-font-path}/iconfont.eot?#iefix') format('embedded-opentype'),
+        url('@{icons-font-path}/iconfont.woff2') format('woff2'),
+        url('@{icons-font-path}/iconfont.woff') format('woff'),
+        url('@{icons-font-path}/iconfont.ttf') format('truetype'),
+        url('@{icons-font-path}/iconfont.svg#iconfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rab-icon() {
+    display: inline-block;
+    font-family: @icons-font-family;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: optimizeLegibility;
+    line-height: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: inherit;
+    text-align: center;
+}
+
+.rab-icon {
+    .rab-icon();
+}

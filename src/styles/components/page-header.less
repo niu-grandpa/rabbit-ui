@@ -1,0 +1,54 @@
+@import '../custom.less';
+
+@page-header-tag-name: r-page-header;
+@page-header-prefix-cls: ~'@{css-prefix}page-header';
+@icon-prefix-cls: ~'@{css-prefix}icon';
+
+@{page-header-tag-name} {
+    display: block;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
+    position: relative;
+    padding: @padding-sm @padding-lg;
+    background-color: @white;
+}
+
+.@{page-header-prefix-cls} {
+    &-heading {
+        width: 100%;
+        display: flex;
+        align-items: baseline;
+        overflow: hidden;
+
+        &-title {
+            display: block;
+            float: left;
+            padding-right: @padding-sm;
+            color: @title-color;
+            font-size: 20px;
+            line-height: 40px;
+        }
+
+        &-sub-title {
+            color: @subsidiary-color;
+            font-size: @font-size-base;
+        }
+    }
+
+    &-back {
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s;
+        color: @title-color;
+        cursor: pointer;
+
+        &:hover {
+            color: @primary-color;
+        }
+
+        .@{icon-prefix-cls} {
+            font-size: 21px;
+        }
+    }
+}

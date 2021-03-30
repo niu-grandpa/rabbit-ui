@@ -1,0 +1,22 @@
+{
+    "exclude": ["node_modules", "examples", "site"],
+    "include": ["src/**/*.ts"],
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "strict": true,
+        "jsx": "preserve",
+        "declaration": false,
+        "incremental": true,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": false,
+        "baseUrl": ".",
+        "lib": ["es5", "es2015.promise", "dom", "dom.iterable", "scripthost"],
+        "downlevelIteration": true
+    }
+}

@@ -1,0 +1,108 @@
+@import '../custom.less';
+
+@collapse-tag-name: r-collapse;
+@collapse-panel-tag: r-collapse-panel;
+@collapse-prefix-cls: ~'@{css-prefix}collapse';
+
+@{collapse-tag-name} {
+    display: block;
+    background-color: @background-color-base;
+    border-radius: @border-radius-base;
+    border: @border-width-base @border-style-base @border-color-base;
+}
+
+@{collapse-panel-tag} {
+    display: none;
+    border-top: @border-width-base @border-style-base @border-color-base;
+
+    &:first-child {
+        border-top: 0;
+    }
+
+    > .@{collapse-prefix-cls}-header {
+        height: 38px;
+        line-height: 38px;
+        padding-left: @padding-md;
+        color: #666;
+        cursor: pointer;
+        position: relative;
+        border-bottom: @border-width-base @border-style-base transparent;
+
+        > i {
+            transition: transform @transition-time @ease-in-out;
+            margin-right: 14px;
+        }
+    }
+
+    &.@{collapse-prefix-cls}-item-active > .@{collapse-prefix-cls}-header {
+        border-bottom: @border-width-base @border-style-base @border-color-base;
+
+        > i {
+            transform: rotate(90deg);
+        }
+    }
+
+    &:last-child {
+        > .@{collapse-prefix-cls}-content {
+            border-radius: 0 0 @border-radius-base @border-radius-base;
+        }
+    }
+}
+
+.@{collapse-prefix-cls} {
+    &-simple,
+    &-ghost {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+
+    &-simple > @{collapse-panel-tag}&-item-active > &-header,
+    &-ghost > @{collapse-panel-tag}&-item-active > &-header {
+        border-bottom: @border-width-base @border-style-base transparent;
+    }
+
+    &-content {
+        display: none;
+        overflow: hidden;
+        color: @text-color;
+        padding: 0 @padding-md;
+        background-color: @white;
+
+        & > &-box {
+            padding-top: @padding-md;
+            padding-bottom: @padding-md;
+        }
+    }
+
+    &-simple > @{collapse-panel-tag} > &-content > &-content-box {
+        padding-top: 0;
+    }
+
+    &-simple &-content {
+        background-color: @background-color-base;
+    }
+
+    &-ghost {
+        border-bottom: none;
+    }
+
+    &-ghost > @{collapse-panel-tag} {
+        border-top: none;
+    }
+
+    &-ghost > @{collapse-panel-tag} > &-content > &-content-box {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    &-ghost,
+    &-ghost &-content {
+        background-color: @white;
+    }
+
+    &-item-active > &-content {
+        display: block;
+    }
+}

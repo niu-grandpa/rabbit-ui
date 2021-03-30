@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-radio checked="true">Radio</r-radio>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="apple" id="a">
+            <r-radio label="apple" icon="logo-apple">Apple</r-radio>
+            <r-radio label="android" icon="logo-android">Android</r-radio>
+            <r-radio label="windows" icon="logo-windows">Windows</r-radio>
+        </r-radio-group>
+
+        <r-radio-group value="爪哇犀牛">
+            <r-radio label="金斑蝶">金斑蝶</r-radio>
+            <r-radio label="爪哇犀牛">爪哇犀牛</r-radio>
+            <r-radio label="印度黑羚">印度黑羚</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio checked="true" disabled>Radio</r-radio>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="爪哇犀牛">
+            <r-radio label="金斑蝶" disabled>金斑蝶</r-radio>
+            <r-radio label="爪哇犀牛">爪哇犀牛</r-radio>
+            <r-radio label="印度黑羚">印度黑羚</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="apple" direction="vertical">
+            <r-radio label="apple">Apple</r-radio>
+            <r-radio label="android">Android</r-radio>
+            <r-radio label="windows">Windows</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="北京" type="button">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海">上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+        <br> <br>
+        <r-radio-group value="北京" type="button">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海" disabled>上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+        <br> <br>
+        <r-radio-group value="北京" type="button">
+            <r-radio label="北京" disabled>北京</r-radio>
+            <r-radio label="上海" disabled>上海</r-radio>
+            <r-radio label="深圳" disabled>深圳</r-radio>
+            <r-radio label="杭州" disabled>杭州</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="北京" type="button" button-style="solid">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海">上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+
+        <r-radio-group value="深圳" type="button" button-style="solid" style="margin-top: 16px">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海" disabled>上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="金斑蝶">
+            <r-radio label="金斑蝶" type="border">金斑蝶</r-radio>
+            <r-radio label="爪哇犀牛" type="border">爪哇犀牛</r-radio>
+            <r-radio label="印度黑羚" type="border">印度黑羚</r-radio>
+        </r-radio-group>
+    </div>
+
+    <div class="example">
+        <r-radio-group value="北京" type="button" size="large">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海">上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+        <br> <br>
+        <r-radio-group value="北京" type="button">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海">上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+        <br> <br>
+        <r-radio-group value="北京" type="button" size="small">
+            <r-radio label="北京">北京</r-radio>
+            <r-radio label="上海">上海</r-radio>
+            <r-radio label="深圳">深圳</r-radio>
+            <r-radio label="杭州">杭州</r-radio>
+        </r-radio-group>
+    </div>
+</body>
+
+</html>

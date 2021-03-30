@@ -1,0 +1,343 @@
+// @className 动画类名
+// @keyframes 动画
+// @direction 动画方向
+// @duration 持续时间
+// @time-function 过渡效果函数
+.move(@className, @keyframes, @direction, @duration, @time-function) {
+  .@{css-prefix}@{className}-move-@{direction} {
+    animation: @keyframes @duration @time-function;
+  }
+}
+
+// message组件的动画
+@-webkit-keyframes rabMessageMoveIn {
+  0% {
+    opacity: 0;
+    padding: 0;
+    transform: translateY(-40%);
+  }
+
+  100% {
+    opacity: 1;
+    padding: 8px;
+  }
+}
+
+@keyframes rabMessageMoveIn {
+  0% {
+    opacity: 0;
+    padding: 0;
+    transform: translateY(-40%);
+  }
+
+  100% {
+    opacity: 1;
+    padding: 8px;
+  }
+}
+
+@-webkit-keyframes rabMessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes rabMessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}
+
+// notice组件的动画
+@-webkit-keyframes rabNoticeMoveIn {
+  0% {
+    opacity: 0;
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes rabNoticeMoveIn {
+  0% {
+    opacity: 0;
+    transform-origin: 0 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 0 0;
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes rabNoticeMoveOut {
+  0% {
+    opacity: 1;
+    transform-origin: 0 0;
+    transform: translateX(0);
+  }
+
+  70% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+    height: auto;
+    padding: 16px;
+    margin-bottom: 10px;
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+    height: 0;
+    padding: 0;
+    margin-bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes rabNoticeMoveOut {
+  0% {
+    transform-origin: 0 0;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+
+  70% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+    height: auto;
+    padding: 16px;
+    margin-bottom: 10px;
+    opacity: 0;
+  }
+
+  100% {
+    transform-origin: 0 0;
+    transform: translateX(100%);
+    height: 0;
+    padding: 0;
+    margin-bottom: 0;
+    opacity: 0;
+  }
+}
+
+// drawer组件的动画
+@-webkit-keyframes rabDrawerMoveRightIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rabDrawerMoveRightIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes rabDrawerMoveRightOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes rabDrawerMoveRightOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+// drawer left
+@-webkit-keyframes rabDrawerMoveLeftIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rabDrawerMoveLeftIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes rabDrawerMoveLeftOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes rabDrawerMoveLeftOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+// drawer top
+@-webkit-keyframes rabDrawerMoveTopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rabDrawerMoveTopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes rabDrawerMoveTopOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes rabDrawerMoveTopOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+// drawer bottom
+@-webkit-keyframes rabDrawerMoveBottomIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rabDrawerMoveBottomIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes rabDrawerMoveBottomOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes rabDrawerMoveBottomOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}

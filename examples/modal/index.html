@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    body {
+        height: 1000px;
+    }
+    
+    .example {
+        width: 480px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+    
+    .vertical-center-modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .vertical-center-modal .rab-modal {
+        top: 0;
+    }
+    
+    .demo-custom-modal .rab-modal {
+        top: 20px;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="handleModal1()">显示对话框</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="handleModal2()">不带标题栏</button>
+        <button class="rab-btn" onclick="handleModal3()">国际化</button>
+        <button class="rab-btn" onclick="handleModal4()">设置宽度</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="handleModal5()">异步关闭</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="handleModal6()">禁用右上角关闭(含Esc键)</button>
+        <button class="rab-btn" onclick="handleModal7()">禁用遮罩层关闭</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="handleModal8()">垂直居中</button>
+        <button class="rab-btn" onclick="handleModal9()">距离顶部20px</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="handleModal10()">显示全屏对话框</button>
+    </div>
+
+    <r-modal title="普通的Modal对话框标题" id="m1">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal id="m2">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="Modal Title" ok-text="ok" cancel-text="cancel" id="m3">
+        <div>
+            <p>Some Content...</p>
+            <p>Some Content...</p>
+            <p>Some Content...</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="自定义宽度" width="360px" id="m4">
+        <div>
+            <p>自定义宽度，单位 px，默认 520px。</p>
+            <p>
+                对话框的宽度是响应式的，当屏幕尺寸小于 768px 时，宽度会变为自动
+                <code>auto</code>。
+            </p>
+        </div>
+    </r-modal>
+
+    <r-modal title="对话框标题" loading="true" id="m5">
+        <p>点击确定后，对话框将在 2秒 后关闭。</p>
+    </r-modal>
+
+    <r-modal title="对话框标题" closable="false" id="m6">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="对话框标题" mask-closable="false" id="m7">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="对话框标题" class-name="vertical-center-modal" id="m8">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="对话框标题" class-name="demo-custom-modal" id="m9">
+        <div>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+            <p>对话框内容</p>
+        </div>
+    </r-modal>
+
+    <r-modal title="全屏对话框" fullscreen="true" id="m10">
+        <p>这是一个全屏的对话框</p>
+    </r-modal>
+</body>
+
+</html>

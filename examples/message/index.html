@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <!-- <div class="rab-message" style="top: 24px; z-index: 1010">
+        <div class="rab-message-notice rab-message-move-enter">
+            <div class="rab-message-notice-content rab-message-notice-content-info">
+                <div class="rab-message-notice-content-text">
+                    <div class="rab-message-info">
+                        <i class="rab-icon rab-icon-ios-information-circle"></i>
+                        <span>这是一条普通的提示</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="example">
+        <button class="rab-btn rab-btn-primary" onclick="getInfo()">显示消息提示</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="getSuccess()">显示成功提示</button>
+        <button class="rab-btn" onclick="getWarning()">显示警告提示</button>
+        <button class="rab-btn" onclick="getError()">显示错误提示</button>
+    </div>
+
+    <div class="example">
+        <h3>带背景色</h3>
+        <button class="rab-btn" onclick="getInfoBgc()">显示消息提示</button>
+        <button class="rab-btn" onclick="getSuccessBgc()">显示成功提示</button>
+        <button class="rab-btn" onclick="getWarningBgc()">显示警告提示</button>
+        <button class="rab-btn" onclick="getErrorBgc()">显示错误提示</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="getLoading()">显示加载中...</button>
+        <button class="rab-btn" onclick="getPromise()">Promise 接口</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="get10s()">显示10秒的提示</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="getClosable()">显示可关闭的提示</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="useHTML()">使用 HTML 片段</button>
+    </div>
+</body>
+
+</html>

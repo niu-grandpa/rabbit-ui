@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-alert title="信息提示的文案"></r-alert>
+        <r-alert type="success" title="成功提示的文案"></r-alert>
+        <r-alert type="warning" title="警告提示的文案"></r-alert>
+        <r-alert type="error" title="错误提示的文案"></r-alert>
+    </div>
+
+    <div class="example">
+        <r-alert title="信息提示的文案">
+            <p>信息提示的内容,信息提示的内容，信息提示的,信息提示的内容,信息提示的内容。</p>
+        </r-alert>
+        <r-alert type="success" title="成功提示的文案">
+            <p>成功提示的内容,成功提示的内容，成功提示的,成功提示的内容,成功提示的内容。</p>
+        </r-alert>
+        <r-alert type="warning" title="警告提示的文案">
+            <p>警告提示的内容,警告提示的内容，警告提示的,警告提示的内容,警告提示的内容。</p>
+        </r-alert>
+        <r-alert type="error" title="错误提示的文案">
+            <p>错误提示的内容,错误提示的内容，错误提示的,错误提示的内容,错误提示的内容。</p>
+        </r-alert>
+    </div>
+
+    <div class="example">
+        <r-alert title="信息提示的文案" show-icon="true"></r-alert>
+        <r-alert type="success" title="成功提示的文案" show-icon="true"></r-alert>
+        <r-alert type="warning" title="警告提示的文案" show-icon="true"></r-alert>
+        <r-alert type="error" title="错误提示的文案" show-icon="true"></r-alert>
+
+        <r-alert title="信息提示的文案" show-icon="true">
+            <p>信息提示的内容,信息提示的内容，信息提示的,信息提示的内容,信息提示的内容。</p>
+        </r-alert>
+        <r-alert type="success" title="成功提示的文案" show-icon="true">
+            <p>成功提示的内容,成功提示的内容，成功提示的,成功提示的内容,成功提示的内容。</p>
+        </r-alert>
+        <r-alert type="warning" title="警告提示的文案" show-icon="true">
+            <p>警告提示的内容,警告提示的内容，警告提示的,警告提示的内容,警告提示的内容。</p>
+        </r-alert>
+        <r-alert type="error" title="错误提示的文案" show-icon="true">
+            <p>错误提示的内容,错误提示的内容，错误提示的,错误提示的内容,错误提示的内容。</p>
+        </r-alert>
+        <r-alert title="自定义图标" show-icon="true" icon="<i class='rab-icon rab-icon-ios-planet'>">
+            <p>自定义图标的内容，自定义图标的内容，自定义图标的内容。</p>
+        </r-alert>
+    </div>
+
+    <div class="example">
+        <r-alert title="信息提示的文案" closable="true" id="test"></r-alert>
+        <r-alert type="success" title="成功提示的文案" closable="true">
+            <p>成功提示的内容,成功提示的内容，成功提示的,成功提示的内容,成功提示的内容。</p>
+        </r-alert>
+        <r-alert type="warning" title="警告提示的文案" closable="true" close-text="知道了"></r-alert>
+    </div>
+
+    <div class="example">
+        <r-alert banner="true" type="warning" title="注意:通知内容……"></r-alert>
+        <r-alert banner="true" closable="true" type="warning" title="注意:通知内容……"></r-alert>
+        <r-alert banner="true" show-icon="true" type="warning" title="注意:通知内容……"></r-alert>
+    </div>
+</body>
+
+</html>

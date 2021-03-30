@@ -1,0 +1,45 @@
+.fade(@className,@keyframes) {
+  .rab-fade-@{className} {
+    -webkit-animation: @keyframes 0.3s ease-in-out;
+            animation: @keyframes 0.3s ease-in-out;
+  }
+}
+
+.fade(in,rabFadeIn);
+.fade(out,rabFadeOut);
+
+@-webkit-keyframes rabFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rabFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes rabFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rabFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

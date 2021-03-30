@@ -1,0 +1,8 @@
+.*
+*.md
+*.log
+node_modules/
+config/
+docs/
+examples/
+site/

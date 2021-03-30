@@ -1,0 +1,73 @@
+@import '../custom.less';
+
+@jumbotron-tag-name: r-jumbotron;
+@jumbotron-prefix-cls: ~'@{css-prefix}jumbotron';
+
+@{jumbotron-tag-name} {
+    display: block;
+    padding: 2rem 1rem;
+    margin-bottom: 32px;
+    background-color: @normal-color;
+    border-radius: @border-radius-base;
+
+    &[type='light'] {
+        background-color: @white;
+    }
+
+    &[type='dark'] {
+        background-color: @black;
+
+        .@{jumbotron-prefix-cls} {
+            &-title {
+                color: fade(@white, 80%);
+            }
+
+            &-subtitle {
+                color: fade(@white, 85%);
+            }
+        }
+    }
+
+    @media (min-width: @screen-sm-min) {
+        padding: 3rem 2rem;
+    }
+}
+
+.@{jumbotron-prefix-cls} {
+    &-container {
+        width: 100%;
+        padding-right: @padding-md - 1;
+        padding-left: @padding-md - 1;
+        margin-right: auto;
+        margin-left: auto;
+
+        @media (min-width: @screen-sm-min) {
+            max-width: 540px;
+        }
+
+        @media (min-width: @screen-md-min) {
+            max-width: 720px;
+        }
+
+        @media (min-width: @screen-md-min) {
+            max-width: 960px;
+        }
+
+        @media (min-width: @screen-md-min) {
+            max-width: 1140px;
+        }
+    }
+
+    &-title {
+        color: @title-color;
+        font-size: 3.5rem;
+        font-weight: 300;
+        line-height: 1.5;
+    }
+
+    &-subtitle {
+        font-size: 1.25rem;
+        font-weight: 300;
+        margin-bottom: 16px;
+    }
+}

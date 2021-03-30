@@ -1,0 +1,18 @@
+@import '../custom.less';
+
+@time-tag-name: r-time;
+@time-prefix-cls: ~'@{css-prefix}time';
+
+@{time-tag-name} {
+    display: inline-block;
+}
+
+.@{time-prefix-cls} {
+    &-with-hash {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

@@ -1,0 +1,107 @@
+@import '../custom.less';
+@import '../mixins/size.less';
+
+@spin-tag-name: r-spin;
+@spin-prefix-cls: ~'@{css-prefix}spin';
+@spin-dot-size-small: 12px;
+@spin-dot-size: 20px;
+@spin-dot-size-large: 32px;
+@table-prefix-cls: ~'@{css-prefix}table';
+
+@{spin-tag-name} {
+    color: @primary-color;
+    vertical-align: middle;
+    text-align: center;
+
+    &[size='small'] {
+        .@{spin-prefix-cls}-dot {
+            .square(@spin-dot-size-small);
+        }
+    }
+
+    &[size='large'] {
+        .@{spin-prefix-cls}-dot {
+            .square(@spin-dot-size-large);
+        }
+    }
+
+    &[fix] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: @zindex-spin;
+        .square(100%);
+        background-color: rgba(255, 255, 255, 0.9);
+
+        .@{spin-prefix-cls} {
+            &-main {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+            &-dot {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.@{spin-prefix-cls} {
+    &-dot {
+        position: relative;
+        display: block;
+        border-radius: 50%;
+        background-color: @primary-color;
+        .square(@spin-dot-size);
+        animation: ani-spin-bounce 1s 0s ease-in-out infinite;
+    }
+
+    &-fullscreen {
+        z-index: @zindex-spin-fullscreen;
+
+        &-wrapper {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+    &-text,
+    &-show-text &-dot {
+        display: none !important;
+    }
+
+    &-show-text &-text {
+        display: block !important;
+    }
+}
+
+.@{table-prefix-cls}-wrapper {
+    @{spin-tag-name}[fix] {
+        border: none;
+    }
+}
+
+.@{table-prefix-cls}-wrapper-with-border {
+    @{spin-tag-name}[fix] {
+        border: 1px solid @border-color-base;
+        border-top: 0;
+        border-left: 0;
+    }
+}
+
+@keyframes ani-spin-bounce {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}

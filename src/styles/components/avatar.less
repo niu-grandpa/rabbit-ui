@@ -1,0 +1,68 @@
+@import '../custom.less';
+
+@avatar-tag-name: r-avatar;
+@avatar-prefix-cls: ~'@{css-prefix}avatar';
+
+@{avatar-tag-name} {
+    display: inline-block;
+    text-align: center;
+    background: @avatar-bg;
+    color: @avatar-color;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+
+    .rab-icon {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &[size='large'] {
+        .avatar-size(@avatar-size-lg, @avatar-font-size-lg);
+    }
+
+    .avatar-size(@avatar-size-base, @avatar-font-size-base);
+
+    &[size='small'] {
+        .avatar-size(@avatar-size-sm, @avatar-font-size-sm);
+    }
+
+    &[shape='circle'] {
+        border-radius: 50%;
+    }
+
+    &[shape='square'] {
+        border-radius: @avatar-border-radius;
+    }
+
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.@{avatar-prefix-cls} {
+    &-image {
+        background: transparent;
+    }
+
+    &-string {
+        position: absolute;
+        left: 50%;
+        transform-origin: 0 center;
+    }
+}
+
+.avatar-size(@size, @font-size) {
+    width: @size;
+    height: @size;
+    line-height: @size;
+    border-radius: 50%;
+
+    &.@{avatar-prefix-cls}-icon {
+        font-size: @font-size;
+    }
+}

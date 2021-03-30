@@ -1,0 +1,33 @@
+@import '../custom.less';
+@import '../animation/fade.less';
+
+@backtop-tag-name: r-back-top;
+@backtop-prefix-cls: ~'@{css-prefix}back-top';
+
+@{backtop-tag-name} {
+    z-index: @zindex-back-top;
+    position: fixed;
+    cursor: pointer;
+    display: none;
+
+    i {
+        position: relative;
+        top: -3px;
+        color: @white;
+        font-size: 24px;
+        padding: @padding-xs @padding-sm;
+    }
+}
+
+.@{backtop-prefix-cls} {
+    &-inner {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: @border-radius-base;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        transition: all @transition-time @ease-in-out;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+}

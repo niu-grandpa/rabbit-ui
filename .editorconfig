@@ -1,0 +1,22 @@
+# 该文件用于统一不同编辑器和ide的编码风格
+# https://editorconfig.org
+
+# 最顶端的编辑器配置文件
+root = true
+
+# 所有文件
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# 制表符缩进(未指定大小)
+[Makefile]
+indent_style = tab

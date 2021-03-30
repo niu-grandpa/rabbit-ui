@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        display: block;
+        width: 35%;
+        padding: 0 20px;
+        margin: 20px auto;
+    }
+    
+    .example r-progress {
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <!-- status为 success 或 wrong 时替换进度文字显示对应图标
+    <r-progress class="rab-progress-show-info">
+        <div class="rab-progress-outer">
+            <div class="rab-progress-inner">
+                <div class="rab-progress-bg" style="width: 25%; height: 10px">
+                    百分比内显
+                    <span class="rab-progress-inner-text">45%</span>
+                </div>
+                <div class="rab-progress-success-bg" style="width: 0%; height: 10px"></div>
+            </div>
+        </div>
+        百分比内显或 show-text="false" 则移除下面的节点
+        <div class="rab-progress-text">
+            <span class="rab-progress-text-inner">
+          25%
+          <i class="rab-icon rab-icon-ios-checkmark-circle"></i>
+        </span>
+        </div>
+    </r-progress> -->
+
+    <div class="example">
+        <r-progress percent="30"></r-progress>
+        <r-progress percent="50" status="active"></r-progress>
+        <r-progress percent="70" status="wrong"></r-progress>
+        <r-progress percent="100" status="success"></r-progress>
+        <r-progress percent="50" status="warning"></r-progress>
+        <r-progress percent="50" show-text="false"></r-progress>
+    </div>
+
+    <div class="example">
+        <r-progress text-inside="true" stroke-width="20" percent="30"></r-progress>
+        <r-progress text-inside="true" stroke-width="20" percent="70" status="active"></r-progress>
+        <r-progress text-inside="true" stroke-width="20" percent="100" status="success"></r-progress>
+        <r-progress text-inside="true" stroke-width="20" percent="80" status="warning"></r-progress>
+        <r-progress text-inside="true" stroke-width="20" percent="50" status="wrong"></r-progress>
+    </div>
+
+    <div class="example">
+        <r-progress percent="99" stroke-color="['#108ee9', '#87d068']"></r-progress>
+        <r-progress percent="99" stroke-color="['#108ee9', '#87d068']" status="active"></r-progress>
+    </div>
+
+    <div class="example">
+        <r-progress percent="60" success-percent="30" id="a"></r-progress>
+    </div>
+</body>
+<script></script>
+
+</html>

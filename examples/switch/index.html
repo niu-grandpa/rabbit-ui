@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 20px;
+        margin: 20px auto;
+        border: 1px solid #f0f0f0;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-switch id="a"></r-switch>
+        开关状态：<span id="status">false</span>
+    </div>
+    <div class="example">
+        <r-switch size="large"></r-switch>
+        <r-switch></r-switch>
+        <r-switch size="small"></r-switch>
+    </div>
+    <div class="example">
+        <r-switch open="开" close="关"></r-switch>
+        <r-switch open="<i class='rab-icon rab-icon-md-checkmark'></i>" close="<i class='rab-icon rab-icon-md-close'></i>"></r-switch>
+    </div>
+    <div class="example">
+        <r-switch size="large" open="开启" close="关闭"></r-switch>
+        <r-switch size="large" open="ON" close="OFF"></r-switch>
+    </div>
+    <div class="example">
+        <r-switch disabled="disabled" id="switch"></r-switch>
+        <button class="rab-btn rab-btn-primary" onclick="Toggle()">切换禁用</button>
+    </div>
+    <div class="example">
+        <r-switch loading="true" checked="true"></r-switch>
+        <r-switch loading="true" size="small"></r-switch>
+    </div>
+    <div class="example">
+        <r-switch true-color="#13ce66" false-color="#ff4949"></r-switch>
+    </div>
+</body>
+<script>
+    const sw = document.querySelector('#switch');
+    Toggle = () => {
+        sw.getAttribute('disabled') ?
+            sw.removeAttribute('disabled') :
+            sw.setAttribute('disabled', 'disabled');
+    };
+</script>
+
+</html>

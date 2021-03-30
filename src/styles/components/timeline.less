@@ -1,0 +1,97 @@
+@import '../custom.less';
+@import '../mixins/size.less';
+
+@timeline-tag-name: r-timeline;
+@timeline-prefix-cls: ~'@{css-prefix}timeline';
+@timeline-color: @border-color-split;
+
+.@{timeline-prefix-cls} {
+    &-item {
+        &-tail {
+            height: 100%;
+            border-left: @border-width-base @border-style-base @timeline-color;
+            position: absolute;
+            left: 5px;
+            top: 0;
+        }
+
+        &-head {
+            .size(12px,12px);
+            background-color: @white;
+            border-radius: 50%;
+            border: 2px @border-style-base transparent;
+            position: absolute;
+
+            &-blue {
+                border-color: @primary-color;
+                color: @primary-color;
+            }
+            &-red {
+                border-color: @error-color;
+                color: @error-color;
+            }
+            &-green {
+                border-color: @success-color;
+                color: @success-color;
+            }
+            &-gray {
+                border-color: #ccc;
+                color: #ccc;
+            }
+        }
+
+        &-head-custom {
+            .size(40px,auto);
+            margin-top: 6px;
+            padding: 3px 0;
+            text-align: center;
+            line-height: @line-height-base;
+            border: 0;
+            border-radius: 0;
+            font-size: @font-size-base;
+            position: absolute;
+            left: -15px;
+            transform: translateY(-50%);
+
+            .rab-icon {
+                font-size: @font-size-large;
+            }
+        }
+
+        &-content {
+            padding: 1px 1px 10px 22px;
+            font-size: @font-size-base;
+            position: relative;
+            top: -6px;
+        }
+    }
+}
+
+@{timeline-tag-name} {
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    &-item {
+        display: block;
+        margin: 0 !important;
+        padding: 0 0 @padding-sm 0;
+        position: relative;
+
+        &:last-child {
+            .@{timeline-prefix-cls}-item-tail {
+                display: none;
+            }
+        }
+    }
+
+    &[pending='true'] @{timeline-tag-name}-item:nth-last-of-type(2) {
+        .@{timeline-prefix-cls}-item-tail {
+            border-left: @border-width-base dotted @timeline-color;
+        }
+
+        .@{timeline-prefix-cls}-item-content {
+            min-height: 48px;
+        }
+    }
+}

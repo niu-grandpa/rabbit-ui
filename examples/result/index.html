@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 918px;
+        padding: 0 20px;
+        margin: 20px auto;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .typography {
+        overflow-wrap: break-word;
+        margin-bottom: 8px;
+    }
+    
+    .typography .rab-icon {
+        color: red;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-result status="success" title="提交成功" subtitle="已提交申请，等待部门审核。" extra="<button type='button' class='rab-btn rab-btn-primary'>返回首页</button> <button type='button' class='rab-btn'>打印</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result title="请勿重复操作" extra="<button type='button' class='rab-btn rab-btn-primary'>返回首页</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result status="warning" title="操作发生了一些问题" extra="<button type='button' class='rab-btn rab-btn-primary'>重新提交</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result status="error" title="提交失败" subtitle="请检查并修改以下信息后再重新提交" extra="<button type='button' class='rab-btn rab-btn-primary'>返回修改</button>">
+            <div>
+                <h4 class="typography">您提交的内容有以下错误:</h4>
+                <div class="typography">
+                    <i class="rab-icon rab-icon-ios-close-circle-outline"></i> 您的帐户已被冻结。
+                    <a>立即解冻></a>
+                </div>
+                <div class="typography">
+                    <i class="rab-icon rab-icon-ios-close-circle-outline"></i> 您的帐户还没有资格申请。
+                    <a>申请解锁></a>
+                </div>
+            </div>
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result status="403" title="403" subtitle="对不起，您没有权限访问此页。" extra="<button type='button' class='rab-btn rab-btn-primary'>返回首页</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result status="404" title="404" subtitle="对不起，您访问的页面不存在。" extra="<button type='button' class='rab-btn rab-btn-primary'>返回首页</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result status="500" title="500" subtitle="对不起，服务器出了点问题。" extra="<button type='button' class='rab-btn rab-btn-primary'>返回首页</button>">
+        </r-result>
+    </div>
+
+    <div class="example">
+        <r-result icon="ios-happy" title="太棒了，我们已经完成了所有的操作！" extra="<button type='button' class='rab-btn rab-btn-primary'>下一步</button>">
+        </r-result>
+    </div>
+</body>
+
+</html>

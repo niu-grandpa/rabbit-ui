@@ -1,0 +1,34 @@
+@import '../custom.less';
+@import '../mixins/size.less';
+
+@empty-tag-name: r-empty;
+@empty-prefix-cls: ~'@{css-prefix}empty';
+@icon-prefix-cls: ~'@{css-prefix}icon';
+
+@{empty-tag-name} {
+    display: block;
+    margin: 0 8px;
+    font-size: @font-size-base;
+    line-height: 22px;
+    text-align: center;
+}
+
+.@{empty-prefix-cls} {
+    &-image {
+        height: 100px;
+        margin-bottom: 12px;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    &-description {
+        margin: 0;
+        color: @subsidiary-color;
+    }
+
+    &-footer {
+        margin-top: 12px;
+    }
+}

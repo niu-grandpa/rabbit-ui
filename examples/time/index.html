@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 550px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-time time="new Date().getTime() - 60 * 3 * 1000"></r-time>
+        <br />
+        <r-time time="new Date().getTime() - 86400 * 3 * 1000"></r-time>
+    </div>
+
+    <div class="example">
+        <r-time time="new Date()" interval="1"></r-time>
+    </div>
+
+    <div class="example">
+        <r-time time="new Date().getTime() - 86400 * 3 * 1000"></r-time>
+        <br />
+        <r-time time="new Date().getTime() - 86400 * 3 * 1000" type="date"></r-time>
+        <br />
+        <r-time time="new Date().getTime() - 86400 * 3 * 1000" type="datetime"></r-time>
+    </div>
+
+    <div class="example">
+        <r-time time="new Date().getTime() - 86400 * 3 * 1000" hash="#hash"></r-time>
+    </div>
+</body>
+
+</html>

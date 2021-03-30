@@ -1,0 +1,120 @@
+@import '../animation/move.less';
+@import '../custom.less';
+@import '../mixins/close.less';
+
+@notice-prefix-cls: ~'@{css-prefix}notice';
+@icon-prefix-cls: ~'@{css-prefix}icon';
+
+@notice-width: 384px;
+@notice-padding: 16px;
+@notice-margin-bottom: 10px;
+@notice-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+.@{notice-prefix-cls} {
+    margin-right: 24px;
+    position: fixed;
+    z-index: @zindex-notification;
+
+    &-content-with-icon {
+        margin-left: 51px;
+    }
+
+    &-with-desc&-with-icon &-title {
+        margin-left: 51px;
+    }
+
+    &-notice {
+        width: @notice-width;
+        max-width: calc(100vw - 24px * 2);
+        margin-bottom: @notice-margin-bottom;
+        margin-left: auto;
+        padding: @notice-padding;
+        border-radius: @border-radius-base + 2;
+        box-shadow: @shadow-base;
+        background: @white;
+        line-height: 1.5;
+        position: relative;
+        overflow: hidden;
+
+        &-close {
+            position: absolute;
+            top: 16px;
+            right: 22px;
+            color: #999;
+            outline: none;
+
+            i {
+                .close-base(-4px);
+            }
+        }
+
+        &-with-desc {
+            .@{notice-prefix-cls}-notice-close {
+                top: 11px;
+            }
+        }
+    }
+
+    &-title {
+        font-size: @font-size-large;
+        line-height: @font-size-large + 3;
+        color: @title-color;
+        padding-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &-with-desc &-title {
+        margin-bottom: 8px;
+    }
+
+    &-desc {
+        font-size: @font-size-base;
+        color: @text-color;
+        text-align: justify;
+        line-height: 1.5;
+    }
+
+    &-with-desc&-with-icon &-desc {
+        margin-left: 51px;
+    }
+
+    &-with-icon &-title {
+        margin-left: 26px;
+    }
+
+    &-icon {
+        position: absolute;
+        top: 10px;
+        font-size: @font-size-large + 4;
+
+        &-success {
+            color: @success-color;
+        }
+
+        &-info {
+            color: @primary-color;
+        }
+
+        &-warning {
+            color: @warning-color;
+        }
+
+        &-error {
+            color: @error-color;
+        }
+    }
+
+    &-with-desc &-icon {
+        font-size: 36px;
+        top: 1px;
+    }
+
+    &-custom-content {
+        position: relative;
+    }
+}
+
+.move(notice, rabNoticeMoveIn, enter, .35s, @notice-timing-function);
+.move(notice, rabNoticeMoveOut, leave, .5s, @notice-timing-function);

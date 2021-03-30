@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 20px;
+        margin: 20px auto;
+        border: 1px solid #f0f0f0;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-tag>标签一</r-tag>
+        <r-tag>标签二</r-tag>
+        <r-tag closable="true">标签三</r-tag>
+    </div>
+
+    <div class="example">
+        <r-tag type="border">标签三</r-tag>
+        <r-tag type="border" closable="true"> 标签四 </r-tag>
+        <r-tag type="dot">标签一</r-tag>
+        <r-tag type="dot" closable="true"> 标签二 </r-tag>
+    </div>
+
+    <div class="example">
+        <r-tag color="default">default</r-tag>
+        <r-tag color="primary">primary</r-tag>
+        <r-tag color="success">success</r-tag>
+        <r-tag color="error">error</r-tag>
+        <r-tag color="warning">warning</r-tag>
+        <r-tag color="magenta">magenta</r-tag>
+        <r-tag color="red">red</r-tag>
+        <r-tag color="volcano">volcano</r-tag>
+        <r-tag color="orange">orange</r-tag>
+        <r-tag color="gold">gold</r-tag>
+        <r-tag color="yellow">yellow</r-tag>
+        <r-tag color="lime">lime</r-tag>
+        <r-tag color="green">green</r-tag>
+        <r-tag color="cyan">cyan</r-tag>
+        <r-tag color="blue">blue</r-tag>
+        <r-tag color="geekblue">geekblue</r-tag>
+        <r-tag color="purple">purple</r-tag>
+        <r-tag color="#FFA2D3">Custom Color</r-tag>
+        <br /><br />
+        <r-tag type="border" closable="true" color="primary">标签一</r-tag>
+        <r-tag type="border" closable="true" color="success">标签二</r-tag>
+        <r-tag type="border" closable="true" color="warning">标签三</r-tag>
+        <r-tag type="border" closable="true" color="error">标签四</r-tag>
+        <br /><br />
+        <r-tag type="dot" closable="true" color="primary">标签一</r-tag>
+        <r-tag type="dot" closable="true" color="success">标签二</r-tag>
+        <r-tag type="dot" closable="true" color="warning">标签三</r-tag>
+        <r-tag type="dot" closable="true" color="error">标签四</r-tag>
+    </div>
+
+    <div class="example">
+        <r-tag checkable="true" color="primary" id="demoTag">标签一</r-tag>
+        <r-tag checkable="true" color="success">标签二</r-tag>
+        <r-tag checkable="true" color="error">标签三</r-tag>
+        <r-tag checkable="true" color="warning">标签四</r-tag>
+    </div>
+
+    <div class="example">
+        <r-tag>默认标签</r-tag>
+        <r-tag size="medium">中号标签</r-tag>
+        <r-tag size="large">大号标签</r-tag>
+    </div>
+</body>
+
+</html>

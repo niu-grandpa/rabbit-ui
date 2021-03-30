@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+    
+    .demo-breadcrumb-separator {
+        color: #ff5500;
+        padding: 0 5px;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-breadcrumb>
+            <a href="#">Home</a>
+            <a href="#">Components</a>
+            <span>Breadcrumb</span>
+        </r-breadcrumb>
+    </div>
+
+    <div class="example">
+        <r-breadcrumb>
+            <div>
+                <i class="rab-icon rab-icon-ios-home-outline"></i>
+                <a href="#">Home</a>
+            </div>
+            <div>
+                <i class="rab-icon rab-icon-logo-buffer"></i>
+                <a href="#">Components</a>
+            </div>
+            <div>
+                <i class="rab-icon rab-icon-ios-cafe"></i>
+                <span>Breadcrumb</span>
+            </div>
+        </r-breadcrumb>
+    </div>
+
+    <div class="example">
+        <r-breadcrumb separator=">">
+            <a href="#">Home</a>
+            <a href="#">Components</a>
+            <span>Breadcrumb</span>
+        </r-breadcrumb>
+
+        <r-breadcrumb separator="<b class='demo-breadcrumb-separator'>=></b>">
+            <a href="#">Home</a>
+            <a href="#">Components</a>
+            <span>Breadcrumb</span>
+        </r-breadcrumb>
+    </div>
+</body>
+
+</html>

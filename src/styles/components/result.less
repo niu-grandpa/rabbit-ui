@@ -1,0 +1,83 @@
+@import '../custom.less';
+@import '../mixins/size.less';
+
+@result-tag-name: r-result;
+@result-prefix-cls: ~'@{css-prefix}result';
+@icon-prefix-cls: ~'@{css-prefix}icon';
+
+@{result-tag-name} {
+    display: block;
+    padding: 48px 32px;
+}
+
+.@{result-prefix-cls} {
+    &-info {
+        .@{result-prefix-cls}-icon .@{icon-prefix-cls} {
+            color: @primary-color;
+        }
+    }
+
+    &-success {
+        .@{result-prefix-cls}-icon .@{icon-prefix-cls} {
+            color: @success-color;
+        }
+    }
+
+    &-warning {
+        .@{result-prefix-cls}-icon .@{icon-prefix-cls} {
+            color: @warning-color;
+        }
+    }
+
+    &-error {
+        .@{result-prefix-cls}-icon .@{icon-prefix-cls} {
+            color: @error-color;
+        }
+    }
+
+    &-image {
+        .size(350px,280px);
+        margin: auto;
+    }
+
+    &-icon {
+        margin-bottom: 24px;
+        text-align: center;
+
+        & > .@{icon-prefix-cls} {
+            font-size: 90px;
+        }
+    }
+
+    &-title {
+        color: @title-color;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    &-subtitle {
+        color: @subsidiary-color;
+        font-size: @font-size-base;
+        margin-top: 12px;
+        text-align: center;
+    }
+
+    &-extra {
+        margin: 24px 0 0;
+        text-align: center;
+
+        & > * {
+            margin-right: 8px;
+        }
+
+        & > :last-child {
+            margin-right: 0;
+        }
+    }
+
+    &-content {
+        margin-top: 24px;
+        padding: @padding-lg 40px;
+        background-color: @background-color-base;
+    }
+}

@@ -1,0 +1,40 @@
+@import '../custom.less';
+
+@breadcrumb-tag-name: r-breadcrumb;
+@breadcrumb-prefix-cls: ~'@{css-prefix}breadcrumb';
+
+@{breadcrumb-tag-name} {
+    display: block;
+    color: #999;
+    font-size: @font-size-base;
+
+    a {
+        color: @text-color;
+        transition: color @transition-time @ease-in-out;
+        &:hover {
+            color: tint(@primary-color, 20%);
+        }
+    }
+
+    & > span:last-child {
+        font-weight: bold;
+        color: @text-color;
+    }
+
+    & > span:last-child .@{breadcrumb-prefix-cls}-item-separator {
+        display: none;
+    }
+}
+
+.@{breadcrumb-prefix-cls} {
+    &-item-separator {
+        margin: 0 8px;
+        color: @border-color-base;
+    }
+
+    &-item-link {
+        > .rab-icon + span {
+            margin-left: 4px;
+        }
+    }
+}

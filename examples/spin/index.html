@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 500px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+        position: relative;
+    }
+    
+    .col-span-8 {
+        display: block;
+        width: 33.33333333%;
+        float: left;
+    }
+    
+    .demo-spin-col {
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+    
+    .demo-spin-article {
+        width: 400px;
+        height: 200px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-spin></r-spin>
+    </div>
+
+    <div class="example">
+        <div class="col-span-8">
+            <r-spin size="small"></r-spin>
+        </div>
+
+        <div class="col-span-8">
+            <r-spin></r-spin>
+        </div>
+
+        <div class="col-span-8">
+            <r-spin size="large"></r-spin>
+        </div>
+    </div>
+
+    <div class="example">
+        <r-spin fix></r-spin>
+    </div>
+
+    <div class="example" style="border: none">
+        <div class="demo-spin-col col-span-8">
+            <r-spin fix>加载中...</r-spin>
+        </div>
+
+        <div class="demo-spin-col col-span-8">
+            <r-spin fix>
+                <i class="rab-icon rab-icon-loading1 rab-load-loop" style="font-size: 22px; height: 30px"></i>
+                <div>Loading...</div>
+            </r-spin>
+        </div>
+    </div>
+
+    <br /><br /><br />
+
+    <div class="example">
+        <div class="demo-spin-article">
+            <h3>登金陵凤凰台</h3>
+            <address>李白</address>
+            <article>
+                <p>凤凰台上凤凰游，凤去台空江自流。</p>
+                <p>吴宫花草埋幽径，晋代衣冠成古丘。</p>
+                <p>三山半落青天外，二水中分白鹭洲。</p>
+                <p>总为浮云能蔽日，长安不见使人愁。</p>
+            </article>
+            <r-spin fix size="large" id="abcd"></r-spin>
+        </div>
+        <br /> 切换显示状态：
+        <r-switch></r-switch>
+    </div>
+
+    <div class="example n">
+        <button class="rab-btn rab-btn-primary" onclick="handle1()">整页显示，3秒后关闭</button>
+        <button class="rab-btn rab-btn-primary" onclick="handle2()">自定义显示内容</button>
+    </div>
+</body>
+
+</html>
