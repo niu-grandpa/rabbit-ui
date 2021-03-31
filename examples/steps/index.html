@@ -9,7 +9,7 @@
 <style>
     .example {
         display: block;
-        width: 60%;
+        width: 65%;
         border-bottom: 1px solid #ebedf0;
         padding: 42px 24px 50px;
         margin: 0 auto;
@@ -44,6 +44,7 @@
     </div>
 
     <div class="example">
+        <p>当前正在进行第 <span id="step"></span> 步</p>
         <r-steps current="0" id="test">
             <r-step title="步骤1"></r-step>
             <r-step title="步骤2"></r-step>
@@ -51,7 +52,7 @@
             <r-step title="步骤4"></r-step>
         </r-steps>
         <br />
-        <button class="rab-btn rab-btn-primary" onclick="handlClick()">下一步</button>
+        <button class="rab-btn rab-btn-primary" onclick="handlClickNext()">下一步</button>
     </div>
 
     <div class="example">
@@ -71,52 +72,6 @@
             <r-step title="待进行" content="这里是该步骤的描述信息"></r-step>
         </r-steps>
     </div>
-    <!-- <div class="example">
-        <r-steps direction="horizontal">
-            <r-step status="finish">
-                <div class="rab-steps-tail"><i></i></div>
-                <div class="rab-steps-head">
-                    <div class="rab-steps-head-inner">
-                        <span class="rab-steps-icon rab-icon rab-icon-ios-checkmark"></span>
-                    </div>
-                </div>
-                <div class="rab-steps-main">
-                    <div class="rab-steps-title">已完成</div>
-                    <div class="rab-steps-content">这里是该步骤的描述信息</div>
-                </div>
-            </r-step>
-            <r-step status="finish">
-                <div class="rab-steps-tail"><i></i></div>
-                <div class="rab-steps-head">
-                    <div class="rab-steps-head-inner"><span>2</span></div>
-                </div>
-                <div class="rab-steps-main">
-                    <div class="rab-steps-title">进行中</div>
-                    <div class="rab-steps-content">这里是该步骤的描述信息</div>
-                </div>
-            </r-step>
-            <r-step status="wait">
-                <div class="rab-steps-tail"><i></i></div>
-                <div class="rab-steps-head">
-                    <div class="rab-steps-head-inner"><span>3</span></div>
-                </div>
-                <div class="rab-steps-main">
-                    <div class="rab-steps-title">待进行</div>
-                    <div class="rab-steps-content">这里是该步骤的描述信息</div>
-                </div>
-            </r-step>
-            <r-step status="wait">
-                <div class="rab-steps-tail"><i></i></div>
-                <div class="rab-steps-head">
-                    <div class="rab-steps-head-inner"><span>4</span></div>
-                </div>
-                <div class="rab-steps-main">
-                    <div class="rab-steps-title">待进行</div>
-                    <div class="rab-steps-content">这里是该步骤的描述信息</div>
-                </div>
-            </r-step>
-        </r-steps>
-    </div> -->
 </body>
 
 </html>

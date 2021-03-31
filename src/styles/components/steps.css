@@ -29,7 +29,7 @@ r-steps .rab-steps-head-inner {
 }
 r-steps .rab-steps-head-inner > .rab-steps-icon {
   position: relative;
-  top: -3.5px;
+  top: 3.5px;
 }
 r-steps .rab-steps-head-inner > .rab-steps-icon.rab-icon {
   font-size: 24px;
@@ -101,7 +101,7 @@ r-steps[size='small'] .rab-steps-head-inner {
 }
 r-steps[size='small'] .rab-steps-head-inner > .rab-steps-icon.rab-icon {
   font-size: 16px;
-  top: -3px;
+  top: 1px;
 }
 r-steps[size='small'] .rab-steps-main {
   margin-top: 0;
@@ -232,7 +232,7 @@ r-step.rab-steps-custom .rab-steps-head-inner {
 }
 r-step.rab-steps-custom .rab-steps-head-inner > .rab-steps-icon {
   font-size: 22px;
-  top: 0;
+  top: 4px;
   width: 22px;
   height: 22px;
 }
