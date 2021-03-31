@@ -6,6 +6,7 @@ import {
     nextAll,
     prevAll,
     removeAttrs,
+    setCss,
     setHtml
 } from '../../dom-utils';
 import { warn } from '../../mixins';
@@ -145,7 +146,9 @@ class Steps implements Config {
              <div class="${PREFIX.steps}-tail"><i></i></div>
              <div class="${PREFIX.steps}-head">
                 <div class="${PREFIX.steps}-head-inner">
-                   <span id="showIconOrNums">${stepNumber}</span>
+                   <span id="showIconOrText">
+                       <span id="stepsText">${stepNumber}</span>
+                   </span>
                 </div>
              </div>
              <div class="${PREFIX.steps}-main">
@@ -172,7 +175,7 @@ class Steps implements Config {
         step.dataset['useIcon'] = 'true';
         step.classList.add(`${PREFIX.steps}-custom`);
 
-        const container = step.querySelector('#showIconOrNums')!;
+        const container = step.querySelector('#showIconOrText')!;
         container.className = `${PREFIX.steps}-icon ${PREFIX.icon} ${PREFIX.icon}-${icon}`;
         setHtml(container, '');
     }
@@ -191,7 +194,6 @@ class Steps implements Config {
 
         // @ts-ignore
         node.dataset['current'] = current;
-
         const { _setStatus } = Steps.prototype;
 
         const activeStep = node.querySelector(`r-step[data-index="${current}"]`) as HTMLElement;
@@ -203,12 +205,14 @@ class Steps implements Config {
 
         // 当前活跃状态步骤项的前面所有项
         prevAll(activeStep).forEach((prevStep) => {
-            // @ts-ignore
-            _setStatus(node, prevStep, status, 'finish');
+            // @ts-ignoretrue
+            _setStatus(node, prevStep, status, 'finish', false, 'finish');
 
             if (activeStep.getAttribute('status') === 'error') {
                 if (prevStep.getAttribute('status') === 'error') {
                     prevStep.classList.add(`${PREFIX.steps}-next-error`);
+                } else {
+                    prevStep.classList.remove(`${PREFIX.steps}-next-error`);
                 }
             }
         });
@@ -216,12 +220,23 @@ class Steps implements Config {
         // 当前活跃状态步骤项的后面所有项
         nextAll(activeStep).forEach((nextStep) => {
             // @ts-ignore
-            _setStatus(node, nextStep, status, 'wait');
+            _setStatus(node, nextStep, status, 'wait', false, 'wait');
 
             if (activeStep.getAttribute('status') !== 'error') return;
+
+            if (nextStep.getAttribute('status') !== 'error') {
+                nextStep.classList.remove(`${PREFIX.steps}-next-error`);
+                return;
+            }
+
             if (nextStep.getAttribute('status') === 'error') return;
+
             if (!nextStep.nextElementSibling) return;
-            if (nextStep.nextElementSibling.getAttribute('status') !== 'error') return;
+
+            if (nextStep.nextElementSibling.getAttribute('status') !== 'error') {
+                nextStep.classList.remove(`${PREFIX.steps}-next-error`);
+                return;
+            }
 
             nextStep.classList.add(`${PREFIX.steps}-next-error`);
         });
@@ -272,22 +287,26 @@ class Steps implements Config {
         if (hasErrorStep.length > 1) {
             const lastElem = hasErrorStep[length - 1];
             const curPrevElem = lastElem.previousElementSibling || hasErrorStep[0];
-            if (curPrevElem?.getAttribute('status') === 'error') {
-                curPrevElem.classList.add(`${PREFIX.steps}-next-error`);
-            }
+            curPrevElem.classList.add(`${PREFIX.steps}-next-error`);
         }
     }
 
     private _setStatusIcon(status: string, step: Element): void {
         // @ts-ignore
         const isUseCustomIcon: boolean = step.dataset['useIcon'] === 'true';
+        const container = step.querySelector('#showIconOrText')!;
+        const textContainer = step.querySelector('#stepsText')!;
 
         if (isUseCustomIcon) return;
-        if (status !== 'finish' && status !== 'error') return;
 
-        const container = step.querySelector('#showIconOrNums')!;
+        if (status !== 'finish' && status !== 'error') {
+            container.className = '';
+            setCss(textContainer, 'display', '');
+            return;
+        }
+
         container.className = `${PREFIX.steps}-icon ${PREFIX.icon}`;
-        setHtml(container, '');
+        setCss(textContainer, 'display', 'none');
 
         let iconType = '';
         if (status === 'finish') {

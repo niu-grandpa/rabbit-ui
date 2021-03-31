@@ -3,6 +3,7 @@ import Rabbit from '../../src';
 export default function stepsTest(): void {
     const steps = new Rabbit.Steps();
 
+    const targetStep = steps.config('#test');
     const showStep = document.querySelector('#step')!;
 
     let count = 0;
@@ -16,7 +17,8 @@ export default function stepsTest(): void {
             count += 1;
         }
 
-        steps.config('#test').current = count;
+        targetStep.current = count;
+
         showStep.textContent = `${count + 1}`;
     };
 }
