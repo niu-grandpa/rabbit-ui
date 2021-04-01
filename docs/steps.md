@@ -38,7 +38,7 @@
 
 带图标的步骤条
 
-通过设置`r-step`的`icon`属性可以自定义图标。
+- 通过设置`r-step`的`icon`属性可以自定义图标。
 
 ```html
 <r-steps current="1">
@@ -53,26 +53,26 @@
 - 通常配合内容及按钮使用，表示一个流程的处理进度。
 
 ```html
-<r-steps current="0" id="a">
+<r-steps current="0" id="test">
   <r-step title="步骤1"></r-step>
   <r-step title="步骤2"></r-step>
   <r-step title="步骤3"></r-step>
   <r-step title="步骤4"></r-step>
 </r-steps>
 <br />
-<button class="rab-btn rab-btn-primary" onclick="next()">下一步</button>
+<button class="rab-btn rab-btn-primary" onclick="handlClickNext()">下一步</button>
 
 <script>
 	const Steps = new Rabbit.Steps();
+    
     let n = 0;
-    next = () => {
-        n++;
-        if (n > 3) {
-            n = 3;
-            Steps.config('#a').setSteps({ current: n, status: 'finish' });
-            return;
+    handlClickNext = () => {
+        if (n == 3) {
+            n = 0;
+        } else {
+            count += 1;
         }
-        Steps.config('#a').setSteps({ current: n });
+        Steps.config('#test').current = n;
     };
 </script>
 ```
@@ -118,7 +118,7 @@
 
 ### Step
 
-步骤条内的每一个步骤
+子项步骤
 
 | 属性    | 说明                                                         | 默认值  |
 | :------ | :----------------------------------------------------------- | :------ |
@@ -135,23 +135,18 @@
 | ---- | ------------------------------------------------ | ------ |
 | el   | 配置当前选定的 steps，必须是选择器名称或者元素名 | String |
 
-该方法返回以下两个函数类型的值：
+该方法返回以下值：
 
-- `setSteps(options)`
+- `current`
+- `status`
+- `title`
+- `content`
+- `itemStatus`
 
-- `setChildren(options)`
-
-`setSteps` 的参数 options 为对象，用于设置整体步骤条，具体说明如下：
-
-| 返回值  | 说明                                                         | 类型   | 默认值  |
-| ------- | ------------------------------------------------------------ | ------ | ------- |
-| current | 当前步骤                                                     | Number | 0       |
-| status  | 当前步骤的状态，可选值为`wait`、`process`、`finish`、`error` | String | process |
-
-`setChildren` 的参数 options 为对象，用于设置步骤条内的每一个步骤，具体说明如下：
-
-| 属性    | 说明                     | 类型   | 默认值 |
-| ------- | ------------------------ | ------ | ------ |
-| idx     | 选定步骤条内的某一个步骤 | Number | 0      |
-| title   | 标题                     | String | -      |
-| content | 步骤的详细描述           | String | -      |
+| 返回值     | 说明                                                         | 类型          | 默认值  |
+| ---------- | ------------------------------------------------------------ | ------------- | ------- |
+| current    | 响应式设置或更新当前步骤                                     | Number        | 0       |
+| status     | 响应式设置或更新当前步骤的状态，可选值为`wait`、`process`、`finish`、`error` | String        | process |
+| title      | 响应式设置或更新 title                                       | String        | -       |
+| content    | 响应式设置或更新 content                                     | String        | -       |
+| itemStatus | 响应式设置或更新每一个子项步骤的状态                         | Array<string> | -       |
