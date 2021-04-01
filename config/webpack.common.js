@@ -85,9 +85,11 @@ module.exports = {
             }
         ]
     },
+
     resolve: {
         extensions: ['.ts', '.js']
     },
+
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
         //分离出css文件

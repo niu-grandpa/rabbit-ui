@@ -6510,191 +6510,217 @@ var Steps = /** @class */ (function () {
     Steps.prototype.config = function (el) {
         var target = (0,dom_utils.$el)(el);
         validComps(target, 'steps');
-        var _a = Steps.prototype, _updateStatus = _a._updateStatus, _getCurrent = _a._getCurrent;
-        var oldCurrent = _getCurrent(target);
+        var _a = Steps.prototype, _setCurrentStep = _a._setCurrentStep, _setStatus = _a._setStatus, _setStatusIcon = _a._setStatusIcon;
+        var _current = target.dataset['current'];
+        var StepsTitle = target.querySelector("." + prefix.default.steps + "-title");
+        var StepsContent = target.querySelector("." + prefix.default.steps + "-content");
+        var StepsStep = target.querySelectorAll('r-step');
+        var setTitleOrContent = function (elem, val) {
+            if (val && !isStr(val))
+                return;
+            (0,dom_utils.setHtml)(elem, val);
+        };
         return {
-            setSteps: function (_a) {
-                var current = _a.current, status = _a.status;
-                if (current !== oldCurrent) {
-                    if (!current && current !== 0) {
-                        warn('The current property is missing in the Steps configuration');
-                        return;
-                    }
-                    else if ((current && isNum(current)) || (status && isStr(status))) {
-                        _updateStatus(target, current, status);
-                    }
-                }
+            get current() {
+                return Number(target.dataset['current']);
             },
-            setChildren: function (_a) {
-                var idx = _a.idx, title = _a.title, content = _a.content;
-                // 如果没有传入索引值则默认为第一个
-                if (!idx)
-                    idx = 0;
-                var ChildCurrent = target.children[idx];
-                var ChildTitle = ChildCurrent.querySelector("." + prefix.default.steps + "-title");
-                var ChildContent = ChildCurrent.querySelector("." + prefix.default.steps + "-content");
-                if (title && isStr(title))
-                    (0,dom_utils.setText)(ChildTitle, title);
-                if (content && isStr(content))
-                    (0,dom_utils.setText)(ChildContent, content);
+            set current(newVal) {
+                if (!isNum(newVal))
+                    return;
+                _setCurrentStep(target, newVal, target.dataset['status']);
+            },
+            get title() {
+                return (0,dom_utils.setHtml)(StepsTitle);
+            },
+            set title(newVal) {
+                setTitleOrContent(StepsTitle, newVal);
+            },
+            get content() {
+                return (0,dom_utils.setHtml)(StepsContent);
+            },
+            set content(newVal) {
+                setTitleOrContent(StepsContent, newVal);
+            },
+            get status() {
+                return target.dataset['status'];
+            },
+            set status(newVal) {
+                if (newVal && !isStr(newVal))
+                    return;
+                var currentStep = target.querySelector("r-step[data-index=\"" + _current + "\"]");
+                _setStatus(target, currentStep, newVal);
+            },
+            get itemStatus() {
+                return [];
+            },
+            set itemStatus(newVal) {
+                if (newVal && !isArr(newVal))
+                    return;
+                var changeStatus = function (elem, status) {
+                    elem.setAttribute('status', status);
+                    _setStatusIcon(status, elem);
+                };
+                if (newVal.length == 1) {
+                    var step = StepsStep[0];
+                    changeStatus(step, newVal[0]);
+                    return;
+                }
+                StepsStep.forEach(function (step, idx) {
+                    return newVal[idx] ? changeStatus(step, newVal[idx]) : '';
+                });
             }
         };
     };
     Steps.prototype._create = function (COMPONENTS) {
-        var _this_1 = this;
+        var _this = this;
         COMPONENTS.forEach(function (node) {
-            _this_1._setDirection(node);
-            _this_1._updateStatus(node, _this_1._getCurrent(node));
-            _this_1._createStepItem(node);
-            (0,dom_utils.removeAttrs)(node, ['status']);
+            var _a = _this._attrs(node), current = _a.current, status = _a.status, direction = _a.direction;
+            var StepsStepItem = node.querySelectorAll('r-step');
+            _this._setDirection(node, direction);
+            _this._setStepChildren(StepsStepItem);
+            _this._setCurrentStep(node, current, status);
+            (0,dom_utils.removeAttrs)(node, ['current', 'status']);
         });
     };
-    Steps.prototype._createStepItem = function (node) {
-        // 该父节点下的所有 r-step 标签
-        var children = node.children;
-        var i = 0;
-        var length = children.length;
-        for (; i < length; i++) {
-            var child = children[i];
-            var uid = "steps" + i;
-            var idxText = "" + (i + 1);
-            var title = this._getTitle(child);
-            var content = this._getContent(child);
-            child.innerHTML = "\n             <div class=\"" + prefix.default.steps + "-tail\"><i></i></div>\n             <div class=\"" + prefix.default.steps + "-head\">\n                 <div class=\"" + prefix.default.steps + "-head-inner\">\n                    <span data-steps-uid=" + uid + " data-step=\"current\">" + idxText + "</span>\n                 </div>\n             </div>\n             <div class=\"" + prefix.default.steps + "-main\">\n                 <div class=\"" + prefix.default.steps + "-title\">" + title + "</div>\n                 <div class=\"" + prefix.default.steps + "-content\">" + content + "</div>\n             </div>\n            ";
-            this._setCustomIcon(child);
-            this._setNextErrorStatus(child);
-            this._autoSetFinishOrErrorIcon(child, i);
-            (0,dom_utils.removeAttrs)(child, ['title', 'content', 'icon']);
-        }
+    Steps.prototype._setDirection = function (node, direction) {
+        node.setAttribute('direction', "" + direction);
     };
-    Steps.prototype._setDirection = function (node) {
-        if (!node.getAttribute('direction'))
-            node.setAttribute('direction', 'horizontal');
+    Steps.prototype._setStepChildren = function (stepItem) {
+        var _this = this;
+        stepItem.forEach(function (step, idx) {
+            // @ts-ignore
+            step.dataset['index'] = "" + idx;
+            _this._setStatusFlag(step);
+            var _a = _this._attrs(step), icon = _a.icon, title = _a.title, content = _a.content;
+            var stepsText = idx + 1;
+            var template = "\n             <div class=\"" + prefix.default.steps + "-tail\"><i></i></div>\n             <div class=\"" + prefix.default.steps + "-head\">\n                <div class=\"" + prefix.default.steps + "-head-inner\">\n                   <span id=\"stepsIcon\"></span>\n                   <span id=\"stepsText\">" + stepsText + "</span>\n                </div>\n             </div>\n             <div class=\"" + prefix.default.steps + "-main\">\n                <div class=\"" + prefix.default.steps + "-title\">" + title + "</div>\n                <div class=\"" + prefix.default.steps + "-content\">" + content + "</div>\n             </div>\n            ";
+            (0,dom_utils.setHtml)(step, template);
+            _this._setCustomIcon(step, icon);
+            (0,dom_utils.removeAttrs)(step, ['title', 'content', 'icon']);
+        });
     };
-    Steps.prototype._updateStatus = function (parent, current, status) {
-        var _this = Steps.prototype;
-        var total = parent.children.length - 1;
-        var currentStep = parent.children[current];
-        validComps(currentStep, 'step');
-        _this._validIndexCheck(total, current, currentStep);
-        var isParentStatus = parent.getAttribute('status');
-        var isChildStatus = currentStep.getAttribute('status');
-        var currentStatus;
-        // 如果当前步骤没有状态则默认设为 process 状态
-        if (!isParentStatus && !isChildStatus) {
-            currentStatus = 'process';
-            // 父节点有设置状态并且当前选中的子节点没有设置，则采用父节点的状态，否则反之
-        }
-        else if (isParentStatus && !isChildStatus) {
-            currentStatus = isParentStatus;
-        }
-        else if (isChildStatus && isChildStatus !== 'wait') {
-            currentStatus = isChildStatus;
-        }
-        else {
-            currentStatus = 'process';
-        }
-        _this._setCurrentStatus(currentStep, !status ? currentStatus : status);
-        _this._setPrevStatus(currentStep);
-        _this._setNextStatus(currentStep);
-        _this._setNextErrorStatus(currentStep);
-        setTimeout(function () { return _this._autoSetFinishOrErrorIcon(currentStep, current); }, 0);
-    };
-    Steps.prototype._setCurrentStatus = function (node, status) {
+    Steps.prototype._setStatusFlag = function (step) {
+        var status = step.getAttribute('status');
+        // 如果用户在步骤项设置了status则为该项打上标记，避免被自动设置的默认状态覆盖
         if (status) {
-            node.setAttribute('status', status);
+            // @ts-ignore
+            step.dataset['specifiesStatus'] = status;
+        }
+    };
+    Steps.prototype._setCurrentStep = function (node, current, status) {
+        var len = node.childElementCount - 1;
+        // 防止溢出边界
+        if (current > len) {
+            warn("The currently active step item you set does not exist in the <r-steps>. --> \"" + current + "\"");
+            console.error(node);
+            current = len;
+        }
+        // @ts-ignore
+        node.dataset['current'] = current;
+        var _setStatus = Steps.prototype._setStatus;
+        var currentStep = node.querySelector("r-step[data-index=\"" + current + "\"]");
+        _setStatus(node, currentStep, status);
+    };
+    Steps.prototype._setStatus = function (node, currentStep, status) {
+        // @ts-ignore
+        node.dataset['status'] = status;
+        var _a = Steps.prototype, _setStatusIcon = _a._setStatusIcon, _setPrevAndNextStatus = _a._setPrevAndNextStatus, _setNextError = _a._setNextError;
+        // @ts-ignore
+        var isAutoStatus = currentStep.dataset['autoStatus'];
+        var selfStatus = currentStep.getAttribute('status');
+        // 1.如果步骤项设置了status则优先使用该状态，不包括打上autoStatus的标记项。
+        // 2.如果步骤项父容器指定了某项步骤项为活跃状态，并且指定了 status 则使用该状态。
+        if (selfStatus && isAutoStatus !== '') {
+            currentStep.setAttribute('status', selfStatus);
+            _setStatusIcon(selfStatus, currentStep);
         }
         else {
-            // 如果没有设置status则默认为wait
-            node.setAttribute('status', this._geStatus(node) || 'wait');
+            currentStep.setAttribute('status', status);
+            _setStatusIcon(status, currentStep);
         }
+        _setPrevAndNextStatus('prev', currentStep, _setStatusIcon);
+        _setPrevAndNextStatus('next', currentStep, _setStatusIcon);
+        _setNextError(node);
     };
-    Steps.prototype._setPrevStatus = function (node) {
-        var _this_1 = this;
-        (0,dom_utils.prevAll)(node).forEach(function (prevNode) {
-            // 除去最开始的步骤，当前步骤是正在进行中的，那么它前面的状态一定是完成或者错误
-            // 因此，前面的步骤不能随便的设为等待或进行中状态
-            // 除了 error 状态其余前面的节点都覆盖为 finish 状态
-            if (_this_1._geStatus(prevNode) !== 'error') {
-                _this_1._setCurrentStatus(prevNode, 'finish');
+    Steps.prototype._setPrevAndNextStatus = function (type, currentStep, setStatusIcon) {
+        // @ts-ignore
+        var func = type === 'prev' ? dom_utils.prevAll : dom_utils.nextAll;
+        var defaultStatus = type === 'prev' ? 'finish' : 'wait';
+        func(currentStep).forEach(function (step) {
+            // @ts-ignore
+            var hasSetStatus = step.dataset['specifiesStatus'];
+            // 当前步骤项位置的其他节点如果没有提示设置status，则默认设置为 finish / wait，并打上标记
+            // 如果其中有某个设置了则略过
+            if (!hasSetStatus) {
+                // @ts-ignore
+                step.dataset['autoStatus'] = '';
+                step.setAttribute('status', defaultStatus);
+                setStatusIcon(defaultStatus, step);
+            }
+            else {
+                setStatusIcon(hasSetStatus, step);
             }
         });
     };
-    Steps.prototype._setNextStatus = function (node) {
-        var _this_1 = this;
-        // 从当前节点位置开始，设置其后面的所有节点状态为 wait
-        (0,dom_utils.nextAll)(node).forEach(function (nextNode) { return _this_1._setCurrentStatus(nextNode); });
-    };
-    Steps.prototype._setNextErrorStatus = function (node) {
-        if (this._geStatus(node) === 'error' &&
-            node.previousElementSibling &&
-            this._geStatus(node.previousElementSibling) === 'error') {
-            node.previousElementSibling.classList.add(prefix.default.steps + "-next-error");
-        }
-    };
-    // 设置已被标记状态为成功或失败的图标
-    Steps.prototype._autoSetFinishOrErrorIcon = function (node, current) {
-        var _this_1 = this;
-        if (this._getIcon(node))
+    Steps.prototype._setStatusIcon = function (status, step) {
+        // @ts-ignore
+        var isUseCustomIcon = step.dataset['useIcon'] === 'true';
+        // 如果使用了自定义图标则略过
+        if (isUseCustomIcon)
             return;
-        var prefixIconCls = prefix.default.steps + "-icon " + prefix.default.icon + " " + prefix.default.icon + "-";
-        var currentStatus = this._geStatus(node);
-        var setFinishOrErrorIcon = function (status, children) {
-            if (status === 'finish' || status === 'error') {
-                (0,dom_utils.setHtml)(children, '');
-                if (status === 'finish')
-                    children.className = prefixIconCls + "ios-checkmark";
-                if (status === 'error')
-                    children.className = prefixIconCls + "ios-close";
+        var StepsIcon = step.querySelector('#stepsIcon');
+        var StepsText = StepsIcon.nextElementSibling;
+        // 步骤项状态不为finish或error则显示步骤数字、隐藏图标容器，反之。
+        if (status !== 'finish' && status !== 'error') {
+            (0,dom_utils.setCss)(StepsIcon, 'display', 'none');
+            (0,dom_utils.setCss)(StepsText, 'display', '');
+            return;
+        }
+        (0,dom_utils.setCss)(StepsIcon, 'display', '');
+        (0,dom_utils.setCss)(StepsText, 'display', 'none');
+        var iconType = '';
+        if (status === 'finish') {
+            iconType = 'ios-checkmark';
+        }
+        if (status === 'error') {
+            iconType = 'ios-close';
+        }
+        StepsIcon.className = prefix.default.steps + "-icon " + prefix.default.icon + " " + prefix.default.icon + "-" + iconType;
+    };
+    Steps.prototype._setCustomIcon = function (step, icon) {
+        if (!icon)
+            return;
+        // @ts-ignore
+        step.dataset['useIcon'] = 'true';
+        step.classList.add(prefix.default.steps + "-custom");
+        var StepsIcon = step.querySelector('#stepsIcon');
+        StepsIcon.classList.add("" + prefix.default.icon);
+        StepsIcon.classList.add(prefix.default.icon + "-" + icon);
+        (0,dom_utils.setCss)(StepsIcon.nextElementSibling, 'display', 'none');
+    };
+    Steps.prototype._setNextError = function (node) {
+        var StepsStep = node.querySelectorAll('r-step');
+        StepsStep.forEach(function (step, idx) {
+            if (step.getAttribute('status') === 'error' && idx !== 0) {
+                var prevStep = StepsStep[idx - 1];
+                if (prevStep.getAttribute('status') === 'error') {
+                    prevStep.classList.add(prefix.default.steps + "-next-error");
+                }
+                else {
+                    prevStep.classList.remove(prefix.default.steps + "-next-error");
+                }
             }
+        });
+    };
+    Steps.prototype._attrs = function (node) {
+        return {
+            current: (0,dom_utils.getNumTypeAttr)(node, 'current', 0),
+            icon: (0,dom_utils.getStrTypeAttr)(node, 'icon', ''),
+            title: (0,dom_utils.getStrTypeAttr)(node, 'title', ''),
+            status: (0,dom_utils.getStrTypeAttr)(node, 'status', 'process'),
+            content: (0,dom_utils.getStrTypeAttr)(node, 'content', ''),
+            direction: (0,dom_utils.getStrTypeAttr)(node, 'direction', 'horizontal')
         };
-        // 判断当前选中的步骤的状态是完成还是错误
-        if (currentStatus === 'finish' || currentStatus === 'error') {
-            var uid = "[data-steps-uid=" + current + "]";
-            var HeadInner = node.querySelector(uid);
-            setFinishOrErrorIcon(currentStatus, HeadInner);
-        }
-        // 判断之前的所有步骤的状态
-        (0,dom_utils.prevAll)(node).forEach(function (prevNode) {
-            var prevStatus = _this_1._geStatus(prevNode);
-            // 如果之前的步骤的状态存在有完成或者是错误的则添加对应图标
-            if (prevStatus === 'finish' || prevStatus === 'error') {
-                var HeadInner = prevNode.querySelector('[data-step="current"]');
-                setFinishOrErrorIcon(prevStatus, HeadInner);
-            }
-        });
-    };
-    Steps.prototype._setCustomIcon = function (node) {
-        var iconType = this._getIcon(node);
-        if (!iconType)
-            return;
-        node.classList.add(prefix.default.steps + "-custom");
-        var child = node.querySelector("." + prefix.default.steps + "-head-inner").children[0];
-        (0,dom_utils.setHtml)(child, '');
-        child.className = prefix.default.steps + "-icon " + prefix.default.icon + " " + prefix.default.icon + "-" + iconType;
-    };
-    Steps.prototype._getCurrent = function (node) {
-        return Number(node.getAttribute('current')) || 0;
-    };
-    Steps.prototype._geStatus = function (node) {
-        return node.getAttribute('status');
-    };
-    Steps.prototype._getTitle = function (node) {
-        return node.getAttribute('title') || '';
-    };
-    Steps.prototype._getContent = function (node) {
-        return node.getAttribute('content') || '';
-    };
-    Steps.prototype._getIcon = function (node) {
-        return node.getAttribute('icon') || '';
-    };
-    // 判断设置的索引值是否超过了最大索引值
-    Steps.prototype._validIndexCheck = function (total, current, inode) {
-        // 如果超过最大索引值则该节点是不存在的
-        if (!inode) {
-            warn("The current total number of steps is only " + total + ", you cannot set it to " + current);
-            return;
-        }
     };
     return Steps;
 }());

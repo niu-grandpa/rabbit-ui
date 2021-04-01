@@ -15,7 +15,6 @@ module.exports = merge(common, {
         main: './src/build-umd.ts'
     },
     output: {
-        // eslint-disable-next-line no-undef
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/dist/',
         filename: 'rabbit.js',

@@ -8,7 +8,7 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -27,16 +27,15 @@ module.exports = merge(common, {
     },
 
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true,
-            parallel: true
-        }),
-
         new CompressionPlugin({
             algorithm: 'gzip',
             test: /\.js$|\.css/,
             threshold: 10240,
             minRatio: 0.8
+        }),
+        new UglifyJsPlugin({
+            sourceMap: true,
+            parallel: true
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
