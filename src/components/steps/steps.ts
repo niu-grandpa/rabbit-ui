@@ -48,8 +48,9 @@ class Steps implements Config {
 
         validComps(target, 'steps');
 
-        const { _setActiveStep, _setStatus } = Steps.prototype;
+        const { _setCurrentStep, _setStatus, _setStatusIcon } = Steps.prototype;
 
+        const _current = target.dataset['current']!;
         const StepsTitle = target.querySelector(`.${PREFIX.steps}-title`)!;
         const StepsContent = target.querySelector(`.${PREFIX.steps}-content`)!;
         const StepsStep = target.querySelectorAll('r-step')!;
@@ -65,8 +66,7 @@ class Steps implements Config {
             },
             set current(newVal: number) {
                 if (!type.isNum(newVal)) return;
-
-                _setActiveStep(target, newVal, target.dataset['status']!);
+                _setCurrentStep(target, newVal, target.dataset['status']!);
             },
 
             get title() {
@@ -90,12 +90,9 @@ class Steps implements Config {
             set status(newVal: string) {
                 if (newVal && !type.isStr(newVal)) return;
 
-                const current = target.dataset['current']!;
-                const defaultStatus = target.dataset['status']!;
+                const currentStep = target.querySelector(`r-step[data-index="${_current}"]`)!;
 
-                const currentStep = target.querySelector(`r-step[data-index="${current}"]`)!;
-
-                _setStatus(target, currentStep, newVal, defaultStatus, true);
+                _setStatus(target, currentStep, newVal);
             },
 
             get itemStatus() {
@@ -104,11 +101,14 @@ class Steps implements Config {
             set itemStatus(newVal: string[]) {
                 if (newVal && !type.isArr(newVal)) return;
 
-                const changeStatus = (step: Element, newStatus: string) =>
-                    _setStatus(target, step, newStatus, 'process', false, newStatus);
+                const changeStatus = (elem: Element, status: string) => {
+                    elem.setAttribute('status', status);
+                    _setStatusIcon(status, elem);
+                };
 
                 if (newVal.length == 1) {
-                    if (newVal[0]) changeStatus(StepsStep[0], newVal[0]);
+                    const step = StepsStep[0];
+                    changeStatus(step, newVal[0]);
                     return;
                 }
 
@@ -126,7 +126,7 @@ class Steps implements Config {
 
             this._setDirection(node, direction);
             this._setStepChildren(StepsStepItem);
-            this._setActiveStep(node, current, status);
+            this._setCurrentStep(node, current, status);
 
             removeAttrs(node, ['current', 'status']);
         });
@@ -138,17 +138,21 @@ class Steps implements Config {
 
     private _setStepChildren(stepItem: NodeListOf<Element>): void {
         stepItem.forEach((step, idx) => {
+            // @ts-ignore
+            step.dataset['index'] = `${idx}`;
+
+            this._setStatusFlag(step);
+
             const { icon, title, content } = this._attrs(step);
 
-            const stepNumber = idx + 1;
+            const stepsText = idx + 1;
 
             const template = `
              <div class="${PREFIX.steps}-tail"><i></i></div>
              <div class="${PREFIX.steps}-head">
                 <div class="${PREFIX.steps}-head-inner">
-                   <span id="showIconOrText">
-                       <span id="stepsText">${stepNumber}</span>
-                   </span>
+                   <span id="stepsIcon"></span>
+                   <span id="stepsText">${stepsText}</span>
                 </div>
              </div>
              <div class="${PREFIX.steps}-main">
@@ -156,9 +160,6 @@ class Steps implements Config {
                 <div class="${PREFIX.steps}-content">${content}</div>
              </div>
             `;
-
-            // @ts-ignore
-            step.dataset['index'] = `${idx}`;
 
             setHtml(step, template);
 
@@ -168,147 +169,110 @@ class Steps implements Config {
         });
     }
 
-    private _setCustomIcon(step: Element, icon: string): void {
-        if (!icon) return;
+    private _setStatusFlag(step: Element): void {
+        const status = step.getAttribute('status');
 
-        // @ts-ignore
-        step.dataset['useIcon'] = 'true';
-        step.classList.add(`${PREFIX.steps}-custom`);
-
-        const container = step.querySelector('#showIconOrText')!;
-        container.className = `${PREFIX.steps}-icon ${PREFIX.icon} ${PREFIX.icon}-${icon}`;
-        setHtml(container, '');
+        // 如果用户在步骤项设置了status则为该项打上标记，避免被自动设置的默认状态覆盖
+        if (status) {
+            // @ts-ignore
+            step.dataset['specifiesStatus'] = status;
+        }
     }
 
-    private _setActiveStep(node: Element, current: number, status: string): void {
+    private _setCurrentStep(node: Element, current: number, status: string): void {
         const len = node.childElementCount - 1;
-
+        // 防止溢出边界
         if (current > len) {
             warn(
                 `The currently active step item you set does not exist in the <r-steps>. --> "${current}"`
             );
             console.error(node);
-
             current = len;
         }
 
         // @ts-ignore
         node.dataset['current'] = current;
+
         const { _setStatus } = Steps.prototype;
+        const currentStep = node.querySelector(`r-step[data-index="${current}"]`)!;
 
-        const activeStep = node.querySelector(`r-step[data-index="${current}"]`) as HTMLElement;
-        // @ts-ignore
-        const activeStatus = node.dataset['status'];
-
-        // @ts-ignore
-        _setStatus(node, activeStep, status, 'process', true, activeStatus);
-
-        // 当前活跃状态步骤项的前面所有项
-        prevAll(activeStep).forEach((prevStep) => {
-            // @ts-ignoretrue
-            _setStatus(node, prevStep, status, 'finish', false, 'finish');
-
-            if (activeStep.getAttribute('status') === 'error') {
-                if (prevStep.getAttribute('status') === 'error') {
-                    prevStep.classList.add(`${PREFIX.steps}-next-error`);
-                } else {
-                    prevStep.classList.remove(`${PREFIX.steps}-next-error`);
-                }
-            }
-        });
-
-        // 当前活跃状态步骤项的后面所有项
-        nextAll(activeStep).forEach((nextStep) => {
-            // @ts-ignore
-            _setStatus(node, nextStep, status, 'wait', false, 'wait');
-
-            if (activeStep.getAttribute('status') !== 'error') return;
-
-            if (nextStep.getAttribute('status') !== 'error') {
-                nextStep.classList.remove(`${PREFIX.steps}-next-error`);
-                return;
-            }
-
-            if (nextStep.getAttribute('status') === 'error') return;
-
-            if (!nextStep.nextElementSibling) return;
-
-            if (nextStep.nextElementSibling.getAttribute('status') !== 'error') {
-                nextStep.classList.remove(`${PREFIX.steps}-next-error`);
-                return;
-            }
-
-            nextStep.classList.add(`${PREFIX.steps}-next-error`);
-        });
-
-        if (activeStep.getAttribute('status') === 'error') {
-            const elem = activeStep.previousElementSibling || activeStep;
-            elem.classList.add(`${PREFIX.steps}-next-error`);
-        }
+        _setStatus(node, currentStep, status);
     }
 
-    private _setStatus(
-        node: Element,
-        step: Element,
-        status: string,
-        defaultStatus: string,
-        isActive?: boolean,
-        newSetStatus?: string
-    ): void {
-        newSetStatus ? step.setAttribute('status', newSetStatus) : '';
-
-        const { _setStatusIcon, _setNextErrorStatus } = Steps.prototype;
-        const selfStatus = step.getAttribute('status');
-
-        // 1.步骤项设置了 status 属性指定状态则优先使用该状态
-        // 2.步骤项父的容器指定了当前某项步骤项为活跃状态，并且指定了 status 则使用该状态
-        // 3.如果都不符合以上条件就使用默认状态
-        if (selfStatus) {
-            step.setAttribute('status', selfStatus);
-            _setStatusIcon(selfStatus, step);
-        } else if (isActive && status) {
-            step.setAttribute('status', status);
-            _setStatusIcon(status, step);
-        } else {
-            step.setAttribute('status', defaultStatus);
-            _setStatusIcon(defaultStatus, step);
-        }
-
-        _setNextErrorStatus(node);
-
+    private _setStatus(node: Element, currentStep: Element, status: string): void {
         // @ts-ignore
         node.dataset['status'] = status;
+
+        const { _setStatusIcon, _setPrevAndNextStatus, _setNextError } = Steps.prototype;
+
+        // @ts-ignore
+        const isAutoStatus = currentStep.dataset['autoStatus'];
+        const selfStatus = currentStep.getAttribute('status');
+
+        // 1.如果步骤项设置了status则优先使用该状态，不包括打上autoStatus的标记项。
+        // 2.如果步骤项父容器指定了某项步骤项为活跃状态，并且指定了 status 则使用该状态。
+        if (selfStatus && isAutoStatus !== '') {
+            currentStep.setAttribute('status', selfStatus);
+            _setStatusIcon(selfStatus, currentStep);
+        } else {
+            currentStep.setAttribute('status', status);
+            _setStatusIcon(status, currentStep);
+        }
+
+        _setPrevAndNextStatus('prev', currentStep, _setStatusIcon);
+        _setPrevAndNextStatus('next', currentStep, _setStatusIcon);
+        _setNextError(node);
     }
 
-    private _setNextErrorStatus(node: Element): void {
-        const hasErrorStep = node.querySelectorAll('r-step[status="error"]');
-        const { length } = hasErrorStep;
+    private _setPrevAndNextStatus(
+        type: 'prev' | 'next',
+        currentStep: Element,
+        setStatusIcon: any
+    ): void {
+        // @ts-ignore
+        const func = type === 'prev' ? prevAll : nextAll;
+        const defaultStatus = type === 'prev' ? 'finish' : 'wait';
 
-        if (hasErrorStep.length > 1) {
-            const lastElem = hasErrorStep[length - 1];
-            const curPrevElem = lastElem.previousElementSibling || hasErrorStep[0];
-            curPrevElem.classList.add(`${PREFIX.steps}-next-error`);
-        }
+        func(currentStep).forEach((step) => {
+            // @ts-ignore
+            const hasSetStatus = step.dataset['specifiesStatus'];
+
+            // 当前步骤项位置的其他节点如果没有提示设置status，则默认设置为 finish / wait，并打上标记
+            // 如果其中有某个设置了则略过
+            if (!hasSetStatus) {
+                // @ts-ignore
+                step.dataset['autoStatus'] = '';
+                step.setAttribute('status', defaultStatus);
+
+                setStatusIcon(defaultStatus, step);
+            } else {
+                setStatusIcon(hasSetStatus, step);
+            }
+        });
     }
 
     private _setStatusIcon(status: string, step: Element): void {
         // @ts-ignore
         const isUseCustomIcon: boolean = step.dataset['useIcon'] === 'true';
-        const container = step.querySelector('#showIconOrText')!;
-        const textContainer = step.querySelector('#stepsText')!;
 
+        // 如果使用了自定义图标则略过
         if (isUseCustomIcon) return;
 
+        const StepsIcon = step.querySelector('#stepsIcon')!;
+        const StepsText = StepsIcon.nextElementSibling!;
+
+        // 步骤项状态不为finish或error则显示步骤数字、隐藏图标容器，反之。
         if (status !== 'finish' && status !== 'error') {
-            container.className = '';
-            setCss(textContainer, 'display', '');
+            setCss(StepsIcon, 'display', 'none');
+            setCss(StepsText, 'display', '');
             return;
         }
 
-        container.className = `${PREFIX.steps}-icon ${PREFIX.icon}`;
-        setCss(textContainer, 'display', 'none');
+        setCss(StepsIcon, 'display', '');
+        setCss(StepsText, 'display', 'none');
 
         let iconType = '';
+
         if (status === 'finish') {
             iconType = 'ios-checkmark';
         }
@@ -316,7 +280,38 @@ class Steps implements Config {
             iconType = 'ios-close';
         }
 
-        container.classList.add(`${PREFIX.icon}-${iconType}`);
+        StepsIcon.className = `${PREFIX.steps}-icon ${PREFIX.icon} ${PREFIX.icon}-${iconType}`;
+    }
+
+    private _setCustomIcon(step: Element, icon: string): void {
+        if (!icon) return;
+
+        // @ts-ignore
+        step.dataset['useIcon'] = 'true';
+        step.classList.add(`${PREFIX.steps}-custom`);
+
+        const StepsIcon = step.querySelector('#stepsIcon')!;
+
+        StepsIcon.classList.add(`${PREFIX.icon}`);
+        StepsIcon.classList.add(`${PREFIX.icon}-${icon}`);
+
+        setCss(StepsIcon.nextElementSibling!, 'display', 'none');
+    }
+
+    private _setNextError(node: Element): void {
+        const StepsStep = node.querySelectorAll('r-step');
+
+        StepsStep.forEach((step, idx) => {
+            if (step.getAttribute('status') === 'error' && idx !== 0) {
+                const prevStep = StepsStep[idx - 1];
+
+                if (prevStep.getAttribute('status') === 'error') {
+                    prevStep.classList.add(`${PREFIX.steps}-next-error`);
+                } else {
+                    prevStep.classList.remove(`${PREFIX.steps}-next-error`);
+                }
+            }
+        });
     }
 
     private _attrs(node: Element) {

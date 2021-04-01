@@ -7,8 +7,9 @@ export default function stepsTest(): void {
     const showStep = document.querySelector('#step')!;
 
     let count = 0;
-    showStep.textContent = `${count + 1}`;
 
+    showStep.textContent = `${count + 1}`;
+    // targetStep.itemStatus = ['error', 'error', 'finish', 'process'];
     // @ts-ignore
     window.handlClickNext = () => {
         if (count == 3) {
