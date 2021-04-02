@@ -125,6 +125,7 @@ r-checkbox[disabled] .rab-checkbox .rab-checkbox-inner {
 }
 r-checkbox[disabled] .rab-checkbox .rab-checkbox-inner:after {
   animation-name: none;
+  border-color: #ccc;
 }
 r-checkbox[disabled] .rab-checkbox .rab-checkbox-inner-input {
   cursor: default;
@@ -155,7 +156,7 @@ r-checkbox[size='large'] .rab-checkbox-inner:after {
   width: 5px;
   height: 9px;
 }
-r-checkbox[size='large'] .rab-checkbox-checked .rab-checkbox-inner:after {
+r-checkbox[size='large'].rab-checkbox-checked .rab-checkbox-inner:after {
   width: 6px;
   height: 10px;
 }
@@ -174,7 +175,7 @@ r-checkbox[size='small'] .rab-checkbox-inner:after {
   top: 0;
   left: 3px;
 }
-r-checkbox[size='small'] .rab-checkbox-checked .rab-checkbox-inner:after {
+r-checkbox[size='small'].rab-checkbox-checked .rab-checkbox-inner:after {
   top: 1px;
   left: 4px;
 }
@@ -186,7 +187,7 @@ r-checkbox + span,
 r-checkbox .rab-checkbox + span {
   margin-right: 4px;
 }
-.rab-checkbox-wrapper-checked[type='border'] {
+.rab-checkbox-checked[type='border'] {
   border-color: #1890ff;
 }
 r-checkbox-group {
@@ -195,6 +196,44 @@ r-checkbox-group {
 }
 r-checkbox-group r-checkbox {
   display: inline-block;
+}
+r-checkbox-group[size='large'] {
+  font-size: 16px;
+}
+r-checkbox-group[size='large'] .rab-checkbox-inner {
+  width: 18px;
+  height: 18px;
+}
+r-checkbox-group[size='large'] .rab-checkbox-inner:after {
+  width: 5px;
+  height: 9px;
+}
+r-checkbox-group[size='large'].rab-checkbox-checked .rab-checkbox-inner:after {
+  width: 6px;
+  height: 10px;
+}
+r-checkbox-group[size='large'] .rab-checkbox-indeterminate .rab-checkbox-inner:after {
+  width: 12px;
+  top: 7px;
+}
+r-checkbox-group[size='small'] {
+  font-size: 14px;
+}
+r-checkbox-group[size='small'] .rab-checkbox-inner {
+  width: 14px;
+  height: 14px;
+}
+r-checkbox-group[size='small'] .rab-checkbox-inner:after {
+  top: 0;
+  left: 3px;
+}
+r-checkbox-group[size='small'].rab-checkbox-checked .rab-checkbox-inner:after {
+  top: 1px;
+  left: 4px;
+}
+r-checkbox-group[size='small'] .rab-checkbox-indeterminate .rab-checkbox-inner:after {
+  width: 8px;
+  top: 5px;
 }
 r-checkbox[size="small"][type='border'],
 r-checkbox-group[size="small"] r-checkbox[type='border'] {

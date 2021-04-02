@@ -1,5 +1,6 @@
 @import '../custom.less';
 @import '../mixins/size.less';
+@import '../mixins/checkbox.less';
 
 @checkbox-tag-name: r-checkbox;
 @checkbox-group-tag: r-checkbox-group;
@@ -171,6 +172,7 @@
 
                 &:after {
                     animation-name: none;
+                    border-color: #ccc;
                 }
             }
 
@@ -200,62 +202,7 @@
         transition: border @transition-time @ease-in-out;
     }
 
-    &[size='large'] {
-        font-size: @font-size-large;
-
-        .@{checkbox-inner-prefix-cls} {
-            .square(18px);
-
-            &:after {
-                .size(5px, 9px);
-            }
-        }
-
-        .@{checkbox-prefix-cls}-checked {
-            .@{checkbox-inner-prefix-cls} {
-                &:after {
-                    width: 6px;
-                    height: 10px;
-                }
-            }
-        }
-
-        .@{checkbox-prefix-cls}-indeterminate {
-            .@{checkbox-inner-prefix-cls}:after {
-                width: 12px;
-                top: 7px;
-            }
-        }
-    }
-
-    &[size='small'] {
-        font-size: @font-size-base;
-
-        .@{checkbox-inner-prefix-cls} {
-            .square(14px);
-
-            &:after {
-                top: 0;
-                left: 3px;
-            }
-        }
-
-        .@{checkbox-prefix-cls}-checked {
-            .@{checkbox-inner-prefix-cls} {
-                &:after {
-                    top: 1px;
-                    left: 4px;
-                }
-            }
-        }
-
-        .@{checkbox-prefix-cls}-indeterminate {
-            .@{checkbox-inner-prefix-cls}:after {
-                width: 8px;
-                top: 5px;
-            }
-        }
-    }
+    .checkbox-size();
 
     & + span,
     .@{checkbox-prefix-cls} + span {
@@ -263,7 +210,7 @@
     }
 }
 
-.@{checkbox-prefix-cls}-wrapper-checked[type='border'] {
+.@{checkbox-prefix-cls}-checked[type='border'] {
     border-color: @primary-color;
 }
 
@@ -274,15 +221,8 @@
     @{checkbox-tag-name} {
         display: inline-block;
     }
-}
 
-.size-with-border(@size, @height, @px, @padding) {
-    @{checkbox-tag-name}[size=~'"@{size}"'][type='border'],
-    @{checkbox-group-tag}[size=~'"@{size}"'] @{checkbox-tag-name}[type='border'] {
-        height: @height;
-        line-height: @height - @px;
-        padding: @padding;
-    }
+    .checkbox-size();
 }
 
 .size-with-border(small, @btn-height-small, 1px, @btn-padding-small);
