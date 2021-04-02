@@ -9,6 +9,7 @@ export default {
     button: `${prefixCls}btn`,
     card: `${prefixCls}card`,
     carousel: `${prefixCls}carousel`,
+    checkbox: `${prefixCls}checkbox`,
     collapse: `${prefixCls}collapse`,
     divider: `${prefixCls}divider`,
     drawer: `${prefixCls}drawer`,

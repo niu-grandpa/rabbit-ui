@@ -6,6 +6,7 @@ import Breadcrumb from './components/breadcrumb';
 import Button from './components/button';
 import Card from './components/card';
 import Carousel from './components/carousel';
+import Checkbox from './components/checkbox';
 import Collapse from './components/collapse';
 import Divider from './components/divider';
 import Drawer from './components/drawer';
@@ -63,5 +64,6 @@ export {
     Tag,
     Time,
     Timeline,
-    Tooltip
+    Tooltip,
+    Checkbox
 };
