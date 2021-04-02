@@ -2675,6 +2675,8 @@ var Alert = /** @class */ (function () {
 /* harmony default export */ var components_alert = (alert_alert);
 
 ;// CONCATENATED MODULE: ./src/components/avatar/avatar.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 
 
 
@@ -2684,108 +2686,89 @@ var Avatar = /** @class */ (function () {
         this.COMPONENTS = (0,dom_utils.$el)('r-avatar', { all: true });
         this._create(this.COMPONENTS);
     }
+    Avatar.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        validComps(target, 'avatar');
+        var AvatarImage = target.querySelector('img');
+        return {
+            events: function (_a) {
+                var onError = _a.onError;
+                if (!AvatarImage) {
+                    warn("Unable to add an event where the image failed to load for the current avatar --> \"" + el + "\"");
+                    return;
+                }
+                (0,dom_utils.bind)(AvatarImage, 'error', function (event) { return onError && isFn(onError, event); });
+            }
+        };
+    };
     Avatar.prototype._create = function (COMPONENTS) {
         var _this = this;
         COMPONENTS.forEach(function (node) {
-            _this._setIcon(node);
-            _this._setImage(node);
-            _this._setSize(node);
-            _this._setCustomContent(node);
-            (0,dom_utils.removeAttrs)(node, ['icon', 'src', 'custom-icon']);
+            var _a = _this._attrs(node), icon = _a.icon, src = _a.src, alt = _a.alt, size = _a.size;
+            _this._setSize(node, size);
+            _this._setIcon(node, icon);
+            _this._setImage(node, src, alt);
+            _this._setText(node, icon, src);
+            (0,dom_utils.removeAttrs)(node, ['icon', 'src', 'alt']);
         });
     };
-    Avatar.prototype._setIcon = function (node) {
-        var hasIcon = this._getIcon(node);
-        var customIcon = this._getCustmIcon(node);
-        if (!hasIcon)
+    Avatar.prototype._setSize = function (node, size) {
+        if (!size)
             return;
-        if (hasIcon || customIcon) {
-            (0,dom_utils.setHtml)(node, '');
-            node.classList.add(prefix.default.avatar + "-icon");
-        }
-        if (customIcon) {
-            (0,dom_utils.setHtml)(node, customIcon);
-        }
-        else {
-            var AvatarIcon = (0,dom_utils.createElem)('i');
-            AvatarIcon.className = "rab-icon rab-icon-" + hasIcon;
-            node.appendChild(AvatarIcon);
-        }
+        var _size = Number(size);
+        if (!_size)
+            return;
+        (0,dom_utils.setCss)(node, 'width', _size + "px");
+        (0,dom_utils.setCss)(node, 'height', _size + "px");
+        (0,dom_utils.setCss)(node, 'fontSize', _size / 2 + "px");
+        node.removeAttribute('size');
     };
-    Avatar.prototype._setImage = function (node) {
-        var hasSrc = this._getSrc(node);
-        if (!hasSrc)
+    Avatar.prototype._setIcon = function (node, icon) {
+        if (!icon)
             return;
-        var AvatarImage = (0,dom_utils.createElem)('img');
-        // @ts-ignore
-        AvatarImage.src = hasSrc;
-        (0,dom_utils.setHtml)(node, '');
+        node.classList.add(prefix.default.avatar + "-icon");
+        var AvatarIcon = "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + icon + "\"></i>";
+        (0,dom_utils.setHtml)(node, AvatarIcon);
+    };
+    Avatar.prototype._setImage = function (node, src, alt) {
+        if (!src)
+            return;
         node.classList.add(prefix.default.avatar + "-image");
-        node.appendChild(AvatarImage);
+        var AvatarImage = "<img src=\"" + src + "\" alt=\"" + alt + "\" />";
+        (0,dom_utils.setHtml)(node, AvatarImage);
     };
-    // 自定义头像内容
-    Avatar.prototype._setCustomContent = function (node) {
-        if (node.getAttribute('rb-icon') || node.getAttribute('rb-src'))
+    Avatar.prototype._setText = function (node, icon, src) {
+        if (icon || src)
             return;
-        if ((0,dom_utils.setHtml)(node)) {
-            var AvatarStrBox = (0,dom_utils.createElem)('span');
-            AvatarStrBox.className = prefix.default.avatar + "-string";
-            (0,dom_utils.setHtml)(AvatarStrBox, node.innerHTML);
-            (0,dom_utils.setHtml)(node, '');
-            node.appendChild(AvatarStrBox);
-            this._setScale(node, AvatarStrBox);
-        }
+        if (!(0,dom_utils.setHtml)(node))
+            return;
+        var text = (0,dom_utils.setHtml)(node);
+        var AvatarText = "<span class=\"" + prefix.default.avatar + "-string\">" + text + "</span>";
+        (0,dom_utils.setHtml)(node, AvatarText);
+        this._setScale(node);
     };
-    // 使文本容器大写适应头像容器并且不超出范围
-    Avatar.prototype._setScale = function (node, children) {
+    // 防止字符型头像的字体溢出边界
+    Avatar.prototype._setScale = function (node) {
+        var children = node.querySelector("." + prefix.default.avatar + "-string");
+        if (!children)
+            return;
         var avatarWidth = node.getBoundingClientRect().width;
         var childrenWidth = children.offsetWidth;
         if (avatarWidth - 8 < childrenWidth) {
             var newScale = "scale(" + (avatarWidth - 8) / childrenWidth + ") translateX(-50%)";
-            (0,dom_utils.setCss)(children, 'transform', "scale(" + newScale + ") translateX(-50%)");
+            (0,dom_utils.setCss)(children, 'transform', "" + newScale);
         }
         else {
             (0,dom_utils.setCss)(children, 'transform', 'scale(1) translateX(-50%)');
         }
     };
-    // 设置头像尺寸
-    Avatar.prototype._setSize = function (node) {
-        var size = this._getSize(node);
-        if (!size)
-            return;
-        (0,dom_utils.setCss)(node, 'width', size + "px");
-        (0,dom_utils.setCss)(node, 'height', size + "px");
-        (0,dom_utils.setCss)(node, 'lineHeight', size + "px");
-        // 如果设置的尺寸超过40，且在有图标的情况下将其字体大写设为头像尺寸的一半
-        if (size >= 40) {
-            if (node.querySelector('.rab-icon')) {
-                var newFontSize = Math.floor(size / 2) + "px";
-                (0,dom_utils.setCss)(node, 'fontSize', newFontSize);
-            }
-        }
-    };
-    Avatar.prototype._getIcon = function (node) {
-        return node.getAttribute('rb-icon') || '';
-    };
-    Avatar.prototype._getCustmIcon = function (node) {
-        return node.getAttribute('rb-custom-icon') || '';
-    };
-    Avatar.prototype._getSrc = function (node) {
-        return node.getAttribute('rb-src') || '';
-    };
-    Avatar.prototype._getSize = function (node) {
-        var size = node.getAttribute('rb-size') || '';
-        // 不获取这两个
-        if (size === 'large' || size === 'small')
-            return;
-        // 尺寸设置为数值，则将字符串数值转换为数字
-        var toNum = Number(size);
-        if (toNum)
-            return toNum;
-        // 打印错误不包括设置了数值为0
-        else if (toNum !== 0) {
-            warn("You have set an invalid size value for the Avatar component --> \"" + size + "\"");
-        }
+    Avatar.prototype._attrs = function (node) {
+        return {
+            icon: (0,dom_utils.getStrTypeAttr)(node, 'icon', ''),
+            src: (0,dom_utils.getStrTypeAttr)(node, 'src', ''),
+            alt: (0,dom_utils.getStrTypeAttr)(node, 'alt', ''),
+            size: (0,dom_utils.getStrTypeAttr)(node, 'size', '')
+        };
     };
     return Avatar;
 }());

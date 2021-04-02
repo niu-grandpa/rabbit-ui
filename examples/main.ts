@@ -34,7 +34,7 @@ import skeletonTest from './skeleton';
 import '../src/styles/index.less';
 
 // alertTest();
-// avatarTest();
+avatarTest();
 // backtopTest();
 // badgeTest();
 // breadcrumbTest();
@@ -57,7 +57,7 @@ import '../src/styles/index.less';
 // radioTest();
 // resultTest();
 // skeletonTest();
-stepsTest();
+// stepsTest();
 // spinTest();
 // switchTest();
 // tabsTest();
