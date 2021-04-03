@@ -3,8 +3,8 @@
   vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
-  line-height: 1;
   position: relative;
+  line-height: 1;
 }
 .rab-checkbox-focus {
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
@@ -47,12 +47,16 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
   cursor: pointer;
   opacity: 0;
 }
 .rab-checkbox-input[disabled] {
   cursor: not-allowed;
+}
+.rab-checkbox + .rab-icon {
+  position: relative;
+  top: 1px;
+  margin-left: 5px;
 }
 .rab-checkbox-checked:hover .rab-checkbox-inner {
   border-color: #1890ff;

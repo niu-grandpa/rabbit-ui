@@ -20,6 +20,50 @@
     <div class="example">
         <r-checkbox>Checkbox</r-checkbox>
     </div>
+
+    <div class="example">
+        <r-checkbox-group value="['facebook', 'github']">
+            <r-checkbox label="twitter" icon="logo-twitter">Twitter</r-checkbox>
+            <r-checkbox label="facebook" icon="logo-facebook">Facebook</r-checkbox>
+            <r-checkbox label="github" icon="logo-github">Github</r-checkbox>
+            <r-checkbox label="snapchat" icon="logo-snapchat">Snapchat</r-checkbox>
+        </r-checkbox-group>
+
+        <r-checkbox-group value="['西瓜']">
+            <r-checkbox label="苹果">苹果</r-checkbox>
+            <r-checkbox label="西瓜">西瓜</r-checkbox>
+            <r-checkbox label="猕猴桃">猕猴桃</r-checkbox>
+        </r-checkbox-group>
+    </div>
+
+    <div class="example">
+        <r-checkbox checked="true" disabled>Checkbox</r-checkbox>
+
+        <r-checkbox-group value="['西瓜']">
+            <r-checkbox label="苹果" disabled>苹果</r-checkbox>
+            <r-checkbox label="西瓜" disabled>西瓜</r-checkbox>
+            <r-checkbox label="猕猴桃">猕猴桃</r-checkbox>
+        </r-checkbox-group>
+    </div>
+
+    <div class="example">
+        <r-checkbox-group value="['苹果']">
+            <r-checkbox label="苹果" type="border">苹果</r-checkbox>
+            <r-checkbox label="西瓜" type="border">西瓜</r-checkbox>
+            <r-checkbox label="猕猴桃" type="border">猕猴桃</r-checkbox>
+        </r-checkbox-group>
+    </div>
+
+    <div class="example">
+        <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+            <r-checkbox indeterminate="true">全选</r-checkbox>
+        </div>
+        <r-checkbox-group value="['苹果','猕猴桃']">
+            <r-checkbox label="苹果">苹果</r-checkbox>
+            <r-checkbox label="西瓜">西瓜</r-checkbox>
+            <r-checkbox label="猕猴桃">猕猴桃</r-checkbox>
+        </r-checkbox-group>
+    </div>
 </body>
 
 </html>

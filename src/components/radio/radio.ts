@@ -110,17 +110,17 @@ class Radio implements Config {
         COMPONENTS.forEach((node) => {
             const { checked, label, icon, name } = this._attrs(node);
             const content = setHtml(node);
-            const groupWrapper = this._getGroupElm(node);
+            const RadioGroupWrapper = this._getGroupElm(node);
 
-            if (groupWrapper) {
-                const { value } = this._attrs(groupWrapper);
+            if (RadioGroupWrapper) {
+                const { value } = this._attrs(RadioGroupWrapper);
                 this._setCurrentlyChecked(node, value, label);
             }
 
             this._setMainTemplate(node, content, name);
-            this._setSingleChecked(node, checked, groupWrapper);
+            this._setSingleChecked(node, checked, RadioGroupWrapper);
             this._setIcon(node, icon);
-            this._handleClick(node, groupWrapper);
+            this._handleClick(node, RadioGroupWrapper);
 
             removeAttrs(node, ['checked', 'icon']);
         });
