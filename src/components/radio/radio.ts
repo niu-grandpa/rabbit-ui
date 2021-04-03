@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { type, validComps } from '../../utils';
 import {
     $el,
@@ -75,7 +76,6 @@ class Radio implements Config {
                 if (!isGroup && !type.isStr(newVal)) return;
 
                 Array.from(target.children).forEach((child) => {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     const label = child.getAttribute('label')!;
                     _setCurrentlyChecked(child, newVal, label);
                 });

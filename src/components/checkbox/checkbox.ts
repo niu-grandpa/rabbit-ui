@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { warn } from '../../mixins';
 import {
     $el,
     bind,
@@ -8,9 +9,25 @@ import {
     removeAttrs,
     setHtml
 } from '../../dom-utils';
+import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
-class Checkbox {
+interface Config {
+    config(
+        el: string
+    ): {
+        value: (string | number)[];
+        checked: boolean;
+        indeterminate: boolean;
+        events({ onChange }: CheckboxEvent): void;
+    };
+}
+
+interface CheckboxEvent {
+    onChange: (checked: boolean | string[]) => void;
+}
+
+class Checkbox implements Config {
     readonly VERSION: string;
     readonly COMPONENTS: NodeListOf<Element>;
 
@@ -20,9 +37,81 @@ class Checkbox {
         this._create(this.COMPONENTS);
     }
 
+    public config(
+        el: string
+    ): {
+        value: (string | number)[];
+        checked: boolean;
+        indeterminate: boolean;
+        events({ onChange }: CheckboxEvent): void;
+    } {
+        const target = $el(el) as HTMLElement;
+
+        validComps(target, 'checkbox');
+
+        const {
+            _attrs,
+            _getGroupWrapper,
+            _setChecked,
+            _setIndeterminate,
+            _setMultipleChecks
+        } = Checkbox.prototype;
+
+        const CheckBoxGroupWapper = _getGroupWrapper(target);
+        const { value, checked, indeterminate } = _attrs(target);
+
+        return {
+            get value() {
+                return value;
+            },
+            set value(newVal) {
+                if (!CheckBoxGroupWapper) {
+                    warn(`This checkbox is not a child of a group element -->"${el}"`);
+                    return;
+                }
+
+                if (newVal && !type.isArr(newVal)) return;
+
+                _setMultipleChecks(CheckBoxGroupWapper, newVal);
+            },
+
+            get checked() {
+                return checked;
+            },
+            set checked(newVal) {
+                if (newVal && !type.isBol(newVal)) return;
+                _setChecked(target, newVal);
+            },
+
+            get indeterminate() {
+                return indeterminate;
+            },
+            set indeterminate(newVal) {
+                if (newVal && !type.isBol(newVal)) return;
+                _setIndeterminate(target, newVal);
+            },
+
+            events({ onChange }: CheckboxEvent) {
+                let checked: boolean | string[];
+
+                const func = () => {
+                    if (CheckBoxGroupWapper) {
+                        checked;
+                    } else {
+                        checked = target.dataset['value'] === 'true';
+                    }
+
+                    onChange && type.isFn(onChange, checked);
+                };
+
+                bind(target, 'click', func);
+            }
+        };
+    }
+
     private _create(COMPONENTS: NodeListOf<Element>) {
         COMPONENTS.forEach((node) => {
-            const { icon, name, checked, label } = this._attrs(node);
+            const { icon, name, checked, label, indeterminate } = this._attrs(node);
             const CheckboxGroupWrapper = this._getGroupWrapper(node);
 
             this._setChecked(node, checked);
@@ -30,6 +119,7 @@ class Checkbox {
             this._setLabel(node, label);
             this._setDisabled(node);
             this._setIcon(node, icon);
+            this._setIndeterminate(node, indeterminate);
             this._handleChange(node);
 
             if (CheckboxGroupWrapper) {
@@ -90,6 +180,18 @@ class Checkbox {
         node.querySelector(`.${PREFIX.checkbox}`)!.insertAdjacentHTML('afterend', template);
     }
 
+    private _setIndeterminate(node: Element, indeterminate: boolean) {
+        const Checkbox = node.querySelector(`.${PREFIX.checkbox}`)!;
+
+        if (!indeterminate) {
+            if (Checkbox.classList.contains(`${PREFIX.checkbox}-indeterminate`)) {
+                Checkbox.classList.remove(`${PREFIX.checkbox}-indeterminate`);
+            }
+        } else {
+            Checkbox.classList.add(`${PREFIX.checkbox}-indeterminate`);
+        }
+    }
+
     private _setMultipleChecks(checkboxGroupWrapper: Element, value: (string | number)[]): void {
         let i = 0;
         const { length } = value;
@@ -101,37 +203,30 @@ class Checkbox {
     }
 
     private _handleChange(node: Element): void {
-        const addFocusedState = (e: any) => {
-            if (
-                e.target.parentElement.tagName === 'R-CHECKBOX' ||
-                e.target.parentElement.className === `${PREFIX.checkbox}`
-            ) {
-                node.querySelector(`.${PREFIX.checkbox}-inner`)?.classList.add(
-                    `${PREFIX.checkbox}-focus`
-                );
-            } else {
+        const addFocusedState = () => {
+            node.querySelector(`.${PREFIX.checkbox}-inner`)?.classList.add(
+                `${PREFIX.checkbox}-focus`
+            );
+            setTimeout(() => {
                 node.querySelector(`.${PREFIX.checkbox}-inner`)?.classList.remove(
                     `${PREFIX.checkbox}-focus`
                 );
-            }
+            }, 1500);
         };
 
-        const toogle = (e: any) => {
-            e.stopPropagation();
-
+        const toogle = () => {
             // @ts-ignore
             const isChecked = node.dataset['value'] === 'true' ? false : true;
             const isDisabled = this._isDisabled(node);
 
             if (isDisabled) return false;
 
-            addFocusedState(e);
+            addFocusedState();
 
             this._setChecked(node, isChecked);
         };
 
-        bind(node, 'click', (e: any) => toogle(e));
-        bind(document, 'click', (e: any) => addFocusedState(e));
+        bind(node, 'click', toogle);
     }
 
     private _isDisabled(node: Element): boolean {
