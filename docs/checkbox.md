@@ -101,15 +101,14 @@
 
     checkAllGroup.events({
         onChange: (data) => {
-            if (data.length === 3) {
+            if (data.length === 0) {
+                checkAll.checked = false;
                 checkAll.indeterminate = false;
+            } else if (data.length === 3) {
                 checkAll.checked = true;
-            } else if (data.length > 0) {
-                checkAll.indeterminate = true;
-                checkAll.checked = false;
-            } else {
                 checkAll.indeterminate = false;
-                checkAll.checked = false;
+            } else if (data.length && data.length < 3) {
+                checkAll.indeterminate = true;
             }
         }
     });
