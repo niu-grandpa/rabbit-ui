@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!****************************************!*\
-  !*** ./src/build-umd.ts + 140 modules ***!
+  !*** ./src/build-umd.ts + 142 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -71,6 +71,7 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
   "Button": function() { return components_button; },
   "Card": function() { return components_card; },
   "Carousel": function() { return components_carousel; },
+  "Checkbox": function() { return components_checkbox; },
   "Collapse": function() { return components_collapse; },
   "Divider": function() { return components_divider; },
   "Drawer": function() { return components_drawer; },
@@ -3593,6 +3594,227 @@ var Carousel = /** @class */ (function () {
 
 /* harmony default export */ var components_carousel = (carousel);
 
+;// CONCATENATED MODULE: ./src/components/checkbox/checkbox.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+
+var Checkbox = /** @class */ (function () {
+    function Checkbox() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-checkbox', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Checkbox.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        var isGroup = target.tagName.toLowerCase() == 'r-checkbox-group';
+        // 排除 group 项
+        if (!isGroup) {
+            validComps(target, 'checkbox');
+        }
+        else {
+            validComps(target, 'checkbox-group');
+        }
+        var _a = Checkbox.prototype, _attrs = _a._attrs, _setChecked = _a._setChecked, _setIndeterminate = _a._setIndeterminate, _setMultipleChecks = _a._setMultipleChecks, _isDisabled = _a._isDisabled;
+        var value = _attrs(target).value;
+        return {
+            get value() {
+                return value;
+            },
+            set value(newVal) {
+                if (!isGroup) {
+                    warn("This checkbox is not a child of a group element -->\"" + el + "\"");
+                    return;
+                }
+                if (newVal && !isArr(newVal))
+                    return;
+                _setMultipleChecks(target, newVal);
+            },
+            get checked() {
+                return target.dataset['value'] === 'true';
+            },
+            set checked(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _setChecked(target, newVal);
+            },
+            get disabled() {
+                return _isDisabled(target);
+            },
+            set disabled(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                if (isGroup)
+                    return;
+                newVal
+                    ? target.setAttribute('disabled', 'disabled')
+                    : target.removeAttribute('disabled');
+                var CheckBoxInput = target.querySelector("." + prefix.default.checkbox + "-input");
+                CheckBoxInput.disabled = newVal;
+            },
+            get indeterminate() {
+                var isIndeterminate = target
+                    .querySelector("." + prefix.default.checkbox)
+                    .classList.contains(prefix.default.checkbox + "-indeterminate");
+                return isIndeterminate;
+            },
+            set indeterminate(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                if (isGroup)
+                    return;
+                _setIndeterminate(target, newVal);
+            },
+            events: function (_a) {
+                var onChange = _a.onChange;
+                var CheckBox, checked;
+                isGroup ? (CheckBox = target.querySelectorAll('r-checkbox')) : (CheckBox = target);
+                var fn = function () {
+                    if (isGroup) {
+                        checked = [];
+                        CheckBox.forEach(function (elm) {
+                            elm.dataset['value'] === 'true'
+                                ? checked.push(elm.dataset['label'])
+                                : '';
+                        });
+                    }
+                    else {
+                        checked = target.dataset['value'] === 'true';
+                    }
+                    onChange && isFn(onChange, checked);
+                };
+                (0,dom_utils.bind)(target, 'click', fn);
+            }
+        };
+    };
+    Checkbox.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            var _a = _this._attrs(node), icon = _a.icon, name = _a.name, checked = _a.checked, label = _a.label, indeterminate = _a.indeterminate;
+            var CheckboxGroupWrapper = _this._getGroupWrapper(node);
+            _this._setChecked(node, checked);
+            _this._setMainTemplate(node, name);
+            _this._setLabel(node, label);
+            _this._setDisabled(node);
+            _this._setIcon(node, icon);
+            _this._setIndeterminate(node, indeterminate);
+            _this._handleChange(node);
+            if (CheckboxGroupWrapper) {
+                var value = _this._attrs(CheckboxGroupWrapper).value;
+                _this._setMultipleChecks(CheckboxGroupWrapper, value);
+                (0,dom_utils.removeAttrs)(CheckboxGroupWrapper, ['value']);
+            }
+            (0,dom_utils.removeAttrs)(node, ['icon', 'name', 'checked', 'label']);
+        });
+    };
+    Checkbox.prototype._setChecked = function (node, checked) {
+        // @ts-ignore
+        node.dataset['value'] = "" + checked;
+        if (!checked) {
+            if (node.classList.contains(prefix.default.checkbox + "-checked")) {
+                node.classList.remove(prefix.default.checkbox + "-checked");
+            }
+        }
+        else {
+            node.classList.add(prefix.default.checkbox + "-checked");
+        }
+    };
+    Checkbox.prototype._setMainTemplate = function (node, name) {
+        var content = (0,dom_utils.setHtml)(node);
+        var template = "\n         <span class=\"" + prefix.default.checkbox + "\">\n            <span class=\"" + prefix.default.checkbox + "-inner\"></span>\n                <input type=\"checkbox\" class=\"" + prefix.default.checkbox + "-input\" name=\"" + name + "\">\n            </span>\n         <span>" + content + "</span>\n        ";
+        (0,dom_utils.setHtml)(node, template);
+    };
+    Checkbox.prototype._setLabel = function (node, label) {
+        if (!this._getGroupWrapper(node))
+            return;
+        // @ts-ignore
+        node.dataset['label'] = label;
+    };
+    Checkbox.prototype._setDisabled = function (node) {
+        if (!this._isDisabled(node))
+            return;
+        var CheckBoxInput = node.querySelector("." + prefix.default.checkbox + "-input");
+        CheckBoxInput.disabled = true;
+    };
+    Checkbox.prototype._setIcon = function (node, icon) {
+        if (!icon)
+            return;
+        var template = "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + icon + "\"></i>";
+        node.querySelector("." + prefix.default.checkbox).insertAdjacentHTML('afterend', template);
+    };
+    Checkbox.prototype._setIndeterminate = function (node, indeterminate) {
+        var Checkbox = node.querySelector("." + prefix.default.checkbox);
+        if (!indeterminate) {
+            if (Checkbox.classList.contains(prefix.default.checkbox + "-indeterminate")) {
+                Checkbox.classList.remove(prefix.default.checkbox + "-indeterminate");
+            }
+        }
+        else {
+            Checkbox.classList.add(prefix.default.checkbox + "-indeterminate");
+        }
+    };
+    Checkbox.prototype._setMultipleChecks = function (checkboxGroupWrapper, value) {
+        var _setChecked = Checkbox.prototype._setChecked;
+        var Checkboxs = checkboxGroupWrapper.querySelectorAll('r-checkbox');
+        var length = value.length;
+        if (length == 0) {
+            Checkboxs.forEach(function (elm) { return _setChecked(elm, false); });
+        }
+        else if (length == 1) {
+            _setChecked(Checkboxs[0], true);
+        }
+        else {
+            var i = 0;
+            for (; i < length; i++) {
+                var currentCheckbox = checkboxGroupWrapper.querySelector("[data-label=\"" + value[i] + "\"]");
+                currentCheckbox ? _setChecked(currentCheckbox, true) : '';
+            }
+        }
+    };
+    Checkbox.prototype._handleChange = function (node) {
+        var _this = this;
+        var addFocusedState = function () {
+            var CheckBoxInner = node.querySelector("." + prefix.default.checkbox + "-inner");
+            CheckBoxInner.classList.add(prefix.default.checkbox + "-focus");
+            setTimeout(function () { return CheckBoxInner.classList.remove(prefix.default.checkbox + "-focus"); }, 1500);
+        };
+        var toogle = function () {
+            // @ts-ignore
+            var isChecked = node.dataset['value'] === 'true' ? false : true;
+            var isDisabled = _this._isDisabled(node);
+            if (isDisabled)
+                return false;
+            addFocusedState();
+            _this._setChecked(node, isChecked);
+        };
+        (0,dom_utils.bind)(node, 'click', toogle);
+    };
+    Checkbox.prototype._isDisabled = function (node) {
+        return node.getAttribute('disabled') == '' || node.getAttribute('disabled') == 'true';
+    };
+    Checkbox.prototype._getGroupWrapper = function (node) {
+        var parent = node.parentElement;
+        return (parent === null || parent === void 0 ? void 0 : parent.tagName.toLowerCase()) === 'r-checkbox-group' ? parent : null;
+    };
+    Checkbox.prototype._attrs = function (node) {
+        return {
+            icon: (0,dom_utils.getStrTypeAttr)(node, 'icon', ''),
+            name: (0,dom_utils.getStrTypeAttr)(node, 'name', ''),
+            label: (0,dom_utils.getStrTypeAttr)(node, 'label', ''),
+            value: (0,dom_utils.getArrTypeAttr)(node, 'value'),
+            checked: (0,dom_utils.getBooleanTypeAttr)(node, 'checked'),
+            indeterminate: (0,dom_utils.getBooleanTypeAttr)(node, 'indeterminate')
+        };
+    };
+    return Checkbox;
+}());
+/* harmony default export */ var checkbox_checkbox = (Checkbox);
+
+;// CONCATENATED MODULE: ./src/components/checkbox/index.ts
+
+/* harmony default export */ var components_checkbox = (checkbox_checkbox);
+
 // EXTERNAL MODULE: ./src/dom-utils/elem.ts
 var elem = __webpack_require__("./src/dom-utils/elem.ts");
 ;// CONCATENATED MODULE: ./src/components/collapse/collapse.ts
@@ -6040,6 +6262,7 @@ var Progress = /** @class */ (function () {
 /* harmony default export */ var components_progress = (progress);
 
 ;// CONCATENATED MODULE: ./src/components/radio/radio.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
@@ -6055,6 +6278,9 @@ var Radio = /** @class */ (function () {
         // 排除 group 项
         if (!isGroup) {
             validComps(target, 'radio');
+        }
+        else {
+            validComps(target, 'radio-group');
         }
         var _a = Radio.prototype, _isChecked = _a._isChecked, _isDisabled = _a._isDisabled, _setSingleChecked = _a._setSingleChecked, _setCurrentlyChecked = _a._setCurrentlyChecked;
         return {
@@ -6074,7 +6300,6 @@ var Radio = /** @class */ (function () {
                 if (!isGroup && !isStr(newVal))
                     return;
                 Array.from(target.children).forEach(function (child) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     var label = child.getAttribute('label');
                     _setCurrentlyChecked(child, newVal, label);
                 });
@@ -6110,15 +6335,15 @@ var Radio = /** @class */ (function () {
         COMPONENTS.forEach(function (node) {
             var _a = _this._attrs(node), checked = _a.checked, label = _a.label, icon = _a.icon, name = _a.name;
             var content = (0,dom_utils.setHtml)(node);
-            var groupWrapper = _this._getGroupElm(node);
-            if (groupWrapper) {
-                var value = _this._attrs(groupWrapper).value;
+            var RadioGroupWrapper = _this._getGroupElm(node);
+            if (RadioGroupWrapper) {
+                var value = _this._attrs(RadioGroupWrapper).value;
                 _this._setCurrentlyChecked(node, value, label);
             }
             _this._setMainTemplate(node, content, name);
-            _this._setSingleChecked(node, checked, groupWrapper);
+            _this._setSingleChecked(node, checked, RadioGroupWrapper);
             _this._setIcon(node, icon);
-            _this._handleClick(node, groupWrapper);
+            _this._handleClick(node, RadioGroupWrapper);
             (0,dom_utils.removeAttrs)(node, ['checked', 'icon']);
         });
     };
@@ -7607,6 +7832,7 @@ var Tooltip = /** @class */ (function () {
 
 
 
+
 ;// CONCATENATED MODULE: ./src/styles/index.less
 // extracted by mini-css-extract-plugin
 
@@ -7642,6 +7868,7 @@ var prefixCls = 'rab-';
     button: prefixCls + "btn",
     card: prefixCls + "card",
     carousel: prefixCls + "carousel",
+    checkbox: prefixCls + "checkbox",
     collapse: prefixCls + "collapse",
     divider: prefixCls + "divider",
     drawer: prefixCls + "drawer",
