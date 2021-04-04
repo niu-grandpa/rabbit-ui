@@ -48,6 +48,8 @@ class Radio implements Config {
         // 排除 group 项
         if (!isGroup) {
             validComps(target, 'radio');
+        } else {
+            validComps(target, 'radio-group');
         }
 
         const {
