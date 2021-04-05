@@ -21,9 +21,13 @@ class Rate {
 
     private _create(COMPONENTS: NodeListOf<Element>): void {
         COMPONENTS.forEach((node) => {
-            const { icon, count, character } = this._attrs(node);
+            const { icon, count, value, character, showText, allowHalf } = this._attrs(node);
+
+            // @ts-ignore
+            node.dataset['value'] = `${value}`;
 
             this._setMainTemplate(node, count, icon, character);
+            this._setShowText(node, showText, value);
 
             removeAttrs(node, [
                 'icon',
@@ -80,8 +84,34 @@ class Rate {
         }
     }
 
-    private _setShowText(showText: boolean): void {
+    private _setActiveStars(node: Element, value: string | number, half: boolean): void {
+        value = Number(value) - 1;
+
+        const RateStars = node.querySelectorAll(`.${PREFIX.rate}-star` || `.${PREFIX.rate}-chart`);
+
+        // if (!half) {
+        //     if (value >= idx) {
+        //         star.classList.add(`${PREFIX.rate}-star-full`);
+        //     }
+        // } else {
+        //     if (/\./.test(`${value}`) && value >= idx) {
+        //         star.classList.add(`${PREFIX.rate}-star-full`);
+        //     }
+        // }
+    }
+
+    private _setShowText(node: Element, showText: boolean, value: string | number): void {
         if (!showText) return;
+
+        const RateText = createElem('div');
+
+        RateText.className = `${PREFIX.rate}-text`;
+
+        if (value > 0) {
+            setHtml(RateText, `<span>${value} 星</span>`);
+        }
+
+        node.appendChild(RateText);
     }
 
     private _attrs(node: Element) {
