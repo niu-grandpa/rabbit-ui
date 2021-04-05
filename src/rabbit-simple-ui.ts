@@ -21,6 +21,7 @@ import PageHeader from './components/page-header';
 import Poptip from './components/poptip';
 import Progress from './components/progress';
 import Radio from './components/radio';
+import Rate from './components/rate';
 import Result from './components/result';
 import Skeleton from './components/skeleton';
 import Spin from './components/spin';
@@ -55,6 +56,7 @@ export {
     Poptip,
     Progress,
     Radio,
+    Rate,
     Result,
     Skeleton,
     Spin,
