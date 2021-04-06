@@ -21,13 +21,17 @@ class Rate {
 
     private _create(COMPONENTS: NodeListOf<Element>): void {
         COMPONENTS.forEach((node) => {
-            const { icon, count, value, character, showText, allowHalf } = this._attrs(node);
+            const { icon, count, value, character, showText, disabled, allowHalf } = this._attrs(
+                node
+            );
 
             // @ts-ignore
             node.dataset['value'] = `${value}`;
 
             this._setMainTemplate(node, count, icon, character);
+            this._setActiveStars(node, value, allowHalf);
             this._setShowText(node, showText, value);
+            this._setDisabled(node, disabled);
 
             removeAttrs(node, [
                 'icon',
@@ -70,7 +74,7 @@ class Rate {
             }
 
             const template = `
-             <span type="half" class="${PREFIX.rate}-star-first">${content}</span> 
+             <span class="${PREFIX.rate}-star-first">${content}</span> 
              <span class="${PREFIX.rate}-star-second">${content}</span>
             `;
 
@@ -78,26 +82,68 @@ class Rate {
         } else {
             star.className = `${PREFIX.rate}-star`;
 
-            const template = `<span type="half" class="${PREFIX.rate}-star-content"></span> `;
+            const template = `<span class="${PREFIX.rate}-star-content"></span> `;
 
             setHtml(star, template);
         }
     }
 
     private _setActiveStars(node: Element, value: string | number, half: boolean): void {
-        value = Number(value) - 1;
+        if (!value) return;
 
-        const RateStars = node.querySelectorAll(`.${PREFIX.rate}-star` || `.${PREFIX.rate}-chart`);
+        let index = Number(value) - 1;
 
-        // if (!half) {
-        //     if (value >= idx) {
-        //         star.classList.add(`${PREFIX.rate}-star-full`);
-        //     }
-        // } else {
-        //     if (/\./.test(`${value}`) && value >= idx) {
-        //         star.classList.add(`${PREFIX.rate}-star-full`);
-        //     }
-        // }
+        const RateStars = node.querySelectorAll(`.${PREFIX.rate}-star`);
+        const RateStarChart = node.querySelectorAll(`.${PREFIX.rate}-star-chart`);
+
+        const setPrevStarFull = (children: NodeListOf<Element>, i: number, diff = 0) => {
+            while (i--) {
+                if (i < 0) break;
+
+                if (!children[i - diff]) return;
+
+                children[i - diff].classList.add(`${PREFIX.rate}-star-full`);
+            }
+        };
+
+        const setFull = (children: NodeListOf<Element>) => {
+            index = Math.floor(index);
+
+            const lastActiveStar = children[index];
+
+            if (!lastActiveStar) return;
+
+            lastActiveStar.classList.add(`${PREFIX.rate}-star-full`);
+
+            setPrevStarFull(children, index);
+        };
+
+        const setHalf = (children: NodeListOf<Element>) => {
+            // @ts-ignore
+            const next = Math.round(value);
+
+            if (value < next) {
+                if (children[next - 1])
+                    children[next - 1].classList.add(`${PREFIX.rate}-star-half`);
+            }
+
+            setPrevStarFull(children, next, 1);
+        };
+
+        const determineHalfOrFullStar = (children: NodeListOf<Element>) => {
+            if (!half) {
+                setFull(children);
+            } else {
+                if (/\./.test(`${value}`)) {
+                    setHalf(children);
+                } else {
+                    setFull(children);
+                }
+            }
+        };
+
+        determineHalfOrFullStar(RateStars);
+        determineHalfOrFullStar(RateStarChart);
     }
 
     private _setShowText(node: Element, showText: boolean, value: string | number): void {
@@ -112,6 +158,15 @@ class Rate {
         }
 
         node.appendChild(RateText);
+    }
+
+    private _setDisabled(node: Element, disabled: boolean): void {
+        if (!disabled) {
+            if (node.classList.contains(`${PREFIX.rate}-disabled`))
+                node.classList.remove(`${PREFIX.rate}-disabled`);
+        } else {
+            node.classList.add(`${PREFIX.rate}-disabled`);
+        }
     }
 
     private _attrs(node: Element) {
