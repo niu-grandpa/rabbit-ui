@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     $el,
+    bind,
     createElem,
     getBooleanTypeAttr,
     getNumTypeAttr,
     getStrTypeAttr,
+    nextAll,
+    prevAll,
     removeAttrs,
     setHtml
 } from '../../dom-utils';
@@ -28,9 +32,14 @@ class Rate {
             // @ts-ignore
             node.dataset['value'] = `${value}`;
 
-            this._setMainTemplate(node, count, icon, character);
+            this._setMainTemplate(node, count, icon, character, disabled);
+
+            const RateText = createElem('div');
+            RateText.className = `${PREFIX.rate}-text`;
+            node.appendChild(RateText);
+
             this._setActiveStars(node, value, allowHalf);
-            this._setShowText(node, showText, value);
+            this._setShowText(RateText, showText, value);
             this._setDisabled(node, disabled);
 
             removeAttrs(node, [
@@ -46,14 +55,23 @@ class Rate {
         });
     }
 
-    private _setMainTemplate(node: Element, count: number, icon: string, character: string) {
+    private _setMainTemplate(
+        node: Element,
+        count: number,
+        icon: string,
+        character: string,
+        disabled: boolean
+    ) {
         const Fragment = document.createDocumentFragment();
 
         let i = 0;
         for (; i < count; i++) {
             const RateStar = createElem('div');
 
+            RateStar.dataset['index'] = `${i}`;
+
             this._setStarContent(RateStar, icon, character);
+            this._handleMouseEvent(node, RateStar, disabled);
 
             Fragment.appendChild(RateStar);
         }
@@ -86,6 +104,10 @@ class Rate {
 
             setHtml(star, template);
         }
+    }
+
+    private _handleMouseEvent(node: Element, star: HTMLElement, disabled: boolean): void {
+        if (disabled) return;
     }
 
     private _setActiveStars(node: Element, value: string | number, half: boolean): void {
@@ -125,6 +147,10 @@ class Rate {
             if (value < next) {
                 if (children[next - 1])
                     children[next - 1].classList.add(`${PREFIX.rate}-star-half`);
+            } else {
+                if (children[next]) children[next].classList.add(`${PREFIX.rate}-star-half`);
+
+                setPrevStarFull(children, next, 0);
             }
 
             setPrevStarFull(children, next, 1);
@@ -146,18 +172,12 @@ class Rate {
         determineHalfOrFullStar(RateStarChart);
     }
 
-    private _setShowText(node: Element, showText: boolean, value: string | number): void {
+    private _setShowText(RateText: Element, showText: boolean, value: string | number): void {
         if (!showText) return;
 
-        const RateText = createElem('div');
-
-        RateText.className = `${PREFIX.rate}-text`;
-
         if (value > 0) {
-            setHtml(RateText, `<span>${value} 星</span>`);
+            setHtml(RateText, `${value} 星`);
         }
-
-        node.appendChild(RateText);
     }
 
     private _setDisabled(node: Element, disabled: boolean): void {
