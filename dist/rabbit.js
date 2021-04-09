@@ -7887,6 +7887,7 @@ var prefixCls = 'rab-';
     noticeChild: prefixCls + "notice-notice",
     progress: prefixCls + "progress",
     radio: prefixCls + "radio",
+    rate: prefixCls + "rate",
     result: prefixCls + "result",
     skeleton: prefixCls + "skeleton",
     switch: prefixCls + "switch",
