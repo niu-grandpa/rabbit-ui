@@ -21,7 +21,6 @@ import noticeTest from './notice';
 import pageHeaderTest from './page-header';
 import progressTest from './progress';
 import radioTest from './radio';
-import rateTest from './rate';
 import resultTest from './result';
 import skeletonTest from './skeleton';
 import spinTest from './spin';
@@ -35,7 +34,7 @@ import tooltipTest from './tooltip';
 
 import '../src/styles/index.less';
 
-// alertTest();
+alertTest();
 // avatarTest();
 // backtopTest();
 // badgeTest();
@@ -58,7 +57,6 @@ import '../src/styles/index.less';
 // poptipTest();
 // progressTest();
 // radioTest();
-rateTest();
 // resultTest();
 // skeletonTest();
 // stepsTest();
