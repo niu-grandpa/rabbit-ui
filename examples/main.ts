@@ -1,3 +1,4 @@
+import affixTest from './affix';
 import alertTest from './alert';
 import avatarTest from './avatar';
 import backtopTest from './back-top';
@@ -34,7 +35,8 @@ import tooltipTest from './tooltip';
 
 import '../src/styles/index.less';
 
-alertTest();
+affixTest();
+// alertTest();
 // avatarTest();
 // backtopTest();
 // badgeTest();

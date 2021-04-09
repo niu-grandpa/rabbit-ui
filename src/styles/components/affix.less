@@ -1,0 +1,12 @@
+@import '../custom.less';
+
+@affix-tag-name: r-affix;
+
+@{affix-tag-name} {
+    display: block;
+
+    &[data-fix='true'] {
+        position: fixed;
+        z-index: @zindex-affix;
+    }
+}

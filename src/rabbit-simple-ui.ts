@@ -1,3 +1,4 @@
+import Affix from './components/affix';
 import Alert from './components/alert';
 import Avatar from './components/avatar';
 import BackTop from './components/back-top';
@@ -33,6 +34,7 @@ import Timeline from './components/timeline';
 import Tooltip from './components/tooltip';
 
 export {
+    Affix,
     Alert,
     Avatar,
     BackTop,
