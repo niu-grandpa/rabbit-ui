@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!****************************************!*\
-  !*** ./src/build-umd.ts + 142 modules ***!
+  !*** ./src/build-umd.ts + 144 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -73,6 +73,7 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
   "Carousel": function() { return components_carousel; },
   "Checkbox": function() { return components_checkbox; },
   "Collapse": function() { return components_collapse; },
+  "CountDown": function() { return components_count_down; },
   "Divider": function() { return components_divider; },
   "Drawer": function() { return components_drawer; },
   "Dropdown": function() { return components_dropdown; },
@@ -4020,6 +4021,103 @@ var Collapse = /** @class */ (function () {
 
 /* harmony default export */ var components_collapse = (collapse);
 
+;// CONCATENATED MODULE: ./src/components/count-down/count-down.ts
+
+
+var CountDown = /** @class */ (function () {
+    function CountDown() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-count-down', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    CountDown.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        validComps(target, 'count-down');
+        var _countTime = CountDown.prototype._countTime;
+        return {
+            get endTime() {
+                return '';
+            },
+            set endTime(newVal) {
+                if (newVal && !isStr(newVal))
+                    return;
+                _countTime(target, newVal);
+            },
+            events: function (_a) {
+                var onStop = _a.onStop;
+                if (!onStop)
+                    return;
+                (0,dom_utils.bind)(target, 'DOMNodeInserted', function (e) {
+                    if (e.target.textContent === '00:00:00') {
+                        isFn(onStop, true);
+                    }
+                });
+            }
+        };
+    };
+    CountDown.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            var endTime = _this._attrs(node).endTime;
+            _this._countTime(node, endTime);
+            (0,dom_utils.removeAttrs)(node, ['endTime']);
+        });
+    };
+    CountDown.prototype._countTime = function (node, endTime) {
+        if (!endTime)
+            return;
+        var timer = null;
+        var countDown = function () {
+            //获取当前时间
+            var date = new Date();
+            var now = date.getTime();
+            //设置截止时间
+            var endDate = new Date(endTime);
+            var _endTime = endDate.getTime();
+            //时间差
+            var diff = _endTime - now;
+            //定义变量 d,h,m,s保存倒计时的时间
+            var d = 0, h = 0, m = 0, s = 0;
+            if (diff >= 0) {
+                d = Math.floor(diff / 1000 / 60 / 60 / 24);
+                h = Math.floor((diff / 1000 / 60 / 60) % 24);
+                m = Math.floor((diff / 1000 / 60) % 60);
+                s = Math.floor((diff / 1000) % 60);
+            }
+            var checkTime = function (t) {
+                if (t < 10)
+                    t = "0" + t;
+                return t;
+            };
+            //将0-9的数字前面加上0，例1变为01
+            d = checkTime(d);
+            h = checkTime(h);
+            m = checkTime(m);
+            s = checkTime(s);
+            node.textContent = h + ":" + m + ":" + s;
+        };
+        countDown();
+        timer = window.setInterval(countDown, 1000);
+        (0,dom_utils.bind)(node, 'DOMNodeInserted', function (e) {
+            if (e.target.textContent === '00:00:00') {
+                window.clearInterval(timer);
+                return;
+            }
+        });
+    };
+    CountDown.prototype._attrs = function (node) {
+        return {
+            endTime: (0,dom_utils.getStrTypeAttr)(node, 'end-time', '')
+        };
+    };
+    return CountDown;
+}());
+/* harmony default export */ var count_down = (CountDown);
+
+;// CONCATENATED MODULE: ./src/components/count-down/index.ts
+
+/* harmony default export */ var components_count_down = (count_down);
+
 ;// CONCATENATED MODULE: ./src/components/divider/divider.ts
 
 
@@ -7798,6 +7896,7 @@ var Tooltip = /** @class */ (function () {
 /* harmony default export */ var components_tooltip = (tooltip);
 
 ;// CONCATENATED MODULE: ./src/rabbit-simple-ui.ts
+
 
 
 

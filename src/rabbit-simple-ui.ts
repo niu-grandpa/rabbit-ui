@@ -8,6 +8,7 @@ import Card from './components/card';
 import Carousel from './components/carousel';
 import Checkbox from './components/checkbox';
 import Collapse from './components/collapse';
+import CountDown from './components/count-down';
 import Divider from './components/divider';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
@@ -42,6 +43,7 @@ export {
     Card,
     Carousel,
     Collapse,
+    CountDown,
     Divider,
     Drawer,
     Dropdown,
