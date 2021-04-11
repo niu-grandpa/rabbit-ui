@@ -1,3 +1,4 @@
 # dependencies
 debug.log
 /node_modules
+/site/node_modules

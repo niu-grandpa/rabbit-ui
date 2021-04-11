@@ -34,7 +34,7 @@ RabbitUI
 - Using npm:
 
 ```text
-npm install rabbit-design --save
+npm install rabbit-simple-ui --save
 ```
 
 - Using a script tag for global use:
@@ -97,7 +97,7 @@ NPM environment
 It is recommended to use NPM for installation, enjoy the convenience of the ecosystem and tools, and work well with Webpack. Of course, we also recommend using ES2015.
 
 ```js
-import Rabbit from 'rabbit-design';
+import Rabbit from 'rabbit-simple-ui';
 
 const Alert = new Rabbit.Alert();   
 const Tooltip = new Rabbit.Tooltip();  
@@ -107,7 +107,7 @@ const Collapse = new Rabbit.Collapse();
 Using css via import:
 
 ```js
-import 'rabbit-design/dist/styles/rabbit.css';
+import 'rabbit-simple-ui/dist/styles/rabbit.css';
 ```
 
 ## Import as needed
@@ -120,7 +120,7 @@ npm install babel-plugin-import --save-dev
 // .babelrc
 {
   "plugins": [["import", {
-    "libraryName": "rabbit-design",
+    "libraryName": "rabbit-simple-ui",
     "libraryDirectory": "src/components"
   }]]
 }
@@ -129,12 +129,12 @@ npm install babel-plugin-import --save-dev
 Then import the components as needed to reduce the size:
 
 ```js
-import { Alert, Message } from 'rabbit-design';
+import { Alert, Message } from 'rabbit-simple-ui';
 ```
 
 ### Especially remind
 
--According to the need to still need to import the reference style that the **main js** or the root component `import 'rabbit-design/dist/styles/rabbit. CSS';`
+-According to the need to still need to import the reference style that the **main js** or the root component `import 'rabbit-simple-ui/dist/styles/rabbit. CSS';`
 
 ## Browser Support
 

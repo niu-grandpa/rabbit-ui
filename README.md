@@ -34,7 +34,7 @@ RabbitUI
 - 使用 npm
 
 ```text
-npm install rabbit-design --save
+npm install rabbit-simple-ui --save
 ```
 
 - 浏览器引入
@@ -98,7 +98,7 @@ NPM 环境
 推荐使用 npm 来安装，享受生态圈和工具带来的便利，更好地和 webpack 配合使用，当然，我们也推荐使用 ES2015。
 
 ```js
-import Rabbit from 'rabbit-design';
+import Rabbit from 'rabbit-simple-ui';
 
 const Alert = new Rabbit.Alert();   
 const Tooltip = new Rabbit.Tooltip();
@@ -108,7 +108,7 @@ const Collapse = new Rabbit.Collapse();
 引入样式：
 
 ```js
-import 'rabbit-design/dist/styles/rabbit.css';
+import 'rabbit-simple-ui/dist/styles/rabbit.css';
 ```
 
 ## 按需引用
@@ -121,7 +121,7 @@ npm install babel-plugin-import --save-dev
 // .babelrc
 {
   "plugins": [["import", {
-    "libraryName": "rabbit-design",
+    "libraryName": "rabbit-simple-ui",
     "libraryDirectory": "src/components"
   }]]
 }
@@ -130,12 +130,12 @@ npm install babel-plugin-import --save-dev
 然后这样按需引入组件，就可以减小体积了：
 
 ```js
-import { Alert, Message } from 'rabbit-design';
+import { Alert, Message } from 'rabbit-simple-ui';
 ```
 
 ### 特别提醒
 
-- 按需引用仍然需要导入样式，即在 **main.js** 或根组件执行 `import 'rabbit-design/dist/styles/rabbit.css';`
+- 按需引用仍然需要导入样式，即在 **main.js** 或根组件执行 `import 'rabbit-simple-ui/dist/styles/rabbit.css';`
 
 ## 浏览器支持
 
