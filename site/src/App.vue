@@ -1,15 +1,14 @@
 <template>
-    <div></div>
+    <div>
+        <Header :logo="logo" />
+        <router-view></router-view>
+    </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import Logo from 'assets/logo.svg';
+import Header from 'comps/Header.vue';
 
-export default defineComponent({
-    name: 'App',
-    components: {}
-});
+const logo = ref(Logo);
 </script>
-
-<style lang="less">
-</style>

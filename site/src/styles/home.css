@@ -1,0 +1,21 @@
+.el-footer {
+  background: #fff;
+  color: #55585e;
+  line-height: 60px;
+}
+.el-main {
+  color: #55585e;
+  text-align: center;
+  line-height: 160px;
+}
+.el-footer {
+  text-align: center;
+}
+.el-footer .text {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+}
+body > .el-container {
+  margin-bottom: 40px;
+}

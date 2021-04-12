@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+.el-header {
+  background: #fff;
+  color: #55585e;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+.el-header .el-row {
+  margin-bottom: 20px;
+}
+.el-header .el-row:last-child {
+  margin-bottom: 0;
+}
+.el-header .logo-wrapper {
+  margin-bottom: 0;
+}
+.el-header .logo-wrapper #logo {
+  height: 64px;
+  overflow: hidden;
+  color: #2c3e50;
+  font-size: 18px;
+  line-height: 64px;
+  white-space: nowrap;
+  padding-right: 16px;
+  padding-left: 40px;
+}
+.el-header .logo-wrapper #logo img {
+  position: relative;
+  top: 11px;
+  height: 36px;
+  margin-right: 16px;
+}
