@@ -1,3 +1,29 @@
-import { ElContainer, ElHeader, ElMain, ElFooter, ElRow, ElCol, ElButton } from 'element-plus';
+import {
+    ElContainer,
+    ElHeader,
+    ElMain,
+    ElFooter,
+    ElRow,
+    ElCol,
+    ElButton,
+    ElMenu,
+    ElMenuItem,
+    ElIcon,
+    ElSelect,
+    ElOption
+} from 'element-plus';
 
-export default [ElContainer, ElHeader, ElMain, ElFooter, ElRow, ElCol, ElButton];
+export default [
+    ElContainer,
+    ElHeader,
+    ElMain,
+    ElFooter,
+    ElRow,
+    ElCol,
+    ElButton,
+    ElMenu,
+    ElMenuItem,
+    ElIcon,
+    ElSelect,
+    ElOption
+];

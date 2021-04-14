@@ -1,10 +1,5 @@
 <template>
-    <el-container>
-        <el-main>Main</el-main>
-        <el-footer>
-            <p class="text">MIT Licensed | Copyright © 2020-present Ryan John</p>
-        </el-footer>
-    </el-container>
+    <el-main>Main</el-main>
 </template>
 
 <script lang="ts">

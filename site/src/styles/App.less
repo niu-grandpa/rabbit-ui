@@ -12,7 +12,7 @@ a {
 .el-header {
     background: @white;
     color: @text-color;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
+    border-bottom: 1px solid @border-color-split;
 
     .el-row {
         margin-bottom: 20px;
@@ -22,6 +22,7 @@ a {
     }
 
     .logo-wrapper {
+        display: inline-block;
         margin-bottom: 0;
 
         #logo {
@@ -41,5 +42,33 @@ a {
                 margin-right: 16px;
             }
         }
+    }
+
+    .g-icon {
+        width: 15px;
+        position: relative;
+        top: -1px;
+    }
+}
+
+.el-footer {
+    height: inherit !important;
+    background: #475050;
+    text-align: center;
+    color: @white;
+    padding: 40px 0;
+
+    p {
+        line-height: 1.7;
+        margin: 8px 0;
+    }
+
+    a {
+        color: @white;
+    }
+
+    .social-icon {
+        margin: 0 5px;
+        font-size: 1.2rem;
     }
 }

@@ -8,7 +8,7 @@ a {
 .el-header {
   background: #fff;
   color: #55585e;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #e8eaec;
 }
 .el-header .el-row {
   margin-bottom: 20px;
@@ -17,6 +17,7 @@ a {
   margin-bottom: 0;
 }
 .el-header .logo-wrapper {
+  display: inline-block;
   margin-bottom: 0;
 }
 .el-header .logo-wrapper #logo {
@@ -34,4 +35,27 @@ a {
   top: 11px;
   height: 36px;
   margin-right: 16px;
+}
+.el-header .g-icon {
+  width: 15px;
+  position: relative;
+  top: -1px;
+}
+.el-footer {
+  height: inherit !important;
+  background: #475050;
+  text-align: center;
+  color: #fff;
+  padding: 40px 0;
+}
+.el-footer p {
+  line-height: 1.7;
+  margin: 8px 0;
+}
+.el-footer a {
+  color: #fff;
+}
+.el-footer .social-icon {
+  margin: 0 5px;
+  font-size: 1.2rem;
 }

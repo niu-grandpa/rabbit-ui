@@ -1,14 +1,11 @@
 <template>
-    <div>
-        <Header :logo="logo" />
-        <router-view></router-view>
-    </div>
+    <Header :logo="Logo" />
+    <router-view></router-view>
+    <Footer />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import Logo from 'assets/logo.svg';
 import Header from 'comps/Header.vue';
-
-const logo = ref(Logo);
+import Footer from 'comps/Footer.vue';
 </script>
