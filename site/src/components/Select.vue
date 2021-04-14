@@ -13,8 +13,8 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 
 export default defineComponent({
-    props: {
-        data: Array
+    setup: () => {
+        const state = reactive({});
     }
 });
 </script>
