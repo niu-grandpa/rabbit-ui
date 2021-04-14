@@ -9,8 +9,8 @@ import {
     ElMenu,
     ElMenuItem,
     ElIcon,
-    ElSelect,
-    ElOption
+    ElAutocomplete,
+    ElDivider
 } from 'element-plus';
 
 export default [
@@ -24,6 +24,6 @@ export default [
     ElMenu,
     ElMenuItem,
     ElIcon,
-    ElSelect,
-    ElOption
+    ElAutocomplete,
+    ElDivider
 ];

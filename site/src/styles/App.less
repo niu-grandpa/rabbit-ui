@@ -10,9 +10,11 @@ a {
 }
 
 .el-header {
+    height: 64px !important;
     background: @white;
     color: @text-color;
-    border-bottom: 1px solid @border-color-split;
+    box-shadow: 0 2px 8px #f0f1f2;
+    z-index: 10;
 
     .el-row {
         margin-bottom: 20px;
@@ -37,10 +39,20 @@ a {
 
             img {
                 position: relative;
-                top: 11px;
-                height: 36px;
-                margin-right: 16px;
+                top: 9px;
+                height: 32px;
+                margin-right: 12px;
             }
+        }
+    }
+
+    .inline-search-input {
+        @media (max-width: 1200px) {
+            display: none;
+        }
+
+        .el-input__inner {
+            border: none;
         }
     }
 
@@ -48,6 +60,19 @@ a {
         width: 15px;
         position: relative;
         top: -1px;
+        font-size: 16px;
+    }
+
+    .el-menu {
+        @media (max-width: 1200px) {
+            display: none;
+        }
+
+        background-color: transparent;
+
+        &.el-menu--horizontal {
+            border: none;
+        }
     }
 }
 

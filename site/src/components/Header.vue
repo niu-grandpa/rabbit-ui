@@ -3,11 +3,10 @@
         <el-row>
             <el-col :span="18">
                 <HeaderLogo :src="logo" />
-                <Select />
+                <el-divider direction="vertical"></el-divider>
+                <SearchInput />
             </el-col>
-            <el-col :span="6">
-                <NavBar />
-            </el-col>
+            <el-col :span="6"> <NavBar /></el-col>
         </el-row>
     </el-header>
 </template>
@@ -15,7 +14,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import HeaderLogo from 'comps/HeaderLogo.vue';
-import Select from 'comps/Select.vue';
+import SearchInput from 'comps/SearchInput.vue';
 import NavBar from 'comps/NavBar.vue';
 
 export default defineComponent({
@@ -25,7 +24,7 @@ export default defineComponent({
 
     components: {
         HeaderLogo,
-        Select,
+        SearchInput,
         NavBar
     },
 

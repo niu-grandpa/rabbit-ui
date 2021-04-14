@@ -3,3 +3,44 @@
   text-align: center;
   line-height: 160px;
 }
+.el-main .home-main-wrapper {
+  margin: 2.5rem 0 2.75rem;
+  padding: 0 1.5rem;
+}
+.el-main .home-main-wrapper .figure {
+  margin: 0;
+  padding: 0 1.5rem;
+}
+.el-main .home-main-wrapper .figure img {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  height: 200px;
+  max-width: 100%;
+  max-height: 280px;
+}
+.el-main .home-main-wrapper .title {
+  font-size: 3rem;
+  margin-top: 2.2rem;
+  color: #2c3e50;
+  line-height: 1.25;
+}
+.el-main .home-main-wrapper .desc {
+  margin: 0;
+  font-weight: 300;
+  margin-top: 1.5rem;
+  line-height: 1.2;
+  font-size: 1.6rem;
+}
+.el-main .home-main-wrapper .home-link {
+  position: relative;
+  top: -10px;
+}
+.el-main .home-main-wrapper .home-link .el-button {
+  padding: 0 36px;
+  line-height: 48px;
+  font-size: 1.2rem;
+}
+.el-main .home-main-wrapper .home-link .el-button.is-round {
+  border-radius: 40px;
+}

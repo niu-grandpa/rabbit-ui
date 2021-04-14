@@ -6,9 +6,11 @@ a {
   text-decoration: none;
 }
 .el-header {
+  height: 64px !important;
   background: #fff;
   color: #55585e;
-  border-bottom: 1px solid #e8eaec;
+  box-shadow: 0 2px 8px #f0f1f2;
+  z-index: 10;
 }
 .el-header .el-row {
   margin-bottom: 20px;
@@ -32,14 +34,34 @@ a {
 }
 .el-header .logo-wrapper #logo img {
   position: relative;
-  top: 11px;
-  height: 36px;
-  margin-right: 16px;
+  top: 9px;
+  height: 32px;
+  margin-right: 12px;
+}
+@media (max-width: 1200px) {
+  .el-header .inline-search-input {
+    display: none;
+  }
+}
+.el-header .inline-search-input .el-input__inner {
+  border: none;
 }
 .el-header .g-icon {
   width: 15px;
   position: relative;
   top: -1px;
+  font-size: 16px;
+}
+.el-header .el-menu {
+  background-color: transparent;
+}
+@media (max-width: 1200px) {
+  .el-header .el-menu {
+    display: none;
+  }
+}
+.el-header .el-menu.el-menu--horizontal {
+  border: none;
 }
 .el-footer {
   height: inherit !important;
