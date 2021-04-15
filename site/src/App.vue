@@ -1,16 +1,15 @@
 <template>
-    <Header :logo="Logo" />
-    <Slider v-if="show" :docs="showDocsOpts" />
+    <Header />
     <Home v-if="!show" />
+    <Detail v-if="show" :docs="showDocsOpts" />
 </template>
 
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import Logo from 'assets/logo.svg';
-import Slider from 'pages/common/Sider.vue';
-import Header from 'comps/Header.vue';
-import Home from 'pages/Home/Index.vue';
+import Header from 'comps/header/Index.vue';
+import Detail from 'pages/detail/Index.vue';
+import Home from 'pages/home/Index.vue';
 
 const route = useRoute();
 const reg = /(docs\/|components\/)/;

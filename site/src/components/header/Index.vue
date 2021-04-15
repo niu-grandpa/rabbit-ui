@@ -2,7 +2,7 @@
     <el-header class="app-header">
         <el-row>
             <el-col :span="18">
-                <HeaderLogo :src="logo" />
+                <HeaderLogo />
                 <el-divider direction="vertical" />
                 <SearchInput />
             </el-col>
@@ -13,33 +13,15 @@
     </el-header>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, reactive, toRefs } from 'vue';
-import HeaderLogo from 'comps/HeaderLogo.vue';
-import SearchInput from 'comps/SearchInput.vue';
-import NavBar from 'comps/NavBar.vue';
-
-export default defineComponent({
-    props: {
-        logo: String
-    },
-
-    components: {
-        HeaderLogo,
-        SearchInput,
-        NavBar
-    },
-
-    setup: () => {
-        const state = reactive({});
-
-        return toRefs(state);
-    }
-});
+import HeaderLogo from './HeaderLogo.vue';
+import SearchInput from './SearchInput.vue';
+import NavBar from './NavBar.vue';
 </script>
 
 <style lang="less" scope>
-@import '../../../src/styles/custom';
+@import '../../src/styles/custom';
 
 .app-header {
     height: 64px !important;
