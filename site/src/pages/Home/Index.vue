@@ -1,11 +1,29 @@
-@import '../../../src/styles/custom.less';
+<template>
+    <el-container class="app-index-home">
+        <el-main class="app-index-home-main">
+            <HomeContent />
+            <HomeFooter />
+        </el-main>
+    </el-container>
+</template>
 
-.el-main {
-    color: @text-color;
-    text-align: center;
-    line-height: 160px;
+<script setup>
+import HomeContent from './Content.vue';
+import HomeFooter from './Footer.vue';
+</script>
 
-    .home-main-wrapper {
+<style lang="less" >
+@import '../../src/styles/custom';
+
+.app-index-home {
+    &-main {
+        padding: 0 !important;
+        color: @text-color;
+        text-align: center;
+        line-height: 160px;
+    }
+
+    &-content {
         margin: 2.5rem 0 2.75rem;
         padding: 0 1.5rem;
 
@@ -53,4 +71,27 @@
             }
         }
     }
+
+    &-footer {
+        height: auto !important;
+        background: #475050;
+        text-align: center;
+        color: @white;
+        padding: 40px 0;
+
+        p {
+            line-height: 1.7;
+            margin: 8px 0;
+        }
+
+        a {
+            color: @white;
+        }
+
+        .social-icon {
+            margin: 0 5px;
+            font-size: 1.2rem;
+        }
+    }
 }
+</style>

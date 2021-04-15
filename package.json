@@ -19,7 +19,7 @@
         "typescript",
         "framework"
     ],
-    "main": "src/index.ts",
+    "main": "dist/rabbit.js",
     "files": [
         "dist",
         "src"

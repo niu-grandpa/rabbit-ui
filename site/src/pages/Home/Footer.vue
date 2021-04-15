@@ -1,5 +1,5 @@
 <template>
-    <el-footer>
+    <el-footer class="app-index-home-footer">
         <p>
             <a
                 href="https://github.com/niu-grandpa/rabbit-ui"
@@ -43,9 +43,7 @@
         </p>
         <p class="copyright">
             Released under the
-            <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">
-                MIT License
-            </a>
+            <a href="https://opensource.org/licenses/MIT" target="_blank"> MIT License </a>
             <br />
             Copyright © 2020-2021 Ryan John
         </p>

@@ -1,7 +1,7 @@
 <template>
     <el-menu mode="horizontal">
         <el-menu-item index="1">
-            <router-link to="/docs/install">安装</router-link>
+            <router-link to="/docs/introduce">文档</router-link>
         </el-menu-item>
         <el-menu-item index="2">
             <router-link to="/components/color">组件</router-link>

@@ -5,30 +5,28 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: () => import('pages/Home.vue'),
+            component: () => import('@/App.vue'),
             meta: {
                 title: 'Rabbit UI -一个轻量级的 UI 插件库'
             }
         },
         {
             path: '/docs',
-            redirect: '/',
-            component: () => import('pages/docs/Detail.vue'),
-
-            children: [
-                {
-                    path: '/introduce',
-                    component: () => import('pages/docs/Introduce.vue'),
-                    meta: { title: '介绍 - Rabbit' }
-                }
-            ]
+            redirect: '/'
         },
         {
             path: '/components',
-            redirect: '/',
-            component: () => import('pages/components/Detail.vue'),
-
-            children: []
+            redirect: '/'
+        },
+        {
+            path: '/docs/introduce',
+            component: () => import('pages/docs/Introduce.vue'),
+            meta: { title: '介绍 - Rabbit' }
+        },
+        {
+            path: '/components/color',
+            component: () => import('pages/components/Color.vue'),
+            meta: { title: '色彩 Color -Rabbit' }
         }
     ]
 });
