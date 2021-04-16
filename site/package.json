@@ -9,7 +9,8 @@
     "dependencies": {
         "element-plus": "^1.0.2-beta.39",
         "vue": "^3.0.5",
-        "vue-router": "^4.0.6"
+        "vue-router": "^4.0.6",
+        "vue-wechat-title": "^2.0.7"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^1.2.1",

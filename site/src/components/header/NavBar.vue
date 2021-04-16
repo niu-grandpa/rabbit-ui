@@ -1,5 +1,5 @@
 <template>
-    <el-menu mode="horizontal">
+    <el-menu mode="horizontal" :default-active="current">
         <el-menu-item index="1">
             <router-link to="/docs/introduce">文档</router-link>
         </el-menu-item>
@@ -13,3 +13,23 @@
         </el-menu-item>
     </el-menu>
 </template>
+
+<script lang="ts" setup>
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const current = ref('');
+
+const setActiveLink = () => {
+    if (route.path.indexOf('/docs') === 0) {
+        current.value = '1';
+    } else if (route.path.indexOf('/components') === 0) {
+        current.value = '2';
+    } else {
+        current.value = '';
+    }
+};
+
+watchEffect(() => setActiveLink());
+</script>

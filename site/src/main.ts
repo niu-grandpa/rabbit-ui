@@ -1,13 +1,13 @@
 import { createApp } from 'vue';
 import Element from 'plugin/element';
-import router from './routes';
+import Router from './routes';
 import App from './App.vue';
 
 import 'styles/App.less';
 
 const app = createApp(App);
 
-usePlugins([router, ...Element]);
+usePlugins([Router, ...Element]);
 
 app.mount('#app');
 

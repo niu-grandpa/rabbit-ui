@@ -12,7 +12,8 @@ import {
     ElMenuItem,
     ElIcon,
     ElAutocomplete,
-    ElDivider
+    ElDivider,
+    ElAffix
 } from 'element-plus';
 
 export default [
@@ -29,5 +30,6 @@ export default [
     ElMenuItem,
     ElIcon,
     ElAutocomplete,
-    ElDivider
+    ElDivider,
+    ElAffix
 ];

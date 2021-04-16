@@ -24,7 +24,7 @@ import NavBar from './NavBar.vue';
 @import '../../src/styles/custom';
 
 .app-header {
-    height: 64px !important;
+    height: 65px !important;
     background: @white;
     color: @text-color;
     border-bottom: 1px solid @border-color-split;
@@ -86,6 +86,12 @@ import NavBar from './NavBar.vue';
 
         &.el-menu--horizontal {
             border: none;
+        }
+
+        &-item {
+            a {
+                display: inline-block;
+            }
         }
     }
 }

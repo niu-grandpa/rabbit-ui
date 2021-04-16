@@ -1,7 +1,7 @@
 <template>
     <Header />
-    <Home v-if="!show" />
-    <Detail v-if="show" :docs="showDocsOpts" />
+    <Home v-if="!homePage" />
+    <Detail v-else />
 </template>
 
 <script lang="ts" setup>
@@ -13,13 +13,7 @@ import Home from 'pages/home/Index.vue';
 
 const route = useRoute();
 const reg = /(docs\/|components\/)/;
-const isDocs = /docs\//;
+const homePage = ref(false);
 
-const show = ref(false);
-const showDocsOpts = ref(false);
-
-watchEffect(() => {
-    reg.test(route.path) ? (show.value = true) : (show.value = false);
-    isDocs.test(route.path) ? (showDocsOpts.value = true) : (showDocsOpts.value = false);
-});
+watchEffect(() => (reg.test(route.path) ? (homePage.value = true) : (homePage.value = false)));
 </script>

@@ -5,10 +5,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: () => import('@/App.vue'),
-            meta: {
-                title: 'Rabbit UI -一个轻量级的 UI 插件库'
-            }
+            component: () => import('@/App.vue')
         },
         {
             path: '/docs',
@@ -20,13 +17,23 @@ const router = createRouter({
         },
         {
             path: '/docs/introduce',
-            component: () => import('pages/docs/Introduce.vue'),
-            meta: { title: '介绍 - Rabbit' }
+            component: () => import('pages/docs/Introduce.vue')
+        },
+        {
+            path: '/docs/install',
+            component: () => import('pages/docs/Install.vue')
+        },
+        {
+            path: '/docs/start',
+            component: () => import('pages/docs/Start.vue')
+        },
+        {
+            path: '/docs/update',
+            component: () => import('pages/docs/Update.vue')
         },
         {
             path: '/components/color',
-            component: () => import('pages/components/Color.vue'),
-            meta: { title: '色彩 Color -Rabbit' }
+            component: () => import('pages/components/Color.vue')
         }
     ]
 });
