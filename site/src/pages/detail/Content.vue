@@ -9,7 +9,7 @@
 <style lang="less" scoped>
 .app {
     &-right {
-        margin-left: 315px;
+        margin-left: 380px;
     }
 
     &-content-wrapper {

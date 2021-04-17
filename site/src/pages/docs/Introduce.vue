@@ -33,7 +33,7 @@
             <Anchor title="版本" />
             <p>
                 <a href="https://www.npmjs.com/package/rabbit-simple-ui" target="_blank">
-                    <img src="https://img.shields.io/badge/npm-v1.0.1-orange" />
+                    <img :src="npmVersionImg" />
                 </a>
             </p>
             <Anchor title="兼容" />
@@ -55,6 +55,9 @@ import { onMounted } from 'vue';
 import Anchor from 'comps/anchor/Index.vue';
 import { Code1, Code2, Code3 } from 'docsMdCode/introduce';
 import Alert from 'rabbitSrc/components/alert';
+
+const version = '1.0.2';
+const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [
     '优雅、简洁，与庞大且臃肿令人眼花缭乱的结构 Say goodbye',

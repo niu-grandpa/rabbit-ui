@@ -1,5 +1,5 @@
 <template>
-    <el-aside width="315px" class="app-left" :class="{ 'aside-fixed': fixed }">
+    <el-aside width="320px" class="app-left" :class="{ 'aside-fixed': fixed }">
         <el-menu :default-active="route.path">
             <div class="comp-link-menu">
                 <template v-if="show">
