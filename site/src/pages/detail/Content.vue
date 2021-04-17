@@ -1,8 +1,8 @@
 <template>
     <el-main class="app-right">
-        <div class="app-content-wrapper">
+        <section class="app-content-wrapper">
             <router-view></router-view>
-        </div>
+        </section>
     </el-main>
 </template>
 

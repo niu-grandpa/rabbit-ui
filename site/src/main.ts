@@ -11,7 +11,7 @@ usePlugins([Router, ...Element]);
 
 app.mount('#app');
 
-function usePlugins(plugins: [...any]) {
+function usePlugins(plugins: [...any]): void {
     for (let i = 0, len = plugins.length; i < len; i++) {
         app.use(plugins[i]);
     }

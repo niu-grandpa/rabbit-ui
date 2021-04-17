@@ -14,7 +14,10 @@ export default defineConfig({
             pages: path.resolve(__dirname, 'src/pages'),
             styles: path.resolve(__dirname, 'src/styles'),
             plugin: path.resolve(__dirname, 'src/plugin'),
-            rabbit: path.resolve(__dirname, '../dist')
+            rabbit: path.resolve(__dirname, '../dist'),
+            rabbitSrc: path.resolve(__dirname, '../src/'),
+            docsMdCode: path.resolve(__dirname, 'src/pages/docs/markdown-code'),
+            compMdCode: path.resolve(__dirname, 'src/pages/components/markdown-code')
         }
     },
     plugins: [

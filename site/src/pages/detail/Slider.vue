@@ -44,7 +44,7 @@ const handleScroll = () => {
     const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-    scrollTop >= 64 ? (fixed.value = true) : (fixed.value = false);
+    scrollTop >= 20 ? (fixed.value = true) : (fixed.value = false);
 };
 
 watchEffect(() => changeList());
