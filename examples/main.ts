@@ -37,7 +37,7 @@ import '../src/styles/index.less';
 
 // alertTest();
 // avatarTest();
-// backtopTest();
+backtopTest();
 // badgeTest();
 // breadcrumbTest();
 // buttonTest();
@@ -45,7 +45,7 @@ import '../src/styles/index.less';
 // carouselTest();
 // checkboxTest();
 // collapseTest();
-countDownTest();
+// countDownTest();
 // dividerTest();
 // drawerTest();
 // dropdownTest();
