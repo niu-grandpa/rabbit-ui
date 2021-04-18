@@ -7811,8 +7811,9 @@ var Tooltip = /** @class */ (function () {
     Tooltip.prototype._triggerDisplay = function (trigger, reference, popper) {
         var _this = this;
         var ev = function () {
-            if (trigger === 'enter')
+            if (trigger === 'enter') {
                 _this._initSetPopper(reference, popper);
+            }
             CssTransition(popper, {
                 inOrOut: trigger === 'enter' ? 'in' : 'out',
                 rmCls: true,

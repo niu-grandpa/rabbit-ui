@@ -13,7 +13,8 @@ import {
     ElIcon,
     ElAutocomplete,
     ElDivider,
-    ElAffix
+    ElTimeline,
+    ElTimelineItem
 } from 'element-plus';
 
 export default [
@@ -31,5 +32,6 @@ export default [
     ElIcon,
     ElAutocomplete,
     ElDivider,
-    ElAffix
+    ElTimeline,
+    ElTimelineItem
 ];

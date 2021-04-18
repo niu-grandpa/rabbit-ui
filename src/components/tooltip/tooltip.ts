@@ -140,7 +140,9 @@ class Tooltip implements Config {
         popper: HTMLElement
     ): void {
         const ev = () => {
-            if (trigger === 'enter') this._initSetPopper(reference, popper);
+            if (trigger === 'enter') {
+                this._initSetPopper(reference, popper);
+            }
 
             CssTransition(popper, {
                 inOrOut: trigger === 'enter' ? 'in' : 'out',

@@ -37,7 +37,7 @@ import '../src/styles/index.less';
 
 // alertTest();
 // avatarTest();
-backtopTest();
+// backtopTest();
 // badgeTest();
 // breadcrumbTest();
 // buttonTest();
@@ -68,4 +68,4 @@ backtopTest();
 // tagTest();
 // timeTest();
 // timelineTest();
-// tooltipTest();
+tooltipTest();
