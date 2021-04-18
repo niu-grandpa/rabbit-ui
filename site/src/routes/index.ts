@@ -24,7 +24,7 @@ const router = createRouter({
             component: () => import('pages/docs/Install.vue')
         },
         {
-            path: '/docs/start',
+            path: '/docs/quickstart',
             component: () => import('pages/docs/Start.vue')
         },
         {
@@ -37,5 +37,7 @@ const router = createRouter({
         }
     ]
 });
+
+router.afterEach(() => window.scrollTo(0, 0));
 
 export default router;
