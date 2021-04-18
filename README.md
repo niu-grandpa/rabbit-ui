@@ -8,10 +8,11 @@
 
 <h1>
 RabbitUI
-    <h3>一个基于 Javascript 并使用 Typescript 编写的轻量级 UI 插件库</h3>
+    <h3>一个基于 JavaScript 并使用 TypeScript 编写的轻量级 UI 插件库</h3>
 </h1>
 
-> 目前项目仍处于制作阶段，后续将会更新更多的组件，制作更加详细的文档介绍和官网详情页面
+
+> 官方文档网站正在制作中
 
 ### 特性
 
@@ -31,7 +32,7 @@ RabbitUI
 
 ### 安装
 
-- 使用 npm
+- 使用 npm，你将需要使用`TypeScript`，并在ts文件里编写和使用代码。 请确保你了解过它，并能够大致使用
 
 ```text
 npm install rabbit-simple-ui --save
@@ -39,7 +40,7 @@ npm install rabbit-simple-ui --save
 
 - 浏览器引入
 
-在浏览器中使用 script 和 link 标签直接引入文件，并使用全局变量 `Rabbit`。
+在浏览器中使用 `script` 和 `link` 标签直接引入文件，并使用全局变量 `Rabbit`。
 
 ```html
 <!--引入样式库-->
@@ -50,64 +51,50 @@ npm install rabbit-simple-ui --save
 
 ## 示例
 
-浏览器环境示例
+通过 CDN 的方式我们可以很容易地使用 Rabbit UI 写出一个示例：
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!--引入样式库-->
-    <link rel="stylesheet" href="dist/styles/rabbit.css">
+    <meta charset="utf-8">
+    <title>RabbitUI demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/rabbit-simple-ui/dist/styles/rabbit.css">
 </head>
-    
 <body>
-    <!--警告提示组件-->
-    <r-alert type="success" message="Success Text"></r-alert>
-    <!--工具提示组件-->
-    <r-tooltip content="这里是提示文字">鼠标经过这段文字时，会显示一个气泡框</r-tooltip>
-    <!--折叠面板组件-->
-    <r-collapse defaultActiveKey="1">
-      <r-collapse-panel key="1" title="面板标题1">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-      <r-collapse-panel key="2" title="面板标题2">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-      <r-collapse-panel key="3" title="面板标题3">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-    </r-collapse>
+    <button type="button" class="rab-btn" onclick="show">Hello Rabbit UI</button>
+    <r-modal title="Welcome" id="exampleModal">
+       <p>Welcome to RabbitUI</p>
+    </r-modal>
 </body>
-<!--引入 Rabbit.js-->
-<script type="text/javascript" src="rabbit.min.js"></script>
+<script src="https://unpkg.com/rabbit-simple-ui/dist/rabbit.min.js"></script>
 <script>
-    // 需要先实例化组件的构造函数
-    const Alert = new Rabbit.Alert();   
-    const Tooltip = new Rabbit.Tooltip();  
-    const Collapse = new Rabbit.Collapse();  
+    // 初始化modal
+    const modal = new Rabbit.Modal();
+    show = function() {
+        modal.config('#exampleModal').visable = true;  
+    }
 </script>
 </html>
 ```
 
 NPM 环境
 
-推荐使用 npm 来安装，享受生态圈和工具带来的便利，更好地和 webpack 配合使用，当然，我们也推荐使用 ES2015。
+使用 npm 来安装，享受工具带来的便利，更好地和 webpack 配合使用，且推荐使用 ES2015。
 
-```js
-import Rabbit from 'rabbit-simple-ui';
+```ts
+import Alert from 'rabbit-simple-ui/src/components/alert';
+import Tooltip from 'rabbit-simple-ui/src/components/alert';
+import Collapse from 'rabbit-simple-ui/src/components/alert';
 
-const Alert = new Rabbit.Alert();   
-const Tooltip = new Rabbit.Tooltip();
-const Collapse = new Rabbit.Collapse();  
+new Alert();   
+new Tooltip();
+new Collapse();  
 ```
 
 引入样式：
 
-```js
+```ts
 import 'rabbit-simple-ui/dist/styles/rabbit.css';
 ```
 
@@ -117,7 +104,9 @@ import 'rabbit-simple-ui/dist/styles/rabbit.css';
 
 ```text
 npm install babel-plugin-import --save-dev
+```
 
+```json
 // .babelrc
 {
   "plugins": [["import", {
@@ -129,7 +118,7 @@ npm install babel-plugin-import --save-dev
 
 然后这样按需引入组件，就可以减小体积了：
 
-```js
+```ts
 import { Alert, Message } from 'rabbit-simple-ui';
 ```
 
@@ -139,7 +128,7 @@ import { Alert, Message } from 'rabbit-simple-ui';
 
 ## 浏览器支持
 
-现代浏览器和Internet Explorer 10+。
+现代浏览器和Internet Explorer 9+。
 
 ## 相关链接
 

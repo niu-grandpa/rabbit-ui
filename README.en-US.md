@@ -11,13 +11,14 @@ RabbitUI
     <h3>A lightweight UI plug-in library written in TypeScript and based on JavaScript</h3>
 </h1>
 
-> At present, the project is still in the production stage. In the future, more components will be updated and more detailed documentation and official website details page will be produced
+
+> The official documentation website is in the works
 
 ### Features
 
-- Elegant, concise, and huge and bloated people look dazzling structure Say goodbye
+- Elegant, concise, and huge and bloated let people see the dazzling structure Say goodbye
 
-- It does not rely on any third party framework, and is based on native JavaScript
+- It does not rely on any third party framework, and is based on native JavaScript at the bottom, out-of-the-box
 
 - Custom tags that use small amounts of HTML code and are semantically readable
 
@@ -31,7 +32,7 @@ RabbitUI
 
 ### Install
 
-- Using npm:
+- With NPM, you'll need to use 'TypeScript' and write and use code in TS files. Make sure you understand it and can use it in general
 
 ```text
 npm install rabbit-simple-ui --save
@@ -39,7 +40,7 @@ npm install rabbit-simple-ui --save
 
 - Using a script tag for global use:
 
-Import the file directly in the browser using the script and link tags, and use the global variable `Rabbit`.
+Import the file directly in the browser using the `script` and `link` tags, and use the global variable `Rabbit`.
 
 ```html
 <!--import the style-->
@@ -50,58 +51,45 @@ Import the file directly in the browser using the script and link tags, and use 
 
 ## Usage
 
-Browser environment example
+With a CDN we can easily write an example using Rabbit UI:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-     <!--import the style-->
-    <link rel="stylesheet" href="dist/styles/rabbit.css">
+    <meta charset="utf-8">
+    <title>RabbitUI demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/rabbit-simple-ui/dist/styles/rabbit.css">
 </head>
-    
 <body>
-    <!--Alert component-->
-    <r-alert type="success" message="Success Text"></r-alert>
-    <!--Tooltip component-->
-    <r-tooltip content="这里是提示文字">鼠标经过这段文字时，会显示一个气泡框</r-tooltip>
-    <!--Collapse component-->
-    <r-collapse defaultActiveKey="1">
-      <r-collapse-panel key="1" title="面板标题1">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-      <r-collapse-panel key="2" title="面板标题2">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-      <r-collapse-panel key="3" title="面板标题3">
-          <p>狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。</p>
-      </r-collapse-panel>
-    </r-collapse>
+    <button type="button" class="rab-btn" onclick="show">Hello Rabbit UI</button>
+    <r-modal title="Welcome" id="exampleModal">
+       <p>Welcome to RabbitUI</p>
+    </r-modal>
 </body>
-<!--import Rabbit.js-->
-<script type="text/javascript" src="rabbit.min.js"></script>
+<script src="https://unpkg.com/rabbit-simple-ui/dist/rabbit.min.js"></script>
 <script>
-    const Alert = new Rabbit.Alert();   
-    const Tooltip = new Rabbit.Tooltip();  
-    const Collapse = new Rabbit.Collapse();  
+    // 初始化modal
+    const modal = new Rabbit.Modal();
+    show = function() {
+        modal.config('#exampleModal').visable = true;  
+    }
 </script>
 </html>
 ```
 
 NPM environment
 
-It is recommended to use NPM for installation, enjoy the convenience of the ecosystem and tools, and work well with Webpack. Of course, we also recommend using ES2015.
+Use NPM to install, enjoy the convenience of the tool, work better with Webpack, and ES2015 is recommended.
 
 ```js
-import Rabbit from 'rabbit-simple-ui';
+import Alert from 'rabbit-simple-ui/src/components/alert';
+import Tooltip from 'rabbit-simple-ui/src/components/alert';
+import Collapse from 'rabbit-simple-ui/src/components/alert';
 
-const Alert = new Rabbit.Alert();   
-const Tooltip = new Rabbit.Tooltip();  
-const Collapse = new Rabbit.Collapse();  
+new Alert();   
+new Tooltip();
+new Collapse();  
 ```
 
 Using css via import:
@@ -114,9 +102,11 @@ import 'rabbit-simple-ui/dist/styles/rabbit.css';
 
 With the help of [babel-plugin-import](https://github.com/ant-design/babel-plugin-import), you can load components on demand and reduce file size. First install and configure it in file '.babelrc ':
 
-```js
+```text
 npm install babel-plugin-import --save-dev
+```
 
+```json
 // .babelrc
 {
   "plugins": [["import", {
@@ -134,11 +124,11 @@ import { Alert, Message } from 'rabbit-simple-ui';
 
 ### Especially remind
 
--According to the need to still need to import the reference style that the **main js** or the root component `import 'rabbit-simple-ui/dist/styles/rabbit. CSS';`
+-According to the need to still need to import the reference style that the **main js** or the root component `import 'rabbit-simple-ui/dist/styles/rabbit.css';`
 
 ## Browser Support
 
-Modern browsers and Internet Explorer 10+.
+Modern browsers and Internet Explorer 9+.
 
 ## Related links
 
