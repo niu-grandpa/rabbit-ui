@@ -58,8 +58,8 @@
 import { onMounted } from 'vue';
 import Anchor from 'comps/anchor/Index.vue';
 import { Code1, Code2, Code3 } from 'docsMdCode/introduce';
-import Alert from 'rabbitSrc/components/alert';
-import Tooltip from 'rabbitSrc/components/tooltip';
+import Alert from 'rabbitui/alert';
+import Tooltip from 'rabbitui/tooltip';
 
 const version = '1.0.2';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
