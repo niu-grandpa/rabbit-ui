@@ -7711,13 +7711,24 @@ var Timeline = /** @class */ (function () {
 
 ;// CONCATENATED MODULE: ./src/components/tooltip/tooltip.ts
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
-var tooltip_SHOWTIMER, tooltip_EVENTTIMER;
+
+var DefaultDelay = 80;
+var EnterCls = 'zoom-big-fast-enter';
+var LeaveCls = 'zoom-big-fast-leave';
+var CssTransitonCommonConfig = {
+    rmCls: true,
+    timeout: 80,
+    enterCls: EnterCls,
+    leaveCls: LeaveCls
+};
+var visableTimer, eventTimer;
 var Tooltip = /** @class */ (function () {
     function Tooltip() {
-        this.VERSION = 'v1.0';
+        this.VERSION = 'v2.0';
         this.COMPONENTS = (0,dom_utils.$el)('r-tooltip', { all: true });
         this._create(this.COMPONENTS);
         scrollUpdate();
@@ -7725,172 +7736,325 @@ var Tooltip = /** @class */ (function () {
     Tooltip.prototype.config = function (el) {
         var target = (0,dom_utils.$el)(el);
         validComps(target, 'tooltip');
-        var _a = Tooltip.prototype, _getDelay = _a._getDelay, _getIsAlways = _a._getIsAlways, _getIsDisabled = _a._getIsDisabled;
-        var popper = target.querySelector("." + prefix.default.tooltip + "-popper");
-        var popperText = target.querySelector("." + prefix.default.tooltip + "-inner");
+        var _a = Tooltip.prototype, _attrs = _a._attrs, _setAlwaysShow = _a._setAlwaysShow, _handleMouseEv = _a._handleMouseEv;
+        var _b = _attrs(target), delay = _b.delay, always = _b.always, disabled = _b.disabled, offset = _b.offset, placement = _b.placement;
+        var TooltipPopper = target.querySelector("." + prefix.default.tooltip + "-popper");
+        var TooltipInner = target.querySelector("." + prefix.default.tooltip + "-inner");
         return {
             get content() {
-                return (0,dom_utils.setText)(popperText);
+                return (0,dom_utils.setHtml)(TooltipInner);
             },
             set content(newVal) {
-                if (isStr(newVal) || isNum(newVal))
-                    (0,dom_utils.setHtml)(popperText, "" + newVal);
+                if (newVal && !isStr(newVal) && !isNum(newVal))
+                    return;
+                (0,dom_utils.setHtml)(TooltipInner, "" + newVal);
+            },
+            get always() {
+                return always;
+            },
+            set always(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _setAlwaysShow(TooltipPopper, newVal);
+            },
+            get disabled() {
+                return disabled;
+            },
+            set disabled(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _handleMouseEv(target, TooltipPopper, delay, offset, placement, this.always, newVal);
             },
             events: function (_a) {
-                var onShow = _a.onShow, onHide = _a.onHide;
-                if (_getIsAlways(target) || _getIsDisabled(target))
-                    return;
-                var delay = _getDelay(target);
-                handleHoverShowAndHideEvents({
-                    reference: target,
-                    popper: popper,
-                    datasetVal: 'tooltipShow',
-                    showCb: onShow,
-                    hideCb: onHide,
-                    delay: delay,
-                    timer: tooltip_EVENTTIMER
-                });
+                var onVisibleChange = _a.onVisibleChange;
+                var event = function () {
+                    var visable = TooltipPopper.dataset.tooltipState === 'show';
+                    onVisibleChange && isFn(onVisibleChange, visable);
+                };
+                var show = function () {
+                    if (eventTimer)
+                        clearTimeout(eventTimer);
+                    eventTimer = setTimeout(event, delay);
+                };
+                var close = function () {
+                    if (eventTimer)
+                        clearTimeout(eventTimer);
+                    // 当鼠标移出tooltip后判断当前状态如果为 show，
+                    // 那么说明气泡显示过了，该执行移出事件了。
+                    // 避免了即使鼠标移出但没有显示过气泡而依然执行事件。
+                    if (TooltipPopper.dataset.tooltipState === 'show')
+                        setTimeout(event, DefaultDelay);
+                };
+                (0,dom_utils.bind)(target, 'mouseenter', show);
+                (0,dom_utils.bind)(target, 'mouseleave', close);
             }
         };
     };
     Tooltip.prototype._create = function (COMPONENTS) {
         var _this = this;
         COMPONENTS.forEach(function (node) {
-            _this._createTooltipNodes(node);
-            (0,dom_utils.removeAttrs)(node, ['content', 'theme', 'delay', 'max-width', 'disabled', 'always']);
+            var _a = _this._attrs(node), content = _a.content, theme = _a.theme, placement = _a.placement, offset = _a.offset, maxWidth = _a.maxWidth, delay = _a.delay, always = _a.always, disabled = _a.disabled;
+            var children = !node.firstElementChild
+                ? node.innerHTML.trim()
+                : node.firstElementChild;
+            _this._setMainTemplate(node, content, theme, placement);
+            var TooltipPopper = node.querySelector("." + prefix.default.tooltip + "-popper");
+            _this._setReferencesElem(node, children);
+            _this._setPopper(node, TooltipPopper, placement, offset);
+            _this._setMaxWidth(node, maxWidth);
+            _this._setAlwaysShow(TooltipPopper, always);
+            _this._handleMouseEv(node, TooltipPopper, delay, offset, placement, always, disabled);
+            (0,dom_utils.removeAttrs)(node, ['content', 'theme', 'delay', 'max-width', 'disabled', 'offset']);
         });
     };
-    Tooltip.prototype._createTooltipNodes = function (reference) {
-        var TooltipRef = (0,dom_utils.createElem)('div');
-        var TooltipPopper = (0,dom_utils.createElem)('div');
-        var TooltipContent = (0,dom_utils.createElem)('div');
-        var TooltipArrow = (0,dom_utils.createElem)('div');
-        var TooltipInner = (0,dom_utils.createElem)('div');
-        this._setCls(reference, [
-            TooltipRef,
-            TooltipPopper,
-            TooltipContent,
-            TooltipArrow,
-            TooltipInner
-        ]);
-        this._setTip(reference, TooltipInner);
-        this._setMaxWidth(reference, TooltipInner);
-        var disabledShow = this._getIsDisabled(reference);
-        var alwaysShow = this._setIsAlwaysShow(reference, TooltipPopper);
-        // 如果 tooltip 没有设置为总是可见或者禁用显示，则正常鼠标移入移出事件
-        if (!alwaysShow && !disabledShow) {
-            this._triggerDisplay('enter', reference, TooltipPopper);
-            this._triggerDisplay('leave', reference, TooltipPopper);
-        }
-        var firstElementChild = reference.firstElementChild;
-        // 只选取第一个子元素作为宿主元素
-        if (firstElementChild)
-            TooltipRef.appendChild(firstElementChild);
-        TooltipPopper.appendChild(TooltipContent);
-        TooltipPopper.append(TooltipArrow, TooltipInner);
-        reference.append(TooltipRef, TooltipPopper);
+    Tooltip.prototype._setMainTemplate = function (node, content, theme, placement) {
+        var template = "\n         <div class=\"" + prefix.default.tooltip + "-rel\"></div>\n         <div class=\"" + prefix.default.tooltip + "-popper " + prefix.default.tooltip + "-" + theme + "\" x-placement=\"" + placement + "\">\n             <div class=\"" + prefix.default.tooltip + "-content\">\n                 <div class=\"" + prefix.default.tooltip + "-arrow\"></div>\n                 <div class=\"" + prefix.default.tooltip + "-inner\">" + content + "</div>\n             </div>\n         </div>\n       ";
+        (0,dom_utils.setHtml)(node, template);
     };
-    Tooltip.prototype._setCls = function (reference, nodes) {
-        // 获取主题颜色
-        var theme = this._getTheme(reference);
-        var nodesCls = [
-            prefix.default.tooltip + "-rel",
-            prefix.default.tooltip + "-popper " + prefix.default.tooltip + "-" + theme,
-            prefix.default.tooltip + "-content",
-            prefix.default.tooltip + "-arrow",
-            prefix.default.tooltip + "-inner"
-        ];
-        // 批量添加样式类名
-        var i = 0;
-        var length = nodes.length;
-        for (; i < length; i++) {
-            var node = nodes[i];
-            node.className = "" + nodesCls[i];
-        }
-    };
-    Tooltip.prototype._triggerDisplay = function (trigger, reference, popper) {
-        var _this = this;
-        var ev = function () {
-            if (trigger === 'enter') {
-                _this._initSetPopper(reference, popper);
-            }
-            CssTransition(popper, {
-                inOrOut: trigger === 'enter' ? 'in' : 'out',
-                rmCls: true,
-                enterCls: 'zoom-big-fast-enter',
-                leaveCls: 'zoom-big-fast-leave',
-                timeout: 85
-            });
-        };
-        var delay = this._getDelay(reference);
-        if (trigger === 'enter') {
-            reference.addEventListener('mouseenter', function () {
-                tooltip_SHOWTIMER = setTimeout(function () {
-                    ev();
-                }, delay);
-            });
-            toggleUpdate(popper, 'hover', reference, delay);
+    Tooltip.prototype._setReferencesElem = function (node, children) {
+        var TooltipRel = node.querySelector("." + prefix.default.tooltip + "-rel");
+        if (children instanceof Element) {
+            TooltipRel.appendChild(children);
         }
         else {
-            reference.addEventListener('mouseleave', function () {
-                clearTimeout(tooltip_SHOWTIMER);
-                ev();
-            });
+            (0,dom_utils.setHtml)(TooltipRel, children);
         }
     };
-    Tooltip.prototype._setTip = function (reference, popper) {
-        return (popper.textContent = this._getTip(reference));
-    };
-    Tooltip.prototype._setMaxWidth = function (reference, popper) {
-        var maxWidth = this._getMaxWidth(reference);
-        if (maxWidth <= 0)
+    Tooltip.prototype._setMaxWidth = function (node, width) {
+        if (!width)
             return;
-        (0,dom_utils.setCss)(popper, 'maxWidth', maxWidth + "px");
-        popper.classList.add(prefix.default.tooltip + "-inner-with-width");
+        var TooltipInner = node.querySelector("." + prefix.default.tooltip + "-inner");
+        TooltipInner.classList.add(prefix.default.tooltip + "-with-width");
+        (0,dom_utils.setCss)(TooltipInner, 'maxWidth', width + "px");
     };
-    Tooltip.prototype._initSetPopper = function (reference, popper) {
-        var offset = this._getOffset(reference);
-        var placement = this._getPlacement(reference);
-        popper.setAttribute('x-placement', placement);
-        return _newCreatePopper(reference, popper, placement, offset);
+    Tooltip.prototype._setAlwaysShow = function (children, always) {
+        if (!always)
+            (0,dom_utils.setCss)(children, 'display', 'none');
+        children.dataset.tooltipState = 'pending';
     };
-    Tooltip.prototype._setIsAlwaysShow = function (reference, popper) {
-        var isAlways = this._getIsAlways(reference);
-        if (isAlways) {
-            (0,dom_utils.setCss)(popper, 'display', '');
-            this._initSetPopper(reference, popper);
-            return true;
-        }
-        (0,dom_utils.setCss)(popper, 'display', 'none');
+    Tooltip.prototype._handleMouseEv = function (node, children, delay, offset, placement, always, disabled) {
+        var _this = this;
+        if (always || disabled)
+            return;
+        var setVisable = function (mode) {
+            if (mode === 'in')
+                _this._setPopper(node, children, placement, offset);
+            children.dataset.tooltipState = mode === 'in' ? 'show' : 'close';
+            CssTransition(children, __assign({ inOrOut: mode }, CssTransitonCommonConfig));
+        };
+        var show = function () {
+            if (visableTimer)
+                clearTimeout(visableTimer);
+            visableTimer = setTimeout(function () { return setVisable('in'); }, delay);
+        };
+        var hide = function () {
+            if (visableTimer)
+                clearTimeout(visableTimer);
+            if (children.dataset.tooltipState === 'show')
+                setTimeout(function () { return setVisable('out'); }, DefaultDelay);
+        };
+        (0,dom_utils.bind)(node, 'mouseenter', show);
+        (0,dom_utils.bind)(node, 'mouseleave', hide);
     };
-    Tooltip.prototype._getTip = function (node) {
-        return node.getAttribute('content') || '';
+    Tooltip.prototype._setPopper = function (node, children, placement, offset) {
+        return _newCreatePopper(node, children, placement, offset);
     };
-    Tooltip.prototype._getPlacement = function (node) {
-        return node.getAttribute('placement') || 'bottom';
-    };
-    Tooltip.prototype._getDelay = function (node) {
-        // 默认 100毫秒的延迟，防止鼠标快速经过时也会显示tooltip
-        return Number(node.getAttribute('delay')) || 100;
-    };
-    Tooltip.prototype._getIsAlways = function (node) {
-        return node.getAttribute('always') === 'true';
-    };
-    Tooltip.prototype._getIsDisabled = function (node) {
-        return node.getAttribute('disabled') === 'true';
-    };
-    Tooltip.prototype._getTheme = function (node) {
-        return node.getAttribute('theme') || 'dark';
-    };
-    Tooltip.prototype._getMaxWidth = function (node) {
-        return Number(node.getAttribute('max-width')) || 0;
-    };
-    Tooltip.prototype._getOffset = function (node) {
-        return Number(node.getAttribute('offset')) || 0;
+    Tooltip.prototype._attrs = function (node) {
+        return {
+            theme: (0,dom_utils.getStrTypeAttr)(node, 'theme', 'dark'),
+            content: (0,dom_utils.getStrTypeAttr)(node, 'content', ''),
+            maxWidth: (0,dom_utils.getStrTypeAttr)(node, 'max-width', ''),
+            placement: (0,dom_utils.getStrTypeAttr)(node, 'placement', 'top'),
+            delay: (0,dom_utils.getNumTypeAttr)(node, 'delay', DefaultDelay),
+            offset: (0,dom_utils.getNumTypeAttr)(node, 'offset', 0),
+            always: (0,dom_utils.getBooleanTypeAttr)(node, 'always'),
+            disabled: (0,dom_utils.getBooleanTypeAttr)(node, 'disabled')
+        };
     };
     return Tooltip;
 }());
 /* harmony default export */ var tooltip = (Tooltip);
+// class Tooltip implements Config {
+//     readonly VERSION: string;
+//     readonly COMPONENTS: NodeListOf<Element>;
+//     constructor() {
+//         this.VERSION = 'v1.0';
+//         this.COMPONENTS = $el('r-tooltip', { all: true });
+//         this._create(this.COMPONENTS);
+//         _arrow.scrollUpdate();
+//     }
+//     public config(
+//         el: string
+//     ): {
+//         content: string | number;
+//         events: (options: TooltipEvents) => void;
+//     } {
+//         const target = $el(el);
+//         validComps(target, 'tooltip');
+//         const { _getDelay, _getIsAlways, _getIsDisabled } = Tooltip.prototype;
+//         const popper = target.querySelector(`.${PREFIX.tooltip}-popper`);
+//         const popperText = target.querySelector(`.${PREFIX.tooltip}-inner`);
+//         return {
+//             get content() {
+//                 return setText(popperText);
+//             },
+//             set content(newVal: string | number) {
+//                 if (type.isStr(newVal) || type.isNum(newVal)) setHtml(popperText, `${newVal}`);
+//             },
+//             events({ onShow, onHide }): void {
+//                 if (_getIsAlways(target) || _getIsDisabled(target)) return;
+//                 const delay = _getDelay(target);
+//                 _Popper.handleHoverShowAndHideEvents({
+//                     reference: target,
+//                     popper: popper,
+//                     datasetVal: 'tooltipShow',
+//                     showCb: onShow,
+//                     hideCb: onHide,
+//                     delay: delay,
+//                     timer: EVENTTIMER
+//                 });
+//             }
+//         };
+//     }
+//     private _create(COMPONENTS: NodeListOf<Element>): void {
+//         COMPONENTS.forEach((node) => {
+//             this._createTooltipNodes(node);
+//             removeAttrs(node, ['content', 'theme', 'delay', 'max-width', 'disabled', 'always']);
+//         });
+//     }
+//     private _createTooltipNodes(reference: Element): void {
+//         const TooltipRef = createElem('div');
+//         const TooltipPopper = createElem('div');
+//         const TooltipContent = createElem('div');
+//         const TooltipArrow = createElem('div');
+//         const TooltipInner = createElem('div');
+//         this._setCls(reference, [
+//             TooltipRef,
+//             TooltipPopper,
+//             TooltipContent,
+//             TooltipArrow,
+//             TooltipInner
+//         ]);
+//         this._setTip(reference, TooltipInner);
+//         this._setMaxWidth(reference, TooltipInner);
+//         const disabledShow = this._getIsDisabled(reference);
+//         const alwaysShow = this._setIsAlwaysShow(reference, TooltipPopper);
+//         // 如果 tooltip 没有设置为总是可见或者禁用显示，则正常鼠标移入移出事件
+//         if (!alwaysShow && !disabledShow) {
+//             this._triggerDisplay('enter', reference, TooltipPopper);
+//             this._triggerDisplay('leave', reference, TooltipPopper);
+//         }
+//         const { firstElementChild } = reference;
+//         // 只选取第一个子元素作为宿主元素
+//         if (firstElementChild) TooltipRef.appendChild(firstElementChild);
+//         TooltipPopper.appendChild(TooltipContent);
+//         TooltipPopper.append(TooltipArrow, TooltipInner);
+//         reference.append(TooltipRef, TooltipPopper);
+//     }
+//     private _setCls(reference: Element, nodes: HTMLElement[]): void {
+//         // 获取主题颜色
+//         const theme = this._getTheme(reference);
+//         const nodesCls = [
+//             `${PREFIX.tooltip}-rel`,
+//             `${PREFIX.tooltip}-popper ${PREFIX.tooltip}-${theme}`,
+//             `${PREFIX.tooltip}-content`,
+//             `${PREFIX.tooltip}-arrow`,
+//             `${PREFIX.tooltip}-inner`
+//         ];
+//         // 批量添加样式类名
+//         let i = 0;
+//         const { length } = nodes;
+//         for (; i < length; i++) {
+//             const node = nodes[i];
+//             node.className = `${nodesCls[i]}`;
+//         }
+//     }
+//     private _triggerDisplay(
+//         trigger: 'enter' | 'leave',
+//         reference: Element,
+//         popper: HTMLElement
+//     ): void {
+//         const ev = () => {
+//             if (trigger === 'enter') {
+//                 this._initSetPopper(reference, popper);
+//             }
+//             CssTransition(popper, {
+//                 inOrOut: trigger === 'enter' ? 'in' : 'out',
+//                 rmCls: true,
+//                 enterCls: 'zoom-big-fast-enter',
+//                 leaveCls: 'zoom-big-fast-leave',
+//                 timeout: 85
+//             });
+//         };
+//         const delay = this._getDelay(reference);
+//         if (trigger === 'enter') {
+//             reference.addEventListener('mouseenter', () => {
+//                 SHOWTIMER = setTimeout(() => {
+//                     ev();
+//                     setTimeout(() => {
+//                         popper.setAttribute('x-placement', popper.dataset['popperPlacement']!);
+//                     }, 0);
+//                 }, delay);
+//             });
+//             _arrow.toggleUpdate(popper, 'hover', reference, delay);
+//         } else {
+//             reference.addEventListener('mouseleave', () => {
+//                 clearTimeout(SHOWTIMER);
+//                 ev();
+//             });
+//         }
+//     }
+//     private _setTip(reference: Element, popper: Element): string {
+//         return (popper.textContent = this._getTip(reference));
+//     }
+//     private _setMaxWidth(reference: Element, popper: HTMLElement): void {
+//         const maxWidth = this._getMaxWidth(reference);
+//         if (maxWidth <= 0) return;
+//         setCss(popper, 'maxWidth', `${maxWidth}px`);
+//         popper.classList.add(`${PREFIX.tooltip}-inner-with-width`);
+//     }
+//     private _initSetPopper(reference: Element, popper: HTMLElement): any {
+//         const offset = this._getOffset(reference);
+//         const placement = this._getPlacement(reference);
+//         popper.setAttribute('x-placement', placement);
+//         return _Popper._newCreatePopper(reference, popper, placement, offset);
+//     }
+//     private _setIsAlwaysShow(reference: Element, popper: HTMLElement): boolean | void {
+//         const isAlways = this._getIsAlways(reference);
+//         if (isAlways) {
+//             setCss(popper, 'display', '');
+//             this._initSetPopper(reference, popper);
+//             return true;
+//         }
+//         setCss(popper, 'display', 'none');
+//     }
+//     private _getTip(node: Element): string {
+//         return node.getAttribute('content') || '';
+//     }
+//     private _getPlacement(node: Element): any {
+//         return node.getAttribute('placement') || 'bottom';
+//     }
+//     private _getDelay(node: Element): number {
+//         // 默认 100毫秒的延迟，防止鼠标快速经过时也会显示tooltip
+//         return Number(node.getAttribute('delay')) || 100;
+//     }
+//     private _getIsAlways(node: Element): boolean {
+//         return node.getAttribute('always') === 'true';
+//     }
+//     private _getIsDisabled(node: Element): boolean {
+//         return node.getAttribute('disabled') === 'true';
+//     }
+//     private _getTheme(node: Element): string {
+//         return node.getAttribute('theme') || 'dark';
+//     }
+//     private _getMaxWidth(node: Element): number {
+//         return Number(node.getAttribute('max-width')) || 0;
+//     }
+//     private _getOffset(node: Element): number {
+//         return Number(node.getAttribute('offset')) || 0;
+//     }
+// }
+// export default Tooltip;
 
 ;// CONCATENATED MODULE: ./src/components/tooltip/index.ts
 

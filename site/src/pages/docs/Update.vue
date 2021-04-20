@@ -28,6 +28,15 @@ onMounted(() => {
 
 const updateInfo = [
     {
+        version: '1.1.0',
+        date: '2021-4-20',
+        info: [
+            '重写 tooltip 的逻辑代码',
+            '新增 tooltip 多种预设色彩的文字提示样式',
+            '修复 1.0.x 版本中，tooltip 的箭头方向无法随着气泡方向更新的问题'
+        ]
+    },
+    {
         version: '1.0.3',
         date: '2021-4-18',
         info: [
