@@ -1,6 +1,6 @@
 {
     "name": "rabbit-simple-ui",
-    "version": "1.0.3",
+    "version": "1.1.0",
     "title": "RabbitUI",
     "description": "A lightweight UI plugin library written in TypeScript and based on JavaScript",
     "homepage": "www.rabbitui.xyz",
