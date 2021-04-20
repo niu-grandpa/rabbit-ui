@@ -33,7 +33,7 @@ const RABBIT_BTN = new Button();
 
 class Modal implements Config {
     readonly VERSION: string;
-    private COMPONENTS: NodeListOf<Element>;
+    readonly COMPONENTS: NodeListOf<Element>;
 
     constructor() {
         this.VERSION = 'v1.1';

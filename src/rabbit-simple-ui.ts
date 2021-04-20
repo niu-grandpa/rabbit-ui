@@ -17,6 +17,7 @@ import Jumbotron from './components/jumbotron';
 import Loading from './components/loading-bar';
 import Message from './components/message';
 import Modal from './components/modal';
+import $Modal from './components/$modal';
 import Notice from './components/notice';
 import PageHeader from './components/page-header';
 import Poptip from './components/poptip';
@@ -52,6 +53,7 @@ export {
     Loading,
     Message,
     Modal,
+    $Modal,
     Notice,
     PageHeader,
     Poptip,

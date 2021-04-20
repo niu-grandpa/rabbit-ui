@@ -69,12 +69,12 @@ function createMessageInstanceWrapper(): HTMLElement {
 
 class $Message implements Events {
     readonly VERSION: string;
-    readonly INSTANCE: Array<HTMLElement>;
+    readonly INSTANCES: Array<HTMLElement>;
 
     constructor() {
         this.VERSION = 'v1.0';
         // 存储已经创建的实例，在 destroy方法里需要用到
-        this.INSTANCE = [];
+        this.INSTANCES = [];
         createMessageInstanceWrapper();
     }
 
@@ -124,14 +124,14 @@ class $Message implements Events {
             });
         } else {
             // 销毁所有实例
-            this.INSTANCE.forEach((instance) => {
+            this.INSTANCES.forEach((instance) => {
                 destroyElem(instance, {
                     duration: 0.1,
                     clsLeave: MsgMoveLeave
                 });
             });
             // 清空存放的所有实例
-            this.INSTANCE.length = 0;
+            this.INSTANCES.length = 0;
         }
     }
 
@@ -187,7 +187,7 @@ class $Message implements Events {
         $el(`.${PREFIX.message}`)?.appendChild(Message);
 
         // 存放每次创建的实例
-        this.INSTANCE.push(Message);
+        this.INSTANCES.push(Message);
 
         CssTransition(Message, {
             inOrOut: 'in',
