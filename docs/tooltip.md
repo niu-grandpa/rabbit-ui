@@ -17,16 +17,13 @@
 - 最简单的用法。
 
 ```html
-<r-tooltip content="这里是提示文字" id="test"> 鼠标经过这段文字时，会显示一个气泡框 </r-tooltip>
+<r-tooltip content="这里是提示文字" id="test">鼠标经过这段文字时，会显示一个气泡框</r-tooltip>
 <script>
     const tooltip = new Rabbit.Tooltip();
 
     tooltip.config('#test').events({
-        onShow: () => {
-            console.log('show');
-        },
-        onHide: () => {
-            console.log('hide');
+        onVisibleChange: (visable) => {
+            console.log(visable);
         }
     });
 </script>
@@ -41,7 +38,7 @@
   <r-tooltip content="Top Left 文字提示" placement="top-start">
       <button class="rab-btn">上左</button>
   </r-tooltip>
-  <r-tooltip content="Top Center 文字提示" placement="top">
+  <r-tooltip content="Top Center 文字提示">
       <button class="rab-btn">上边</button>
   </r-tooltip>
   <r-tooltip content="Top Right 文字提示" placement="top-end">
@@ -112,7 +109,7 @@
 - 通过设置属性`delay`可以延时显示文字提示，单位毫秒。
 
 ```html
-<r-tooltip content="Tooltip 文字提示" placement="top" delay="1000">
+<r-tooltip content="Tooltip 文字提示" delay="1000">
   <button class="rab-btn">延时1秒显示</button>
 </r-tooltip>
 ```
@@ -120,14 +117,54 @@
 主题
 
 - 设置属性 `theme` 可以显示不同的颜色。
+- 有多种预设色彩的文字提示样式，用作不同场景使用。
 
 ```html
-<r-tooltip content="content of tooltip" placement="top">
+<r-tooltip content="content of tooltip">
   <button class="rab-btn">Dark(default)</button>
 </r-tooltip>
-<r-tooltip content="content of tooltip" placement="top" theme="light">
+<r-tooltip content="content of tooltip" theme="light">
   <button class="rab-btn">Light</button>
-</r-tooltip
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="pink">
+  <button class="rab-btn">pink</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="red">
+  <button class="rab-btn">red</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="yellow">
+  <button class="rab-btn">yellow</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="orange">
+  <button class="rab-btn">orange</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="cyan">
+  <button class="rab-btn">cyan</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="green">
+  <button class="rab-btn">green</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="blue">
+  <button class="rab-btn">blue</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="purple">
+  <button class="rab-btn">purple</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="geekblue">
+  <button class="rab-btn">geekblue</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="magenta">
+  <button class="rab-btn">magenta</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="volcano">
+  <button class="rab-btn">volcano</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="gold">
+  <button class="rab-btn">gold</button>
+</r-tooltip>
+<r-tooltip content="content of tooltip" theme="lime">
+  <button class="rab-btn">lime</button>
+</r-tooltip>
 ```
 
 自动换行
@@ -150,11 +187,11 @@
 | 属性      | 说明                                                         | 默认值 |
 | :-------- | :----------------------------------------------------------- | :----- |
 | content   | 显示的内容                                                   | 空     |
-| placement | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，自动识别 | bottom |
+| placement | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，自动识别 | top    |
 | disabled  | 是否禁用提示框                                               | false  |
-| delay     | 延迟显示，单位毫秒                                           | 0      |
+| delay     | 延迟显示，单位毫秒                                           | -      |
 | always    | 是否总是可见                                                 | false  |
-| theme     | 主题，可选值为 dark 或 light                                 | dark   |
+| theme     | 背景颜色                                                     | dark   |
 | max-width | 最大宽度，超出最大值后，文本将自动换行，并两端对齐           | -      |
 | offset    | 出现位置的偏移量                                             | 0      |
 
@@ -169,17 +206,19 @@
 该方法返回以下两个值：
 
 - `content`
-
+- `disabled`
+- `always`
 - `events(options)`
 
-| 返回值  | 说明                            | 类型             | 默认值 |
-| ------- | ------------------------------- | ---------------- | ------ |
-| content | 响应式设置提示框的内容          | String \| Number | -      |
-| events  | 非响应式API，添加提示框的事件， | Function         | -      |
+| 返回值   | 说明                          | 类型             | 默认值 |
+| -------- | ----------------------------- | ---------------- | ------ |
+| content  | 响应式设置或更新提示框的内容  | String \| Number | -      |
+| disabled | 响应式设置是否禁用提示框      | Boolean          | -      |
+| always   | 响应式设置是否总是可见        | Boolean          | -      |
+| events   | 非响应式API，添加提示框的事件 | Function         | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性   | 说明               | 回调参数 |
-| :----- | :----------------- | :------- |
-| onShow | 在提示框显示时触发 | 无       |
-| onHide | 在提示框消失时触发 | 无       |
+| 属性            | 说明           | 回调参数                  |
+| :-------------- | :------------- | :------------------------ |
+| onVisibleChange | 显示隐藏的回调 | (visible:boolean) => void |
