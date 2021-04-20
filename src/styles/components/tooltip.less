@@ -1,3 +1,4 @@
+@import '../color/colors.less';
 @import '../custom.less';
 @import '../mixins/tooltip.less';
 @import '../animation/zoom.less';
@@ -39,13 +40,13 @@
             border-radius: @border-radius-base;
             box-shadow: @shadow-base;
             white-space: nowrap;
+        }
 
-            &-with-width {
-                white-space: pre-wrap;
-                text-align: justify;
-                word-wrap: break-word;
-                word-break: break-all;
-            }
+        &-with-width {
+            white-space: pre-wrap;
+            text-align: justify;
+            word-wrap: break-word;
+            word-break: break-all;
         }
 
         &-arrow {
@@ -55,11 +56,6 @@
             border-color: transparent;
             border-style: solid;
         }
-    }
-
-    // 加快提示框弹出的速度
-    .zoom-big-fast-enter {
-        animation-duration: 0.2s;
     }
 }
 
@@ -126,3 +122,25 @@
         }
     }
 }
+
+// v2.0，新增多种可选的预设颜色
+@preset-colors: pink, magenta, red, volcano, orange, yellow, gold, cyan, lime, green, blue, geekblue,
+    purple;
+
+.generator-tooltip-preset-color(@i: length(@preset-colors)) when (@i > 0) {
+    .generator-tooltip-preset-color(@i - 1);
+
+    @color: extract(@preset-colors, @i);
+    @lightColor: '@{color}-6';
+
+    .@{tooltip-prefix-cls} {
+        &-popper&-@{color} {
+            .popper(@tooltip-arrow, @tooltip-arrow-width, @tooltip-distance, @@lightColor);
+
+            .@{tooltip-prefix-cls}-inner {
+                background-color: @@lightColor;
+            }
+        }
+    }
+}
+.generator-tooltip-preset-color();
