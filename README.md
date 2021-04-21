@@ -59,7 +59,7 @@ npm install rabbit-simple-ui --save
 <head>
     <meta charset="utf-8">
     <title>RabbitUI demo</title>
-    <link rel="stylesheet" href="https://unpkg.com/rabbit-simple-ui/dist/styles/rabbit.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rabbit-simple-ui/dist/styles/rabbit.css">
 </head>
 <body>
     <button type="button" class="rab-btn" onclick="show">Hello Rabbit UI</button>
@@ -67,7 +67,7 @@ npm install rabbit-simple-ui --save
        <p>Welcome to RabbitUI</p>
     </r-modal>
 </body>
-<script src="https://unpkg.com/rabbit-simple-ui/dist/rabbit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rabbit-simple-ui/dist/rabbit.min.js"></script>
 <script>
     // 初始化modal
     const modal = new Rabbit.Modal();

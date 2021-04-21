@@ -4,8 +4,8 @@
         <Anchor title="CDN 引入" />
         <p>
             目前可以通过
-            <a href="https://unpkg.com/rabbit-simple-ui/" target="_blank">
-                unpkg.com/rabbit-simple-ui
+            <a href="https://cdn.jsdelivr.net/npm/rabbit-simple-ui/" target="_blank">
+                cdn.jsdelivr.net/npm/rabbit-simple-ui
             </a>
             看到 Rabbit UI 最新版本的资源，在页面上引入 js 和 css 文件即可开始使用。
         </p>
