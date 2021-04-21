@@ -18,6 +18,11 @@
     outline: none;
     top: 100px;
 
+    &.zoom-big-enter,
+    &.zoom-big-leave {
+        animation-duration: 0.3s;
+    }
+
     &-hidden {
         display: none !important;
     }
@@ -186,7 +191,7 @@
         &-title {
             display: inline-block;
             vertical-align: middle;
-            margin-left: 12px;
+            margin-left: 10px;
             font-size: @font-size-large;
             color: @title-color;
             font-weight: 500;
@@ -194,7 +199,7 @@
     }
 
     &-body {
-        padding-left: 40px;
+        padding-left: 44px;
         font-size: @font-size-base;
         color: @text-color;
         position: relative;

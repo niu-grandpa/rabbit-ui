@@ -7,37 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    body {
+        height: 1000px;
+    }
+    
+    .example {
+        width: 480px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
 
 <body>
-    <div class="rab-modal-$modal">
-        <div class="rab-modal-mask" style="z-index: 1092;"></div>
-        <div class="rab-modal-wrap" style="z-index: 1092;">
-            <div class="rab-modal" style="width: 416px;">
-                <div class="rab-modal-content">
-                    <div class="rab-modal-body">
-                        <div class="rab-modal-confirm">
-                            <div class="rab-modal-confirm-head">
-                                <div class="rab-modal-confirm-head-icon rab-modal-confirm-head-icon-info">
-                                    <i class="rab-icon rab-icon-ios-information-circle"></i>
-                                </div>
-                                <div class="rab-modal-confirm-head-title">对话框的标题</div>
-                            </div>
-                            <div class="rab-modal-confirm-body">
-                                <div>
-                                    <p>一些对话框内容</p>
-                                    <p>一些对话框内容</p>
-                                </div>
-                            </div>
-                            <div class="rab-modal-confirm-footer">
-                                <button type="button" class="rab-btn rab-btn-primary">
-                                    确定
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="example">
+        <button class="rab-btn" onclick="instance('info')">消息</button>
+        <button class="rab-btn" onclick="instance('success')">成功</button>
+        <button class="rab-btn" onclick="instance('warning')">警告</button>
+        <button class="rab-btn" onclick="instance('error')">错误</button>
+    </div>
+
+    <div class="example">
+        <button class="rab-btn" onclick="confirm()">标准</button>
+        <button class="rab-btn" onclick="custom()">自定义按钮文字</button>
+        <button class="rab-btn" onclick="async()">异步关闭</button>
     </div>
 </body>
 
