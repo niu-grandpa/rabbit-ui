@@ -28,6 +28,14 @@ onMounted(() => {
 
 const updateInfo = [
     {
+        version: '1.2.0',
+        date: '2021-4-21',
+        info: [
+            '新增 Modal 插件的实例化方法 $Modal，用来创建一次性的轻量级对话框。',
+            '$Modal 在全局创建一个对话框，并在消失时移除，所以同时只能操作一个对话框。'
+        ]
+    },
+    {
         version: '1.1.0',
         date: '2021-4-20',
         info: [
