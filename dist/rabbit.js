@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!****************************************!*\
-  !*** ./src/build-umd.ts + 144 modules ***!
+  !*** ./src/build-umd.ts + 146 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -63,6 +63,7 @@ __webpack_require__.d(__webpack_exports__, {
 var rabbit_simple_ui_namespaceObject = {};
 __webpack_require__.r(rabbit_simple_ui_namespaceObject);
 __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
+  "$Modal": function() { return components_$modal; },
   "Alert": function() { return components_alert; },
   "Avatar": function() { return components_avatar; },
   "BackTop": function() { return components_back_top; },
@@ -5169,7 +5170,7 @@ var $Message = /** @class */ (function () {
     function $Message() {
         this.VERSION = 'v1.0';
         // 存储已经创建的实例，在 destroy方法里需要用到
-        this.INSTANCE = [];
+        this.INSTANCES = [];
         createMessageInstanceWrapper();
     }
     $Message.prototype.info = function (config) {
@@ -5213,14 +5214,14 @@ var $Message = /** @class */ (function () {
         }
         else {
             // 销毁所有实例
-            this.INSTANCE.forEach(function (instance) {
+            this.INSTANCES.forEach(function (instance) {
                 destroyElem(instance, {
                     duration: 0.1,
                     clsLeave: MsgMoveLeave
                 });
             });
             // 清空存放的所有实例
-            this.INSTANCE.length = 0;
+            this.INSTANCES.length = 0;
         }
     };
     $Message.prototype._autoSetZindex = function () {
@@ -5271,7 +5272,7 @@ var $Message = /** @class */ (function () {
         Message.appendChild(MsgContentWrap);
         (_a = (0,dom_utils.$el)("." + prefix.default.message)) === null || _a === void 0 ? void 0 : _a.appendChild(Message);
         // 存放每次创建的实例
-        this.INSTANCE.push(Message);
+        this.INSTANCES.push(Message);
         CssTransition(Message, {
             inOrOut: 'in',
             enterCls: MsgMoveEnter,
@@ -5661,6 +5662,146 @@ var Modal = /** @class */ (function () {
 ;// CONCATENATED MODULE: ./src/components/modal/index.ts
 
 /* harmony default export */ var components_modal = (modal);
+
+;// CONCATENATED MODULE: ./src/components/$modal/$modal.ts
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+
+
+var $MODAL_BUTTON = new components_button();
+var ICONTYPE = {
+    info: 'ios-information-circle',
+    success: 'ios-checkmark-circle',
+    warning: 'ios-alert',
+    error: 'ios-close-circle',
+    confirm: 'ios-help-circle',
+    loading: 'loading-solid'
+};
+var DEFAULT_ZINDEX = 1010;
+var $Modal = /** @class */ (function () {
+    function $Modal() {
+        this.VERSION = 'v1.0';
+    }
+    $Modal.prototype.info = function (config) {
+        this._create('info', config);
+    };
+    $Modal.prototype.success = function (config) {
+        this._create('success', config);
+    };
+    $Modal.prototype.warning = function (config) {
+        this._create('warning', config);
+    };
+    $Modal.prototype.error = function (config) {
+        this._create('error', config);
+    };
+    $Modal.prototype.confirm = function (config) {
+        this._create('confirm', config);
+    };
+    $Modal.prototype.remove = function () {
+        var _a = this._getNode(), ModalParent = _a.ModalParent, ModalMask = _a.ModalMask, ModalWrap = _a.ModalWrap;
+        this._destroy(ModalParent, ModalMask, ModalWrap);
+    };
+    $Modal.prototype._create = function (type, config) {
+        DEFAULT_ZINDEX++;
+        var _a = config.width, width = _a === void 0 ? 416 : _a, _b = config.title, title = _b === void 0 ? '' : _b, _c = config.content, content = _c === void 0 ? '' : _c, _d = config.okText, okText = _d === void 0 ? '确定' : _d, _e = config.cancelText, cancelText = _e === void 0 ? '取消' : _e, _f = config.loading, loading = _f === void 0 ? false : _f, _g = config.keyboard, keyboard = _g === void 0 ? false : _g, _h = config.scrollable, scrollable = _h === void 0 ? false : _h, _j = config.lockScroll, lockScroll = _j === void 0 ? true : _j, onOk = config.onOk, onCancel = config.onCancel, _k = config.dangerouslyUseHTMLString, dangerouslyUseHTMLString = _k === void 0 ? false : _k;
+        // @ts-ignore
+        var icon = ICONTYPE[type];
+        var isShowCancelBtn = type === 'confirm'
+            ? "<button type=\"button\" class=\"" + prefix.default.button + " " + prefix.default.button + "-text\">" + cancelText + "</button>"
+            : '';
+        var template = "\n        <div class=\"" + prefix.default.modal + "-instance\">\n          <div class=\"" + prefix.default.modal + "-mask\" style=\"z-index: " + DEFAULT_ZINDEX + ";\"></div>\n          <div class=\"" + prefix.default.modal + "-wrap\" style=\"z-index: " + DEFAULT_ZINDEX + ";\">\n              <div class=\"" + prefix.default.modal + "\" style=\"width: " + width + "px;\">\n                  <div class=\"" + prefix.default.modal + "-content\">\n                      <div class=\"" + prefix.default.modal + "-body\">\n                          <div class=\"" + prefix.default.modal + "-confirm\">\n                              <div class=\"" + prefix.default.modal + "-confirm-head\">\n                                  <div class=\"" + prefix.default.modal + "-confirm-head-icon " + prefix.default.modal + "-confirm-head-icon-" + type + "\">\n                                      <i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + icon + "\"></i>\n                                  </div>\n                                  <div class=\"" + prefix.default.modal + "-confirm-head-title\"></div>\n                              </div>\n                              <div class=\"" + prefix.default.modal + "-confirm-body\"></div>\n                              <div class=\"" + prefix.default.modal + "-confirm-footer\">\n                                  " + isShowCancelBtn + "\n                                  <button type=\"button\" class=\"" + prefix.default.button + " " + prefix.default.button + "-primary\"><span>" + okText + "</span></button>\n                              </div>\n                          </div>\n                      </div>\n                  </div>\n              </div>\n          </div>\n        </div>";
+        document.body.insertAdjacentHTML('beforeend', template);
+        var _l = this._getNode(), ModalParent = _l.ModalParent, ModalMask = _l.ModalMask, ModalWrap = _l.ModalWrap, Modal = _l.Modal;
+        this._setMainContent(Modal, title, content, dangerouslyUseHTMLString);
+        this._setAnimation('in', ModalMask, ModalWrap);
+        this._setScrollable(scrollable, lockScroll);
+        this._handleBtnClick(ModalParent, ModalMask, ModalWrap, Modal, loading, onOk, onCancel);
+        this._keyboardClosed(type, keyboard, ModalParent, ModalMask, ModalWrap, onCancel);
+    };
+    $Modal.prototype._setMainContent = function (modal, title, content, isUseHTML) {
+        var ModalHead = modal.querySelector("." + prefix.default.modal + "-confirm-head-title");
+        var ModalBody = modal.querySelector("." + prefix.default.modal + "-confirm-body");
+        isUseHTMLString(ModalHead, title, isUseHTML);
+        isUseHTMLString(ModalBody, content, isUseHTML);
+    };
+    $Modal.prototype._handleBtnClick = function (parent, mask, wrap, modal, loading, onOk, onCancel) {
+        var _this = this;
+        var ModalOkBtn = modal.querySelector("." + prefix.default.button + "-primary");
+        var ModalCacnelBtn = modal.querySelector("." + prefix.default.button + "-text");
+        var remove = function () { return _this._destroy(parent, mask, wrap); };
+        var okEv = function () {
+            onOk && isFn(onOk);
+            if (loading) {
+                $MODAL_BUTTON.config(ModalOkBtn).loading = loading;
+                return;
+            }
+            remove();
+        };
+        var cancelEv = function () {
+            remove();
+            onCancel && isFn(onCancel);
+        };
+        (0,dom_utils.bind)(ModalOkBtn, 'click', okEv);
+        if (ModalCacnelBtn)
+            (0,dom_utils.bind)(ModalCacnelBtn, 'click', cancelEv);
+    };
+    $Modal.prototype._keyboardClosed = function (_type, keyboard, parent, mask, wrap, onCancel) {
+        var _this = this;
+        if (!keyboard)
+            return;
+        var event = function (e) {
+            if (e.key === 'Escape') {
+                e.stopPropagation();
+                // 判断页面是否有modal实例，如果有才执行事件，避免重复执行
+                if (document.body.contains(parent)) {
+                    // 取消的回调，只在$Modal.confirm()下有效
+                    if (_type === 'confirm')
+                        onCancel && isFn(onCancel);
+                    setTimeout(function () { return _this._destroy(parent, mask, wrap); }, 0);
+                }
+            }
+        };
+        window.onkeydown = function (e) { return event(e); };
+    };
+    $Modal.prototype._destroy = function (parent, mask, wrap) {
+        var _this = this;
+        this._setAnimation('out', mask, wrap);
+        setTimeout(function () {
+            parent.remove();
+            _this._setScrollable(true, false);
+        }, 150);
+    };
+    $Modal.prototype._setAnimation = function (type, elem1, elem2) {
+        var maskAniCls = type === 'in' ? { enterCls: 'rab-fade-in' } : { leaveCls: 'rab-fade-out' };
+        var modalAniCls = type === 'in' ? { enterCls: 'zoom-big-enter' } : { leaveCls: 'zoom-big-leave' };
+        CssTransition(elem1, __assign(__assign({ inOrOut: type }, maskAniCls), { timeout: 250, rmCls: true }));
+        CssTransition(elem2, __assign(__assign({ inOrOut: type }, modalAniCls), { timeout: 300, rmCls: true }));
+    };
+    $Modal.prototype._setScrollable = function (scrollable, lockScroll) {
+        scrollable_scrollable({ scroll: scrollable, lock: lockScroll });
+    };
+    $Modal.prototype._getNode = function () {
+        var ModalParent = (0,dom_utils.$el)("." + prefix.default.modal + "-instance");
+        var ModalMask = ModalParent.querySelector("." + prefix.default.modal + "-mask");
+        var ModalWrap = ModalParent.querySelector("." + prefix.default.modal + "-wrap");
+        var Modal = ModalWrap.querySelector("." + prefix.default.modal);
+        return {
+            ModalParent: ModalParent,
+            ModalMask: ModalMask,
+            ModalWrap: ModalWrap,
+            Modal: Modal
+        };
+    };
+    return $Modal;
+}());
+/* harmony default export */ var $modal = ($Modal);
+
+;// CONCATENATED MODULE: ./src/components/$modal/index.ts
+
+/* harmony default export */ var components_$modal = (new $modal());
 
 ;// CONCATENATED MODULE: ./src/components/notice/notice.ts
 
@@ -8061,6 +8202,7 @@ var Tooltip = /** @class */ (function () {
 /* harmony default export */ var components_tooltip = (tooltip);
 
 ;// CONCATENATED MODULE: ./src/rabbit-simple-ui.ts
+
 
 
 
