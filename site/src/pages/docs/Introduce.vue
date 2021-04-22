@@ -61,7 +61,7 @@ import { Code1, Code2, Code3 } from 'docsMdCode/introduce';
 import Alert from 'rabbitui/alert';
 import Tooltip from 'rabbitui/tooltip';
 
-const version = '1.0.2';
+const version = '1.2.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [

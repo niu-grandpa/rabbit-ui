@@ -15,6 +15,19 @@
                 </svg>
             </a>
             <a
+                href="https://www.npmjs.com/package/rabbit-simple-ui"
+                title="NPM"
+                class="social-icon"
+                target="_blank"
+            >
+                <svg viewBox="0 0 1024 1024" width="20" height="20">
+                    <path
+                        d="M117.149737 906.850263V117.160081h789.690182v789.690182z m148.521374-641.706667v492.533657h248.873374V367.843556h145.025293v389.906101h98.735321V265.143596z"
+                        fill="#ffffff"
+                    ></path>
+                </svg>
+            </a>
+            <a
                 href="https://www.jq22.com/"
                 title="jQuery插件库"
                 class="social-icon"
