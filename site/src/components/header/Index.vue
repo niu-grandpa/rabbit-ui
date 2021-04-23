@@ -61,7 +61,7 @@ import NavBar from './NavBar.vue';
     }
 
     .inline-search-input {
-        @media (max-width: 1200px) {
+        @media (max-width: 960px) {
             display: none;
         }
 
@@ -78,7 +78,7 @@ import NavBar from './NavBar.vue';
     }
 
     .el-menu {
-        @media (max-width: 1200px) {
+        @media (max-width: 960px) {
             display: none;
         }
 

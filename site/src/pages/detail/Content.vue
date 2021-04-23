@@ -9,12 +9,13 @@
 <style lang="less" scoped>
 .app {
     &-right {
+        max-width: 960px;
         margin-left: 380px;
     }
 
     &-content-wrapper {
         min-height: 500px;
-        padding: 0 170px 32px 64px;
+        padding: 20px 25px;
     }
 }
 </style>

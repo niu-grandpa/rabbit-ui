@@ -41,12 +41,12 @@ a {
 .markdown h5,
 .markdown h6 {
   clear: both;
-  margin: 1.1em 0 0.6em;
+  margin: 1em 0 0.6em;
   color: #55585e;
   font-weight: 500;
 }
 .markdown p {
-  margin: 1em 0;
+  margin: 0.5em 0;
 }
 .markdown ul {
   padding-left: 40px;
@@ -75,6 +75,35 @@ a {
 }
 .markdown .anchor:hover a {
   opacity: 1;
+}
+.example-code .el-collapse {
+  border-bottom: 0;
+}
+.example-code .el-collapse-item:last-child {
+  border-bottom: 0;
+}
+.example-code .el-collapse-item__header {
+  border-bottom: 0;
+}
+.example-code .el-collapse-item__arrow {
+  margin: 0 auto !important;
+}
+.example-code .el-collapse-item__wrap {
+  border-bottom: 0;
+}
+.example-code .markdown-code .code-write .md-fences {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background-color: #fff !important;
+}
+:root {
+  --bg-color: #ffffff;
+  --text-color: #55585e;
+  --select-text-bg-color: #b5d6fc;
+  --select-text-font-color: auto;
+  --monospace: 'Lucida Console', Consolas, 'Courier', monospace;
+  --title-bar-height: 20px;
 }
 .markdown-code {
   /* cyrillic-ext */
@@ -107,14 +136,6 @@ a {
   /* latin */
   /* heighlight. */
   /** focus mode */
-}
-.markdown-code :root {
-  --bg-color: #ffffff;
-  --text-color: #55585e;
-  --select-text-bg-color: #b5d6fc;
-  --select-text-font-color: auto;
-  --monospace: 'Lucida Console', Consolas, 'Courier', monospace;
-  --title-bar-height: 20px;
 }
 .markdown-code .mac-os-11 {
   --title-bar-height: 28px;

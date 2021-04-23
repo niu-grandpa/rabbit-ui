@@ -33,7 +33,15 @@ const router = createRouter({
         },
         {
             path: '/components/color',
-            component: () => import('pages/components/Color.vue')
+            component: () => import('pages/components/color/Index.vue')
+        },
+        {
+            path: '/components/alert',
+            component: () => import('pages/components/alert/Index.vue')
+        },
+        {
+            path: '/components/avatar',
+            component: () => import('pages/components/avatar/Index.vue')
         }
     ]
 });

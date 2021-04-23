@@ -14,7 +14,10 @@ import {
     ElAutocomplete,
     ElDivider,
     ElTimeline,
-    ElTimelineItem
+    ElTimelineItem,
+    ElCard,
+    ElCollapse,
+    ElCollapseItem
 } from 'element-plus';
 
 export default [
@@ -33,5 +36,8 @@ export default [
     ElAutocomplete,
     ElDivider,
     ElTimeline,
-    ElTimelineItem
+    ElTimelineItem,
+    ElCard,
+    ElCollapse,
+    ElCollapseItem
 ];

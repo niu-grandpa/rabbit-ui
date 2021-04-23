@@ -65,7 +65,7 @@
 | shape       | 指定头像的形状，可选值为 `circle`、`square`                 | circle |
 | size        | 设置头像的大小，可选值为 `large`、`small`，支持设置具体数值 | -      |
 | src         | 图片类头像的资源地址                                        | -      |
-| icon        | 设置头像的图标类型，参考 `icon` 插件                        | -      |
+| icon        | 设置头像的图标类型，参考 `icon`                        | -      |
 
 ### Config  方法
 
