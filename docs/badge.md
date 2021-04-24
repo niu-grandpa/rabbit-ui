@@ -187,39 +187,3 @@
 | offset    | 设置状态点的位置偏移，格式为 [x, y]                          | -      |
 | color     | 设置更多状态点的颜色或自定义颜色                             | -      |
 
-### Config 方法
-
-配置指定的组件，并提供一些必要的响应式更新DOM内容或其他操作的 API。（并不是每个组件都会有）
-
-| 名称   | 参数                        | 可设置的属性             |
-| ------ | --------------------------- | ------------------------ |
-| config | `el`，配置选定的 badge 组件 | `count` 、`text`、 `dot` |
-
-#### 简单的使用示例
-
-#### 设置徽标数
-
-```html
-<r-badge count="3" id="count"></r-badge>
-<script>
-	const badge = new Rabbit.Badge();
-    let num = 0;
-    setInterval(() => {
-        badge.config('#count').count = num++;
-    },2500);
-</script>
-```
-
-#### 动态显示小红点
-
-```html
-<r-badge dot="false" id="dot"></r-badge>
-<script>
-	const badge = new Rabbit.Badge();
-    // 假如两秒后有新消息
-    setTimeout(() => {
-        badge.config('#dot').dot = true;
-    }, 2000);
-</script>
-```
-

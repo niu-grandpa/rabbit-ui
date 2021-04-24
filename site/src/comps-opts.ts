@@ -12,7 +12,7 @@ export default [
     { value: 'Dropdown 下拉菜单', path: `${prefix}dropdown` },
     { value: 'Empty 空状态', path: `${prefix}empty` },
     { value: 'Jumbotron 巨幕', path: `${prefix}jumbotron` },
-    { value: 'Breadcrumd 面包屑', path: `${prefix}breadcrumd` },
+    { value: 'Breadcrumd 面包屑', path: `${prefix}breadcrumb` },
     { value: 'Badge 徽标数', path: `${prefix}badge` },
     { value: 'Steps 步骤条', path: `${prefix}steps` },
     { value: 'LoadingBar 加载中进度条', path: `${prefix}loading-bar` },

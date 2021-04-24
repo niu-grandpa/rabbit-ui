@@ -42,6 +42,26 @@ const router = createRouter({
         {
             path: '/components/avatar',
             component: () => import('pages/components/avatar/Index.vue')
+        },
+        {
+            path: '/components/breadcrumb',
+            component: () => import('pages/components/breadcrumb/Index.vue')
+        },
+        {
+            path: '/components/empty',
+            component: () => import('pages/components/empty/Index.vue')
+        },
+        {
+            path: '/components/back-top',
+            component: () => import('pages/components/back-top/Index.vue')
+        },
+        {
+            path: '/components/jumbotron',
+            component: () => import('pages/components/jumbotron/Index.vue')
+        },
+        {
+            path: '/components/badge',
+            component: () => import('pages/components/badge/Index.vue')
         }
     ]
 });

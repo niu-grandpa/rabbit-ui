@@ -1,5 +1,8 @@
 <template>
     <el-menu mode="horizontal" :default-active="current">
+        <el-menu-item index="0">
+            <router-link to="/docs/guide">指南</router-link>
+        </el-menu-item>
         <el-menu-item index="1">
             <router-link to="/docs/introduce">文档</router-link>
         </el-menu-item>
@@ -22,7 +25,9 @@ const route = useRoute();
 const current = ref('');
 
 const setActiveLink = () => {
-    if (route.path.indexOf('/docs') === 0) {
+    if (route.path.indexOf('/docs/guide') === 0) {
+        current.value = '0';
+    } else if (route.path.indexOf('/docs/introduce') === 0) {
         current.value = '1';
     } else if (route.path.indexOf('/components') === 0) {
         current.value = '2';
