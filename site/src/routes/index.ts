@@ -62,6 +62,10 @@ const router = createRouter({
         {
             path: '/components/badge',
             component: () => import('pages/components/badge/Index.vue')
+        },
+        {
+            path: '/components/card',
+            component: () => import('pages/components/card/Index.vue')
         }
     ]
 });

@@ -58,3 +58,11 @@ onMounted(() => {
     new Jumbotron();
 });
 </script>
+
+<style lang="less">
+.markdown {
+    .rab-jumbotron-title {
+        font-size: 3.5rem !important;
+    }
+}
+</style>
