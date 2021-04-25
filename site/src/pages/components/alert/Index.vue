@@ -115,7 +115,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Alert from 'rabbitui/alert';
-import Anchor from 'comps/anchor/Index.vue';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5, Code6 } from '../markdown-code/alert';

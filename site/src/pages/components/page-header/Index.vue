@@ -29,7 +29,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import PageHeader from 'rabbitui/page-header';
-import Anchor from 'comps/anchor/Index.vue';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import { Code1, Code2 } from '../markdown-code/page-header';

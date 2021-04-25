@@ -7,34 +7,33 @@
 #### 在路由中使用
 
  ```js
-// 部分代码省略
-import Rabbit from 'rabbit-ui';
+// 以Vue的路由为例，部分代码省略
+import Loading from 'rabbit-simple-ui/src/components/loading-bar';
 
 router.beforeEach((to, from, next) => {
-    Rabbit.Loading.start();
+    Loading.start();
     next();
 });
 
 router.afterEach(route => {
-    Rabbit.Loading.finish();
+    Loading.finish();
 });
  ```
 
 #### 在异步请求中使用
 
-```js
+```html
 <script>
 // 以jQuery的Ajax为例，部分代码省略
-import $ from 'jquery';
-
+// 假设示例以 script 标签引入的方式，所以需要使用全局变量 Rabbit
 function getData () {
-  loading.start();
+  Rabbit.Loading.start();
   $.ajax({
       url: '/api/someurl',
       type: 'get',
       success: () => {
           Rabbit.Loading.finish();
-      }
+      },
       error: () => {
           Rabbit.Loading.error();
       }
@@ -57,7 +56,7 @@ Rabbit.Loading.error();
 
 <p style="font-size: 32px">API</p>
 
-#### LoadingBar instance
+LoadingBar instance
 
 通过直接调用以下方法来使用组件：
 
@@ -80,7 +79,7 @@ Rabbit.Loading.error();
 - `Rabbit.Loading.config(options)`
 - `Rabbit.Loading.destroy()`
 
-```
+```js
 Rabbit.Loading.config({
     color: '#5cb85c',
     failedColor: '#f0ad4e',

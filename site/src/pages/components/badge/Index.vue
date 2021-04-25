@@ -167,7 +167,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Badge from 'rabbitui/badge';
-import Anchor from 'comps/anchor/Index.vue';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import {

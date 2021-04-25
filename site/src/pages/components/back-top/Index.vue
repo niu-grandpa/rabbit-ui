@@ -28,7 +28,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import BackTop from 'rabbitui/back-top';
-import Anchor from 'comps/anchor/Index.vue';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import { Code1, Code2, Code3 } from '../markdown-code/back-top';

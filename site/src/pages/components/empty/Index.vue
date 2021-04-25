@@ -39,7 +39,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Empty from 'rabbitui/empty';
-import Anchor from 'comps/anchor/Index.vue';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4 } from '../markdown-code/empty';
