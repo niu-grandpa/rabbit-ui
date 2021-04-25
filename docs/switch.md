@@ -18,7 +18,7 @@
 ```html
 <r-switch id="test"></r-switch>
 <script>
-	const Switch = new Switch();
+	const Switch = new Rabbit.Switch();
      Switch.config('#test').events({
         onChange: (checked) => {
             Rabbit.Message.info(`开关状态: ${checked}`);
@@ -47,9 +47,9 @@
   open="<i class='rab-icon rab-icon-md-checkmark'></i>"
   close="<i class='rab-icon rab-icon-md-close'></i>">
 </r-switch>
+<br />
 <r-switch size="large" open="开启" close="关闭"></r-switch>
 <r-switch size="large" open="ON" close="OFF"></r-switch>
-
 ```
 
 不可用

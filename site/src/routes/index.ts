@@ -82,6 +82,14 @@ const router = createRouter({
         {
             path: '/components/steps',
             component: () => import('pages/components/steps/Index.vue')
+        },
+        {
+            path: '/components/page-header',
+            component: () => import('pages/components/page-header/Index.vue')
+        },
+        {
+            path: '/components/switch',
+            component: () => import('pages/components/switch/Index.vue')
         }
     ]
 });
