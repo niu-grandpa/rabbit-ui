@@ -19,7 +19,7 @@ interface UpdateAPI {
 }
 
 interface Events {
-    statr(): void;
+    start(): void;
     finish(): void;
     error(): void;
     update(percent: number): void;
@@ -157,7 +157,7 @@ class $LoadingBar implements Events {
         createLoadingBarInstance();
     }
 
-    public statr(): void {
+    public start(): void {
         if (timer) return;
 
         let percent = 0;
