@@ -103,6 +103,10 @@ export default () =>
             {
                 path: '/components/collapse',
                 component: () => import('pages/components/collapse/Index.vue')
+            },
+            {
+                path: '/components/divider',
+                component: () => import('pages/components/divider/Index.vue')
             }
         ]
     });
