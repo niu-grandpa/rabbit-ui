@@ -70,7 +70,7 @@
         if (n == 3) {
             n = 0;
         } else {
-            count += 1;
+            n += 1;
         }
         Steps.config('#test').current = n;
     };

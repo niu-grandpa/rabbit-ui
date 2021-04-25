@@ -31,8 +31,10 @@ export default [
     { value: 'Skeleton 骨架屏', path: `${prefix}skeleton` },
     { value: 'Avatar 头像', path: `${prefix}avatar` },
     { value: 'Tag 标签', path: `${prefix}tag` },
+    { value: 'Carousel 走马灯', path: `${prefix}carousel` },
     { value: 'Timeline 时间轴', path: `${prefix}timeline` },
     { value: 'Time 相对时间', path: `${prefix}time` },
     { value: 'BackTop 返回顶部', path: `${prefix}back-top` },
-    { value: 'Spin 加载中', path: `${prefix}spin` }
+    { value: 'Spin 加载中', path: `${prefix}spin` },
+    { value: 'CountDown 倒计时', path: `${prefix}count-down` }
 ];

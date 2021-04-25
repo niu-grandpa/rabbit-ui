@@ -17,18 +17,24 @@
 - 设置的时间格式为 `YYYY/MM/DD HH:mm:ss` 或 `YYYY-MM-DD HH:mm:ss` 
 
 ```html
-<r-count-down end-time="2021/4/10 15:40:00"></r-count-down>
-<r-count-down id="test"></r-count-down>
+<r-count-down id="test1"></r-count-down>
+<r-count-down id="test2"></r-count-down>
 
 <script>
 	const countDown = new Rabbit.CountDown();
     
     const date = new Date();
+
     const YYMMDD = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    
-    countDown.config('#test').endTime = `${YYMMDD} ${h + 1}:00:00`;
-    
-    countDown.config('#test').events({
+    const h = date.getHours();
+    const mm = date.getMinutes();
+
+    // 'YY/MM/DD hh:mm:ss'
+    countDown.config('#test1').endTime = `${YYMMDD} ${h + 1}:00:00`;
+
+    countDown.config('#test2').endTime = `${YYMMDD} ${h}:${mm + 1}:00`;
+
+    countDown.config('#test2').events({
         onStop: (stop) => {
             if (stop) alert('倒计时结束!');
         }
@@ -38,7 +44,7 @@
 
 <p style="font-size: 32px">Attributes</p>
 
-#### CountDown
+### CountDown
 
 | 属性     | 说明                     | 默认值 |
 | -------- | ------------------------ | ------ |

@@ -66,6 +66,22 @@ const router = createRouter({
         {
             path: '/components/card',
             component: () => import('pages/components/card/Index.vue')
+        },
+        {
+            path: '/components/carousel',
+            component: () => import('pages/components/carousel/Index.vue')
+        },
+        {
+            path: '/components/count-down',
+            component: () => import('pages/components/count-down/Index.vue')
+        },
+        {
+            path: '/components/progress',
+            component: () => import('pages/components/progress/Index.vue')
+        },
+        {
+            path: '/components/steps',
+            component: () => import('pages/components/steps/Index.vue')
         }
     ]
 });
