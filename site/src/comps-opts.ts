@@ -17,6 +17,7 @@ export default [
     { value: 'Steps 步骤条', path: `${prefix}steps` },
     { value: 'LoadingBar 加载中进度条', path: `${prefix}loading-bar` },
     { value: 'Radio 单选框', path: `${prefix}radio` },
+    { value: 'Checkbox 多选框', path: `${prefix}checkbox` },
     { value: 'Switch 开关', path: `${prefix}switch` },
     { value: 'Alert 警告', path: `${prefix}alert` },
     { value: 'Message 全局提示', path: `${prefix}message` },

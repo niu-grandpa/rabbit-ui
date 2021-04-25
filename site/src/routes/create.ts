@@ -111,6 +111,10 @@ export default () =>
             {
                 path: '/components/time',
                 component: () => import('pages/components/time/Index.vue')
+            },
+            {
+                path: '/components/checkbox',
+                component: () => import('pages/components/checkbox/Index.vue')
             }
         ]
     });
