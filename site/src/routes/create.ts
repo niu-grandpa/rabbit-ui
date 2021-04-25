@@ -107,6 +107,10 @@ export default () =>
             {
                 path: '/components/divider',
                 component: () => import('pages/components/divider/Index.vue')
+            },
+            {
+                path: '/components/time',
+                component: () => import('pages/components/time/Index.vue')
             }
         ]
     });
