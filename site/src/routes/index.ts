@@ -90,6 +90,10 @@ const router = createRouter({
         {
             path: '/components/switch',
             component: () => import('pages/components/switch/Index.vue')
+        },
+        {
+            path: '/components/timeline',
+            component: () => import('pages/components/timeline/Index.vue')
         }
     ]
 });
