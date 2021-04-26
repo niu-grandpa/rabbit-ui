@@ -123,6 +123,10 @@ export default () =>
             {
                 path: '/components/tag',
                 component: () => import('pages/components/tag/Index.vue')
+            },
+            {
+                path: '/components/dropdown',
+                component: () => import('pages/components/dropdown/Index.vue')
             }
         ]
     });
