@@ -26,10 +26,16 @@ export default function CssTransition(
         if (hiddenParent) {
             hiddenParent.style.display = '';
             hiddenParent.style.opacity = '1';
+            hiddenParent.style.visibility = 'visible';
         }
 
-        if (elem.style.display === 'none') elem.style.display = '';
-        if (elem.style.opacity === '0') elem.style.opacity = '1';
+        // if (elem.style.display === 'none') elem.style.display = '';
+        // if (elem.style.opacity === '0') elem.style.opacity = '1';
+        // if (elem.style.visibility === 'hidden') elem.style.visibility = 'visible';
+
+        elem.style.display = '';
+        elem.style.opacity = '1';
+        elem.style.visibility = 'visible';
 
         elem.classList.add(enterCls);
 
@@ -48,6 +54,7 @@ export default function CssTransition(
             if (hiddenParent) hiddenParent.style.display = 'none';
             elem.style.display = 'none';
             elem.style.opacity = '0';
+            elem.style.visibility = 'hidden';
         }, timeout);
     }
 }

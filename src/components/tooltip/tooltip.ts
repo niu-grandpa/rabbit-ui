@@ -13,7 +13,7 @@ import { CssTransition, _arrow, _Popper } from '../../mixins';
 import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
-const DefaultDelay = 80;
+const DEFAULTDELAY = 80;
 const EnterCls = 'zoom-big-fast-enter';
 const LeaveCls = 'zoom-big-fast-leave';
 const CssTransitonCommonConfig = {
@@ -23,7 +23,7 @@ const CssTransitonCommonConfig = {
     leaveCls: LeaveCls
 };
 
-let visableTimer: any, eventTimer: any;
+let VISIBLETIMER: any, EVENTTIMER: any;
 
 interface Config {
     config(
@@ -109,16 +109,16 @@ class Tooltip implements Config {
                     onVisibleChange && type.isFn(onVisibleChange, visable);
                 };
                 const show = () => {
-                    if (eventTimer) clearTimeout(eventTimer);
-                    eventTimer = setTimeout(event, delay);
+                    if (EVENTTIMER) clearTimeout(EVENTTIMER);
+                    EVENTTIMER = setTimeout(event, delay);
                 };
                 const close = () => {
-                    if (eventTimer) clearTimeout(eventTimer);
+                    if (EVENTTIMER) clearTimeout(EVENTTIMER);
                     // 当鼠标移出tooltip后判断当前状态如果为 show，
                     // 那么说明气泡显示过了，该执行移出事件了。
                     // 避免了即使鼠标移出但没有显示过气泡而依然执行事件。
                     if (TooltipPopper.dataset.tooltipState === 'show')
-                        setTimeout(event, DefaultDelay);
+                        setTimeout(event, DEFAULTDELAY);
                 };
 
                 bind(target, 'mouseenter', show);
@@ -221,13 +221,13 @@ class Tooltip implements Config {
             });
         };
         const show = () => {
-            if (visableTimer) clearTimeout(visableTimer);
-            visableTimer = setTimeout(() => setVisable('in'), delay);
+            if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
+            VISIBLETIMER = setTimeout(() => setVisable('in'), delay);
         };
         const hide = () => {
-            if (visableTimer) clearTimeout(visableTimer);
+            if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
             if (children.dataset.tooltipState === 'show')
-                setTimeout(() => setVisable('out'), DefaultDelay);
+                setTimeout(() => setVisable('out'), DEFAULTDELAY);
         };
 
         bind(node, 'mouseenter', show);
@@ -249,7 +249,7 @@ class Tooltip implements Config {
             content: getStrTypeAttr(node, 'content', ''),
             maxWidth: getStrTypeAttr(node, 'max-width', ''),
             placement: getStrTypeAttr(node, 'placement', 'top'),
-            delay: getNumTypeAttr(node, 'delay', DefaultDelay),
+            delay: getNumTypeAttr(node, 'delay', DEFAULTDELAY),
             offset: getNumTypeAttr(node, 'offset', 0),
             always: getBooleanTypeAttr(node, 'always'),
             disabled: getBooleanTypeAttr(node, 'disabled')

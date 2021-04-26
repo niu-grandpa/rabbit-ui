@@ -11,7 +11,7 @@ export default function loadingBarTest(): void {
 
     // @ts-ignore
     window.Start = () => {
-        Rabbit.Loading.statr();
+        Rabbit.Loading.start();
     };
     // @ts-ignore
     window.Finish = () => {

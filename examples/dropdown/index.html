@@ -17,14 +17,16 @@
         border: 1px solid #f0f0f0;
         margin: 20px auto;
     }
+    
+    .example r-dropdown {
+        margin-right: 20px;
+    }
 </style>
 
 <body>
     <div class="example">
-        <r-dropdown id="d">
-            <a href="javascript:void(0)">
-                    下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+        <r-dropdown id="exampleDropdown">
+            <a>下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -34,10 +36,10 @@
             </r-dropdown-menu>
         </r-dropdown>
 
-        <r-dropdown style="margin-left: 20px">
+        <r-dropdown>
             <button class="rab-btn rab-btn-primary">
-                    下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </button>
+                下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
+            </button>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -50,9 +52,7 @@
 
     <div class="example">
         <r-dropdown>
-            <a href="javascript:void(0)">
-                    hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+            <a>hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -62,12 +62,14 @@
             </r-dropdown-menu>
         </r-dropdown>
 
-        <r-dropdown trigger="click" style="margin-left: 20px">
-            <a href="javascript:void(0)">
-                    click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+        <r-dropdown trigger="click">
+            <a>click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
-                <r-dropdown-item>老干妈</r-dropdown-item>
+                <r-dropdown-item>
+                    <div>
+                        <div>老干妈</div>
+                    </div>
+                </r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
                 <r-dropdown-item>葱油饼</r-dropdown-item>
                 <r-dropdown-item>黄金糕</r-dropdown-item>
@@ -75,22 +77,18 @@
             </r-dropdown-menu>
         </r-dropdown>
 
-        <r-dropdown trigger="contextMenu" style="margin-left: 20px">
-            <a href="javascript:void(0)">
-                    右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+        <r-dropdown trigger="contextMenu">
+            <a>右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>返回</r-dropdown-item>
-                <r-dropdown-item style="color: #ed4014">删除</r-dropdown-item>
+                <r-dropdown-item danger>删除</r-dropdown-item>
             </r-dropdown-menu>
         </r-dropdown>
     </div>
 
     <div class="example">
         <r-dropdown placement="bottom-start">
-            <a href="javascript:void(0)">
-                    菜单(左) <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+            <a>菜单(左) <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -101,9 +99,9 @@
         </r-dropdown>
 
         <r-dropdown>
-            <a href="javascript:void(0)" style="margin-left: 20px">
-                    菜单(居中) <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+            <a>
+                菜单(居中) <i class="rab-icon rab-icon-ios-arrow-down"></i>
+            </a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -113,10 +111,8 @@
             </r-dropdown-menu>
         </r-dropdown>
 
-        <r-dropdown placement="bottom-end" style="margin-left: 20px">
-            <a href="javascript:void(0)">
-                    菜单(右) <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+        <r-dropdown placement="bottom-end">
+            <a>菜单(右) <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -129,17 +125,15 @@
 
     <div class="example">
         <r-dropdown placement="bottom-start">
-            <a href="javascript:void(0)">
-                    北京小吃 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-                </a>
+            <a>北京小吃 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>豆汁儿</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
                 <r-dropdown-item>驴打滚</r-dropdown-item>
                 <!-- 嵌套下拉菜单 start -->
-                <r-dropdown placement="right-start">
+                <r-dropdown placement="right-start ">
                     <r-dropdown-item>
-                        北京烤鸭 <i class="rab-icon rab-icon-ios-arrow-forward"></i>
+                        北京烤鸭 <i class="rab-icon rab-icon-ios-arrow-forward "></i>
                     </r-dropdown-item>
                     <r-dropdown-menu>
                         <r-dropdown-item>壁炉烤鸭</r-dropdown-item>
