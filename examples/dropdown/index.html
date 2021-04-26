@@ -18,14 +18,14 @@
         margin: 20px auto;
     }
     
-    .example r-dropdown {
+    .example.marginRight20px r-dropdown {
         margin-right: 20px;
     }
 </style>
 
 <body>
-    <div class="example">
-        <r-dropdown id="exampleDropdown">
+    <div class="example marginRight20px">
+        <r-dropdown id="test">
             <a>下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
                 <r-dropdown-item>老干妈</r-dropdown-item>
@@ -50,7 +50,7 @@
         </r-dropdown>
     </div>
 
-    <div class="example">
+    <div class="example marginRight20px">
         <r-dropdown>
             <a>hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
@@ -65,11 +65,7 @@
         <r-dropdown trigger="click">
             <a>click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
-                <r-dropdown-item>
-                    <div>
-                        <div>老干妈</div>
-                    </div>
-                </r-dropdown-item>
+                <r-dropdown-item>老干妈</r-dropdown-item>
                 <r-dropdown-item>炸酱面</r-dropdown-item>
                 <r-dropdown-item>葱油饼</r-dropdown-item>
                 <r-dropdown-item>黄金糕</r-dropdown-item>
@@ -86,7 +82,7 @@
         </r-dropdown>
     </div>
 
-    <div class="example">
+    <div class="example marginRight20px">
         <r-dropdown placement="bottom-start">
             <a>菜单(左) <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
             <r-dropdown-menu>
@@ -131,7 +127,7 @@
                 <r-dropdown-item>炸酱面</r-dropdown-item>
                 <r-dropdown-item>驴打滚</r-dropdown-item>
                 <!-- 嵌套下拉菜单 start -->
-                <r-dropdown placement="right-start ">
+                <r-dropdown placement="right-start">
                     <r-dropdown-item>
                         北京烤鸭 <i class="rab-icon rab-icon-ios-arrow-forward "></i>
                     </r-dropdown-item>

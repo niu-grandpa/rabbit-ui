@@ -20,18 +20,20 @@ interface Config {
 }
 
 interface DropdownEvents {
-    onClick: (key: string) => void;
-    onVisibleChange: (visible: boolean) => void;
+    onClick?: (key: string) => void;
+    onVisibleChange?: (visible: boolean) => void;
 }
 
 const DEFAULTDELAY = 80;
 const STATEKEY = 'visibleState';
+const ITEMKEY = 'itemKey';
 const DROPENTERCLS = 'transition-drop-enter';
 const DROPLEAVECLS = 'transition-drop-leave';
 
-let VISIBLETIMER: any = null;
+let VISIBLETIMER: any = null,
+    EVENTTIMER: any = null;
 
-class Dropdown {
+class Dropdown implements Config {
     readonly VERSION: string;
     readonly COMPONENTS: NodeListOf<Element>;
 
@@ -39,6 +41,74 @@ class Dropdown {
         this.VERSION = 'v2.0';
         this.COMPONENTS = $el('r-dropdown', { all: true });
         this._create(this.COMPONENTS);
+    }
+
+    public config(
+        el: string
+    ): {
+        visible: boolean;
+        events({ onClick, onVisibleChange }: DropdownEvents): void;
+    } {
+        const target = $el(el) as HTMLElement;
+
+        validComps(target, 'dropdown');
+
+        const { _attrs, _setVisible, _getChildDisabled } = Dropdown.prototype;
+        const { trigger, placement } = _attrs(target);
+
+        const DropdownRefElm = target.firstElementChild!;
+        const DropdownMenu = target.querySelector('r-dropdown-menu')! as HTMLElement;
+        const DropdownItem = DropdownMenu.querySelectorAll('r-dropdown-item');
+
+        return {
+            get visible() {
+                return DropdownMenu.dataset[STATEKEY] === 'visible';
+            },
+            set visible(newVal: boolean) {
+                if (newVal && !type.isBol(newVal)) return;
+                _setVisible(target, DropdownMenu, newVal, placement);
+            },
+
+            events({ onClick, onVisibleChange }) {
+                // onVisibleChange
+                const visibleChange = () => {
+                    setTimeout(() => {
+                        const visible = DropdownMenu.dataset[STATEKEY] === 'visible';
+                        onVisibleChange && type.isFn(onVisibleChange, visible);
+                    }, DEFAULTDELAY);
+                };
+                // onClick
+                const itemClickEv = (elem: Element) => {
+                    if (_getChildDisabled(elem)) return false;
+
+                    // @ts-ignore
+                    const key = elem.dataset[ITEMKEY];
+
+                    onClick && type.isFn(onClick, key);
+                    visibleChange();
+                };
+
+                if (trigger === 'hover') {
+                    bind(target, 'mouseenter', () => {
+                        if (EVENTTIMER) clearTimeout(EVENTTIMER);
+                        EVENTTIMER = setTimeout(visibleChange, DEFAULTDELAY);
+                    });
+                    bind(target, 'mouseleave', () => {
+                        if (EVENTTIMER) clearTimeout(EVENTTIMER);
+                        if (DropdownMenu.dataset[STATEKEY] === 'visible')
+                            setTimeout(visibleChange, DEFAULTDELAY);
+                    });
+                }
+                if (trigger === 'click') {
+                    bind(DropdownRefElm, 'click', visibleChange);
+                }
+                if (trigger === 'contextMenu') {
+                    bind(DropdownRefElm, 'contextmenu', visibleChange);
+                }
+
+                DropdownItem.forEach((child) => bind(child, 'click', () => itemClickEv(child)));
+            }
+        };
     }
 
     private _create(COMPONENTS: NodeListOf<Element>): void {
@@ -61,8 +131,10 @@ class Dropdown {
     }
 
     private _correctCompositionNodes(node: Element): boolean {
-        if (node.childElementCount > 2) {
-            warn('👇 The number of child element nodes in this r-dropdown tag cannot exceed two');
+        if (node.firstElementChild?.tagName === 'R-DROPDOWN-MENU') {
+            warn(
+                '👇 The first child element must be the reference element used to trigger the menu display hidden, not r-dropdown-menu'
+            );
             console.error(node);
             return false;
         }
@@ -71,10 +143,8 @@ class Dropdown {
             console.error(node);
             return false;
         }
-        if (node.firstElementChild?.tagName === 'R-DROPDOWN-MENU') {
-            warn(
-                '👇 The first child element must be the reference element used to trigger the menu display hidden, not r-dropdown-menu'
-            );
+        if (node.childElementCount > 2) {
+            warn('👇 The number of child element nodes in this r-dropdown tag cannot exceed two');
             console.error(node);
             return false;
         }
@@ -95,13 +165,7 @@ class Dropdown {
 
         // 触发菜单显示隐藏的引用元素如果是禁用状态则不做操作
         if (/disabled/.test(referenceElem.className)) return;
-        if (
-            referenceElem.getAttribute('disabled') === 'disabled' ||
-            referenceElem.getAttribute('disabled') === 'true' ||
-            referenceElem.getAttribute('disabled') === ''
-        ) {
-            return;
-        }
+        if (this._getChildDisabled(referenceElem)) return;
 
         const showMenu = () => {
             if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
@@ -158,13 +222,16 @@ class Dropdown {
     private _handleItemClick(node: Element, child: HTMLElement, placement: string): void {
         const DropdownItems = child.querySelectorAll('r-dropdown-item');
         DropdownItems.forEach((item) =>
-            bind(item, 'click', () => this._setVisible(node, child, false, placement))
+            bind(item, 'click', () => {
+                if (this._getChildDisabled(item)) return false;
+                this._setVisible(node, child, false, placement);
+            })
         );
     }
 
     private _setChildKey(child: HTMLElement, key: string): void {
         if (key) {
-            child.dataset['itemKey'] = key;
+            child.dataset[ITEMKEY] = key;
             child.removeAttribute('key');
         }
     }
@@ -175,8 +242,6 @@ class Dropdown {
         visible: boolean,
         placement: string
     ): void {
-        child.dataset[STATEKEY] = 'pending';
-
         if (visible) {
             child.dataset[STATEKEY] = 'visible';
             this._setPlacement(node, child, placement);
@@ -208,8 +273,19 @@ class Dropdown {
             inOrOut: type,
             ...transitionCls,
             rmCls: true,
-            timeout: 300
+            timeout: 295
         });
+    }
+
+    private _getChildDisabled(elem: Element): boolean {
+        if (
+            elem.getAttribute('disabled') === 'disabled' ||
+            elem.getAttribute('disabled') === 'true' ||
+            elem.getAttribute('disabled') === ''
+        ) {
+            return true;
+        }
+        return false;
     }
 
     private _attrs(node: Element) {
