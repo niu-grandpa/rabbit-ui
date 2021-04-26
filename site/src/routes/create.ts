@@ -115,6 +115,10 @@ export default () =>
             {
                 path: '/components/checkbox',
                 component: () => import('pages/components/checkbox/Index.vue')
+            },
+            {
+                path: '/components/result',
+                component: () => import('pages/components/result/Index.vue')
             }
         ]
     });
