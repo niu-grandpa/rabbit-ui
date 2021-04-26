@@ -119,6 +119,10 @@ export default () =>
             {
                 path: '/components/result',
                 component: () => import('pages/components/result/Index.vue')
+            },
+            {
+                path: '/components/tag',
+                component: () => import('pages/components/tag/Index.vue')
             }
         ]
     });
