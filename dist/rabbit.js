@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!****************************************!*\
-  !*** ./src/build-umd.ts + 146 modules ***!
+  !*** ./src/build-umd.ts + 147 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -186,11 +186,14 @@ function CssTransition(elem, _a) {
         if (hiddenParent) {
             hiddenParent.style.display = '';
             hiddenParent.style.opacity = '1';
+            hiddenParent.style.visibility = 'visible';
         }
-        if (elem.style.display === 'none')
-            elem.style.display = '';
-        if (elem.style.opacity === '0')
-            elem.style.opacity = '1';
+        // if (elem.style.display === 'none') elem.style.display = '';
+        // if (elem.style.opacity === '0') elem.style.opacity = '1';
+        // if (elem.style.visibility === 'hidden') elem.style.visibility = 'visible';
+        elem.style.display = '';
+        elem.style.opacity = '1';
+        elem.style.visibility = 'visible';
         elem.classList.add(enterCls);
         removeClassAfterTransition(enterCls);
     }
@@ -208,6 +211,7 @@ function CssTransition(elem, _a) {
                 hiddenParent.style.display = 'none';
             elem.style.display = 'none';
             elem.style.opacity = '0';
+            elem.style.visibility = 'hidden';
         }, timeout);
     }
 }
@@ -311,6 +315,36 @@ function clickOutside(target, datasetVal, leaveCls) {
         e.stopPropagation();
         hideJudgment();
     });
+}
+
+;// CONCATENATED MODULE: ./src/mixins/clickoutside.ts
+
+/**
+ * 用于点击外部关闭下拉菜单或气泡提示框
+ * @param elem
+ * @param callback 关闭事件回调
+ * @param child
+ * @param datasetKey
+ * @param datasetVal 要被关闭的对象状态是否已经处于打开状态，如果是那么点击其以外的区域才执行事件回调
+ */
+function clickoutside_clickOutside(elem, callback, child, datasetKey, datasetVal) {
+    var ev = function (e) {
+        if (datasetKey) {
+            if (child) {
+                // @ts-ignore
+                child.dataset[datasetKey] === datasetVal && callback(e);
+            }
+            else {
+                // @ts-ignore
+                child.dataset[datasetKey] === datasetVal && callback(e);
+            }
+        }
+        else {
+            callback();
+        }
+    };
+    (0,dom_utils.bind)(document, 'click', function (e) { return ev(e); });
+    (0,dom_utils.bind)(elem, 'click', function (e) { return e.stopPropagation(); });
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
@@ -2534,6 +2568,7 @@ function handleHoverShowAndHideEvents(_a) {
 
 
 
+
 // EXTERNAL MODULE: ./src/components/prefix.ts
 var prefix = __webpack_require__("./src/components/prefix.ts");
 ;// CONCATENATED MODULE: ./src/components/alert/alert.ts
@@ -4458,283 +4493,6 @@ var Drawer = /** @class */ (function () {
 
 /* harmony default export */ var components_drawer = (drawer);
 
-;// CONCATENATED MODULE: ./src/components/dropdown/dropdown.ts
-
-
-
-
-// 通过点击事件冒泡的方式处理单击下拉菜单项隐藏菜单
-function handleDropdownItemClickHidden() {
-    (0,dom_utils.bind)(document, 'click', function (e) {
-        var target = e.target;
-        // 获取点击的目标元素名
-        var tagName = target.tagName.toLocaleLowerCase();
-        if (tagName === 'r-dropdown-item') {
-            // 是否为禁用项
-            if (target.getAttribute('disabled') === '')
-                return;
-            // 获取菜单项的最外层容器 div.rab-select-dropdown
-            var dropdownMenu = target.parentElement.parentElement;
-            // 设置为隐藏状态
-            dropdownMenu.dataset.dropdownVisable = 'false';
-            CssTransition(dropdownMenu, {
-                inOrOut: 'out',
-                leaveCls: 'transition-drop-leave',
-                rmCls: true,
-                timeout: 280
-            });
-        }
-    });
-}
-var defalutDpdDelay = 100;
-var SHOWTIMER;
-var Dropdown = /** @class */ (function () {
-    function Dropdown() {
-        this.VERSION = 'v1.0';
-        this.COMPONENTS = (0,dom_utils.$el)('r-dropdown', { all: true });
-        this._create(this.COMPONENTS);
-        handleDropdownItemClickHidden();
-    }
-    Dropdown.prototype.config = function (el) {
-        var target = (0,dom_utils.$el)(el);
-        validComps(target, 'dropdown');
-        return {
-            events: function (_a) {
-                var onClick = _a.onClick;
-                var children = target.querySelectorAll('r-dropdown-item');
-                children.forEach(function (child, index) {
-                    (0,dom_utils.bind)(child, 'click', function () {
-                        child.getAttribute('disabled') !== ''
-                            ? onClick && isFn(onClick, index)
-                            : undefined;
-                    });
-                });
-            }
-        };
-    };
-    Dropdown.prototype._create = function (COMPONENTS) {
-        var _this = this;
-        COMPONENTS.forEach(function (node) {
-            // 判断是否由两个子节点组成
-            if (node.childElementCount > 2) {
-                warn('The content of a component dropdown can only be composed of two element nodes, the first being the reference element and the second being the drop-down item');
-            }
-            // 将第一个子元素作为宿主元素
-            var refElm = node.firstElementChild;
-            // 最后一个子元素即菜单项
-            var menuItem = node.lastElementChild;
-            // 清空旧内容，防止获取的元素不正确
-            (0,dom_utils.setHtml)(node, '');
-            var DropdownRef = _this._setReferenceElm(node, refElm);
-            var DropdownMenu = _this._setMenuItem(node, menuItem);
-            _this._handleTrigger(node, DropdownRef, DropdownMenu);
-            _this._setTransformOrigin(node, DropdownMenu);
-            (0,dom_utils.removeAttrs)(node, ['trigger', 'placement']);
-        });
-    };
-    Dropdown.prototype._setReferenceElm = function (node, refElm) {
-        var DropdownRel = (0,dom_utils.createElem)('div');
-        DropdownRel.className = prefix.default.dropdown + "-rel";
-        refElm ? DropdownRel.appendChild(refElm) : '';
-        node.appendChild(DropdownRel);
-        return DropdownRel;
-    };
-    Dropdown.prototype._setMenuItem = function (node, menuItem) {
-        var DropdownMenu = (0,dom_utils.createElem)('div');
-        DropdownMenu.className = 'rab-select-dropdown';
-        this._initVisable(DropdownMenu);
-        menuItem ? DropdownMenu.appendChild(menuItem) : '';
-        node.appendChild(DropdownMenu);
-        (0,dom_utils.setCss)(menuItem, 'display', 'block');
-        return DropdownMenu;
-    };
-    Dropdown.prototype._initVisable = function (dpdMenu) {
-        (0,dom_utils.setCss)(dpdMenu, 'display', 'none');
-        dpdMenu.dataset.dropdownVisable = 'false';
-    };
-    Dropdown.prototype._setTransformOrigin = function (parent, dpdMenu) {
-        var placement = this._attrs(parent).placement;
-        // 根据 placement 设置源方向。
-        // top 开头、right-end、left-end 的位置设置源方向为 center-bottom，反之。
-        // left 和 right 开头的则无需设置。
-        if (/^top|right-end|left-end/.test(placement)) {
-            (0,dom_utils.setCss)(dpdMenu, 'transformOrigin', 'center bottom');
-        }
-        else if (/^bottom|right-start|left-start/.test(placement)) {
-            (0,dom_utils.setCss)(dpdMenu, 'transformOrigin', 'center top');
-        }
-        // TODO: 根据 popper 的方向动态改变源方向
-        // dpdMenu.dataset.popperPlacement;
-    };
-    Dropdown.prototype._handleTrigger = function (parent, dpdRef, dpdMenu) {
-        var _a = this._attrs(parent), trigger = _a.trigger, placement = _a.placement;
-        var setPopper = function () { return _newCreatePopper(dpdRef, dpdMenu, placement, 0); };
-        var show = function () {
-            setPopper();
-            dpdMenu.dataset.dropdownVisable = 'true';
-            CssTransition(dpdMenu, {
-                inOrOut: 'in',
-                enterCls: 'transition-drop-enter',
-                rmCls: true,
-                timeout: 300
-            });
-        };
-        var hidden = function () {
-            if (dpdMenu.dataset.dropdownVisable === 'true') {
-                dpdMenu.dataset.dropdownVisable = 'false';
-                CssTransition(dpdMenu, {
-                    inOrOut: 'out',
-                    leaveCls: 'transition-drop-leave',
-                    rmCls: true,
-                    timeout: 280
-                });
-            }
-        };
-        // 通过点击宿主元素的次数判断是否显示或隐藏菜单项
-        var clicksIsVisable = function (clicks) { return (clicks % 2 == 0 ? hidden() : show()); };
-        if (trigger === 'hover') {
-            (0,dom_utils.bind)(parent, 'mouseenter', function () {
-                SHOWTIMER = setTimeout(function () {
-                    show();
-                }, defalutDpdDelay);
-            });
-            (0,dom_utils.bind)(parent, 'mouseleave', function () {
-                clearTimeout(SHOWTIMER);
-                hidden();
-            });
-        }
-        else if (trigger === 'click') {
-            // 初始当前的点击次数
-            var currentClicks_1 = 1;
-            (0,dom_utils.bind)(dpdRef, 'click', function () { return clicksIsVisable(currentClicks_1++); });
-            (0,dom_utils.bind)(dpdRef, 'focusin', show);
-            (0,dom_utils.bind)(dpdRef, 'focusout', function () {
-                currentClicks_1++;
-                hidden();
-            });
-        }
-        else if (trigger === 'contextMenu') {
-            // 初始当前的右击次数
-            var currentRightClick_1 = 1;
-            (0,dom_utils.bind)(dpdRef, 'contextmenu', function (e) {
-                e.preventDefault();
-                clicksIsVisable(currentRightClick_1++);
-            });
-            (0,dom_utils.bind)(dpdRef, 'focusout', function () {
-                currentRightClick_1++;
-                hidden();
-            });
-        }
-    };
-    Dropdown.prototype._attrs = function (node) {
-        return {
-            trigger: (0,dom_utils.getStrTypeAttr)(node, 'trigger', 'hover'),
-            placement: (0,dom_utils.getStrTypeAttr)(node, 'placement', 'bottom')
-        };
-    };
-    return Dropdown;
-}());
-/* harmony default export */ var dropdown = (Dropdown);
-
-;// CONCATENATED MODULE: ./src/components/dropdown/index.ts
-
-/* harmony default export */ var components_dropdown = (dropdown);
-
-;// CONCATENATED MODULE: ./assets/empty.svg
-/* harmony default export */ var empty = (".././fonts/empty.svg");
-;// CONCATENATED MODULE: ./src/components/empty/empty.ts
-
-
-
-var Empty = /** @class */ (function () {
-    function Empty() {
-        this.VERSION = 'v1.0';
-        this.COMPONENTS = (0,dom_utils.$el)('r-empty', { all: true });
-        this._create(this.COMPONENTS);
-    }
-    Empty.prototype._create = function (COMPONENTS) {
-        var _this = this;
-        COMPONENTS.forEach(function (node) {
-            var _a = _this._attrs(node), desc = _a.desc, image = _a.image, imageStyle = _a.imageStyle;
-            var footerElm = node.firstElementChild;
-            _this._setMainTemplate(node, desc, image, imageStyle);
-            _this._setFooter(node, footerElm);
-            (0,dom_utils.removeAttrs)(node, ['desc', 'image', 'image-style']);
-        });
-    };
-    Empty.prototype._setMainTemplate = function (node, desc, image, imageStyle) {
-        var template = " \n         <div class=\"" + prefix.default.empty + "-image\" style=\"" + imageStyle + "\">\n            <img src=\"" + image + "\" alt=\"empty\" />\n         </div>\n         <div class=\"" + prefix.default.empty + "-description\">" + (desc == 'false' ? '' : desc) + "</div>";
-        (0,dom_utils.setHtml)(node, template);
-    };
-    Empty.prototype._setFooter = function (node, footerElm) {
-        if (!footerElm)
-            return;
-        var footerTpl = "<div class=\"" + prefix.default.empty + "-footer\"></div>";
-        node.insertAdjacentHTML('beforeend', footerTpl);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        node.querySelector("." + prefix.default.empty + "-footer").appendChild(footerElm);
-    };
-    Empty.prototype._attrs = function (node) {
-        return {
-            desc: (0,dom_utils.getStrTypeAttr)(node, 'desc', '暂无数据'),
-            image: (0,dom_utils.getStrTypeAttr)(node, 'image', "" + empty),
-            imageStyle: (0,dom_utils.getStrTypeAttr)(node, 'image-style', '')
-        };
-    };
-    return Empty;
-}());
-/* harmony default export */ var empty_empty = (Empty);
-
-;// CONCATENATED MODULE: ./src/components/empty/index.ts
-
-/* harmony default export */ var components_empty = (empty_empty);
-
-;// CONCATENATED MODULE: ./src/components/jumbotron/jumbotron.ts
-
-
-
-var Jumbotron = /** @class */ (function () {
-    function Jumbotron() {
-        this.VERSION = 'v1.0';
-        this.COMPONENTS = (0,dom_utils.$el)('r-jumbotron', { all: true });
-        this._create(this.COMPONENTS);
-    }
-    Jumbotron.prototype._create = function (COMPONENTS) {
-        var _this = this;
-        COMPONENTS.forEach(function (node) {
-            if (moreThanOneNode(node))
-                return;
-            var placeholderNode = node.firstElementChild;
-            var _a = _this._attrs(node), title = _a.title, subTitle = _a.subTitle;
-            _this._setMainTemplate(node, title, subTitle);
-            _this._setExtraContent(node, placeholderNode);
-            (0,dom_utils.removeAttrs)(node, ['title', 'sub-title']);
-        });
-    };
-    Jumbotron.prototype._setMainTemplate = function (node, title, subTitle) {
-        var template = "\n         <div class=\"" + prefix.default.jumbotron + "-container\">\n             <h1 class=\"" + prefix.default.jumbotron + "-title\">" + title + "</h1>\n             <div class=\"" + prefix.default.jumbotron + "-subtitle\">" + subTitle + "</div>\n         </div>";
-        (0,dom_utils.setHtml)(node, template);
-    };
-    Jumbotron.prototype._setExtraContent = function (node, placeholderNode) {
-        if (!placeholderNode)
-            return;
-        var JumbotronContainer = node.querySelector("." + prefix.default.jumbotron + "-container");
-        JumbotronContainer === null || JumbotronContainer === void 0 ? void 0 : JumbotronContainer.appendChild(placeholderNode);
-    };
-    Jumbotron.prototype._attrs = function (node) {
-        return {
-            title: (0,dom_utils.getStrTypeAttr)(node, 'title', ''),
-            subTitle: (0,dom_utils.getStrTypeAttr)(node, 'sub-title', '')
-        };
-    };
-    return Jumbotron;
-}());
-/* harmony default export */ var jumbotron = (Jumbotron);
-
-;// CONCATENATED MODULE: ./src/components/jumbotron/index.ts
-
-/* harmony default export */ var components_jumbotron = (jumbotron);
-
 ;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -4955,6 +4713,346 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
     return value;
 }
 
+;// CONCATENATED MODULE: ./src/components/dropdown/dropdown.ts
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+var DEFAULTDELAY = 80;
+var STATEKEY = 'visibleState';
+var ITEMKEY = 'itemKey';
+var DROPENTERCLS = 'transition-drop-enter';
+var DROPLEAVECLS = 'transition-drop-leave';
+var VISIBLETIMER = null, EVENTTIMER = null;
+var Dropdown = /** @class */ (function () {
+    function Dropdown() {
+        this.VERSION = 'v2.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-dropdown', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Dropdown.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        validComps(target, 'dropdown');
+        var _a = Dropdown.prototype, _attrs = _a._attrs, _setVisible = _a._setVisible, _getChildDisabled = _a._getChildDisabled;
+        var _b = _attrs(target), trigger = _b.trigger, placement = _b.placement;
+        var DropdownRefElm = target.firstElementChild;
+        var DropdownMenu = target.querySelector('r-dropdown-menu');
+        var DropdownItem = DropdownMenu.querySelectorAll('r-dropdown-item');
+        return {
+            get visible() {
+                return DropdownMenu.dataset[STATEKEY] === 'visible';
+            },
+            set visible(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _setVisible(target, DropdownMenu, newVal, placement);
+            },
+            events: function (_a) {
+                var onClick = _a.onClick, onVisibleChange = _a.onVisibleChange, onClickOutside = _a.onClickOutside;
+                // onVisibleChange
+                var visibleChange = function () {
+                    setTimeout(function () {
+                        var visible = DropdownMenu.dataset[STATEKEY] === 'visible';
+                        onVisibleChange && isFn(onVisibleChange, visible);
+                    }, DEFAULTDELAY);
+                };
+                // onClick
+                var itemClickEv = function (elem) {
+                    if (_getChildDisabled(elem))
+                        return false;
+                    // @ts-ignore
+                    var key = elem.dataset[ITEMKEY];
+                    visibleChange();
+                    onClick && isFn(onClick, key);
+                };
+                if (trigger === 'hover') {
+                    (0,dom_utils.bind)(target, 'mouseenter', function () {
+                        if (EVENTTIMER)
+                            clearTimeout(EVENTTIMER);
+                        EVENTTIMER = setTimeout(visibleChange, DEFAULTDELAY);
+                    });
+                    (0,dom_utils.bind)(target, 'mouseleave', function () {
+                        if (EVENTTIMER)
+                            clearTimeout(EVENTTIMER);
+                        if (DropdownMenu.dataset[STATEKEY] === 'visible')
+                            setTimeout(visibleChange, DEFAULTDELAY);
+                    });
+                }
+                if (trigger === 'click' || trigger === 'contextMenu') {
+                    onClickOutside &&
+                        clickoutside_clickOutside(target, onClickOutside, DropdownMenu, STATEKEY, 'visible');
+                }
+                if (trigger === 'click') {
+                    (0,dom_utils.bind)(DropdownRefElm, 'click', visibleChange);
+                }
+                if (trigger === 'contextMenu') {
+                    (0,dom_utils.bind)(DropdownRefElm, 'contextmenu', visibleChange);
+                }
+                DropdownItem.forEach(function (child) { return (0,dom_utils.bind)(child, 'click', function () { return itemClickEv(child); }); });
+            }
+        };
+    };
+    Dropdown.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            if (!_this._correctCompositionNodes(node))
+                return;
+            var _a = _this._attrs(node), trigger = _a.trigger, placement = _a.placement, visible = _a.visible, stopPropagation = _a.stopPropagation;
+            var DropdownMenu = node.querySelector('r-dropdown-menu');
+            var DropdownItem = DropdownMenu.querySelector('r-dropdown-item');
+            var key = _this._attrs(DropdownItem).key;
+            _this._setVisible(node, DropdownMenu, visible, placement);
+            _this._setChildKey(DropdownItem, key);
+            _this._setStopPropagation(stopPropagation, node, DropdownMenu);
+            _this._handleTrigger(trigger, placement, node, DropdownMenu);
+            _this._handleItemClick(trigger, node, DropdownMenu, placement);
+            (0,dom_utils.removeAttrs)(node, ['key', 'trigger', 'placement', 'visible', 'stop-propagation']);
+        });
+    };
+    Dropdown.prototype._correctCompositionNodes = function (node) {
+        var _a;
+        if (((_a = node.firstElementChild) === null || _a === void 0 ? void 0 : _a.tagName) === 'R-DROPDOWN-MENU') {
+            warn('👇 The first child element must be the reference element used to trigger the menu display hidden, not r-dropdown-menu');
+            console.error(node);
+            return false;
+        }
+        if (node.lastElementChild.tagName !== 'R-DROPDOWN-MENU') {
+            warn('👇 The last child element tag must be made up of r-dropdown-menu');
+            console.error(node);
+            return false;
+        }
+        if (node.childElementCount > 2) {
+            warn('👇 The number of child element nodes in this r-dropdown tag cannot exceed two');
+            console.error(node);
+            return false;
+        }
+        return true;
+    };
+    Dropdown.prototype._setStopPropagation = function (stop, node, child) {
+        if (!stop)
+            return;
+        (0,dom_utils.bind)(node, 'click', function (e) { return e.stopPropagation(); });
+        (0,dom_utils.bind)(child, 'click', function (e) { return e.stopPropagation(); });
+    };
+    Dropdown.prototype._handleTrigger = function (type, placement, node, child) {
+        var _this = this;
+        if (type === 'custom')
+            return;
+        var referenceElem = node.firstElementChild;
+        // 触发菜单显示隐藏的引用元素如果是禁用状态则不做操作
+        if (/disabled/.test(referenceElem.className))
+            return;
+        if (this._getChildDisabled(referenceElem))
+            return;
+        var showMenu = function () {
+            if (VISIBLETIMER)
+                clearTimeout(VISIBLETIMER);
+            if (child.dataset[STATEKEY] === 'visible')
+                return;
+            VISIBLETIMER = setTimeout(function () { return _this._setVisible(node, child, true, placement); }, DEFAULTDELAY);
+        };
+        var hidenMenu = function () {
+            if (VISIBLETIMER)
+                clearTimeout(VISIBLETIMER);
+            if (child.dataset[STATEKEY] === 'visible') {
+                setTimeout(function () { return _this._setVisible(node, child, false, placement); }, DEFAULTDELAY);
+            }
+        };
+        var clickIsShow = function (e) {
+            e.stopPropagation();
+            if (child.dataset[STATEKEY] === 'hidden') {
+                showMenu();
+            }
+            else {
+                hidenMenu();
+            }
+        };
+        if (type === 'hover') {
+            (0,dom_utils.bind)(node, 'mouseenter', showMenu);
+            (0,dom_utils.bind)(node, 'mouseleave', hidenMenu);
+        }
+        // 点击菜单栏以外的地方隐藏
+        if (type === 'click' || type === 'contextMenu') {
+            clickoutside_clickOutside(node, hidenMenu);
+        }
+        if (type === 'click') {
+            (0,dom_utils.bind)(referenceElem, 'click', function (e) { return clickIsShow(e); });
+        }
+        if (type === 'contextMenu') {
+            (0,dom_utils.bind)(referenceElem, 'contextmenu', function (e) {
+                e.preventDefault();
+                clickIsShow(e);
+            });
+        }
+    };
+    Dropdown.prototype._handleItemClick = function (type, node, child, placement) {
+        var _this = this;
+        if (type === 'custom')
+            return;
+        var DropdownItems = child.querySelectorAll('r-dropdown-item');
+        DropdownItems.forEach(function (item) {
+            return (0,dom_utils.bind)(item, 'click', function () {
+                if (_this._getChildDisabled(item))
+                    return;
+                _this._setVisible(node, child, false, placement);
+            });
+        });
+    };
+    Dropdown.prototype._setChildKey = function (child, key) {
+        if (key) {
+            child.dataset[ITEMKEY] = key;
+            child.removeAttribute('key');
+        }
+    };
+    Dropdown.prototype._setVisible = function (node, child, visible, placement) {
+        var _a = Dropdown.prototype, _setPlacement = _a._setPlacement, _setTransitionDrop = _a._setTransitionDrop;
+        if (visible) {
+            child.dataset[STATEKEY] = 'visible';
+            _setPlacement(node, child, placement);
+            _setTransitionDrop('in', child);
+        }
+        else {
+            child.dataset[STATEKEY] = 'hidden';
+            setTimeout(function () {
+                child.dataset[STATEKEY] === 'hidden' && _setTransitionDrop('out', child);
+            }, 0);
+        }
+    };
+    Dropdown.prototype._setPlacement = function (node, child, placement) {
+        var popperPlacement = child.dataset['popperPlacement'] || placement;
+        if (/^top|right-end|left-end/.test(popperPlacement)) {
+            (0,dom_utils.setCss)(child, 'transformOrigin', 'center bottom');
+        }
+        if (/^bottom|right-start|left-start/.test(popperPlacement)) {
+            (0,dom_utils.setCss)(child, 'transformOrigin', 'center top');
+        }
+        _newCreatePopper(node, child, placement, 0);
+    };
+    Dropdown.prototype._setTransitionDrop = function (type, child) {
+        var transitionCls = type === 'in' ? { enterCls: DROPENTERCLS } : { leaveCls: DROPLEAVECLS };
+        CssTransition(child, __assign(__assign({ inOrOut: type }, transitionCls), { rmCls: true, timeout: 290 }));
+    };
+    Dropdown.prototype._getChildDisabled = function (elem) {
+        if (elem.getAttribute('disabled') === 'disabled' ||
+            elem.getAttribute('disabled') === 'true' ||
+            elem.getAttribute('disabled') === '') {
+            return true;
+        }
+        return false;
+    };
+    Dropdown.prototype._attrs = function (node) {
+        return {
+            key: (0,dom_utils.getStrTypeAttr)(node, 'key', ''),
+            trigger: (0,dom_utils.getStrTypeAttr)(node, 'trigger', 'hover'),
+            placement: (0,dom_utils.getStrTypeAttr)(node, 'placement', 'bottom'),
+            visible: (0,dom_utils.getBooleanTypeAttr)(node, 'visible'),
+            stopPropagation: (0,dom_utils.getBooleanTypeAttr)(node, 'stop-propagation')
+        };
+    };
+    return Dropdown;
+}());
+/* harmony default export */ var dropdown = (Dropdown);
+
+;// CONCATENATED MODULE: ./src/components/dropdown/index.ts
+
+/* harmony default export */ var components_dropdown = (dropdown);
+
+;// CONCATENATED MODULE: ./assets/empty.svg
+/* harmony default export */ var empty = (".././fonts/empty.svg");
+;// CONCATENATED MODULE: ./src/components/empty/empty.ts
+
+
+
+var Empty = /** @class */ (function () {
+    function Empty() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-empty', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Empty.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            var _a = _this._attrs(node), desc = _a.desc, image = _a.image, imageStyle = _a.imageStyle;
+            var footerElm = node.firstElementChild;
+            _this._setMainTemplate(node, desc, image, imageStyle);
+            _this._setFooter(node, footerElm);
+            (0,dom_utils.removeAttrs)(node, ['desc', 'image', 'image-style']);
+        });
+    };
+    Empty.prototype._setMainTemplate = function (node, desc, image, imageStyle) {
+        var template = " \n         <div class=\"" + prefix.default.empty + "-image\" style=\"" + imageStyle + "\">\n            <img src=\"" + image + "\" alt=\"empty\" />\n         </div>\n         <div class=\"" + prefix.default.empty + "-description\">" + (desc == 'false' ? '' : desc) + "</div>";
+        (0,dom_utils.setHtml)(node, template);
+    };
+    Empty.prototype._setFooter = function (node, footerElm) {
+        if (!footerElm)
+            return;
+        var footerTpl = "<div class=\"" + prefix.default.empty + "-footer\"></div>";
+        node.insertAdjacentHTML('beforeend', footerTpl);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        node.querySelector("." + prefix.default.empty + "-footer").appendChild(footerElm);
+    };
+    Empty.prototype._attrs = function (node) {
+        return {
+            desc: (0,dom_utils.getStrTypeAttr)(node, 'desc', '暂无数据'),
+            image: (0,dom_utils.getStrTypeAttr)(node, 'image', "" + empty),
+            imageStyle: (0,dom_utils.getStrTypeAttr)(node, 'image-style', '')
+        };
+    };
+    return Empty;
+}());
+/* harmony default export */ var empty_empty = (Empty);
+
+;// CONCATENATED MODULE: ./src/components/empty/index.ts
+
+/* harmony default export */ var components_empty = (empty_empty);
+
+;// CONCATENATED MODULE: ./src/components/jumbotron/jumbotron.ts
+
+
+
+var Jumbotron = /** @class */ (function () {
+    function Jumbotron() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-jumbotron', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Jumbotron.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            if (moreThanOneNode(node))
+                return;
+            var placeholderNode = node.firstElementChild;
+            var _a = _this._attrs(node), title = _a.title, subTitle = _a.subTitle;
+            _this._setMainTemplate(node, title, subTitle);
+            _this._setExtraContent(node, placeholderNode);
+            (0,dom_utils.removeAttrs)(node, ['title', 'sub-title']);
+        });
+    };
+    Jumbotron.prototype._setMainTemplate = function (node, title, subTitle) {
+        var template = "\n         <div class=\"" + prefix.default.jumbotron + "-container\">\n             <h1 class=\"" + prefix.default.jumbotron + "-title\">" + title + "</h1>\n             <div class=\"" + prefix.default.jumbotron + "-subtitle\">" + subTitle + "</div>\n         </div>";
+        (0,dom_utils.setHtml)(node, template);
+    };
+    Jumbotron.prototype._setExtraContent = function (node, placeholderNode) {
+        if (!placeholderNode)
+            return;
+        var JumbotronContainer = node.querySelector("." + prefix.default.jumbotron + "-container");
+        JumbotronContainer === null || JumbotronContainer === void 0 ? void 0 : JumbotronContainer.appendChild(placeholderNode);
+    };
+    Jumbotron.prototype._attrs = function (node) {
+        return {
+            title: (0,dom_utils.getStrTypeAttr)(node, 'title', ''),
+            subTitle: (0,dom_utils.getStrTypeAttr)(node, 'sub-title', '')
+        };
+    };
+    return Jumbotron;
+}());
+/* harmony default export */ var jumbotron = (Jumbotron);
+
+;// CONCATENATED MODULE: ./src/components/jumbotron/index.ts
+
+/* harmony default export */ var components_jumbotron = (jumbotron);
+
 ;// CONCATENATED MODULE: ./src/components/loading-bar/loading-bar.ts
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -5063,7 +5161,7 @@ var $LoadingBar = /** @class */ (function () {
         this.COMPONENTS = (0,dom_utils.$el)("." + prefix.default.loadingBar);
         createLoadingBarInstance();
     }
-    $LoadingBar.prototype.statr = function () {
+    $LoadingBar.prototype.start = function () {
         if (timer)
             return;
         var percent = 0;
@@ -6091,8 +6189,8 @@ var PageHeader = /** @class */ (function () {
 
 
 
-var DEFAULTDELAY = 100;
-var poptip_SHOWTIMER, EVENTTIMER;
+var poptip_DEFAULTDELAY = 100;
+var SHOWTIMER, poptip_EVENTTIMER;
 var Poptip = /** @class */ (function () {
     function Poptip() {
         this.VERSION = 'v1.0';
@@ -6166,8 +6264,8 @@ var Poptip = /** @class */ (function () {
                         datasetVal: 'poptipStatus',
                         showCb: onShow,
                         hideCb: onHide,
-                        delay: DEFAULTDELAY,
-                        timer: EVENTTIMER
+                        delay: poptip_DEFAULTDELAY,
+                        timer: poptip_EVENTTIMER
                     });
                 }
                 // 确认对话框的确定和取消按钮都要触发提示框隐藏
@@ -6283,15 +6381,15 @@ var Poptip = /** @class */ (function () {
         }
         else if (trigger === 'hover' && !poptipAttrs.isConfirm) {
             (0,dom_utils.bind)(parent, 'mouseenter', function () {
-                poptip_SHOWTIMER = setTimeout(function () {
+                SHOWTIMER = setTimeout(function () {
                     show();
-                }, DEFAULTDELAY);
+                }, poptip_DEFAULTDELAY);
             });
             (0,dom_utils.bind)(parent, 'mouseleave', function () {
-                clearTimeout(poptip_SHOWTIMER);
+                clearTimeout(SHOWTIMER);
                 hide();
             });
-            toggleUpdate(popper, 'hover', parent, DEFAULTDELAY);
+            toggleUpdate(popper, 'hover', parent, poptip_DEFAULTDELAY);
         }
         // 确认对话框的确定和取消按钮触发隐藏
         if (poptipAttrs.isConfirm) {
@@ -7857,7 +7955,7 @@ var Timeline = /** @class */ (function () {
 
 
 
-var DefaultDelay = 80;
+var tooltip_DEFAULTDELAY = 80;
 var EnterCls = 'zoom-big-fast-enter';
 var LeaveCls = 'zoom-big-fast-leave';
 var CssTransitonCommonConfig = {
@@ -7866,7 +7964,7 @@ var CssTransitonCommonConfig = {
     enterCls: EnterCls,
     leaveCls: LeaveCls
 };
-var visableTimer, eventTimer;
+var tooltip_VISIBLETIMER, tooltip_EVENTTIMER;
 var Tooltip = /** @class */ (function () {
     function Tooltip() {
         this.VERSION = 'v2.0';
@@ -7913,18 +8011,18 @@ var Tooltip = /** @class */ (function () {
                     onVisibleChange && isFn(onVisibleChange, visable);
                 };
                 var show = function () {
-                    if (eventTimer)
-                        clearTimeout(eventTimer);
-                    eventTimer = setTimeout(event, delay);
+                    if (tooltip_EVENTTIMER)
+                        clearTimeout(tooltip_EVENTTIMER);
+                    tooltip_EVENTTIMER = setTimeout(event, delay);
                 };
                 var close = function () {
-                    if (eventTimer)
-                        clearTimeout(eventTimer);
+                    if (tooltip_EVENTTIMER)
+                        clearTimeout(tooltip_EVENTTIMER);
                     // 当鼠标移出tooltip后判断当前状态如果为 show，
                     // 那么说明气泡显示过了，该执行移出事件了。
                     // 避免了即使鼠标移出但没有显示过气泡而依然执行事件。
                     if (TooltipPopper.dataset.tooltipState === 'show')
-                        setTimeout(event, DefaultDelay);
+                        setTimeout(event, tooltip_DEFAULTDELAY);
                 };
                 (0,dom_utils.bind)(target, 'mouseenter', show);
                 (0,dom_utils.bind)(target, 'mouseleave', close);
@@ -7984,15 +8082,15 @@ var Tooltip = /** @class */ (function () {
             CssTransition(children, __assign({ inOrOut: mode }, CssTransitonCommonConfig));
         };
         var show = function () {
-            if (visableTimer)
-                clearTimeout(visableTimer);
-            visableTimer = setTimeout(function () { return setVisable('in'); }, delay);
+            if (tooltip_VISIBLETIMER)
+                clearTimeout(tooltip_VISIBLETIMER);
+            tooltip_VISIBLETIMER = setTimeout(function () { return setVisable('in'); }, delay);
         };
         var hide = function () {
-            if (visableTimer)
-                clearTimeout(visableTimer);
+            if (tooltip_VISIBLETIMER)
+                clearTimeout(tooltip_VISIBLETIMER);
             if (children.dataset.tooltipState === 'show')
-                setTimeout(function () { return setVisable('out'); }, DefaultDelay);
+                setTimeout(function () { return setVisable('out'); }, tooltip_DEFAULTDELAY);
         };
         (0,dom_utils.bind)(node, 'mouseenter', show);
         (0,dom_utils.bind)(node, 'mouseleave', hide);
@@ -8006,7 +8104,7 @@ var Tooltip = /** @class */ (function () {
             content: (0,dom_utils.getStrTypeAttr)(node, 'content', ''),
             maxWidth: (0,dom_utils.getStrTypeAttr)(node, 'max-width', ''),
             placement: (0,dom_utils.getStrTypeAttr)(node, 'placement', 'top'),
-            delay: (0,dom_utils.getNumTypeAttr)(node, 'delay', DefaultDelay),
+            delay: (0,dom_utils.getNumTypeAttr)(node, 'delay', tooltip_DEFAULTDELAY),
             offset: (0,dom_utils.getNumTypeAttr)(node, 'offset', 0),
             always: (0,dom_utils.getBooleanTypeAttr)(node, 'always'),
             disabled: (0,dom_utils.getBooleanTypeAttr)(node, 'disabled')
@@ -8015,187 +8113,6 @@ var Tooltip = /** @class */ (function () {
     return Tooltip;
 }());
 /* harmony default export */ var tooltip = (Tooltip);
-// class Tooltip implements Config {
-//     readonly VERSION: string;
-//     readonly COMPONENTS: NodeListOf<Element>;
-//     constructor() {
-//         this.VERSION = 'v1.0';
-//         this.COMPONENTS = $el('r-tooltip', { all: true });
-//         this._create(this.COMPONENTS);
-//         _arrow.scrollUpdate();
-//     }
-//     public config(
-//         el: string
-//     ): {
-//         content: string | number;
-//         events: (options: TooltipEvents) => void;
-//     } {
-//         const target = $el(el);
-//         validComps(target, 'tooltip');
-//         const { _getDelay, _getIsAlways, _getIsDisabled } = Tooltip.prototype;
-//         const popper = target.querySelector(`.${PREFIX.tooltip}-popper`);
-//         const popperText = target.querySelector(`.${PREFIX.tooltip}-inner`);
-//         return {
-//             get content() {
-//                 return setText(popperText);
-//             },
-//             set content(newVal: string | number) {
-//                 if (type.isStr(newVal) || type.isNum(newVal)) setHtml(popperText, `${newVal}`);
-//             },
-//             events({ onShow, onHide }): void {
-//                 if (_getIsAlways(target) || _getIsDisabled(target)) return;
-//                 const delay = _getDelay(target);
-//                 _Popper.handleHoverShowAndHideEvents({
-//                     reference: target,
-//                     popper: popper,
-//                     datasetVal: 'tooltipShow',
-//                     showCb: onShow,
-//                     hideCb: onHide,
-//                     delay: delay,
-//                     timer: EVENTTIMER
-//                 });
-//             }
-//         };
-//     }
-//     private _create(COMPONENTS: NodeListOf<Element>): void {
-//         COMPONENTS.forEach((node) => {
-//             this._createTooltipNodes(node);
-//             removeAttrs(node, ['content', 'theme', 'delay', 'max-width', 'disabled', 'always']);
-//         });
-//     }
-//     private _createTooltipNodes(reference: Element): void {
-//         const TooltipRef = createElem('div');
-//         const TooltipPopper = createElem('div');
-//         const TooltipContent = createElem('div');
-//         const TooltipArrow = createElem('div');
-//         const TooltipInner = createElem('div');
-//         this._setCls(reference, [
-//             TooltipRef,
-//             TooltipPopper,
-//             TooltipContent,
-//             TooltipArrow,
-//             TooltipInner
-//         ]);
-//         this._setTip(reference, TooltipInner);
-//         this._setMaxWidth(reference, TooltipInner);
-//         const disabledShow = this._getIsDisabled(reference);
-//         const alwaysShow = this._setIsAlwaysShow(reference, TooltipPopper);
-//         // 如果 tooltip 没有设置为总是可见或者禁用显示，则正常鼠标移入移出事件
-//         if (!alwaysShow && !disabledShow) {
-//             this._triggerDisplay('enter', reference, TooltipPopper);
-//             this._triggerDisplay('leave', reference, TooltipPopper);
-//         }
-//         const { firstElementChild } = reference;
-//         // 只选取第一个子元素作为宿主元素
-//         if (firstElementChild) TooltipRef.appendChild(firstElementChild);
-//         TooltipPopper.appendChild(TooltipContent);
-//         TooltipPopper.append(TooltipArrow, TooltipInner);
-//         reference.append(TooltipRef, TooltipPopper);
-//     }
-//     private _setCls(reference: Element, nodes: HTMLElement[]): void {
-//         // 获取主题颜色
-//         const theme = this._getTheme(reference);
-//         const nodesCls = [
-//             `${PREFIX.tooltip}-rel`,
-//             `${PREFIX.tooltip}-popper ${PREFIX.tooltip}-${theme}`,
-//             `${PREFIX.tooltip}-content`,
-//             `${PREFIX.tooltip}-arrow`,
-//             `${PREFIX.tooltip}-inner`
-//         ];
-//         // 批量添加样式类名
-//         let i = 0;
-//         const { length } = nodes;
-//         for (; i < length; i++) {
-//             const node = nodes[i];
-//             node.className = `${nodesCls[i]}`;
-//         }
-//     }
-//     private _triggerDisplay(
-//         trigger: 'enter' | 'leave',
-//         reference: Element,
-//         popper: HTMLElement
-//     ): void {
-//         const ev = () => {
-//             if (trigger === 'enter') {
-//                 this._initSetPopper(reference, popper);
-//             }
-//             CssTransition(popper, {
-//                 inOrOut: trigger === 'enter' ? 'in' : 'out',
-//                 rmCls: true,
-//                 enterCls: 'zoom-big-fast-enter',
-//                 leaveCls: 'zoom-big-fast-leave',
-//                 timeout: 85
-//             });
-//         };
-//         const delay = this._getDelay(reference);
-//         if (trigger === 'enter') {
-//             reference.addEventListener('mouseenter', () => {
-//                 SHOWTIMER = setTimeout(() => {
-//                     ev();
-//                     setTimeout(() => {
-//                         popper.setAttribute('x-placement', popper.dataset['popperPlacement']!);
-//                     }, 0);
-//                 }, delay);
-//             });
-//             _arrow.toggleUpdate(popper, 'hover', reference, delay);
-//         } else {
-//             reference.addEventListener('mouseleave', () => {
-//                 clearTimeout(SHOWTIMER);
-//                 ev();
-//             });
-//         }
-//     }
-//     private _setTip(reference: Element, popper: Element): string {
-//         return (popper.textContent = this._getTip(reference));
-//     }
-//     private _setMaxWidth(reference: Element, popper: HTMLElement): void {
-//         const maxWidth = this._getMaxWidth(reference);
-//         if (maxWidth <= 0) return;
-//         setCss(popper, 'maxWidth', `${maxWidth}px`);
-//         popper.classList.add(`${PREFIX.tooltip}-inner-with-width`);
-//     }
-//     private _initSetPopper(reference: Element, popper: HTMLElement): any {
-//         const offset = this._getOffset(reference);
-//         const placement = this._getPlacement(reference);
-//         popper.setAttribute('x-placement', placement);
-//         return _Popper._newCreatePopper(reference, popper, placement, offset);
-//     }
-//     private _setIsAlwaysShow(reference: Element, popper: HTMLElement): boolean | void {
-//         const isAlways = this._getIsAlways(reference);
-//         if (isAlways) {
-//             setCss(popper, 'display', '');
-//             this._initSetPopper(reference, popper);
-//             return true;
-//         }
-//         setCss(popper, 'display', 'none');
-//     }
-//     private _getTip(node: Element): string {
-//         return node.getAttribute('content') || '';
-//     }
-//     private _getPlacement(node: Element): any {
-//         return node.getAttribute('placement') || 'bottom';
-//     }
-//     private _getDelay(node: Element): number {
-//         // 默认 100毫秒的延迟，防止鼠标快速经过时也会显示tooltip
-//         return Number(node.getAttribute('delay')) || 100;
-//     }
-//     private _getIsAlways(node: Element): boolean {
-//         return node.getAttribute('always') === 'true';
-//     }
-//     private _getIsDisabled(node: Element): boolean {
-//         return node.getAttribute('disabled') === 'true';
-//     }
-//     private _getTheme(node: Element): string {
-//         return node.getAttribute('theme') || 'dark';
-//     }
-//     private _getMaxWidth(node: Element): number {
-//         return Number(node.getAttribute('max-width')) || 0;
-//     }
-//     private _getOffset(node: Element): number {
-//         return Number(node.getAttribute('offset')) || 0;
-//     }
-// }
-// export default Tooltip;
 
 ;// CONCATENATED MODULE: ./src/components/tooltip/index.ts
 
