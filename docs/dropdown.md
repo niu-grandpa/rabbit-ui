@@ -17,10 +17,8 @@
 - 本例还展示了禁用项和分隔线。
 
 ```html
-<r-dropdown id="demo">
-  <a href="javascript:void(0)">
-     下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+<r-dropdown id="test">
+  <a>下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -30,10 +28,10 @@
   </r-dropdown-menu>
 </r-dropdown>
 
-<r-dropdown style="margin-left: 20px">
+<r-dropdown>
   <button class="rab-btn rab-btn-primary">
       下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-   </button>
+  </button>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -45,9 +43,12 @@
 
 <script>
 	const dropdown = new Rabbit.Dropdown();
-    dropdown.config('#demo').events({
-        onClick: (index) => {
-            console.log(`当前索引项：${index}`);
+    dropdown.config('#test').events({
+        onClick: (key) => {
+            console.log(key);
+        },
+        onVisibleChange: (visible) => {
+            console.log(visible);
         }
     });
 </script>
@@ -59,9 +60,7 @@
 
 ```html
 <r-dropdown>
-  <a href="javascript:void(0)">
-     hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-   </a>
+  <a>hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -71,10 +70,8 @@
   </r-dropdown-menu>
 </r-dropdown>
 
-<r-dropdown trigger="click" style="margin-left: 20px">
-  <a href="javascript:void(0)">
-     click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+<r-dropdown trigger="click">
+  <a>click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -84,15 +81,34 @@
   </r-dropdown-menu>
 </r-dropdown>
 
-<r-dropdown trigger="contextMenu" style="margin-left: 20px">
-  <a href="javascript:void(0)">
-     右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+<r-dropdown trigger="contextMenu">
+  <a>右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>返回</r-dropdown-item>
-      <r-dropdown-item style="color: #ed4014">删除</r-dropdown-item>
+      <r-dropdown-item danger>删除</r-dropdown-item>
   </r-dropdown-menu>
 </r-dropdown>
+
+<r-dropdown trigger="custom" class="custom" id="testCustom">
+  <a onclick="handleOpen()">
+      custom 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
+  </a>
+  <r-dropdown-menu>
+      <r-dropdown-item>
+          <p>常用于各种自定义下拉内容的场景。</p>
+          <div style="text-align: right;margin:10px;">
+              <button class="rab-btn rab-btn-primary" onclick="handleClose()">关闭</button>
+          </div>
+      </r-dropdown-item>
+  </r-dropdown-menu>
+</r-dropdown>
+
+<script>
+    const dropdown = new Rabbit.Dropdown();
+    // 下拉菜单自定义触发
+    handleOpen = () => (dropdown.config('#testCustom').visible = true);
+    handleClose = () => (dropdown.config('#testCustom').visible = false);
+</script>
 ```
 
 对齐方向
@@ -101,9 +117,7 @@
 
 ```html
 <r-dropdown placement="bottom-start">
-  <a href="javascript:void(0)">
-    菜单(左) <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+  <a>菜单(左) <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -114,8 +128,8 @@
 </r-dropdown>
 
 <r-dropdown>
-  <a href="javascript:void(0)" style="margin-left: 20px">
-     菜单(居中) <i class="rab-icon rab-icon-ios-arrow-down"></i>
+  <a>
+      菜单(居中) <i class="rab-icon rab-icon-ios-arrow-down"></i>
   </a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
@@ -126,10 +140,8 @@
   </r-dropdown-menu>
 </r-dropdown>
 
-<r-dropdown placement="bottom-end" style="margin-left: 20px">
-  <a href="javascript:void(0)">
-     菜单(右) <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+<r-dropdown placement="bottom-end">
+  <a>菜单(右) <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>老干妈</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -146,9 +158,7 @@
 
 ```html
 <r-dropdown placement="bottom-start">
-  <a href="javascript:void(0)">
-     北京小吃 <i class="rab-icon rab-icon-ios-arrow-down"></i>
-  </a>
+  <a>北京小吃 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
   <r-dropdown-menu>
       <r-dropdown-item>豆汁儿</r-dropdown-item>
       <r-dropdown-item>炸酱面</r-dropdown-item>
@@ -173,10 +183,21 @@
 
 ### Dropdown
 
-| 属性      | 说明                                                         | 默认值 |
-| :-------- | :----------------------------------------------------------- | :----- |
-| trigger   | 触发方式，可选值为 `hover`（悬停）`click`（点击）`contextMenu`（右键） | hover  |
-| placement | 下拉菜单出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`, 支持自动识别 | bottom |
+| 属性             | 说明                                                         | 默认值 |
+| :--------------- | :----------------------------------------------------------- | :----- |
+| trigger          | 触发方式，可选值为 `hover`（悬停）`click`（点击）`contextMenu`（右键） | hover  |
+| placement        | 下拉菜单出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`, 支持自动识别 | bottom |
+| visible          | 手动控制下拉框的显示，在 trigger = 'custom' 时使用           | false  |
+| stop-propagation | 是否开启 stop-propagation，在trigger = 'custom' 时，如果将事件绑定到 r-dropdown 上时最好使用 | false  |
+
+### DropdownItem
+
+| 属性     | 说明               | 默认值 |
+| :------- | :----------------- | :----- |
+| key      | 用来标识这一项     | -      |
+| disabled | 禁用该项           | -      |
+| divided  | 显示分割线         | -      |
+| selected | 标记该项为选中状态 | -      |
 
 ### Config  方法
 
@@ -188,14 +209,19 @@
 
 该方法返回以下方法：
 
+- `visible`
+
 - `events(options)`
 
-| 返回值 | 说明                        | 类型     | 默认值 |
-| ------ | --------------------------- | -------- | ------ |
-| events | 非响应式API，添加抽屉事件， | Function | -      |
+| 返回值  | 说明                          | 类型     | 默认值 |
+| ------- | ----------------------------- | -------- | ------ |
+| visible | 响应式设置或更新下拉框的显示  | Boolean  | false  |
+| events  | 非响应式API，添加下拉菜单事件 | Function | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性    | 说明             | 回调参数               |
-| :------ | :--------------- | :--------------------- |
-| onClick | 点击菜单项时触发 | (index:Number) => void |
+| 属性            | 说明                                             | 回调参数                  |
+| :-------------- | :----------------------------------------------- | :------------------------ |
+| onClick         | 点击菜单项时触发，返回 r-dropdown-item 的 key 值 | (key:String)  =>  void    |
+| onVisibleChange | 菜单显示状态改变时调用                           | (visible:Boolean) => void |
+| onClickOutside  | 点击外部关闭下拉菜单时触发                       | (event:Event) => void     |
