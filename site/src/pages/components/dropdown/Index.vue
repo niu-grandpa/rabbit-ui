@@ -7,31 +7,27 @@
         </Describe>
         <Example next-title="触发方式">
             <template #content>
-                <r-dropdown id="demo">
-                    <a> 下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i> </a>
+                <r-dropdown id="test">
+                    <a>下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
                     <r-dropdown-menu>
-                        <r-dropdown-item
-                            v-for="item in list2"
-                            :disabled="item.disabled"
-                            :key="item.key"
-                        >
-                            {{ item.value }}
-                        </r-dropdown-item>
+                        <r-dropdown-item>老干妈</r-dropdown-item>
+                        <r-dropdown-item>炸酱面</r-dropdown-item>
+                        <r-dropdown-item disabled>葱油饼</r-dropdown-item>
+                        <r-dropdown-item>黄金糕</r-dropdown-item>
+                        <r-dropdown-item divided>冰糖葫芦</r-dropdown-item>
                     </r-dropdown-menu>
                 </r-dropdown>
-
-                <r-dropdown style="margin-left: 20px">
+                ​
+                <r-dropdown>
                     <button class="rab-btn rab-btn-primary">
                         下拉菜单 <i class="rab-icon rab-icon-ios-arrow-down"></i>
                     </button>
                     <r-dropdown-menu>
-                        <r-dropdown-item
-                            v-for="item in list2"
-                            :disabled="item.disabled"
-                            :key="item.key"
-                        >
-                            {{ item.value }}
-                        </r-dropdown-item>
+                        <r-dropdown-item>老干妈</r-dropdown-item>
+                        <r-dropdown-item>炸酱面</r-dropdown-item>
+                        <r-dropdown-item disabled>葱油饼</r-dropdown-item>
+                        <r-dropdown-item>黄金糕</r-dropdown-item>
+                        <r-dropdown-item divided>冰糖葫芦</r-dropdown-item>
                     </r-dropdown-menu>
                 </r-dropdown>
                 <p>最简单的下拉菜单，触发对象可以是链接、按钮等各种元素。</p>
@@ -42,28 +38,44 @@
         <Example next-title="对齐方向">
             <template #content>
                 <r-dropdown>
-                    <a> hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i> </a>
+                    <a>hover 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
                     <r-dropdown-menu>
                         <r-dropdown-item v-for="item in list1" :key="item.key">
                             {{ item.value }}
                         </r-dropdown-item>
                     </r-dropdown-menu>
                 </r-dropdown>
-
-                <r-dropdown trigger="click" style="margin-left: 20px">
-                    <a> click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i> </a>
+                ​
+                <r-dropdown trigger="click">
+                    <a>click 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
                     <r-dropdown-menu>
                         <r-dropdown-item v-for="item in list1" :key="item.key">
                             {{ item.value }}
                         </r-dropdown-item>
                     </r-dropdown-menu>
                 </r-dropdown>
-
-                <r-dropdown trigger="contextMenu" style="margin-left: 20px">
-                    <a> 右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i> </a>
+                ​
+                <r-dropdown trigger="contextMenu">
+                    <a>右键触发 <i class="rab-icon rab-icon-ios-arrow-down"></i></a>
                     <r-dropdown-menu>
                         <r-dropdown-item>返回</r-dropdown-item>
-                        <r-dropdown-item style="color: #ed4014">删除</r-dropdown-item>
+                        <r-dropdown-item danger>删除</r-dropdown-item>
+                    </r-dropdown-menu>
+                </r-dropdown>
+                ​
+                <r-dropdown trigger="custom" class="custom" id="testCustom">
+                    <a @click="handleOpen">
+                        custom 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
+                    </a>
+                    <r-dropdown-menu>
+                        <r-dropdown-item>
+                            <p>常用于各种自定义下拉内容的场景。</p>
+                            <div style="text-align: right; margin: 10px">
+                                <button class="rab-btn rab-btn-primary" @click="handleClose">
+                                    关闭
+                                </button>
+                            </div>
+                        </r-dropdown-item>
                     </r-dropdown-menu>
                 </r-dropdown>
                 <p>
@@ -162,12 +174,28 @@ const list2 = [
     { value: '冰糖葫芦', disabled: true, key: 5 }
 ];
 
+let dropdown: any;
+
 onMounted(() => {
-    const dropdown = new Dropdown();
-    dropdown.config('#demo').events({
-        onClick: (index: number) => {
-            console.log(`当前索引项：${index}`);
+    dropdown = new Dropdown();
+    dropdown.config('#test').events({
+        onClick: (key: string) => {
+            console.log(key);
+        },
+        onVisibleChange: (visible: boolean) => {
+            console.log(visible);
         }
     });
 });
+const handleOpen = () => (dropdown.config('#testCustom').visible = true);
+const handleClose = () => (dropdown.config('#testCustom').visible = false);
 </script>
+
+<style lang="less" scoped>
+.custom {
+    r-dropdown-item:hover {
+        background-color: #fff;
+        cursor: default;
+    }
+}
+</style>
