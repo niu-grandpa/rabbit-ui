@@ -21,6 +21,11 @@
     .example.marginRight20px r-dropdown {
         margin-right: 20px;
     }
+    
+    .custom r-dropdown-item:hover {
+        background-color: #fff;
+        cursor: default;
+    }
 </style>
 
 <body>
@@ -80,6 +85,20 @@
                 <r-dropdown-item danger>删除</r-dropdown-item>
             </r-dropdown-menu>
         </r-dropdown>
+
+        <r-dropdown trigger="custom" class="custom" id="testCustom">
+            <a onclick="handleOpen()">
+                custom 触发 <i class="rab-icon rab-icon-ios-arrow-down"></i>
+            </a>
+            <r-dropdown-menu>
+                <r-dropdown-item>
+                    <p>常用于各种自定义下拉内容的场景。</p>
+                    <div style="text-align: right;margin:10px;">
+                        <button class="rab-btn rab-btn-primary" onclick="handleClose()">关闭</button>
+                    </div>
+                </r-dropdown-item>
+            </r-dropdown-menu>
+        </r-dropdown>
     </div>
 
     <div class="example marginRight20px">
@@ -129,7 +148,7 @@
                 <!-- 嵌套下拉菜单 start -->
                 <r-dropdown placement="right-start">
                     <r-dropdown-item>
-                        北京烤鸭 <i class="rab-icon rab-icon-ios-arrow-forward "></i>
+                        北京烤鸭 <i class="rab-icon rab-icon-ios-arrow-forward"></i>
                     </r-dropdown-item>
                     <r-dropdown-menu>
                         <r-dropdown-item>壁炉烤鸭</r-dropdown-item>
