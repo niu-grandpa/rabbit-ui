@@ -2,7 +2,6 @@
 import {
     $el,
     bind,
-    createElem,
     getBooleanTypeAttr,
     getStrTypeAttr,
     removeAttrs,
