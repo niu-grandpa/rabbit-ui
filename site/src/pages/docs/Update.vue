@@ -28,6 +28,16 @@ onMounted(() => {
 
 const updateInfo = [
     {
+        version: '1.3.0',
+        date: '2021-4-27',
+        info: [
+            '重写 dropdown，优化代码逻辑并且修复若干个bug',
+            'dropdown 新增属性 stop-propagation，新增 visible 属性，用于手动控制下拉框的显示',
+            'dropdown 新增事件 onVisibleChange，菜单显示状态改变时调用，新增事件 onClickOutside，点击外部关闭下拉菜单时触发',
+            'dropdown-item 新增属性 key，用来标识这一项，新增属性 danger'
+        ]
+    },
+    {
         version: '1.2.0',
         date: '2021-4-21',
         info: [
@@ -39,7 +49,7 @@ const updateInfo = [
         version: '1.1.0',
         date: '2021-4-20',
         info: [
-            '重写 tooltip 的逻辑代码',
+            '重写 tooltip，优化代码逻辑并且修复若干个bug',
             '新增 tooltip 多种预设色彩的文字提示样式',
             '修复 1.0.x 版本中，tooltip 的箭头方向无法随着气泡方向更新的问题'
         ]
