@@ -5,6 +5,7 @@ import moreThanOneNode from './one-node';
 import Scrollable from './scrollable';
 import usePromiseCallback from './cb-promise';
 import clickOutside from './click-outside';
+import clickoutside from './clickoutside';
 import * as _Popper from './tooltip';
 
 export {
@@ -15,5 +16,6 @@ export {
     Scrollable,
     usePromiseCallback,
     clickOutside,
+    clickoutside,
     _Popper
 };
