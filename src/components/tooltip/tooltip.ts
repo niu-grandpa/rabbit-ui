@@ -13,6 +13,7 @@ import { CssTransition, _arrow, _Popper } from '../../mixins';
 import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
+const STATEKEY = 'tooltipState';
 const DEFAULTDELAY = 80;
 const EnterCls = 'zoom-big-fast-enter';
 const LeaveCls = 'zoom-big-fast-leave';
@@ -105,7 +106,7 @@ class Tooltip implements Config {
 
             events({ onVisibleChange }) {
                 const event = () => {
-                    const visable: boolean = TooltipPopper.dataset.tooltipState === 'show';
+                    const visable: boolean = TooltipPopper.dataset[STATEKEY] === 'show';
                     onVisibleChange && type.isFn(onVisibleChange, visable);
                 };
                 const show = () => {
@@ -117,8 +118,7 @@ class Tooltip implements Config {
                     // 当鼠标移出tooltip后判断当前状态如果为 show，
                     // 那么说明气泡显示过了，该执行移出事件了。
                     // 避免了即使鼠标移出但没有显示过气泡而依然执行事件。
-                    if (TooltipPopper.dataset.tooltipState === 'show')
-                        setTimeout(event, DEFAULTDELAY);
+                    if (TooltipPopper.dataset[STATEKEY] === 'show') setTimeout(event, DEFAULTDELAY);
                 };
 
                 bind(target, 'mouseenter', show);
@@ -198,7 +198,7 @@ class Tooltip implements Config {
 
     private _setAlwaysShow(children: HTMLElement, always: boolean): void {
         if (!always) setCss(children, 'display', 'none');
-        children.dataset.tooltipState = 'pending';
+        children.dataset[STATEKEY] = 'pending';
     }
 
     private _handleMouseEv(
@@ -214,7 +214,7 @@ class Tooltip implements Config {
 
         const setVisable = (mode: 'in' | 'out') => {
             if (mode === 'in') this._setPopper(node, children, placement, offset);
-            children.dataset.tooltipState = mode === 'in' ? 'show' : 'close';
+            children.dataset[STATEKEY] = mode === 'in' ? 'show' : 'close';
             CssTransition(children, {
                 inOrOut: mode,
                 ...CssTransitonCommonConfig
@@ -226,7 +226,7 @@ class Tooltip implements Config {
         };
         const hide = () => {
             if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
-            if (children.dataset.tooltipState === 'show')
+            if (children.dataset[STATEKEY] === 'show')
                 setTimeout(() => setVisable('out'), DEFAULTDELAY);
         };
 

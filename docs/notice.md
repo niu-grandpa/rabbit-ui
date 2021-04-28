@@ -15,8 +15,7 @@
  基础用法
 
 - 基本用法，默认在 4.5秒后关闭。如果 `desc` 参数为空或不填，则自动应用仅标题模式下的样式。
-
-  建议标题言简意赅，例如"删除成功"，更详细的内容可以放在描述信息里。
+- 建议标题言简意赅，例如"删除成功"，更详细的内容可以放在描述信息里。
 
 ```js
 Rabbit.Notice.open({
@@ -39,7 +38,7 @@ Rabbit.Notice.open({
 
 - 带有状态图标的提醒。
 
-`带描述信息`
+带描述信息
 
 ```js
 Rabbit.Notice.info({
@@ -68,7 +67,7 @@ Rabbit.Notice.error({
 
 ```
 
-`仅标题`
+仅标题
 
 ```js
 Rabbit.Notice.info({
@@ -143,7 +142,7 @@ Rabbit.Notice.open({
 
 ```
 
-> `title` 和  `desc`  属性虽然支持传入 HTML 片段，但是在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。因此在 `dangerouslyUseHTMLString` 打开的情况下，请确保 `title` 或 `desc` 的内容是可信的，**永远不要**将用户提交的内容赋值给 `title` 或 `desc` 属性。
+> `title` 和  `desc`  属性虽然支持传入 HTML 片段，但是在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。因此在 `dangerouslyUseHTMLString` 打开的情况下，请确保  `desc` 的内容是可信的，**永远不要**将用户提交的内容赋值给  `desc` 属性。
 
 - 隐藏关闭按钮
 

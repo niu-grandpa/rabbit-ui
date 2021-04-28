@@ -2,8 +2,6 @@
 
 按钮用于开始一个即时操作。
 
-> 无需先实例化组件 ，如果使用组件提供的 API 则需要先实例化后使用。 `new Rabbit.Button()`
-
 ## 何时使用
 
 - 标记了一个（或封装一组）操作命令，响应用户点击行为，触发相应的业务逻辑。
@@ -104,7 +102,6 @@
 <button type="button" loading="true" class="rab-btn rab-btn-primary">Loading...</button>
 <button type="button" loading="true" class="rab-btn rab-btn-circle"></button>
 <button type="button" loading="true" class="rab-btn rab-btn-primary rab-btn-circle"></button>
-
 ```
 
 - 按钮组合
@@ -235,36 +232,41 @@
 
 | 属性       | 说明                                                 | 默认值 |
 | ---------- | ---------------------------------------------------- | ------ |
-| loading | 设置按钮为加载中状态，如果为动态设置请看下面方法介绍 | false  |
+| loading | 设置按钮为加载中状态 | false  |
 | disabled   | 设置按钮为禁用状态                                   | false  |
 | icon    | 设置按钮的图标类型                                   | -      |
 
-### Config 方法
+### Config  方法
 
 配置指定的组件，并提供一些必要的响应式更新DOM内容或其他操作的 API。（并不是每个组件都会有）
 
-| 名称   | 参数                                            | 可设置的属性 |
-| ------ | ----------------------------------------------- | ------------ |
-| config | `el`，配置选定的 button 组件 | `loading`    |
+| 参数 | 说明                                              | 类型   |
+| ---- | ------------------------------------------------- | ------ |
+| el   | 配置当前选定的 button，必须是选择器名称或者元素名 | String |
 
-## config 使用
+该方法返回以下值：
 
-### 动态设置按钮是否加载状态
+- `loading`
 
-常用于点击按钮后等待验证或其他异步操作，在这段时间按钮是被设为加载中的状态，并且在等待响应完成后按钮需切换为原始状态，所以这就需要用到 方法 `config(el).loading`。
+| 返回值  | 说明                           | 类型   | 默认值 |
+| ------- | ------------------------------ | ------ | ------ |
+| loading | 响应式设置设置按钮为加载中状态 | String | -      |
+
+### 动态设置按钮加载中状态
+
+常用于点击按钮后等待验证或其他异步操作，在这段时间按钮是被设为加载中的状态，并且在等待响应完成后按钮需切换为原始状态。
 
 示例：
 
 ```html
-<button type="button" onclick="Validation()" class="rab-btn" id="check">验证</button>
+<button type="button" class="rab-btn" id="exampleBtn" onclick="handleClick()">验证</button>
 <script>
-	const btn = new Button();
-    const btnCheck = btn.config('#check');
-    
-    Validation = () => {
-        btnCheck.loading = true;
+	const button = new Button();
+ 
+    handleClick = () => {
+       button.config('#exampleBtn').loading = true;
         setTimeout(() => {
-    		btnCheck.loading = false;
+    		button.config('#exampleBtn').loading = false;
             console.log('加载完成!');
  		}, 3000);
     }

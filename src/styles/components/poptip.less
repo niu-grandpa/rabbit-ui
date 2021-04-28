@@ -22,22 +22,28 @@
     }
 
     &-title {
+        min-width: 177px;
+        min-height: 32px;
         margin: 0;
         padding: @padding-xs @padding-md;
         position: relative;
         border-bottom: @border-width-base @border-style-base @border-color-split;
+        color: @title-color;
+        font-size: @font-size-base;
+        font-weight: 500;
 
-        &-inner {
-            color: @title-color;
-            font-size: @font-size-base;
-            font-weight: 500;
-        }
+        // &-inner {
+        //     color: @title-color;
+        //     font-size: @font-size-base;
+        //     font-weight: 500;
+        // }
     }
 
     &-body {
         padding: @padding-sm @padding-md;
 
         &-content {
+            color: @text-color;
             overflow: auto;
 
             &-word-wrap {
@@ -45,9 +51,9 @@
                 text-align: justify;
             }
 
-            &-inner {
-                color: @text-color;
-            }
+            // &-inner {
+            //     color: @text-color;
+            // }
         }
     }
 
@@ -56,14 +62,19 @@
         background-color: @white;
         background-clip: padding-box;
         border-radius: @border-radius-base;
-        box-shadow: @shadow-base;
+        box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+            0 9px 28px 8px rgb(0 0 0 / 5%);
         white-space: nowrap;
+        text-align: left;
     }
 
     &-popper {
         min-width: 170px;
         font-size: @font-size-base;
+        will-change: top, left;
         .popper(@poptip-arrow, @poptip-arrow-width, @poptip-distance, @poptip-arrow-color);
+        visibility: hidden;
+        opacity: 0;
 
         &[x-placement^='top'] .@{poptip-arrow}:after {
             content: ' ';
@@ -135,20 +146,21 @@
         padding: @padding-md @padding-md @padding-xs;
 
         .rab-icon {
-            font-size: @font-size-large;
+            font-size: @font-size-large + 2;
             color: @warning-color;
-            line-height: 18px;
+            line-height: 16px;
             position: absolute;
         }
 
         &-message {
-            padding-left: 20px;
+            padding: 0 0 @padding-sm @padding-sm * 2;
+            color: @title-color;
         }
     }
 
     &-confirm &-footer {
         text-align: right;
-        padding: @padding-xs @padding-md @padding-md;
+        margin-bottom: 6px;
 
         button {
             margin-left: 4px;
