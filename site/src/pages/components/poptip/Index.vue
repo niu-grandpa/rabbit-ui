@@ -1,7 +1,7 @@
 <template>
     <article class="markdown">
         <Describe
-            title="Poptip 分割线"
+            title="Poptip 气泡提示"
             desc="点击/鼠标移入元素，弹出气泡式的卡片浮层。"
             name="Poptip"
         >

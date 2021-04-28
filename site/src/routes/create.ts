@@ -135,6 +135,10 @@ export default () =>
             {
                 path: '/components/poptip',
                 component: () => import('pages/components/poptip/Index.vue')
+            },
+            {
+                path: '/components/skeleton',
+                component: () => import('pages/components/skeleton/Index.vue')
             }
         ]
     });

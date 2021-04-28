@@ -85,20 +85,19 @@
     const skeleton = document.querySelector('#demoSkeleton');
     const content = document.querySelector('.content');
 
-    toggle = (_this) => {
+    toggle = ($this) => {
       skeleton.style.display = '';
       content.style.display = 'none';
-      _this.setAttribute('disabled', 'true');
+      $this.setAttribute('disabled', 'true');
 
       setTimeout(() => {
         skeleton.style.display = 'none';
         content.style.display = '';
-        _this.removeAttribute('disabled');
+        $this.removeAttribute('disabled');
       }, 3000);
     };
   </script>
 </div>
-
 ```
 
 <p style="font-size: 32px">Attributes</p>
