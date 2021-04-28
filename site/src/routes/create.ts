@@ -139,6 +139,10 @@ export default () =>
             {
                 path: '/components/skeleton',
                 component: () => import('pages/components/skeleton/Index.vue')
+            },
+            {
+                path: '/components/radio',
+                component: () => import('pages/components/radio/Index.vue')
             }
         ]
     });

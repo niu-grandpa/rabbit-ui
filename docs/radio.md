@@ -21,8 +21,8 @@
 <script>
 	const radio = new Rabbit.Radio();
     radio.config('#demoRadio').events({
-        onChange: (status) => {
-            console.log(`当前状态：${status}`)
+        onChange: (state) => {
+            console.log(`当前状态：${state}`)
         }
     })
 </script>
@@ -215,6 +215,6 @@
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性     | 说明                                                         | 回调参数                                 |
-| :------- | :----------------------------------------------------------- | :--------------------------------------- |
-| onChange | 在选项状态发生改变时触发，当选中的配置目标是 radio-group 时，则返回当前选中的项，如果是单个 radio 则返回当前选中状态 | (status:Boolean \| item:Element) => void |
+| 属性     | 说明                                                         | 回调参数                               |
+| :------- | :----------------------------------------------------------- | :------------------------------------- |
+| onChange | 在选项状态发生改变时触发，当选中的配置目标是 radio-group 时，则返回一个对象，为当前选中的项，如果是单个 radio 则返回当前选中状态 | (state:Boolean \| item:Object) => void |
