@@ -124,7 +124,7 @@
         </Example>
         <Example>
             <template #content>
-                <r-dropdown placement="bottom-start">
+                <r-dropdown>
                     <a> 北京小吃 <i class="rab-icon rab-icon-ios-arrow-down"></i> </a>
                     <r-dropdown-menu>
                         <r-dropdown-item>豆汁儿</r-dropdown-item>

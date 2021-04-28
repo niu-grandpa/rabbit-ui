@@ -127,6 +127,14 @@ export default () =>
             {
                 path: '/components/dropdown',
                 component: () => import('pages/components/dropdown/Index.vue')
+            },
+            {
+                path: '/components/tooltip',
+                component: () => import('pages/components/tooltip/Index.vue')
+            },
+            {
+                path: '/components/poptip',
+                component: () => import('pages/components/poptip/Index.vue')
             }
         ]
     });

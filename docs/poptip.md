@@ -91,7 +91,7 @@
 
 嵌套复杂内容
 
-- 通过 `config` 方法来实现复杂的内容。
+- 实现复杂的内容。
 
 ```html
 <r-poptip width="400" placement="right" id="test1">
@@ -146,7 +146,6 @@
 >
   <button class="rab-btn">长文本</button>
 </r-poptip>
-
 ```
 
 确认框

@@ -17,7 +17,8 @@ import {
     ElTimelineItem,
     ElCard,
     ElCollapse,
-    ElCollapseItem
+    ElCollapseItem,
+    ElInput
 } from 'element-plus';
 
 export default [
@@ -39,5 +40,6 @@ export default [
     ElTimelineItem,
     ElCard,
     ElCollapse,
-    ElCollapseItem
+    ElCollapseItem,
+    ElInput
 ];
