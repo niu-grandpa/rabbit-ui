@@ -184,16 +184,16 @@
 
 ### Tooltip
 
-| 属性      | 说明                                                         | 默认值 |
-| :-------- | :----------------------------------------------------------- | :----- |
-| content   | 显示的内容                                                   | 空     |
-| placement | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，自动识别 | top    |
-| disabled  | 是否禁用提示框                                               | false  |
-| delay     | 延迟显示，单位毫秒                                           | -      |
-| always    | 是否总是可见                                                 | false  |
-| theme     | 背景颜色                                                     | dark   |
-| max-width | 最大宽度，超出最大值后，文本将自动换行，并两端对齐           | -      |
-| offset    | 出现位置的偏移量                                             | 0      |
+| 属性          | 说明                                                         | 默认值 |
+| :------------ | :----------------------------------------------------------- | :----- |
+| content       | 显示的内容                                                   | 空     |
+| placement     | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，自动识别 | top    |
+| disabled      | 是否禁用提示框                                               | false  |
+| delay         | 延迟显示，单位毫秒                                           | -      |
+| always        | 是否总是可见                                                 | false  |
+| theme `1.1.0` | 背景颜色                                                     | dark   |
+| max-width     | 最大宽度，超出最大值后，文本将自动换行，并两端对齐           | -      |
+| offset        | 出现位置的偏移量                                             | 0      |
 
 ### Config  方法
 
@@ -203,22 +203,23 @@
 | ---- | ------------------------------------------------ | ------ |
 | el   | 配置当前选定的 tooltip，必须是选择器名称或者元素名 | String |
 
-该方法返回以下两个值：
+该方法返回以下四个值：
 
 - `content`
 - `disabled`
 - `always`
 - `events(options)`
 
-| 返回值   | 说明                          | 类型             | 默认值 |
-| -------- | ----------------------------- | ---------------- | ------ |
-| content  | 响应式设置或更新提示框的内容  | String \| Number | -      |
-| disabled | 响应式设置是否禁用提示框      | Boolean          | -      |
-| always   | 响应式设置是否总是可见        | Boolean          | -      |
-| events   | 非响应式API，添加提示框的事件 | Function         | -      |
+| 返回值           | 说明                          | 类型             | 默认值 |
+| ---------------- | ----------------------------- | ---------------- | ------ |
+| content          | 响应式设置或更新提示框的内容  | String \| Number | -      |
+| disabled `1.1.0` | 响应式设置是否禁用提示框      | Boolean          | false  |
+| always `1.1.0`   | 响应式设置是否总是可见        | Boolean          | false  |
+| events           | 非响应式API，添加提示框的事件 | Function         | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性            | 说明           | 回调参数                  |
-| :-------------- | :------------- | :------------------------ |
-| onVisibleChange | 显示隐藏的回调 | (visible:boolean) => void |
+| 属性                    | 说明           | 回调参数                  |
+| :---------------------- | :------------- | :------------------------ |
+| onVisibleChange `1.1.0` | 显示隐藏的回调 | (visible:Boolean) => void |
+

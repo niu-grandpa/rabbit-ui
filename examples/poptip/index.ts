@@ -16,6 +16,10 @@ export default function poptipTest(): void {
     window.handleChange = (value: string) => {
         poptip.config('#testInput').content = value;
     };
+    // @ts-ignore
+    window.handleClose = () => {
+        poptip.config('#test2').visible = false;
+    };
 
     const table = `
         <div class="api">
@@ -48,9 +52,9 @@ export default function poptipTest(): void {
     </div>
     `;
 
-    poptip.config('#test2').content = table;
+    poptip.config('#test3').content = table;
 
-    poptip.config('#test3').events({
+    poptip.config('#test4').events({
         onOk: () => {
             Rabbit.Message.info('点击了确定');
         },

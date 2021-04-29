@@ -125,13 +125,19 @@
     </div>
 
     <div class="example">
+        <r-poptip id="test2" title="标题" content="<a onclick='handleClose()'>关闭提示框</a>">
+            <a>Click 激活</a>
+        </r-poptip>
+    </div>
+
+    <div class="example">
         <r-poptip disabled="true">
             <button class="rab-btn">禁用提示</button>
         </r-poptip>
     </div>
 
     <div class="example">
-        <r-poptip width="400" placement="right" id="test2">
+        <r-poptip width="400" placement="right" id="test3">
             <button class="rab-btn">复杂内容</button>
         </r-poptip>
     </div>
@@ -143,7 +149,7 @@
     </div>
 
     <div class="example">
-        <r-poptip confirm="true" title="您确认删除这条内容吗？" id="test3">
+        <r-poptip confirm="true" title="您确认删除这条内容吗？" id="test4">
             <button class="rab-btn">删除</button>
         </r-poptip>
         <r-poptip confirm="true" title="Are you sure delete this task?" ok-text="yes" cancel-text="no">

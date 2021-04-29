@@ -183,22 +183,22 @@
 
 ### Dropdown
 
-| 属性             | 说明                                                         | 默认值 |
-| :--------------- | :----------------------------------------------------------- | :----- |
-| trigger          | 触发方式，可选值为 `hover`（悬停）`click`（点击）`contextMenu`（右键） | hover  |
-| placement        | 下拉菜单出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`, 支持自动识别 | bottom |
-| visible          | 手动控制下拉框的显示，在 trigger = 'custom' 时使用           | false  |
-| stop-propagation | 是否开启 stop-propagation，在trigger = 'custom' 时，如果将事件绑定到 r-dropdown 上时最好使用 | false  |
+| 属性                     | 说明                                                         | 默认值 |
+| :----------------------- | :----------------------------------------------------------- | :----- |
+| trigger                  | 触发方式，可选值为 `hover`（悬停）`click`（点击）`contextMenu`（右键）`custom` (自定义) | hover  |
+| placement                | 下拉菜单出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`, 支持自动识别 | bottom |
+| visible `1.3.0`          | 手动控制下拉框的显示，在 trigger = 'custom' 时使用           | false  |
+| stop-propagation `1.3.0` | 是否开启 stop-propagation，在trigger = 'custom' 时，如果将事件绑定到 r-dropdown 上时最好使用 | false  |
 
 ### DropdownItem
 
-| 属性     | 说明                         | 默认值 |
-| :------- | :--------------------------- | :----- |
-| key      | 用来标识这一项               | -      |
-| disabled | 禁用该项                     | -      |
-| divided  | 显示分割线                   | -      |
-| selected | 标记该项为选中状态           | -      |
-| danger   | 标记为危险项，用于删除项操作 |        |
+| 属性           | 说明                         | 默认值 |
+| :------------- | :--------------------------- | :----- |
+| key `1.3.0`    | 用来标识这一项               | -      |
+| disabled       | 禁用该项                     | -      |
+| divided        | 显示分割线                   | -      |
+| selected       | 标记该项为选中状态           | -      |
+| danger `1.3.0` | 标记为危险项，用于删除项操作 |        |
 
 ### Config  方法
 
@@ -208,21 +208,22 @@
 | ---- | ------------------------------------------------- | ------ |
 | el   | 配置当前选定的 drawer，必须是选择器名称或者元素名 | String |
 
-该方法返回以下方法：
+该方法返回以下值：
 
 - `visible`
 
 - `events(options)`
 
-| 返回值  | 说明                          | 类型     | 默认值 |
-| ------- | ----------------------------- | -------- | ------ |
-| visible | 响应式设置或更新下拉框的显示  | Boolean  | false  |
-| events  | 非响应式API，添加下拉菜单事件 | Function | -      |
+| 返回值          | 说明                          | 类型     | 默认值 |
+| --------------- | ----------------------------- | -------- | ------ |
+| visible `1.3.0` | 响应式设置或更新下拉框的显示  | Boolean  | false  |
+| events          | 非响应式API，添加下拉菜单事件 | Function | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性            | 说明                                             | 回调参数                  |
-| :-------------- | :----------------------------------------------- | :------------------------ |
-| onClick         | 点击菜单项时触发，返回 r-dropdown-item 的 key 值 | (key:String)  =>  void    |
-| onVisibleChange | 菜单显示状态改变时调用                           | (visible:Boolean) => void |
-| onClickOutside  | 点击外部关闭下拉菜单时触发                       | (event:Event) => void     |
+| 属性                    | 说明                                             | 回调参数                  |
+| :---------------------- | :----------------------------------------------- | :------------------------ |
+| onClick `1.3.0`         | 点击菜单项时触发，返回 r-dropdown-item 的 key 值 | (key:String)  =>  void    |
+| onVisibleChange `1.3.0` | 菜单显示状态改变时调用                           | (visible:Boolean) => void |
+| onClickOutside `1.3.0`  | 点击外部关闭下拉菜单时触发                       | (event:Event) => void     |
+

@@ -6,11 +6,11 @@
 
 ## 何时使用
 
-当目标元素有进一步的描述和相关操作时，可以收纳到卡片中，根据用户的操作行为进行展现。
+- 当目标元素有进一步的描述和相关操作时，可以收纳到卡片中，根据用户的操作行为进行展现。
 
-和`Tooltip` 类似，具有很多相同配置，不同点是 `Poptip` 以卡片的形式承载了更多的内容，比如链接、表格、按钮等。
+- 和`Tooltip` 类似，具有很多相同配置，不同点是 `Poptip` 以卡片的形式承载了更多的内容，比如链接、表格、按钮等。
 
-`Poptip `还 `confirm` 确认框，与 `Modal`不同的是，它会出现在就近元素，相对轻量。
+- `Poptip `还 `confirm` 确认框，与 `Modal`不同的是，它会出现在就近元素，相对轻量。
 
 ## 代码示例
 
@@ -19,23 +19,33 @@
 - 支持三种触发方式：鼠标悬停、点击、聚焦。默认是点击。
 
 ```html
-<r-poptip trigger="hover" title="提示标题" content="提示内容">
+<r-poptip trigger="hover" title="标题" content="提示内容">
   <button type="button" class="rab-btn">hover 激活</button>
 </r-poptip>
-<r-poptip title="提示标题" content="提示内容">
+<r-poptip title="标题" content="提示内容" id="test1">
   <button type="button" class="rab-btn">click 激活</button>
 </r-poptip>
-<r-poptip trigger="focus" title="提示标题" content="提示内容">
+<r-poptip trigger="focus" title="标题" content="提示内容">
   <button type="button" class="rab-btn">focus 激活</button>
 </r-poptip>
-<r-poptip title="提示标题" content="请输入内容..." id="test-input">
+<r-poptip title="标题" content="<span style='color:#ccc'>请输入内容...</span>" id="testInput">
   <input type="text" placeholder="配合输入框" oninput="handleChange(this.value)" />
 </r-poptip>
 
 <script>
-    const poptip = new Rabbit.Poptip();
-    handleChange = (val) => {
-      poptip.config('#test-input').content = val;
+	const poptip = new Rabbit.Poptip();
+
+    poptip.config('#test1').events({
+        onPopperShow: () => {
+            console.log('poptip show');
+        },
+        onPopperHide: () => {
+            console.log('poptip hide');
+        }
+    });
+
+    handleChange = (value) => {
+        poptip.config('#testInput').content = value;
     };
 </script>
 ```
@@ -89,18 +99,44 @@
 </div>
 ```
 
+从浮层内关闭
+
+- 通过 config 方法提供的`visible` api 来控制提示框的显示和隐藏。
+
+```html
+<r-poptip id="test2" title="标题" content="<a onclick='handleClose()'>关闭提示框</a>">
+  <a>Click 激活</a>
+</r-poptip>
+
+<script>
+	handleClose = () => {
+       poptip.config('#test2').visible = false;
+    };
+</script>
+```
+
+禁用提示
+
+- 通过设置属性 `disabled="true"` 禁止显示提示框
+
+```html
+<r-poptip disabled="true">
+  <button class="rab-btn">禁用提示</button>
+</r-poptip>
+```
+
 嵌套复杂内容
 
 - 实现复杂的内容。
 
 ```html
-<r-poptip width="400" placement="right" id="test1">
+<r-poptip width="400" placement="right" id="test3">
   <button class="rab-btn">复杂内容</button>
 </r-poptip>
 
 <script>
 	const poptip = new Rabbit.Poptip();
-    const complexContent = `
+    const table = `
       <div class="api">
           <table>
               <thead>
@@ -128,9 +164,8 @@
                   </tr>
               </tbody>
           </table>
-      </div>
-    `;
-	poptip.config('#test1').content = complexContent;
+      </div>`;
+	poptip.config('#test3').content = table;
 </script>
 ```
 
@@ -153,7 +188,7 @@
 - 通过设置属性`confirm`开启确认框模式。确认框只会以 click 的形式激活，并且只会显示 title 的内容，忽略 content。
 
 ```html
-<r-poptip confirm="true" title="您确认删除这条内容吗？" id="test2">
+<r-poptip confirm="true" title="您确认删除这条内容吗？" id="test4">
   <button class="rab-btn">删除</button>
 </r-poptip>
 <r-poptip confirm="true" title="Are you sure delete this task?" ok-text="yes" cancel-text="no">
@@ -162,7 +197,7 @@
 
 <script>
     const poptip = new Rabbit.Poptip();
-    poptip.config('#test2').events({
+    poptip.config('#test4').events({
         onOk: () => {
             Rabbit.Message.info('点击了确定');
         },
@@ -177,19 +212,20 @@
 
 ### Poptip
 
-| 属性        | 说明                                                         | 默认值   |
-| :---------- | :----------------------------------------------------------- | :------- |
-| trigger     | 触发方式，可选值为`hover`（悬停）`click`（点击）`focus`（聚焦）,在 confirm 模式下，只有 click 有效 | click    |
-| title       | 显示的标题                                                   | -        |
-| content     | 显示的正文内容，只在非 confirm 模式下有效-                   | -        |
-| placement   | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，支持自动识别top | top      |
-| width       | 宽度，最小宽度为 150px，在 confirm 模式下，默认最大宽度为 300px | -        |
-| confirm     | 是否开启对话框模式                                           | false    |
-| disabled    | 是否禁用                                                     | false    |
-| ok-text     | 确定按钮的文字，只在 confirm 模式下有效                      | 确定     |
-| cancel-text | 取消按钮的文字，只在 confirm 模式下有效                      | 取消     |
-| padding     | 自定义间距值                                                 | 8px 16px |
-| offset      | 出现位置的偏移量                                             | 0        |
+| 属性            | 说明                                                         | 默认值   |
+| :-------------- | :----------------------------------------------------------- | :------- |
+| trigger         | 触发方式，可选值为`hover`（悬停）`click`（点击）`focus`（聚焦）,在 confirm 模式下，只有 click 有效 | click    |
+| title           | 显示的标题                                                   | -        |
+| content         | 显示的正文内容，只在非 confirm 模式下有效-                   | -        |
+| placement       | 提示框出现的位置，可选值为`top``top-start``top-end``bottom``bottom-start``bottom-end``left``left-start``left-end``right``right-start``right-end`，支持自动识别top | top      |
+| width           | 宽度，最小宽度为 150px，在 confirm 模式下，默认最大宽度为 300px | -        |
+| confirm         | 是否开启对话框模式                                           | false    |
+| disabled        | 是否禁用                                                     | false    |
+| ok-text         | 确定按钮的文字，只在 confirm 模式下有效                      | 确定     |
+| cancel-text     | 取消按钮的文字，只在 confirm 模式下有效                      | 取消     |
+| padding         | 自定义间距值                                                 | 8px 16px |
+| offset          | 出现位置的偏移量                                             | 0        |
+| visible `1.4.0` | 提示框是否显示或隐藏                                         | false    |
 
 ### Config  方法
 
@@ -202,22 +238,24 @@
 该方法返回以下三个值：
 
 - `title`
-
 - `content`
-
+- `disabled`
+- `visible`
 - `events(options)`
 
-| 返回值  | 说明                            | 类型             | 默认值 |
-| ------- | ------------------------------- | ---------------- | ------ |
-| title   | 响应式设置提示框标题            | String \| Number | -      |
-| content | 响应式设置提示框的内容          | String\| Number  | -      |
-| events  | 非响应式API，添加提示框的事件， | Function         | -      |
+| 返回值           | 说明                           | 类型              | 默认值 |
+| ---------------- | ------------------------------ | ----------------- | ------ |
+| title            | 响应式设置提示框标题           | String \| Number  | -      |
+| content          | 响应式设置提示框的内容         | String  \| Number | -      |
+| disabled `1.4.0` | 响应式设置提示框是否禁用       | Boolean           | false  |
+| visible `1.4.0`  | 响应式设置提示框是否显示和隐藏 | Boolean           | false  |
+| events           | 非响应式API，添加提示框的事件  | Function          | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性     | 说明                                    | 回调参数 |
-| :------- | :-------------------------------------- | :------- |
-| onShow   | 在提示框显示时触发                      | 无       |
-| onHide   | 在提示框消失时触发                      | 无       |
-| onOK     | 点击确定的回调，只在 confirm 模式下有效 | 无       |
-| onCancel | 点击取消的回调，只在 confirm 模式下有效 | 无       |
+| 属性                 | 说明                                    | 回调参数 |
+| :------------------- | :-------------------------------------- | :------- |
+| onPopperShow `1.4.0` | 在提示框显示时触发                      | 无       |
+| onPopperHide `1.4.0` | 在提示框消失时触发                      | 无       |
+| onOK                 | 点击确定的回调，只在 confirm 模式下有效 | 无       |
+| onCancel             | 点击取消的回调，只在 confirm 模式下有效 | 无       |
