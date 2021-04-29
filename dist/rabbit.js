@@ -6184,231 +6184,269 @@ var PageHeader = /** @class */ (function () {
 
 ;// CONCATENATED MODULE: ./src/components/poptip/poptip.ts
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
 
-
-var poptip_DEFAULTDELAY = 100;
-var SHOWTIMER, poptip_EVENTTIMER;
+var poptip_STATEKEY = 'visibleState';
+var poptip_DEFAULTDELAY = 80;
+var poptip_VISIBLETIMER = null, poptip_EVENTTIMER = null;
 var Poptip = /** @class */ (function () {
     function Poptip() {
-        this.VERSION = 'v1.0';
+        this.VERSION = 'v2.0';
         this.COMPONENTS = (0,dom_utils.$el)('r-poptip', { all: true });
         this._create(this.COMPONENTS);
-        this.children = (0,dom_utils.$el)("." + prefix.default.poptip + "-popper", { all: true });
-        clickOutside(this.children, 'poptipShow', 'zoom-big-fast-leave');
         scrollUpdate();
     }
     Poptip.prototype.config = function (el) {
         var target = (0,dom_utils.$el)(el);
         validComps(target, 'poptip');
-        var attrs = Poptip.prototype.attrs;
-        var PoptipRef = target.querySelector("." + prefix.default.poptip + "-rel");
+        var _a = Poptip.prototype, _attrs = _a._attrs, _setVisible = _a._setVisible, _handleTrigger = _a._handleTrigger;
+        var _b = _attrs(target), trigger = _b.trigger, title = _b.title, content = _b.content, disabled = _b.disabled, placement = _b.placement, offset = _b.offset, confirm = _b.confirm;
+        var PoptipRefElem = target.querySelector("." + prefix.default.poptip + "-rel");
         var PoptipPopper = target.querySelector("." + prefix.default.poptip + "-popper");
-        var PoptipContent = target.querySelector("." + prefix.default.poptip + "-body-content-inner");
-        var PoptipTitle;
-        var OkBtn;
-        var CancelBtn;
-        // 判断要设置的提示框标题是否是确认对话框的标题
-        // 判断是否要获取确认对话框的确定和取消按钮
-        if (attrs(target).isConfirm) {
-            PoptipTitle = target.querySelector("." + prefix.default.poptip + "-body-message");
-            OkBtn = target.querySelector("." + prefix.default.button + "-primary." + prefix.default.button + "-sm");
-            CancelBtn = target.querySelector("." + prefix.default.button + "-text." + prefix.default.button + "-sm");
-        }
-        else {
-            PoptipTitle = target.querySelector("." + prefix.default.poptip + "-title-inner");
-        }
+        var PoptipTitle = target.querySelector("." + prefix.default.poptip + "-title");
+        var PoptipContent = target.querySelector("." + prefix.default.poptip + "-body-content");
         return {
+            get visible() {
+                return PoptipPopper.dataset[poptip_STATEKEY] === 'show';
+            },
+            set visible(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _setVisible(newVal, PoptipRefElem, PoptipPopper, placement, offset);
+            },
+            get disabled() {
+                return disabled;
+            },
+            set disabled(newVal) {
+                if (newVal && !isBol(newVal))
+                    return;
+                _handleTrigger(trigger, newVal, target, PoptipRefElem, PoptipPopper, placement, offset);
+            },
             get title() {
-                return (0,dom_utils.setHtml)(PoptipTitle);
+                return title;
             },
             set title(newVal) {
-                if (isStr(newVal) || isNum(newVal))
-                    (0,dom_utils.setHtml)(PoptipTitle, newVal);
+                if (newVal && !isStr(newVal))
+                    return;
+                (0,dom_utils.setHtml)(PoptipTitle, newVal);
             },
             get content() {
-                return (0,dom_utils.setHtml)(PoptipContent);
+                return content;
             },
             set content(newVal) {
-                if (isStr(newVal) || isNum(newVal))
-                    (0,dom_utils.setHtml)(PoptipContent, newVal);
+                if (newVal && !isStr(newVal))
+                    return;
+                (0,dom_utils.setHtml)(PoptipContent, newVal);
             },
             events: function (_a) {
-                var onShow = _a.onShow, onHide = _a.onHide, onOk = _a.onOk, onCancel = _a.onCancel;
-                var triggerMode = attrs(target).trigger;
-                var showEv = function () {
-                    if (PoptipPopper.dataset.poptipShow === 'true')
-                        onShow && isFn(onShow);
+                var onPopperShow = _a.onPopperShow, onPopperHide = _a.onPopperHide, onOk = _a.onOk, onCancel = _a.onCancel;
+                var visibleEvent = function (show) {
+                    if (show) {
+                        onPopperShow && isFn(onPopperShow);
+                    }
+                    else {
+                        onPopperHide && isFn(onPopperHide);
+                    }
                 };
-                var hideEv = function () {
-                    if (PoptipPopper.dataset.poptipShow === 'false')
-                        onHide && isFn(onHide);
+                var toogleEv = function () {
+                    setTimeout(function () {
+                        PoptipPopper.dataset[poptip_STATEKEY] === 'show'
+                            ? visibleEvent(true)
+                            : visibleEvent(false);
+                    }, 200);
                 };
-                var clickEv = function () {
-                    showEv();
-                    hideEv();
+                var clickoutsideEv = function () {
+                    if (PoptipPopper.style.visibility === 'visible') {
+                        setTimeout(function () { return visibleEvent(false); }, poptip_DEFAULTDELAY);
+                    }
                 };
-                if (triggerMode === 'click') {
-                    (0,dom_utils.bind)(PoptipRef, 'click', clickEv);
-                }
-                else if (triggerMode === 'focus') {
-                    (0,dom_utils.bind)(target, 'mousedown', showEv);
-                    (0,dom_utils.bind)(target, 'mouseup', hideEv);
-                }
-                else if (triggerMode === 'hover') {
-                    handleHoverShowAndHideEvents({
-                        reference: target,
-                        popper: PoptipPopper,
-                        datasetVal: 'poptipStatus',
-                        showCb: onShow,
-                        hideCb: onHide,
-                        delay: poptip_DEFAULTDELAY,
-                        timer: poptip_EVENTTIMER
+                if (trigger === 'hover') {
+                    (0,dom_utils.bind)(target, 'mouseenter', function () {
+                        if (poptip_EVENTTIMER)
+                            clearTimeout(poptip_EVENTTIMER);
+                        poptip_EVENTTIMER = setTimeout(function () { return visibleEvent(true); }, poptip_DEFAULTDELAY);
+                    });
+                    (0,dom_utils.bind)(target, 'mouseleave', function () {
+                        if (poptip_EVENTTIMER)
+                            clearTimeout(poptip_EVENTTIMER);
+                        if (PoptipPopper.dataset[poptip_STATEKEY] === 'show')
+                            setTimeout(function () { return visibleEvent(false); }, poptip_DEFAULTDELAY);
                     });
                 }
-                // 确认对话框的确定和取消按钮都要触发提示框隐藏
-                if (OkBtn) {
-                    (0,dom_utils.bind)(OkBtn, 'click', function () {
-                        hideEv();
-                        onOk && isFn(onOk);
-                    });
+                if (trigger === 'click' || trigger === 'focus') {
+                    clickoutside_clickOutside(target, clickoutsideEv);
                 }
-                if (CancelBtn) {
-                    (0,dom_utils.bind)(OkBtn, 'click', function () {
-                        hideEv();
-                        onCancel && isFn(onCancel);
-                    });
+                if (trigger === 'click') {
+                    (0,dom_utils.bind)(PoptipRefElem, 'click', toogleEv);
+                }
+                if (trigger === 'focus') {
+                    (0,dom_utils.bind)(PoptipRefElem, 'mousedown', function () { return visibleEvent(true); });
+                    (0,dom_utils.bind)(PoptipRefElem, 'mouseup', function () { return visibleEvent(false); });
+                }
+                if (confirm) {
+                    var PoptipOkBtn = PoptipPopper.querySelector("." + prefix.default.button + "-primary");
+                    var PoptipCancelBtn = PoptipPopper.querySelector("." + prefix.default.button + "-text");
+                    (0,dom_utils.bind)(PoptipOkBtn, 'click', function () { return onOk && isFn(onOk); });
+                    (0,dom_utils.bind)(PoptipCancelBtn, 'click', function () { return onCancel && isFn(onCancel); });
                 }
             }
         };
     };
     Poptip.prototype._create = function (COMPONENTS) {
         var _this = this;
-        COMPONENTS.forEach(function (node, i) {
-            _this._createPoptipNodes(node, i);
+        COMPONENTS.forEach(function (node) {
+            var ReferenceElem = node.firstElementChild || node.innerHTML;
+            var _a = _this._attrs(node), trigger = _a.trigger, title = _a.title, content = _a.content, placement = _a.placement, padding = _a.padding, offset = _a.offset, confirm = _a.confirm, visible = _a.visible, width = _a.width, wordWrap = _a.wordWrap, disabled = _a.disabled, okText = _a.okText, cancelText = _a.cancelText;
+            _this.setMainTemplate(node, title, content, placement);
+            var PoptipRel = node.querySelector("." + prefix.default.poptip + "-rel");
+            var PoptipPopper = node.querySelector("." + prefix.default.poptip + "-popper");
+            _this.addReferenceElem(PoptipRel, ReferenceElem);
+            _this.setConfirmTemplate(confirm, node, title, okText, cancelText);
+            _this._setPlacement(PoptipRel, PoptipPopper, placement, offset);
+            _this._setVisible(visible, PoptipRel, PoptipPopper, placement, offset);
+            _this._setPadding(node, padding);
+            _this._setWidthAndWordWrap(PoptipPopper, width, wordWrap);
+            _this._handleTrigger(trigger, disabled, node, PoptipRel, PoptipPopper, placement, offset);
+            _this._handleBtnClick(PoptipRel, PoptipPopper, placement, offset);
             (0,dom_utils.removeAttrs)(node, [
                 'width',
                 'title',
+                'offset',
                 'content',
-                'ok-text',
+                'confirm',
+                'visible',
                 'padding',
                 'disabled',
+                'trigger',
                 'placement',
                 'word-wrap',
+                'ok-text',
                 'cancel-text'
             ]);
         });
     };
-    Poptip.prototype._createPoptipNodes = function (node, i) {
-        var attrs = this.attrs(node);
-        if (attrs.isConfirm)
-            node.className = prefix.default.poptip + "-confirm";
-        var uid = "poptip" + i;
-        var referenceElem = node.firstElementChild;
-        var PoptipRel = (0,dom_utils.createElem)('div');
-        PoptipRel.className = prefix.default.poptip + "-rel";
-        PoptipRel.appendChild(referenceElem);
-        var whatModel = attrs.isConfirm ? this._confirmTpl(attrs) : this._normalTpl(attrs);
-        var template = "\n            <div class=\"" + prefix.default.poptip + "-popper\" x-placement=" + attrs.placement + " data-poptip-uid=" + uid + ">\n                <div class=\"" + prefix.default.poptip + "-content\">\n                    <div class=\"" + prefix.default.poptip + "-arrow\" data-popper-arrow></div>\n                    <div class=\"" + prefix.default.poptip + "-inner\">" + whatModel + "</div>\n                </div>\n            </div>\n        ";
+    Poptip.prototype.setMainTemplate = function (node, title, content, placement) {
+        var template = "\n         <div class=\"" + prefix.default.poptip + "-rel\"></div>\n         <div class=\"" + prefix.default.poptip + "-popper\" x-placement=\"" + placement + "\">\n             <div class=\"" + prefix.default.poptip + "-content\">\n                 <div class=\"" + prefix.default.poptip + "-arrow\"></div>\n                 <div class=\"" + prefix.default.poptip + "-inner\">\n                    " + (title ? "<div class=\"" + prefix.default.poptip + "-title\">" + title + "</div>" : '') + "\n                     <div class=\"" + prefix.default.poptip + "-body\">\n                         <div class=\"" + prefix.default.poptip + "-body-content\">" + content + "</div>\n                     </div>\n                 </div>\n             </div>\n         </div>\n        ";
         (0,dom_utils.setHtml)(node, template);
-        this._setWidth(attrs, uid);
-        var Popper = (0,dom_utils.$el)("[data-poptip-uid=" + uid + "]");
-        Popper === null || Popper === void 0 ? void 0 : Popper.before(PoptipRel);
-        // 初始化 display
-        (0,dom_utils.setCss)(Popper, 'display', 'none');
-        if (!attrs.isDisabled) {
-            // @ts-ignore
-            this._triggerDisplay(attrs.trigger, node, PoptipRel, Popper, attrs);
+    };
+    Poptip.prototype.addReferenceElem = function (child, ReferenceElem) {
+        if (typeof ReferenceElem === 'string') {
+            (0,dom_utils.setHtml)(child, ReferenceElem);
+        }
+        else if (ReferenceElem instanceof Element) {
+            child.appendChild(ReferenceElem);
         }
     };
-    Poptip.prototype._normalTpl = function (attrs) {
-        var setPadding = attrs.padding ? "padding:" + attrs.padding : '';
-        var isShowTitle = !attrs.isWordWrap && attrs.title
-            ? "<div class=\"" + prefix.default.poptip + "-title\" style=\"" + setPadding + "\">\n                      <div class=\"" + prefix.default.poptip + "-title-inner\">" + attrs.title + "</div>\n                   </div>"
-            : '';
-        var template = "\n            " + isShowTitle + "\n            <div class=\"" + prefix.default.poptip + "-body\" style=\"" + setPadding + "\">\n                <div class=\"" + prefix.default.poptip + "-body-content\">\n                <div class=\"" + prefix.default.poptip + "-body-content-inner\">" + attrs.content + "</div>\n                </div>\n            </div>\n            ";
-        return template;
-    };
-    Poptip.prototype._confirmTpl = function (attrs) {
-        var template = "\n          <div class=\"" + prefix.default.poptip + "-body\">\n              <i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-ios-help-circle\"></i>\n              <div class=\"" + prefix.default.poptip + "-body-message\">" + attrs.title + "</div>\n          </div>\n          <div class=\"" + prefix.default.poptip + "-footer\">\n              <button class=\"" + prefix.default.button + " " + prefix.default.button + "-text " + prefix.default.button + "-sm\">" + attrs.cancelText + "</button>\n              <button class=\"" + prefix.default.button + " " + prefix.default.button + "-primary " + prefix.default.button + "-sm\">" + attrs.okText + "</button>\n          </div>\n      ";
-        return template;
-    };
-    Poptip.prototype._setWidth = function (attrs, uid) {
-        var popper = document.querySelector("[data-poptip-uid=" + uid + "]");
-        if (attrs.width) {
-            (0,dom_utils.setCss)(popper, 'width', attrs.width + "px");
-        }
-        if (attrs.isWordWrap) {
-            var popperContent = popper === null || popper === void 0 ? void 0 : popper.querySelector("." + prefix.default.poptip + "-body-content");
-            popperContent === null || popperContent === void 0 ? void 0 : popperContent.classList.add(prefix.default.poptip + "-body-content-word-wrap");
-        }
-    };
-    Poptip.prototype._triggerDisplay = function (trigger, parent, referenceChild, popper, poptipAttrs) {
-        if (trigger !== 'click' && trigger !== 'hover' && trigger !== 'focus') {
-            warn("The Poptip attribute trigger got an invalid trigger mode --> '" + trigger + "'");
+    Poptip.prototype.setConfirmTemplate = function (confirm, node, title, okText, cancelText) {
+        if (!confirm)
             return;
-        }
-        var _initPoptip = this._initPoptip;
-        var common = {
-            rmCls: true,
-            enterCls: 'zoom-big-fast-enter',
-            leaveCls: 'zoom-big-fast-leave',
-            timeout: 200
+        var template = "\n         <i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-ios-help-circle\"></i>\n         <div class=\"" + prefix.default.poptip + "-body-message\">" + title + "</div>\n         <div class=\"" + prefix.default.poptip + "-footer\">\n            <button type=\"button\" class=\"" + prefix.default.button + " " + prefix.default.button + "-text " + prefix.default.button + "-sm\">" + cancelText + "</button>\n            <button type=\"button\" class=\"" + prefix.default.button + " " + prefix.default.button + "-primary " + prefix.default.button + "-sm\">" + okText + "</button>\n         </div>\n        ";
+        var PoptipBody = node.querySelector("." + prefix.default.poptip + "-body");
+        (0,dom_utils.setHtml)(PoptipBody, template);
+        node.querySelector("." + prefix.default.poptip + "-title").remove();
+        node.classList.add(prefix.default.poptip + "-confirm");
+    };
+    Poptip.prototype._handleTrigger = function (type, disabled, node, refElem, popper, placement, offset) {
+        var _this = this;
+        if (disabled)
+            return;
+        var show = function (show, e) {
+            if (e)
+                e.stopPropagation();
+            _this._setVisible(show, refElem, popper, placement, offset);
         };
-        // 通过设置 popper.dataset.poptipShow 来判断是否隐藏或显示
-        var show = function () {
-            popper.dataset.poptipShow = 'true';
-            CssTransition(popper, __assign({ inOrOut: 'in' }, common));
-            _initPoptip(parent, popper, poptipAttrs);
-        };
-        var hide = function () {
-            popper.dataset.poptipShow = 'false';
-            CssTransition(popper, __assign({ inOrOut: 'out' }, common));
-        };
-        var judgmentIsVisible = function () { return (popper.dataset.poptipShow === 'true' ? hide() : show()); };
-        if (trigger === 'click' || trigger === 'focus') {
-            _initPoptip(parent, popper, poptipAttrs);
-            toggleUpdate(popper, trigger, parent);
-        }
-        if (trigger === 'click') {
-            (0,dom_utils.bind)(referenceChild, 'click', judgmentIsVisible);
-        }
-        else if (trigger === 'focus' && !poptipAttrs.isConfirm) {
-            (0,dom_utils.bind)(referenceChild, 'mousedown', judgmentIsVisible);
-            (0,dom_utils.bind)(referenceChild, 'mouseup', hide);
-        }
-        else if (trigger === 'hover' && !poptipAttrs.isConfirm) {
-            (0,dom_utils.bind)(parent, 'mouseenter', function () {
-                SHOWTIMER = setTimeout(function () {
-                    show();
-                }, poptip_DEFAULTDELAY);
+        if (type === 'hover') {
+            (0,dom_utils.bind)(node, 'mouseenter', function (e) {
+                if (poptip_VISIBLETIMER)
+                    clearTimeout(poptip_VISIBLETIMER);
+                if (popper.dataset[poptip_STATEKEY] === 'show')
+                    return;
+                poptip_VISIBLETIMER = setTimeout(function () { return show(true, e); }, poptip_DEFAULTDELAY);
             });
-            (0,dom_utils.bind)(parent, 'mouseleave', function () {
-                clearTimeout(SHOWTIMER);
-                hide();
+            (0,dom_utils.bind)(node, 'mouseleave', function (e) {
+                if (poptip_VISIBLETIMER)
+                    clearTimeout(poptip_VISIBLETIMER);
+                if (popper.dataset[poptip_STATEKEY] === 'show')
+                    setTimeout(function () { return show(false, e); }, poptip_DEFAULTDELAY);
             });
-            toggleUpdate(popper, 'hover', parent, poptip_DEFAULTDELAY);
         }
-        // 确认对话框的确定和取消按钮触发隐藏
-        if (poptipAttrs.isConfirm) {
-            var confirmOkBtn = popper.querySelector("." + prefix.default.button + "-primary." + prefix.default.button + "-sm");
-            var confirmCancelBtn = popper.querySelector("." + prefix.default.button + "-text." + prefix.default.button + "-sm");
-            confirmOkBtn.addEventListener('click', judgmentIsVisible);
-            confirmCancelBtn.addEventListener('click', judgmentIsVisible);
+        if (type === 'click') {
+            var hide = function () {
+                if (popper.dataset[poptip_STATEKEY] === 'close')
+                    return;
+                show(false);
+            };
+            var clickEv_1 = function (e) {
+                var poppers = document.querySelectorAll("." + prefix.default.poptip + "-popper");
+                poppers.forEach(function (child) {
+                    var otherPopper = child;
+                    if (otherPopper.dataset[poptip_STATEKEY] === 'show') {
+                        _this._setVisible(false, refElem, otherPopper, placement, offset);
+                    }
+                });
+                popper.style.visibility === 'visible' ? show(false, e) : show(true, e);
+            };
+            clickoutside_clickOutside(node, hide);
+            (0,dom_utils.bind)(refElem, 'click', function (e) { return clickEv_1(e); });
+        }
+        if (type === 'focus') {
+            (0,dom_utils.bind)(refElem, 'mousedown', function (e) { return show(true, e); });
+            (0,dom_utils.bind)(refElem, 'mouseup', function (e) { return show(false, e); });
         }
     };
-    Poptip.prototype._initPoptip = function (reference, popper, poptipAttrs) {
-        var NCP = _newCreatePopper(reference, popper, poptipAttrs.placement, poptipAttrs.offset);
-        return NCP;
+    Poptip.prototype._handleBtnClick = function (refElem, popper, placement, offset) {
+        var _this = this;
+        var PoptipOkBtn = popper.querySelector("." + prefix.default.button + "-primary");
+        var PoptipCancelBtn = popper.querySelector("." + prefix.default.button + "-text");
+        if (!PoptipOkBtn)
+            return;
+        var hidden = function () { return _this._setVisible(false, refElem, popper, placement, offset); };
+        (0,dom_utils.bind)(PoptipOkBtn, 'click', hidden);
+        (0,dom_utils.bind)(PoptipCancelBtn, 'click', hidden);
     };
-    Poptip.prototype.attrs = function (node) {
+    Poptip.prototype._setVisible = function (visible, refElem, popper, placement, offset) {
+        var _a = Poptip.prototype, _setPlacement = _a._setPlacement, _visibleTransition = _a._visibleTransition;
+        if (visible) {
+            popper.dataset[poptip_STATEKEY] = 'show';
+            _visibleTransition('in', popper);
+            _setPlacement(refElem, popper, placement, offset);
+        }
+        else {
+            popper.dataset[poptip_STATEKEY] = 'close';
+            setTimeout(function () {
+                popper.dataset[poptip_STATEKEY] === 'close' && _visibleTransition('out', popper);
+            }, 0);
+        }
+    };
+    Poptip.prototype._setPlacement = function (refElem, popper, placement, offset) {
+        _newCreatePopper(refElem, popper, placement, offset);
+    };
+    Poptip.prototype._visibleTransition = function (type, popper) {
+        var aniCls = type === 'in'
+            ? { enterCls: 'zoom-big-fast-enter' }
+            : { leaveCls: 'zoom-big-fast-leave' };
+        CssTransition(popper, __assign(__assign({ inOrOut: type }, aniCls), { rmCls: true, timeout: 190 }));
+    };
+    Poptip.prototype._setWidthAndWordWrap = function (child, width, wordWrap) {
+        (0,dom_utils.setCss)(child, 'width', width + "px");
+        if (!wordWrap)
+            return;
+        var PoptipBodyContent = child.querySelector("." + prefix.default.poptip + "-body-content");
+        PoptipBodyContent.classList.add(prefix.default.poptip + "-body-content-word-wrap");
+    };
+    Poptip.prototype._setPadding = function (node, padding) {
+        if (!padding)
+            return;
+        (0,dom_utils.setCss)(node.querySelector("." + prefix.default.poptip + "-title"), 'padding', padding);
+        (0,dom_utils.setCss)(node.querySelector("." + prefix.default.poptip + "-body"), 'padding', padding);
+    };
+    Poptip.prototype._attrs = function (node) {
         return {
-            // number type
-            width: (0,dom_utils.getNumTypeAttr)(node, 'width', 0),
+            width: (0,dom_utils.getNumTypeAttr)(node, 'width', -1),
             offset: (0,dom_utils.getNumTypeAttr)(node, 'offset', 0),
-            // string type
             title: (0,dom_utils.getStrTypeAttr)(node, 'title', ''),
             okText: (0,dom_utils.getStrTypeAttr)(node, 'ok-text', '确定'),
             content: (0,dom_utils.getStrTypeAttr)(node, 'content', ''),
@@ -6416,10 +6454,10 @@ var Poptip = /** @class */ (function () {
             padding: (0,dom_utils.getStrTypeAttr)(node, 'padding', ''),
             placement: (0,dom_utils.getStrTypeAttr)(node, 'placement', 'top'),
             cancelText: (0,dom_utils.getStrTypeAttr)(node, 'cancel-text', '取消'),
-            // boolean type
-            isConfirm: (0,dom_utils.getBooleanTypeAttr)(node, 'confirm'),
-            isDisabled: (0,dom_utils.getBooleanTypeAttr)(node, 'disabled'),
-            isWordWrap: (0,dom_utils.getBooleanTypeAttr)(node, 'word-wrap')
+            confirm: (0,dom_utils.getBooleanTypeAttr)(node, 'confirm'),
+            visible: (0,dom_utils.getBooleanTypeAttr)(node, 'visible'),
+            disabled: (0,dom_utils.getBooleanTypeAttr)(node, 'disabled'),
+            wordWrap: (0,dom_utils.getBooleanTypeAttr)(node, 'word-wrap')
         };
     };
     return Poptip;
@@ -7955,6 +7993,7 @@ var Timeline = /** @class */ (function () {
 
 
 
+var tooltip_STATEKEY = 'tooltipState';
 var tooltip_DEFAULTDELAY = 80;
 var EnterCls = 'zoom-big-fast-enter';
 var LeaveCls = 'zoom-big-fast-leave';
@@ -8007,7 +8046,7 @@ var Tooltip = /** @class */ (function () {
             events: function (_a) {
                 var onVisibleChange = _a.onVisibleChange;
                 var event = function () {
-                    var visable = TooltipPopper.dataset.tooltipState === 'show';
+                    var visable = TooltipPopper.dataset[tooltip_STATEKEY] === 'show';
                     onVisibleChange && isFn(onVisibleChange, visable);
                 };
                 var show = function () {
@@ -8021,7 +8060,7 @@ var Tooltip = /** @class */ (function () {
                     // 当鼠标移出tooltip后判断当前状态如果为 show，
                     // 那么说明气泡显示过了，该执行移出事件了。
                     // 避免了即使鼠标移出但没有显示过气泡而依然执行事件。
-                    if (TooltipPopper.dataset.tooltipState === 'show')
+                    if (TooltipPopper.dataset[tooltip_STATEKEY] === 'show')
                         setTimeout(event, tooltip_DEFAULTDELAY);
                 };
                 (0,dom_utils.bind)(target, 'mouseenter', show);
@@ -8069,7 +8108,7 @@ var Tooltip = /** @class */ (function () {
     Tooltip.prototype._setAlwaysShow = function (children, always) {
         if (!always)
             (0,dom_utils.setCss)(children, 'display', 'none');
-        children.dataset.tooltipState = 'pending';
+        children.dataset[tooltip_STATEKEY] = 'pending';
     };
     Tooltip.prototype._handleMouseEv = function (node, children, delay, offset, placement, always, disabled) {
         var _this = this;
@@ -8078,7 +8117,7 @@ var Tooltip = /** @class */ (function () {
         var setVisable = function (mode) {
             if (mode === 'in')
                 _this._setPopper(node, children, placement, offset);
-            children.dataset.tooltipState = mode === 'in' ? 'show' : 'close';
+            children.dataset[tooltip_STATEKEY] = mode === 'in' ? 'show' : 'close';
             CssTransition(children, __assign({ inOrOut: mode }, CssTransitonCommonConfig));
         };
         var show = function () {
@@ -8089,7 +8128,7 @@ var Tooltip = /** @class */ (function () {
         var hide = function () {
             if (tooltip_VISIBLETIMER)
                 clearTimeout(tooltip_VISIBLETIMER);
-            if (children.dataset.tooltipState === 'show')
+            if (children.dataset[tooltip_STATEKEY] === 'show')
                 setTimeout(function () { return setVisable('out'); }, tooltip_DEFAULTDELAY);
         };
         (0,dom_utils.bind)(node, 'mouseenter', show);

@@ -13,9 +13,9 @@ export default function poptipTest(): void {
     });
 
     // @ts-ignore
-    // window.handleChange = (val: string) => {
-    //     poptip.config('#test-input').content = val;
-    // };
+    window.handleChange = (value: string) => {
+        poptip.config('#testInput').content = value;
+    };
 
     const table = `
         <div class="api">
