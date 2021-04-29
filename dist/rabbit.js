@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!****************************************!*\
-  !*** ./src/build-umd.ts + 147 modules ***!
+  !*** ./src/build-umd.ts + 146 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -102,12 +102,6 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
 
 // EXTERNAL MODULE: ./src/dom-utils/index.ts + 5 modules
 var dom_utils = __webpack_require__("./src/dom-utils/index.ts");
-;// CONCATENATED MODULE: ./src/mixins/warn.ts
-function warn(msg) {
-    console.error("[Rabbit] Error: " + msg);
-    return;
-}
-
 ;// CONCATENATED MODULE: ./src/mixins/arrow.ts
 // 更新popver弹窗或下拉菜单的箭头方向
 
@@ -131,44 +125,65 @@ function scrollUpdate() {
         window.addEventListener('scroll', function () { return scrollEv(poptips); });
     }
 }
-function toggleUpdate(popper, updateMode, reference, delay) {
-    var setArrow = function () {
-        var xPlacement = popper.getAttribute('x-placement');
-        var popperPlacement = popper.dataset.popperPlacement;
-        if (popperPlacement) {
-            if (xPlacement === popperPlacement)
-                return;
-            popper.setAttribute('x-placement', popperPlacement);
+
+;// CONCATENATED MODULE: ./src/mixins/cb-promise.ts
+/**
+ * 用于实例组件关闭后返回 promise，提供 then 接口在关闭后运行 callback
+ * @param duration 组件关闭的时间，这里是用于组件没自己的配置项时，设为全局时间
+ * @param compConfig 组件的配置项，这里是用于是否切换为组件自己设置的时间
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function usePromiseCallback(duration, compConfig) {
+    // promise 触发的时机为默认时间
+    var timeout = duration;
+    // 当组件参数以对象形式传递，并且设置了自己的 duration则修改 promise的触发时机
+    if (typeof compConfig === 'object') {
+        if (compConfig.duration || compConfig.duration === 0) {
+            timeout = compConfig.duration;
         }
-    };
-    if (reference) {
-        if (updateMode === 'hover') {
-            reference.addEventListener(updateMode, function (e) {
-                e.stopPropagation();
-                if (delay) {
-                    setTimeout(function () {
-                        setArrow();
-                    }, delay);
-                }
-                else {
-                    setArrow();
-                }
-            });
-        }
-        else if (updateMode === 'click') {
-            reference.addEventListener('click', function (e) {
-                e.stopPropagation();
-                setArrow();
-            });
-        }
-        else if (updateMode === 'focus') {
-            reference.addEventListener('mousedown', function (e) {
-                e.stopPropagation();
-                setArrow();
-            });
+        else {
+            timeout = duration;
         }
     }
-    setArrow();
+    return promiseCb(timeout);
+}
+function promiseCb(duration) {
+    var timer = null;
+    return new Promise(function (afterClose) {
+        timer = setTimeout(afterClose, duration * 1000);
+        // duration 为 0 则说明当前组件不自动关闭
+        duration === 0 ? clearTimeout(timer) : timer;
+    });
+}
+
+;// CONCATENATED MODULE: ./src/mixins/clickoutside.ts
+
+/**
+ * 用于点击外部关闭下拉菜单或气泡提示框
+ * @param elem
+ * @param callback 关闭事件回调
+ * @param child
+ * @param datasetKey
+ * @param datasetVal 要被关闭的对象状态是否已经处于打开状态，如果是那么点击其以外的区域才执行事件回调
+ */
+function clickOutside(elem, callback, child, datasetKey, datasetVal) {
+    var ev = function (e) {
+        if (datasetKey) {
+            if (child) {
+                // @ts-ignore
+                child.dataset[datasetKey] === datasetVal && callback(e);
+            }
+            else {
+                // @ts-ignore
+                child.dataset[datasetKey] === datasetVal && callback(e);
+            }
+        }
+        else {
+            callback();
+        }
+    };
+    (0,dom_utils.bind)(document, 'click', function (e) { return ev(e); });
+    (0,dom_utils.bind)(elem, 'click', function (e) { return e.stopPropagation(); });
 }
 
 ;// CONCATENATED MODULE: ./src/mixins/css-transition.ts
@@ -255,96 +270,6 @@ function scrollable_scrollable(_a) {
             }
         }
     }
-}
-
-;// CONCATENATED MODULE: ./src/mixins/cb-promise.ts
-/**
- * 用于实例组件关闭后返回 promise，提供 then 接口在关闭后运行 callback
- * @param duration 组件关闭的时间，这里是用于组件没自己的配置项时，设为全局时间
- * @param compConfig 组件的配置项，这里是用于是否切换为组件自己设置的时间
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function usePromiseCallback(duration, compConfig) {
-    // promise 触发的时机为默认时间
-    var timeout = duration;
-    // 当组件参数以对象形式传递，并且设置了自己的 duration则修改 promise的触发时机
-    if (typeof compConfig === 'object') {
-        if (compConfig.duration || compConfig.duration === 0) {
-            timeout = compConfig.duration;
-        }
-        else {
-            timeout = duration;
-        }
-    }
-    return promiseCb(timeout);
-}
-function promiseCb(duration) {
-    var timer = null;
-    return new Promise(function (afterClose) {
-        timer = setTimeout(afterClose, duration * 1000);
-        // duration 为 0 则说明当前组件不自动关闭
-        duration === 0 ? clearTimeout(timer) : timer;
-    });
-}
-
-;// CONCATENATED MODULE: ./src/mixins/click-outside.ts
-
-
-/**
- * 适用tooltip、poptip的点击空白处关闭
- */
-function clickOutside(target, datasetVal, leaveCls) {
-    var hideJudgment = function () {
-        target.forEach(function (node) {
-            if (node.dataset[datasetVal] === 'true') {
-                node.dataset[datasetVal] = 'false';
-                CssTransition(node, {
-                    inOrOut: 'out',
-                    rmCls: true,
-                    leaveCls: leaveCls,
-                    timeout: 200
-                });
-            }
-        });
-    };
-    (0,dom_utils.bind)(document, 'focusout', function (e) {
-        e.stopPropagation();
-        hideJudgment();
-    });
-    (0,dom_utils.bind)(document, 'click', function (e) {
-        e.stopPropagation();
-        hideJudgment();
-    });
-}
-
-;// CONCATENATED MODULE: ./src/mixins/clickoutside.ts
-
-/**
- * 用于点击外部关闭下拉菜单或气泡提示框
- * @param elem
- * @param callback 关闭事件回调
- * @param child
- * @param datasetKey
- * @param datasetVal 要被关闭的对象状态是否已经处于打开状态，如果是那么点击其以外的区域才执行事件回调
- */
-function clickoutside_clickOutside(elem, callback, child, datasetKey, datasetVal) {
-    var ev = function (e) {
-        if (datasetKey) {
-            if (child) {
-                // @ts-ignore
-                child.dataset[datasetKey] === datasetVal && callback(e);
-            }
-            else {
-                // @ts-ignore
-                child.dataset[datasetKey] === datasetVal && callback(e);
-            }
-        }
-        else {
-            callback();
-        }
-    };
-    (0,dom_utils.bind)(document, 'click', function (e) { return ev(e); });
-    (0,dom_utils.bind)(elem, 'click', function (e) { return e.stopPropagation(); });
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
@@ -2384,6 +2309,51 @@ var popper_createPopper = /*#__PURE__*/popperGenerator({
  // eslint-disable-next-line import/no-unused-modules
 
 
+;// CONCATENATED MODULE: ./src/mixins/tooltip.ts
+
+function _newCreatePopper(reference, popper, placement, offset) {
+    return popper_createPopper(reference, popper, {
+        placement: placement,
+        modifiers: [
+            {
+                name: 'computeStyles',
+                options: {
+                    gpuAcceleration: false // 使用top/left属性。否则会和弹出器动画冲突
+                }
+            },
+            {
+                name: 'computeStyles',
+                options: {
+                    adaptive: false // 避免重新计算弹出器位置从而造成位置牛头不对马嘴
+                }
+            },
+            {
+                name: 'offset',
+                options: {
+                    offset: [offset] // 自定义弹出器出现位置的偏移量
+                }
+            }
+        ]
+    });
+}
+
+;// CONCATENATED MODULE: ./src/mixins/warn.ts
+function warn(msg) {
+    console.error("[Rabbit] Error: " + msg);
+    return;
+}
+
+;// CONCATENATED MODULE: ./src/mixins/index.ts
+
+
+
+
+
+
+
+
+
+
 ;// CONCATENATED MODULE: ./src/utils/check-type.ts
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -2497,72 +2467,6 @@ function validComps(target, compName) {
 }
 
 ;// CONCATENATED MODULE: ./src/utils/index.ts
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/mixins/tooltip.ts
-
-
-
-function _newCreatePopper(reference, popper, placement, offset) {
-    return popper_createPopper(reference, popper, {
-        placement: placement,
-        modifiers: [
-            {
-                name: 'computeStyles',
-                options: {
-                    gpuAcceleration: false // 使用top/left属性。否则会和弹出器动画冲突
-                }
-            },
-            {
-                name: 'computeStyles',
-                options: {
-                    adaptive: false // 避免重新计算弹出器位置从而造成位置牛头不对马嘴
-                }
-            },
-            {
-                name: 'offset',
-                options: {
-                    offset: [offset] // 自定义弹出器出现位置的偏移量
-                }
-            }
-        ]
-    });
-}
-function handleHoverShowAndHideEvents(_a) {
-    var reference = _a.reference, popper = _a.popper, datasetVal = _a.datasetVal, showCb = _a.showCb, hideCb = _a.hideCb, delay = _a.delay, timer = _a.timer;
-    (0,dom_utils.bind)(reference, 'mouseenter', function () {
-        timer = setTimeout(function () {
-            showEv();
-        }, delay);
-    });
-    (0,dom_utils.bind)(reference, 'mouseleave', hideEv);
-    // 通过设置 popper.dataset.tooltipShow 的方式可以判断提示框是否显示，
-    // 并根据设置的值 "true" 和 "false" 来判断是否执行对应回调事件，
-    // 避免出现鼠标快速经过但没有显示提示框，却依然执行了提示框消失时触发的回调
-    function showEv() {
-        popper.dataset[datasetVal] = 'show';
-        showCb && isFn(showCb);
-    }
-    function hideEv() {
-        clearTimeout(timer);
-        if (popper.dataset[datasetVal] === 'show') {
-            popper.dataset[datasetVal] = 'hide';
-            hideCb && isFn(hideCb);
-        }
-        (0,dom_utils.unbind)(reference, 'mouseenter', showEv);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/mixins/index.ts
-
-
-
-
-
 
 
 
@@ -4781,7 +4685,7 @@ var Dropdown = /** @class */ (function () {
                 }
                 if (trigger === 'click' || trigger === 'contextMenu') {
                     onClickOutside &&
-                        clickoutside_clickOutside(target, onClickOutside, DropdownMenu, STATEKEY, 'visible');
+                        clickOutside(target, onClickOutside, DropdownMenu, STATEKEY, 'visible');
                 }
                 if (trigger === 'click') {
                     (0,dom_utils.bind)(DropdownRefElm, 'click', visibleChange);
@@ -4874,7 +4778,7 @@ var Dropdown = /** @class */ (function () {
         }
         // 点击菜单栏以外的地方隐藏
         if (type === 'click' || type === 'contextMenu') {
-            clickoutside_clickOutside(node, hidenMenu);
+            clickOutside(node, hidenMenu);
         }
         if (type === 'click') {
             (0,dom_utils.bind)(referenceElem, 'click', function (e) { return clickIsShow(e); });
@@ -6277,7 +6181,7 @@ var Poptip = /** @class */ (function () {
                     });
                 }
                 if (trigger === 'click' || trigger === 'focus') {
-                    clickoutside_clickOutside(target, clickoutsideEv);
+                    clickOutside(target, clickoutsideEv);
                 }
                 if (trigger === 'click') {
                     (0,dom_utils.bind)(PoptipRefElem, 'click', toogleEv);
@@ -6389,7 +6293,7 @@ var Poptip = /** @class */ (function () {
                 });
                 popper.style.visibility === 'visible' ? show(false, e) : show(true, e);
             };
-            clickoutside_clickOutside(node, hide);
+            clickOutside(node, hide);
             (0,dom_utils.bind)(refElem, 'click', function (e) { return clickEv_1(e); });
         }
         if (type === 'focus') {
