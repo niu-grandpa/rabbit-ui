@@ -1,12 +1,11 @@
-import warn from './warn';
 import * as _arrow from './arrow';
+import usePromiseCallback from './cb-promise';
+import clickoutside from './clickoutside';
 import CssTransition from './css-transition';
 import moreThanOneNode from './one-node';
 import Scrollable from './scrollable';
-import usePromiseCallback from './cb-promise';
-import clickOutside from './click-outside';
-import clickoutside from './clickoutside';
 import * as _Popper from './tooltip';
+import warn from './warn';
 
 export {
     warn,
@@ -15,7 +14,6 @@ export {
     moreThanOneNode,
     Scrollable,
     usePromiseCallback,
-    clickOutside,
     clickoutside,
     _Popper
 };

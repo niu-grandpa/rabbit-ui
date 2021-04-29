@@ -28,6 +28,16 @@ onMounted(() => {
 
 const updateInfo = [
     {
+        version: '1.4.0',
+        date: '2021-4-29',
+        info: [
+            '重写 poptip，优化代码逻辑并且修复若干个bug',
+            'poptip 新增属性 visible',
+            'poptip 新增响应式API visible 和 disabled',
+            'poptip 新增事件 onPopperShow 和 onPopperHide，删除事件 onShow 和 onHide'
+        ]
+    },
+    {
         version: '1.3.0',
         date: '2021-4-27',
         info: [
