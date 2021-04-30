@@ -143,6 +143,10 @@ export default () =>
             {
                 path: '/components/radio',
                 component: () => import('pages/components/radio/Index.vue')
+            },
+            {
+                path: '/components/drawer',
+                component: () => import('pages/components/drawer/Index.vue')
             }
         ]
     });

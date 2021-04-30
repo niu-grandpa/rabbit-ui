@@ -7,7 +7,7 @@
 
 ## 何时使用
 
-抽屉从父窗体边缘滑入，覆盖住部分父窗体内容。用户在抽屉内操作时不必离开当前任务，操作完成后，可以平滑地回到到原任务。
+- 抽屉从父窗体边缘滑入，覆盖住部分父窗体内容。用户在抽屉内操作时不必离开当前任务，操作完成后，可以平滑地回到到原任务。
 
 - 当需要一个附加的面板来控制父窗体内容，这个面板在需要时呼出。比如，控制界面展示样式，往界面中添加内容。
 - 当需要在当前任务流中插入临时任务，创建或预览附加内容。比如展示协议条款，创建子对象。
@@ -18,9 +18,11 @@
 基础抽屉
 
 - 基础抽屉，点击触发按钮抽屉从右滑出，点击遮罩区关闭。
+- 注意！容器内的节点必须具有一个父元素
 
 ```html
-<button class="rab-btn rab-btn-primary" onclick="Op1()">Open</button>
+<button class="rab-btn rab-btn-primary" onclick="handleClick()">Open</button>
+
 <r-drawer title="Basic Drawer" id="test1">
   <div>
       <p>Some contents...</p>
@@ -28,12 +30,16 @@
       <p>Some contents...</p>
   </div>
 </r-drawer>
+
 <script>
-    let f1 = false;
-    Op1 = () => {
-       f1 === false ? (f1 = !f1) : f1;
-       drawer.config('#test1').visable = f1;
+    const drawer = new Rabbit.Drawer();
+    
+    let visible = false;
+    handleClick = () => {
+       visible === false ? (visible = !visible) : visible;
+       drawer.config('#test1').visable = visible;
     };
+    
     drawer.config('#test1').events({
         onClose: () => {
             console.log('关闭抽屉');
@@ -47,10 +53,10 @@
 - 自定义位置，点击触发按钮抽屉从相应的位置滑出，点击遮罩区关闭
 
 ```html
-<button class="rab-btn" onclick="handleTop()">Top</button>
-<button class="rab-btn" onclick="handleLeft()">Left</button>
-<button class="rab-btn" onclick="handleBottom()">Bottom</button>
-<button class="rab-btn" onclick="handleRight()">Right</button>
+<button class="rab-btn" onclick="Top()">Top</button>
+<button class="rab-btn" onclick="Left()">Left</button>
+<button class="rab-btn" onclick="Bottom()">Bottom</button>
+<button class="rab-btn" onclick="Right()">Right</button>
 
 <r-drawer id="test2" title="Basic Drawer" placement="top">
   <div>
@@ -85,26 +91,29 @@
 </r-drawer>
 
 <script>
+    const drawer = new Rabbit.Drawer();
+    
     let top = false;
-    handleTop = () => {
+    let left = false;
+    let bottom = false;
+    let right = false;
+    
+    Top = () => {
         top === false ? (top = !top) : top;
         drawer.config('#test2').visable = top;
     };
-
-    let left = false;
-    handleLeft = () => {
+    
+    Left = () => {
         left === false ? (left = !left) : left;
         drawer.config('#test3').visable = left;
     };
-
-    let bottom = false;
-    handleBottom = () => {
+    
+    Bottom = () => {
         bottom === false ? (bottom = !bottom) : bottom;
         drawer.config('#test4').visable = bottom;
     };
-
-    let right = false;
-    handleRight = () => {
+    
+    Right = () => {
         right === false ? (right = !right) : right;
         drawer.config('#test5').visable = right;
     };
@@ -116,13 +125,33 @@
 - 设置抽屉在当前元素内打开
 
 ```html
-<button class="rab-btn rab-btn-primary" onclick="handleOpenInner()">Open Inner</button>
-<r-drawer title="Basic Drawer" id="test6" inner="true">
-    <p>Some contents...</p>
-</r-drawer>
+<style>
+    .container {
+        width: 480px;
+        height: 200px;
+        margin: 20px auto;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #ebedf0;
+        border-radius: 2px;
+        padding: 48px;
+        text-align: center;
+        background: #fafafa;
+    }
+</style>
+
+<div class="container">
+    <button class="rab-btn rab-btn-primary" onclick="openInner()">Open Inner</button>
+    <r-drawer title="Basic Drawer" id="test6" inner="true">
+        <p>Some contents...</p>
+    </r-drawer>
+</div>
+
 <script>
+    const drawer = new Rabbit.Drawer();
+    
     let inner = false;
-    handleOpenInner = () => {
+    openInner = () => {
       inner === false ? (inner = !inner) : inner;
       drawer.config('#test6').visable = inner;
     };
@@ -134,24 +163,28 @@
 - 在抽屉内打开新的抽屉，用以解决多分支任务的复杂状况。
 
 ```html
-<button class="rab-btn rab-btn-primary" onclick="multilayerDrawer()">多层抽屉</button>
+<button class="rab-btn rab-btn-primary" onclick="handleClick1()">多层抽屉</button>
 
 <r-drawer id="test7" title="多层抽屉" width="512px">
-  <button class="rab-btn rab-btn-primary" onclick="secondDrawer()">打开第二层抽屉</button>
+  <button class="rab-btn rab-btn-primary" onclick="handleClick2()">打开第二层抽屉</button>
 </r-drawer>
 
 <r-drawer id="test8" title="第二层抽屉">
   <p>这是第二层抽屉。</p>
 </r-drawer>
+
 <script>
+    const drawer = new Rabbit.Drawer();
+    
 	let first = false;
-    multilayerDrawer = () => {
+    let second = false;
+    
+    handleClick1 = () => {
       first === false ? (first = !first) : first;
       drawer.config('#test7').visable = first;
     };
 
-    let second = false;
-    secondDrawer = () => {
+    handleClick2 = () => {
       second === false ? (second = !second) : second;
       drawer.config('#test8').visable = second;
     };

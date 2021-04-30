@@ -42,7 +42,7 @@
     &-notice-content {
         display: inline-block;
         pointer-events: all;
-        padding: 9px 16px;
+        padding: @padding-xs + 2 @padding-md;
         border-radius: @border-radius-base;
         box-shadow: @shadow-base;
         background: @white;
@@ -78,9 +78,9 @@
 
     .@{icon-prefix-cls} {
         margin-right: 8px;
-        font-size: 16px;
+        font-size: 18px;
         position: relative;
-        top: 0.5px;
+        top: 1px;
 
         // 修复 loading 图标旋转左右晃动
         &-loading-solid {
