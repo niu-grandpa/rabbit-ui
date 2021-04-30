@@ -147,6 +147,10 @@ export default () =>
             {
                 path: '/components/drawer',
                 component: () => import('pages/components/drawer/Index.vue')
+            },
+            {
+                path: '/components/$modal',
+                component: () => import('pages/components/$modal/Index.vue')
             }
         ]
     });
