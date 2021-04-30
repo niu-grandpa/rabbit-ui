@@ -23,7 +23,7 @@ export default [
     { value: 'Message 全局提示', path: `${prefix}message` },
     { value: 'Notice 通知提醒', path: `${prefix}notice` },
     { value: 'Modal 对话框', path: `${prefix}modal` },
-    { value: '$Modal 轻量对话框', path: `${prefix}$modal` },
+    { value: 'MiniModal 轻量对话框', path: `${prefix}mini-modal` },
     { value: 'Drawer 抽屉', path: `${prefix}drawer` },
     { value: 'Tooltip 文字提示', path: `${prefix}tooltip` },
     { value: 'Poptip 气泡提示', path: `${prefix}poptip` },

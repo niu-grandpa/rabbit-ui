@@ -5,7 +5,7 @@ import { type, useHTMLString } from '../../utils';
 import Button from '../button';
 import PREFIX from '../prefix';
 
-const $MODAL_BUTTON = new Button();
+const MiniModalBtn = new Button();
 
 const ICONTYPE = {
     info: 'ios-information-circle',
@@ -18,7 +18,7 @@ const ICONTYPE = {
 
 let DEFAULT_ZINDEX = 1010;
 
-interface ModalOptions {
+interface MinModalOptions {
     width?: string | number;
     title?: string;
     content?: string;
@@ -33,30 +33,30 @@ interface ModalOptions {
     onCancel?: () => void;
 }
 
-class $Modal {
+class MiniModal {
     readonly VERSION: string;
 
     constructor() {
         this.VERSION = 'v1.0';
     }
 
-    public info(config: ModalOptions): void {
+    public info(config: MinModalOptions): void {
         this._create('info', config);
     }
 
-    public success(config: ModalOptions): void {
+    public success(config: MinModalOptions): void {
         this._create('success', config);
     }
 
-    public warning(config: ModalOptions): void {
+    public warning(config: MinModalOptions): void {
         this._create('warning', config);
     }
 
-    public error(config: ModalOptions): void {
+    public error(config: MinModalOptions): void {
         this._create('error', config);
     }
 
-    public confirm(config: ModalOptions): void {
+    public confirm(config: MinModalOptions): void {
         this._create('confirm', config);
     }
 
@@ -65,7 +65,7 @@ class $Modal {
         this._destroy(ModalParent, ModalMask, ModalWrap);
     }
 
-    private _create(type: string, config: ModalOptions): void {
+    private _create(type: string, config: MinModalOptions): void {
         DEFAULT_ZINDEX++;
 
         const {
@@ -92,7 +92,7 @@ class $Modal {
                 : '';
 
         const template = `
-        <div class="${PREFIX.modal}-instance">
+        <div class="${PREFIX.modal}-mini-modal">
           <div class="${PREFIX.modal}-mask" style="z-index: ${DEFAULT_ZINDEX};"></div>
           <div class="${PREFIX.modal}-wrap" style="z-index: ${DEFAULT_ZINDEX};">
               <div class="${PREFIX.modal}" style="width: ${width}px;">
@@ -156,7 +156,7 @@ class $Modal {
         const okEv = () => {
             onOk && type.isFn(onOk);
             if (loading) {
-                $MODAL_BUTTON.config(ModalOkBtn).loading = loading;
+                MiniModalBtn.config(ModalOkBtn).loading = loading;
                 return;
             }
             remove();
@@ -185,7 +185,7 @@ class $Modal {
                 e.stopPropagation();
                 // 判断页面是否有modal实例，如果有才执行事件，避免重复执行
                 if (document.body.contains(parent)) {
-                    // 取消的回调，只在$Modal.confirm()下有效
+                    // 取消的回调，只在MinModal.confirm()下有效
                     if (_type === 'confirm') onCancel && type.isFn(onCancel);
                     setTimeout(() => this._destroy(parent, mask, wrap), 0);
                 }
@@ -233,7 +233,7 @@ class $Modal {
         ModalWrap: Element;
         Modal: Element;
     } {
-        const ModalParent = $el(`.${PREFIX.modal}-instance`) as HTMLElement;
+        const ModalParent = $el(`.${PREFIX.modal}-mini-modal`) as HTMLElement;
         const ModalMask = ModalParent.querySelector(`.${PREFIX.modal}-mask`)!;
         const ModalWrap = ModalParent.querySelector(`.${PREFIX.modal}-wrap`)!;
         const Modal = ModalWrap.querySelector(`.${PREFIX.modal}`)!;
@@ -246,4 +246,4 @@ class $Modal {
     }
 }
 
-export default $Modal;
+export default MiniModal;

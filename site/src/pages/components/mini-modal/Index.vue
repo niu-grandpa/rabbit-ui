@@ -1,8 +1,14 @@
 <template>
     <article class="markdown">
-        <Describe title="$Modal 轻量对话框" desc="创建一次性的轻量级对话框。" name="$Modal">
+        <Describe
+            title="MiniModal 轻量对话框"
+            desc="创建一次性的轻量级对话框。"
+            name="MiniModal"
+            :is-methods="true"
+        >
             <li>
-                当需要一个简洁的确认框询问用户时，可以调用 Rabbit.$Modal.confirm() 实例方法创建。
+                当需要一个简洁的确认框询问用户时，可以调用
+                <code>Rabbit.MiniModal.confirm()</code> 实例方法创建。
             </li>
         </Describe>
         <Example next-title="确认对话框">
@@ -34,11 +40,11 @@
 </template>
 
 <script lang="ts" setup>
-import $Modal from 'rabbitui/$modal';
+import MiniModal from 'rabbitui/mini-modal';
 import Message from 'rabbitui/message';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
-import { Code1, Code2, Code3, Tip } from '../markdown-code/$modal';
+import { Code1, Code2, Code3, Tip } from '../markdown-code/mini-modal';
 
 const title = '对话框标题';
 const content = '这是一段对话框的内容';
@@ -46,25 +52,25 @@ const content = '这是一段对话框的内容';
 const instance = (type: string) => {
     switch (type) {
         case 'info':
-            $Modal.info({
+            MiniModal.info({
                 title,
                 content
             });
             break;
         case 'success':
-            $Modal.success({
+            MiniModal.success({
                 title,
                 content
             });
             break;
         case 'warning':
-            $Modal.warning({
+            MiniModal.warning({
                 title,
                 content
             });
             break;
         case 'error':
-            $Modal.error({
+            MiniModal.error({
                 title,
                 content
             });
@@ -73,7 +79,7 @@ const instance = (type: string) => {
 };
 
 const confirm = () => {
-    $Modal.confirm({
+    MiniModal.confirm({
         title: '确认对话框标题',
         content: '<p>这是一段自定义的内容...</p><p>这是一段自定义的内容...</p>',
         dangerouslyUseHTMLString: true,
@@ -87,7 +93,7 @@ const confirm = () => {
 };
 
 const custom = () => {
-    $Modal.confirm({
+    MiniModal.confirm({
         title: '确认对话框标题',
         content: '<p>这是一段自定义的内容...</p><p>这是一段自定义的内容...</p>',
         okText: 'OK',
@@ -97,14 +103,14 @@ const custom = () => {
 };
 
 const async = () => {
-    $Modal.confirm({
+    MiniModal.confirm({
         title: '确认对话框标题',
         content: '<p>对话框将在 2秒 后关闭</p>',
         loading: true,
         dangerouslyUseHTMLString: true,
         onOk: () => {
             setTimeout(() => {
-                $Modal.remove();
+                MiniModal.remove();
                 Message.info('异步关闭了对话框');
             }, 2000);
         }

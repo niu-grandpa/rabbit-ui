@@ -6,7 +6,7 @@
         <slot></slot>
     </ul>
     <h2>代码示例</h2>
-    <Tip :name="props.name" />
+    <Tip :name="props.name" :isMethods="isMethods" />
     <el-divider content-position="left">基础用法</el-divider>
 </template>
 
@@ -18,6 +18,7 @@ import Tip from 'pages/components/markdown-code/tip/Index.vue';
 const props = defineProps({
     title: String,
     desc: String,
-    name: String
+    name: String,
+    isMethods: Boolean
 });
 </script>

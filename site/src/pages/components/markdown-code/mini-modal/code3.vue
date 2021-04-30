@@ -6,11 +6,11 @@
             </h4>
             <p><span>通过直接调用以下方法来使用：</span></p>
             <ul>
-                <li><code>Rabbit.$Modal.info(config)</code></li>
-                <li><code>Rabbit.$Modal.success(config)</code></li>
-                <li><code>Rabbit.$Modal.warning(config)</code></li>
-                <li><code>Rabbit.$Modal.error(config)</code></li>
-                <li><code>Rabbit.$Modal.confirm(config)</code></li>
+                <li><code>Rabbit.MiniModal.info(config)</code></li>
+                <li><code>Rabbit.MiniModal.success(config)</code></li>
+                <li><code>Rabbit.MiniModal.warning(config)</code></li>
+                <li><code>Rabbit.MiniModal.error(config)</code></li>
+                <li><code>Rabbit.MiniModal.confirm(config)</code></li>
             </ul>
             <p><span>以上方法隐式地创建及维护。参数 config 为对象，具体说明如下：</span></p>
             <figure>
@@ -104,7 +104,7 @@
             </figure>
             <p><span>另外提供了全局关闭对话框的方法：</span></p>
             <ul>
-                <li><code>Rabbit.$Modal.remove()</code></li>
+                <li><code>Rabbit.MiniModal.remove()</code></li>
             </ul>
         </div>
     </div>
