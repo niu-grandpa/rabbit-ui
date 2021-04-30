@@ -125,7 +125,7 @@
         </Example>
         <Example>
             <template #content>
-                <r-poptip confirm="true" title="您确认删除这条内容吗？" id="test2">
+                <r-poptip confirm="true" title="您确认删除这条内容吗？" id="test3">
                     <button class="rab-btn">删除</button>
                 </r-poptip>
                 <r-poptip
@@ -150,11 +150,12 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch, watchEffect } from 'vue';
 import Poptip from 'rabbitui/poptip';
+import Message from 'rabbitui/message';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5, Code6, Code7 } from '../markdown-code/poptip';
 
-const inputContent = ref<string>('');
+const inputContent = ref<string>('输入内容');
 
 onMounted(() => {
     const poptip = new Poptip();
@@ -166,6 +167,15 @@ onMounted(() => {
     window.handleClose = () => {
         poptip.config('#test2').visible = false;
     };
+
+    poptip.config('#test3').events({
+        onOk: () => {
+            Message.info('点击了确定');
+        },
+        onCancel: () => {
+            Message.info('点击了取消');
+        }
+    });
 });
 
 const table = `

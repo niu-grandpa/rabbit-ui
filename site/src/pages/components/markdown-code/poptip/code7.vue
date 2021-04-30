@@ -89,6 +89,13 @@
                             <td style="text-align: left"><span>出现位置的偏移量</span></td>
                             <td style="text-align: left"><span>0</span></td>
                         </tr>
+                        <tr>
+                            <td style="text-align: left">
+                                <span>visible </span><code>1.4.0</code>
+                            </td>
+                            <td style="text-align: left"><span>提示框是否显示或隐藏</span></td>
+                            <td style="text-align: left"><span>false</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </figure>
@@ -121,6 +128,8 @@
             <ul>
                 <li><code>title</code></li>
                 <li><code>content</code></li>
+                <li><code>disabled</code></li>
+                <li><code>visible</code></li>
                 <li><code>events(options)</code></li>
             </ul>
             <figure>
@@ -143,12 +152,24 @@
                         <tr>
                             <td><span>content</span></td>
                             <td><span>响应式设置提示框的内容</span></td>
-                            <td><span>String</span><span>|</span><span> Number</span></td>
+                            <td><span>String </span><span>|</span><span> Number</span></td>
                             <td><span>-</span></td>
                         </tr>
                         <tr>
+                            <td><span>disabled </span><code>1.4.0</code></td>
+                            <td><span>响应式设置提示框是否禁用</span></td>
+                            <td><span>Boolean</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>visible </span><code>1.4.0</code></td>
+                            <td><span>响应式设置提示框是否显示和隐藏</span></td>
+                            <td><span>Boolean</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
                             <td><span>events</span></td>
-                            <td><span>非响应式API，添加提示框的事件，</span></td>
+                            <td><span>非响应式API，添加提示框的事件</span></td>
                             <td><span>Function</span></td>
                             <td><span>-</span></td>
                         </tr>
@@ -169,12 +190,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="text-align: left"><span>onShow</span></td>
+                            <td style="text-align: left">
+                                <span>onPopperShow </span><code>1.4.0</code>
+                            </td>
                             <td style="text-align: left"><span>在提示框显示时触发</span></td>
                             <td style="text-align: left"><span>无</span></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left"><span>onHide</span></td>
+                            <td style="text-align: left">
+                                <span>onPopperHide </span><code>1.4.0</code>
+                            </td>
                             <td style="text-align: left"><span>在提示框消失时触发</span></td>
                             <td style="text-align: left"><span>无</span></td>
                         </tr>
