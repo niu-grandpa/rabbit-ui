@@ -85,6 +85,7 @@ class Poptip implements Config {
                 if (newVal && !type.isBol(newVal)) return;
                 _handleTrigger(
                     trigger,
+                    confirm,
                     newVal,
                     target,
                     PoptipRefElem,
@@ -128,26 +129,28 @@ class Poptip implements Config {
                     }
                 };
 
-                if (trigger === 'hover') {
-                    bind(target, 'mouseenter', () => {
-                        if (EVENTTIMER) clearTimeout(EVENTTIMER);
-                        EVENTTIMER = setTimeout(() => visibleEvent(true), DEFAULTDELAY);
-                    });
-                    bind(target, 'mouseleave', () => {
-                        if (EVENTTIMER) clearTimeout(EVENTTIMER);
-                        if (PoptipPopper.dataset[STATEKEY] === 'show')
-                            setTimeout(() => visibleEvent(false), DEFAULTDELAY);
-                    });
+                if (!confirm) {
+                    if (trigger === 'hover') {
+                        bind(target, 'mouseenter', () => {
+                            if (EVENTTIMER) clearTimeout(EVENTTIMER);
+                            EVENTTIMER = setTimeout(() => visibleEvent(true), DEFAULTDELAY);
+                        });
+                        bind(target, 'mouseleave', () => {
+                            if (EVENTTIMER) clearTimeout(EVENTTIMER);
+                            if (PoptipPopper.dataset[STATEKEY] === 'show')
+                                setTimeout(() => visibleEvent(false), DEFAULTDELAY);
+                        });
+                    }
+                    if (trigger === 'focus') {
+                        bind(PoptipRefElem, 'mousedown', () => visibleEvent(true));
+                        bind(PoptipRefElem, 'mouseup', () => visibleEvent(false));
+                    }
                 }
                 if (trigger === 'click' || trigger === 'focus') {
                     clickoutside(target, clickoutsideEv);
                 }
                 if (trigger === 'click') {
                     bind(PoptipRefElem, 'click', toogleEv);
-                }
-                if (trigger === 'focus') {
-                    bind(PoptipRefElem, 'mousedown', () => visibleEvent(true));
-                    bind(PoptipRefElem, 'mouseup', () => visibleEvent(false));
                 }
                 if (confirm) {
                     const PoptipOkBtn = PoptipPopper.querySelector(`.${PREFIX.button}-primary`);
@@ -194,6 +197,7 @@ class Poptip implements Config {
             this._setWidthAndWordWrap(PoptipPopper, width, wordWrap);
             this._handleTrigger(
                 trigger,
+                confirm,
                 disabled,
                 node,
                 PoptipRel,
@@ -281,6 +285,7 @@ class Poptip implements Config {
 
     private _handleTrigger(
         type: string,
+        confirm: boolean,
         disabled: boolean,
         node: Element,
         refElem: Element,
@@ -295,17 +300,23 @@ class Poptip implements Config {
             this._setVisible(show, refElem, popper, placement, offset);
         };
 
-        if (type === 'hover') {
-            bind(node, 'mouseenter', (e: MouseEvent) => {
-                if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
-                if (popper.dataset[STATEKEY] === 'show') return;
-                VISIBLETIMER = setTimeout(() => show(true, e), DEFAULTDELAY);
-            });
-            bind(node, 'mouseleave', (e: MouseEvent) => {
-                if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
-                if (popper.dataset[STATEKEY] === 'show')
-                    setTimeout(() => show(false, e), DEFAULTDELAY);
-            });
+        if (!confirm) {
+            if (type === 'hover') {
+                bind(node, 'mouseenter', (e: MouseEvent) => {
+                    if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
+                    if (popper.dataset[STATEKEY] === 'show') return;
+                    VISIBLETIMER = setTimeout(() => show(true, e), DEFAULTDELAY);
+                });
+                bind(node, 'mouseleave', (e: MouseEvent) => {
+                    if (VISIBLETIMER) clearTimeout(VISIBLETIMER);
+                    if (popper.dataset[STATEKEY] === 'show')
+                        setTimeout(() => show(false, e), DEFAULTDELAY);
+                });
+            }
+            if (type === 'focus') {
+                bind(refElem, 'mousedown', (e: MouseEvent) => show(true, e));
+                bind(refElem, 'mouseup', (e: MouseEvent) => show(false, e));
+            }
         }
 
         if (type === 'click') {
@@ -326,10 +337,6 @@ class Poptip implements Config {
 
             clickoutside(node, hide);
             bind(refElem, 'click', (e: MouseEvent) => clickEv(e));
-        }
-        if (type === 'focus') {
-            bind(refElem, 'mousedown', (e: MouseEvent) => show(true, e));
-            bind(refElem, 'mouseup', (e: MouseEvent) => show(false, e));
         }
     }
 

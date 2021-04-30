@@ -32,7 +32,7 @@
             </template>
             <template #code><Code1 /></template>
         </Example>
-        <Example next-title="嵌套复杂内容">
+        <Example next-title="从浮层内关闭">
             <template #content>
                 <div class="top">
                     <r-poptip title="提示标题" content="提示内容" placement="top-start">
@@ -88,14 +88,27 @@
             </template>
             <template #code><Code2 /></template>
         </Example>
+        <Example next-title="嵌套复杂内容">
+            <template #content>
+                <r-poptip
+                    id="test2"
+                    title="标题"
+                    content="<a onclick='handleClose()'>关闭提示框</a>"
+                >
+                    <a>Click 激活</a>
+                </r-poptip>
+                <p>通过 config 方法提供的<code>visible</code> api 来控制提示框的显示和隐藏。</p>
+            </template>
+            <template #code><Code3 /></template>
+        </Example>
         <Example next-title="自动换行">
             <template #content>
-                <r-poptip width="400" placement="right" :content="complexContent">
+                <r-poptip width="400" placement="right" :content="table">
                     <button class="rab-btn">复杂内容</button>
                 </r-poptip>
                 <p>实现复杂的内容。</p>
             </template>
-            <template #code><Code3 /></template>
+            <template #code><Code4 /></template>
         </Example>
         <Example next-title="确认框">
             <template #content>
@@ -108,7 +121,7 @@
                 </r-poptip>
                 <p>设置属性<code>word-wrap</code>，当超出宽度后，文本将自动换行，并两端对齐。</p>
             </template>
-            <template #code><Code4 /></template>
+            <template #code><Code5 /></template>
         </Example>
         <Example>
             <template #content>
@@ -128,9 +141,9 @@
                     的形式激活，并且只会显示 title 的内容，忽略 content。
                 </p>
             </template>
-            <template #code><Code5 /></template>
+            <template #code><Code6 /></template>
         </Example>
-        <Code6 />
+        <Code7 />
     </article>
 </template>
 
@@ -139,18 +152,23 @@ import { onMounted, ref, watch, watchEffect } from 'vue';
 import Poptip from 'rabbitui/poptip';
 import Describe from 'comps/comps-describe/Index.vue';
 import Example from 'comps/comps-code-box/Index.vue';
-import { Code1, Code2, Code3, Code4, Code5, Code6 } from '../markdown-code/poptip';
+import { Code1, Code2, Code3, Code4, Code5, Code6, Code7 } from '../markdown-code/poptip';
 
 const inputContent = ref<string>('');
 
 onMounted(() => {
     const poptip = new Poptip();
+
     watchEffect(() => {
         poptip.config('#test').content = inputContent.value;
     });
+
+    window.handleClose = () => {
+        poptip.config('#test2').visible = false;
+    };
 });
 
-const complexContent = `
+const table = `
       <div class="api">
           <table>
               <thead>
