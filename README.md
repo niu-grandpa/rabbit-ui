@@ -3,14 +3,13 @@
         <img width="200" src="./assets/logo.svg">
     </a>
 </p>
-
 简体中文 | [English](./README.en-US.md)
 
-<h1>
-RabbitUI
-    <h3>一个基于 JavaScript 并使用 TypeScript 编写的轻量级 UI 插件库</h3>
-</h1>
+# RabbitUI
 
+### 一个基于 JavaScript 并使用 TypeScript 编写的轻量级 UI 插件库
+
+[![](https://img.shields.io/badge/npm-v1.4.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui) [![](https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge)](https://www.jsdelivr.com/package/npm/rabbit-simple-ui)
 
 > 官方文档网站正在制作中
 

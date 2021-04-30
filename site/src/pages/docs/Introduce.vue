@@ -36,9 +36,12 @@
     </r-alert>
     <article class="markdown">
         <Anchor title="版本" />
-        <p>
+        <p class="badge">
             <a href="https://www.npmjs.com/package/rabbit-simple-ui" target="_blank">
                 <img :src="npmVersionImg" />
+            </a>
+            <a href="https://www.jsdelivr.com/package/npm/rabbit-simple-ui" target="_blank">
+                <img src="https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge" />
             </a>
         </p>
         <Anchor title="兼容" />
@@ -61,7 +64,7 @@ import { Code1, Code2, Code3 } from 'docsMdCode/introduce';
 import Alert from 'rabbitui/alert';
 import Tooltip from 'rabbitui/tooltip';
 
-const version = '1.2.0';
+const version = '1.4.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [
@@ -98,3 +101,13 @@ onMounted(() => {
     new Tooltip();
 });
 </script>
+
+<style lang="less" scoped>
+.markdown {
+    .badge {
+        a {
+            margin-right: 8px;
+        }
+    }
+}
+</style>
