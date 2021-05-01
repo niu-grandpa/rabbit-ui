@@ -159,6 +159,10 @@ export default () =>
             {
                 path: '/components/spin',
                 component: () => import('pages/components/spin/Index.vue')
+            },
+            {
+                path: '/components/tabs',
+                component: () => import('pages/components/tabs/Index.vue')
             }
         ]
     });

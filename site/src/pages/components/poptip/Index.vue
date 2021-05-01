@@ -90,11 +90,7 @@
         </Example>
         <Example next-title="嵌套复杂内容">
             <template #content>
-                <r-poptip
-                    id="test2"
-                    title="标题"
-                    content="<a onclick='handleClose()'>关闭提示框</a>"
-                >
+                <r-poptip id="test2" title="标题" content="<a id='close'>关闭提示框</a>">
                     <a>Click 激活</a>
                 </r-poptip>
                 <p>通过 config 方法提供的<code>visible</code> api 来控制提示框的显示和隐藏。</p>
@@ -148,7 +144,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import Poptip from 'rabbitui/poptip';
 import Message from 'rabbitui/message';
 import Describe from 'comps/comps-describe/Index.vue';
@@ -164,9 +160,9 @@ onMounted(() => {
         poptip.config('#test').content = inputContent.value;
     });
 
-    window.handleClose = () => {
+    document.querySelector('#close')?.addEventListener('click', () => {
         poptip.config('#test2').visible = false;
-    };
+    });
 
     poptip.config('#test3').events({
         onOk: () => {

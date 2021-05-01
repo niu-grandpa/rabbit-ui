@@ -186,7 +186,7 @@ class Tabs implements Config {
     private _setTabIcon(tabElm: Element, icon: string): void {
         if (!icon) return;
 
-        const Icon = createElem('icon');
+        const Icon = createElem('i');
 
         Icon.className = `${PREFIX.icon} ${PREFIX.icon}-${icon}`;
         tabElm.prepend(Icon);
