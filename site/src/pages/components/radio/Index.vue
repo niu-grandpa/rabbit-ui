@@ -155,9 +155,9 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import Radio from 'rabbitui/radio';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Radio from '../../../../../src/components/radio';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import {
     Code1,
     Code2,
@@ -182,8 +182,8 @@ onMounted(() => {
     });
 
     radio.config('#demoRadioGroup').events({
-        onChange: (item: object) => {
-            console.log(item);
+        onChange: (data) => {
+            console.log(data);
         }
     });
 });

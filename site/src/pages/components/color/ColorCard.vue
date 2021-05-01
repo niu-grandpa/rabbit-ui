@@ -9,7 +9,7 @@
     </el-row>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { defineProps } from 'vue';
 
 const props = defineProps({
@@ -17,7 +17,7 @@ const props = defineProps({
         type: Number,
         default: 8
     },
-    data: Array
+    data: Object
 });
 </script>
 

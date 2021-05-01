@@ -131,9 +131,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Tooltip from 'rabbitui/tooltip';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Tooltip from '../../../../../src/components/tooltip';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5, Code6, Code7, Code8 } from '../markdown-code/tooltip';
 
 const customContent = `<div><p>显示多行信息</p><p><i>可以自定义样式</i></p></div>`;

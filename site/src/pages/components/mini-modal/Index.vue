@@ -40,10 +40,10 @@
 </template>
 
 <script lang="ts" setup>
-import MiniModal from 'rabbitui/mini-modal';
-import Message from 'rabbitui/message';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import MiniModal from '../../../../../src/components/mini-modal';
+import Message from '../../../../../src/components/message';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Tip } from '../markdown-code/mini-modal';
 
 const title = '对话框标题';

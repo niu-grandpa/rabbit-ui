@@ -19,8 +19,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Anchor from 'comps/anchor/Index.vue';
-import Timeline from 'rabbitui/timeline';
+import Anchor from '../../components/anchor/Index.vue';
+import Timeline from '../../../../src/components/timeline';
 
 onMounted(() => {
     new Timeline();

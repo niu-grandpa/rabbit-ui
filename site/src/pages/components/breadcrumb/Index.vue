@@ -65,9 +65,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Breadcrumb from 'rabbitui/breadcrumb';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Breadcrumb from '../../../../../src/components/breadcrumb';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4 } from '../markdown-code/breadcrumb';
 
 onMounted(() => {

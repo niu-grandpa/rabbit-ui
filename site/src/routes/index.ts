@@ -1,5 +1,5 @@
 import createRouter from './create';
-import Loading from 'rabbitui/loading-bar';
+import Loading from '../../../src/components/loading-bar';
 
 const router = createRouter();
 

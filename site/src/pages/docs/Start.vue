@@ -31,6 +31,6 @@
 </template>
 
 <script lang="ts" setup>
-import Anchor from 'comps/anchor/Index.vue';
-import { Code1, Code2, Code3, Code4, Code5 } from 'docsMdCode/start';
+import Anchor from '../../components/anchor/Index.vue';
+import { Code1, Code2, Code3, Code4, Code5 } from './markdown-code/start';
 </script>

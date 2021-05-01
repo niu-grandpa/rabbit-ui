@@ -31,10 +31,10 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Loading from 'rabbitui/loading-bar';
-import Anchor from 'comps/anchor/Index.vue';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Loading from '../../../../../src/components/loading-bar';
+import Anchor from '../../../components/anchor/Index.vue';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4 } from '../markdown-code/loading-bar';
 
 const start = () => Loading.start();

@@ -128,9 +128,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Tabs from 'rabbitui/tabs';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Tabs from '../../../../../src/components/tabs';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import {
     Code1,
     Code2,

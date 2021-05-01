@@ -1,4 +1,4 @@
-@import 'rabbit/styles/rabbit.css';
+@import '../../../dist/styles/rabbit.css';
 * {
   margin: 0;
   padding: 0;
@@ -1040,6 +1040,7 @@ a {
 .markdown-code .CodeMirror-wrap .CodeMirror-code pre {
   border-right: none;
   width: auto;
+  margin: 5px 0;
 }
 .markdown-code .CodeMirror-linebackground {
   position: absolute;

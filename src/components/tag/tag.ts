@@ -20,8 +20,8 @@ interface Config {
 }
 
 interface TagEvents {
-    onClose?: ($this?: Element) => void;
-    onChange?: (checked?: boolean) => void;
+    onClose?: ($this: Element) => void;
+    onChange?: (checked: boolean) => void;
 }
 
 class Tag implements Config {

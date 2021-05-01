@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 import { onMounted, watchEffect, onUnmounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import DocsOpts from '@/docs-opts';
-import CompsOpts from '@/comps-opts';
+import DocsOpts from '../../docs-opts';
+import CompsOpts from '../../comps-opts';
 
 const route = useRoute();
 

@@ -70,9 +70,9 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import Skeleton from 'rabbitui/skeleton';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Skeleton from '../../../../../src/components/skeleton';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5, Code6 } from '../markdown-code/skeleton';
 
 onMounted(() => {

@@ -74,9 +74,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Divider from 'rabbitui/divider';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Divider from '../../../../../src/components/divider';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5 } from '../markdown-code/divider';
 
 onMounted(() => {

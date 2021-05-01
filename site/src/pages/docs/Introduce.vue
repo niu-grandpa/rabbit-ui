@@ -59,10 +59,10 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Anchor from 'comps/anchor/Index.vue';
-import { Code1, Code2, Code3 } from 'docsMdCode/introduce';
-import Alert from 'rabbitui/alert';
-import Tooltip from 'rabbitui/tooltip';
+import Anchor from '../../components/anchor/Index.vue';
+import { Code1, Code2, Code3 } from './markdown-code/introduce';
+import Alert from '../../../../src/components/alert';
+import Tooltip from '../../../../src/components/tooltip';
 
 const version = '1.4.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;

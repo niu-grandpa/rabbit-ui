@@ -145,10 +145,10 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Modal from 'rabbitui/modal';
-import Message from 'rabbitui/message';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Modal from '../../../../../src/components/modal';
+import Message from '../../../../../src/components/message';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5, Code6, Code7 } from '../markdown-code/modal';
 
 let modal: any,

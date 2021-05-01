@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import Anchor from 'comps/anchor/Index.vue';
-import { Code1, Code2 } from 'docsMdCode/install';
-import { Code1 as NPMInstallCode } from 'docsMdCode/introduce';
+import Anchor from '../../components/anchor/Index.vue';
+import { Code1, Code2 } from './markdown-code/install';
+import { Code1 as NPMInstallCode } from './markdown-code/introduce';
 </script>

@@ -84,9 +84,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Timeline from 'rabbitui/timeline';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Timeline from '../../../../../src/components/timeline';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4, Code5 } from '../markdown-code/timeline';
 
 onMounted(() => {

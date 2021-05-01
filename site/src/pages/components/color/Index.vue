@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import Anchor from 'comps/anchor/Index.vue';
+import Anchor from '../../../components/anchor/Index.vue';
 import ColorCard from './ColorCard.vue';
 
 interface ColorsProps {

@@ -22,9 +22,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import CountDown from 'rabbitui/count-down';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import CountDown from '../../../../../src/components/count-down';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2 } from '../markdown-code/count-down';
 
 onMounted(() => {

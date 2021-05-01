@@ -48,9 +48,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Jumbotron from 'rabbitui/jumbotron';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Jumbotron from '../../../../../src/components/jumbotron';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3 } from '../markdown-code/jumbotron';
 
 onMounted(() => {

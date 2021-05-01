@@ -56,9 +56,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import Carousel from 'rabbitui/carousel';
-import Describe from 'comps/comps-describe/Index.vue';
-import Example from 'comps/comps-code-box/Index.vue';
+import Carousel from '../../../../../src/components/carousel';
+import Describe from '../../../components/comps-describe/Index.vue';
+import Example from '../../../components/comps-code-box/Index.vue';
 import { Code1, Code2, Code3, Code4 } from '../markdown-code/carousel';
 
 onMounted(() => {

@@ -21,8 +21,14 @@ interface Config {
     };
 }
 
+interface ItemData {
+    index: number;
+    label: string;
+    current: Element;
+}
+
 interface RadioEvent {
-    onChange: (param?: boolean | Element) => void;
+    onChange: (param: boolean & ItemData) => void;
 }
 
 class Radio implements Config {
@@ -90,17 +96,17 @@ class Radio implements Config {
                         onChange && type.isFn(onChange, true);
                     });
                 } else {
-                    const item = Object.create(null);
+                    const data = Object.create(null);
 
                     bind(target, 'click', () => {
                         Array.from(target.children).forEach((child, index) => {
                             if (_isDisabled(child)) return false;
 
-                            item['index'] = index;
-                            item['label'] = child.getAttribute('label');
-                            item['current'] = child;
+                            data['index'] = index;
+                            data['label'] = child.getAttribute('label');
+                            data['current'] = child;
 
-                            if (_isChecked(child)) onChange && type.isFn(onChange, item);
+                            if (_isChecked(child)) onChange && type.isFn(onChange, data);
                         });
                     });
                 }

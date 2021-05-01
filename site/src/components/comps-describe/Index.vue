@@ -12,8 +12,8 @@
 
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-import Anchor from 'comps/anchor/Index.vue';
-import Tip from 'pages/components/markdown-code/tip/Index.vue';
+import Anchor from '../anchor/Index.vue';
+import Tip from '../../pages/components/markdown-code/tip/Index.vue';
 
 const props = defineProps({
     title: String,

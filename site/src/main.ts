@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import Element from 'plugin/element';
+import Element from './plugin/element';
 import Router from './routes';
 import App from './App.vue';
 
