@@ -1,4 +1,4 @@
-# Message全局提示
+# Message 全局提示
 
 全局展示操作反馈信息。
 
@@ -149,7 +149,7 @@ Rabbit.Message.info({
 - `Rabbit.Message.config(options)`
 - `Rabbit.Message.destroy()`
 
-> 也可通过 `Rabbit.Message.destroy(key)` 来关闭一条消息。
+也可通过 `Rabbit.Message.destroy(key)` 来关闭一条消息。
 
 ```js
 Rabbit.Message.loading({

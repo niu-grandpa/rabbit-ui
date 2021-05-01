@@ -207,10 +207,6 @@ const table = `
 </script>
 
 <style lang="less" scope>
-.rab-btn {
-    margin-right: 8px;
-}
-
 .top,
 .bottom {
     text-align: center;

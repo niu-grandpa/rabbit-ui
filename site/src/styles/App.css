@@ -76,6 +76,9 @@ a {
 .markdown .anchor:hover a {
   opacity: 1;
 }
+.markdown .rab-btn {
+  margin-right: 8px;
+}
 .example-code .el-collapse {
   border-bottom: 0;
 }

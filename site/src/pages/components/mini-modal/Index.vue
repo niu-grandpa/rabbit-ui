@@ -117,9 +117,3 @@ const async = () => {
     });
 };
 </script>
-
-<style  scoped>
-.rab-btn {
-    margin-right: 8px;
-}
-</style>

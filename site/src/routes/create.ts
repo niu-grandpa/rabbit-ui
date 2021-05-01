@@ -163,6 +163,10 @@ export default () =>
             {
                 path: '/components/tabs',
                 component: () => import('pages/components/tabs/Index.vue')
+            },
+            {
+                path: '/components/message',
+                component: () => import('pages/components/message/Index.vue')
             }
         ]
     });

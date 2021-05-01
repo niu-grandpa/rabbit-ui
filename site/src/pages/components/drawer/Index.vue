@@ -173,8 +173,4 @@ const handleClick2 = () => {
     text-align: center;
     background: #fafafa;
 }
-
-.rab-btn {
-    margin-right: 8px;
-}
 </style>

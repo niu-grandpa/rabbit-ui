@@ -195,7 +195,6 @@ const colors = [
 
 .demo-color {
     .rab-btn {
-        margin-right: 8px;
         margin-bottom: 8px;
     }
 }

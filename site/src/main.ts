@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import Element from './plugin/element';
 import Router from './routes';
-import App from './App.vue';
+import App from '@/App.vue';
 
 import 'styles/App.less';
 

@@ -188,10 +188,6 @@ onMounted(() => {
 
 <style lang="less">
 .markdown {
-    .rab-btn {
-        margin-right: 8px;
-    }
-
     .vertical-center-modal {
         display: flex;
         align-items: center;
