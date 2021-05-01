@@ -1,0 +1,197 @@
+<template>
+    <div class="markdown-code">
+        <div class="code-write">
+            <p style="font-size: 32px">Attributes</p>
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><span>属性</span></th>
+                            <th><span>说明</span></th>
+                            <th><span>默认值</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>visible</span></td>
+                            <td><span>对话框默认是否显示</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>title</span></td>
+                            <td><span>对话框标题</span></td>
+                            <td><span>-</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>closable</span></td>
+                            <td><span>是否显示右上角的关闭按钮，关闭后 Esc 按键也将关闭</span></td>
+                            <td><span>true</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>mask-closable</span></td>
+                            <td><span>是否允许点击遮罩层关闭</span></td>
+                            <td><span>true</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>loading</span></td>
+                            <td>
+                                <span
+                                    >点击确定按钮时，确定按钮是否显示 loading
+                                    状态，开启则需手动关闭对话框</span
+                                >
+                            </td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>scrollable</span></td>
+                            <td><span>页面是否可以滚动</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>fullscreen</span></td>
+                            <td><span>是否全屏显示</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>mask</span></td>
+                            <td><span>是否显示遮罩层</span></td>
+                            <td><span>true</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>ok-text</span></td>
+                            <td><span>确定按钮文字</span></td>
+                            <td><span>确定</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>cancel-text</span></td>
+                            <td><span>取消按钮文字</span></td>
+                            <td><span>取消</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>width</span></td>
+                            <td>
+                                <span
+                                    >对话框宽度，对话框的宽度是响应式的，当屏幕尺寸小于 768px
+                                    时，宽度会变为自动</span
+                                ><code>auto</code><span>。</span>
+                            </td>
+                            <td><span>520px</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>footer-hide</span></td>
+                            <td><span>不显示底部</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>class-name</span></td>
+                            <td>
+                                <span>设置对话框容器</span><code>.rab-modal-wrap</code
+                                ><span>的类名，可辅助实现垂直居中等自定义效果</span>
+                            </td>
+                            <td><span>-</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>z-index</span></td>
+                            <td><span>层级</span></td>
+                            <td><span>1000</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>lock-scroll</span></td>
+                            <td><span>是否禁止对页面滚动条的修改</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figure>
+            <h3><a name="config--方法" class="md-header-anchor"></a><span>Config 方法</span></h3>
+            <p>
+                <span
+                    >配置指定的组件，并提供一些必要的响应式更新DOM内容或其他操作的
+                    API。（并不是每个组件都会有）</span
+                >
+            </p>
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><span>参数</span></th>
+                            <th><span>说明</span></th>
+                            <th><span>类型</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>el</span></td>
+                            <td><span>配置当前选定的 modal，必须是选择器名称或者元素名</span></td>
+                            <td><span>String</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figure>
+            <p><span>该方法返回以下值：</span></p>
+            <ul>
+                <li><code>visible</code></li>
+                <li><code>title</code></li>
+                <li><code>events(options)</code></li>
+            </ul>
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><span>返回值</span></th>
+                            <th><span>说明</span></th>
+                            <th><span>类型</span></th>
+                            <th><span>默认值</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>visible</span></td>
+                            <td><span>响应式设置或更新对话框的显示</span></td>
+                            <td><span>Boolean</span></td>
+                            <td><span>false</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>title</span></td>
+                            <td><span>响应式设置或更新对话框标题</span></td>
+                            <td><span>String</span></td>
+                            <td><span>-</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>events</span></td>
+                            <td><span>非响应式API，添加对话框事件</span></td>
+                            <td><span>Function</span></td>
+                            <td><span>-</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figure>
+            <ul>
+                <li><code>events</code><span>的参数 options 为对象，具体说明如下：</span></li>
+            </ul>
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: left"><span>属性</span></th>
+                            <th style="text-align: left"><span>说明</span></th>
+                            <th style="text-align: left"><span>回调参数</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left"><span>onOk</span></td>
+                            <td style="text-align: left"><span>点击确定的回调</span></td>
+                            <td style="text-align: left"><span>无</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left"><span>onCancel</span></td>
+                            <td style="text-align: left"><span>点击取消的回调</span></td>
+                            <td style="text-align: left"><span>无</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figure>
+        </div>
+    </div>
+</template>

@@ -6,7 +6,7 @@ export default function modalTest(): void {
     let timer: any;
     // @ts-ignore
     window.handleModal1 = () => {
-        modal.config('#m1').visable = true;
+        modal.config('#m1').visible = true;
         modal.config('#m1').events({
             onOk: () => {
                 Rabbit.Message.info('点击了确定');
@@ -18,23 +18,23 @@ export default function modalTest(): void {
     };
     // @ts-ignore
     window.handleModal2 = () => {
-        modal.config('#m2').visable = true;
+        modal.config('#m2').visible = true;
     };
     // @ts-ignore
     window.handleModal3 = () => {
-        modal.config('#m3').visable = true;
+        modal.config('#m3').visible = true;
     };
     // @ts-ignore
     window.handleModal4 = () => {
-        modal.config('#m4').visable = true;
+        modal.config('#m4').visible = true;
     };
     // @ts-ignore
     window.handleModal5 = () => {
-        modal.config('#m5').visable = true;
+        modal.config('#m5').visible = true;
         modal.config('#m5').events({
             onOk: () => {
                 timer = setTimeout(() => {
-                    modal.config('#m5').visable = false;
+                    modal.config('#m5').visible = false;
                 }, 2000);
             },
             onCancel: () => {
@@ -44,22 +44,22 @@ export default function modalTest(): void {
     };
     // @ts-ignore
     window.handleModal6 = () => {
-        modal.config('#m6').visable = true;
+        modal.config('#m6').visible = true;
     };
     // @ts-ignore
     window.handleModal7 = () => {
-        modal.config('#m7').visable = true;
+        modal.config('#m7').visible = true;
     };
     // @ts-ignore
     window.handleModal8 = () => {
-        modal.config('#m8').visable = true;
+        modal.config('#m8').visible = true;
     };
     // @ts-ignore
     window.handleModal9 = () => {
-        modal.config('#m9').visable = true;
+        modal.config('#m9').visible = true;
     };
     // @ts-ignore
     window.handleModal10 = () => {
-        modal.config('#m10').visable = true;
+        modal.config('#m10').visible = true;
     };
 }

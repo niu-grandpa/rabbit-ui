@@ -24,7 +24,7 @@ interface Config {
         el: string
     ): {
         title: string;
-        visable: boolean;
+        visible: boolean;
         events({ onOk, onCancel }: ModalEvents): void;
     };
 }
@@ -45,7 +45,7 @@ class Modal implements Config {
         el: string
     ): {
         title: string;
-        visable: boolean;
+        visible: boolean;
         events({ onOk, onCancel }: ModalEvents): void;
     } {
         const target = $el(el);
@@ -63,10 +63,10 @@ class Modal implements Config {
             set title(newVal: string) {
                 if (type.isStr(newVal)) setHtml(M_Child.modalTitle, newVal);
             },
-            get visable() {
+            get visible() {
                 return false;
             },
-            set visable(newVal: boolean) {
+            set visible(newVal: boolean) {
                 if (type.isBol(newVal)) {
                     // 当设置modal为隐藏状态并且确定按钮是加载中的状态则初始化它
                     if (!newVal) {
@@ -137,7 +137,7 @@ class Modal implements Config {
                 'class-name',
                 'cancel-text',
                 'mask',
-                'visable',
+                'visible',
                 'scrollable',
                 'fullscreen',
                 'lock-scroll',
@@ -190,14 +190,14 @@ class Modal implements Config {
     }
 
     private _initVisable(node: Element): void {
-        const { visable, scrollable } = this._attrs(node);
+        const { visible, scrollable } = this._attrs(node);
 
         const { modalMask, modalWrap, modal } = this._getModalNode(node);
 
         let { lockScroll } = this._attrs(node);
         !node.getAttribute('lock-scroll') ? (lockScroll = true) : lockScroll;
 
-        if (visable) {
+        if (visible) {
             setCss(modalMask, 'display', '');
             modalWrap.classList.remove(`${PREFIX.modal}-hidden`);
             setCss(modal, 'display', '');
@@ -210,7 +210,7 @@ class Modal implements Config {
 
         // @ts-ignore
         // 设置初始显示状态
-        node.dataset.modalVisable = visable;
+        node.dataset.modalVisable = visible;
     }
 
     private _setHeader(node: Element): void {
@@ -267,9 +267,9 @@ class Modal implements Config {
         }
     }
 
-    private _handleVisable(visable: boolean, target: Element, children: Element[]): void {
+    private _handleVisable(visible: boolean, target: Element, children: Element[]): void {
         const { _show, _hide } = Modal.prototype;
-        visable ? _show(target, children) : _hide(target, children);
+        visible ? _show(target, children) : _hide(target, children);
     }
 
     private _handleClose(parent: Element): void {
@@ -403,7 +403,7 @@ class Modal implements Config {
             cancelText: getStrTypeAttr(node, 'cancel-text', '取消'),
             maskClosable: getStrTypeAttr(node, 'mask-closable', 'true'),
             zIndex: getNumTypeAttr(node, 'z-index', 1000),
-            visable: getBooleanTypeAttr(node, 'visable'),
+            visible: getBooleanTypeAttr(node, 'visible'),
             loading: getBooleanTypeAttr(node, 'loading'),
             scrollable: getBooleanTypeAttr(node, 'scrollable'),
             lockScroll: getBooleanTypeAttr(node, 'lock-scroll'),

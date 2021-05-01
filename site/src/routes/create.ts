@@ -151,6 +151,10 @@ export default () =>
             {
                 path: '/components/mini-modal',
                 component: () => import('pages/components/mini-modal/Index.vue')
+            },
+            {
+                path: '/components/modal',
+                component: () => import('pages/components/modal/Index.vue')
             }
         ]
     });

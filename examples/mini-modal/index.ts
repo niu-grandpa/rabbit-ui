@@ -1,6 +1,6 @@
 import Rabbit from '../../src';
 
-export default function $modalTest(): void {
+export default function miniModalTest(): void {
     const title = '对话框标题';
     const content = '这是一段对话框的内容';
 
@@ -8,25 +8,25 @@ export default function $modalTest(): void {
     window.instance = (type: string) => {
         switch (type) {
             case 'info':
-                Rabbit.$Modal.info({
+                Rabbit.MiniModal.info({
                     title,
                     content
                 });
                 break;
             case 'success':
-                Rabbit.$Modal.success({
+                Rabbit.MiniModal.success({
                     title,
                     content
                 });
                 break;
             case 'warning':
-                Rabbit.$Modal.warning({
+                Rabbit.MiniModal.warning({
                     title,
                     content
                 });
                 break;
             case 'error':
-                Rabbit.$Modal.error({
+                Rabbit.MiniModal.error({
                     title,
                     content
                 });
@@ -36,7 +36,7 @@ export default function $modalTest(): void {
 
     // @ts-ignore
     window.confirm = () => {
-        Rabbit.$Modal.confirm({
+        Rabbit.MiniModal.confirm({
             title: '确认对话框标题',
             content: '<p>这是一段自定义的内容...</p><p>这是一段自定义的内容...</p>',
             dangerouslyUseHTMLString: true,
@@ -51,7 +51,7 @@ export default function $modalTest(): void {
 
     // @ts-ignore
     window.custom = () => {
-        Rabbit.$Modal.confirm({
+        Rabbit.MiniModal.confirm({
             title: '确认对话框标题',
             content: '<p>这是一段自定义的内容...</p><p>这是一段自定义的内容...</p>',
             okText: 'OK',
@@ -62,14 +62,14 @@ export default function $modalTest(): void {
 
     // @ts-ignore
     window.async = () => {
-        Rabbit.$Modal.confirm({
+        Rabbit.MiniModal.confirm({
             title: '确认对话框标题',
             content: '<p>对话框将在 2秒 后关闭</p>',
             loading: true,
             dangerouslyUseHTMLString: true,
             onOk: () => {
                 setTimeout(() => {
-                    Rabbit.$Modal.remove();
+                    Rabbit.MiniModal.remove();
                     Rabbit.Message.info('异步关闭了对话框');
                 }, 2000);
             }
