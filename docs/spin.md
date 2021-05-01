@@ -23,9 +23,23 @@
 - 通过设置`size`属性为`large`和`small`将 Spin 设置为大和小尺寸，不设置为默认（中）尺寸。
 
 ```html
-<r-spin size="small"></r-spin>
-<r-spin></r-spin>
-<r-spin size="large"></r-spin>
+<style>
+    .col-span-8 {
+        display: block;
+        width: 33.33333333%;
+        float: left;
+    }
+</style>
+
+<div class="col-span-8">
+  <r-spin size="small"></r-spin>
+</div>
+<div class="col-span-8">
+  <r-spin></r-spin>
+</div>
+<div class="col-span-8">
+  <r-spin size="large"></r-spin>
+</div>
 ```
 
 居中固定
@@ -52,11 +66,30 @@
 - 自定义 Spin 的内容，可以是简单的文字，也可以是很复杂的动画。
 
 ```html
-<r-spin fix>加载中...</r-spin>
-<r-spin fix>
-  <i class="rab-icon rab-icon-loading1 rab-load-loop" style="font-size: 22px; height: 30px"></i>
-  <div>Loading...</div>
-</r-spin>
+<style>
+    .col-span-8 {
+        display: block;
+        width: 33.33333333%;
+        float: left;
+    }
+    
+    .demo-spin-col {
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+</style>
+
+<div class="demo-spin-col col-span-8">
+  <r-spin fix>加载中...</r-spin>
+</div>
+
+<div class="demo-spin-col col-span-8">
+  <r-spin fix>
+      <i class="rab-icon rab-icon-loading1 rab-load-loop"></i>
+      <div>Loading...</div>
+  </r-spin>
+</div>
 ```
 
 状态切换
@@ -67,7 +100,7 @@
 <style>
     .demo-spin-article {
         width: 400px;
-        height: 200px;
+        height: 240px;
         padding: 10px;
         text-align: center;
         position: relative;
@@ -90,9 +123,12 @@
 
 <script>
     const spin = new Rabbit.Spin();
-    const _switch = new Rabbit.Switch();
-    _switch.onChange('r-switch', ([status]) => {
-       document.querySelector('#demo_spin').style.display = status ? 'none' : '';
+    const Switch = new Rabbit.Switch();
+    
+    Switch.config('r-switch').events({
+        onChange: (checked) => {
+            document.querySelector('#demo_spin').style.display = checked ? 'none' : '';
+        }
     });
 </script>
 ```
@@ -102,23 +138,22 @@
 - 使用Spin提供的 `show` 和 `hide` 方法可以全局加载和隐藏。
 
 ```html
-<button class="rab-btn rab-btn-primary" onclick="handle1()">整页显示，3秒后关闭</button>
-<button class="rab-btn rab-btn-primary" onclick="handle2()">自定义显示内容</button>
+<button class="rab-btn rab-btn-primary" onclick="handleShow()">整页显示，3秒后关闭</button>
+<button class="rab-btn rab-btn-primary" onclick="handleHide()">自定义显示内容</button>
 <script>
-    window.handle1 = () => {
+    handleShow = () => {
         spin.show();
         setTimeout(() => {
             spin.hide();
         }, 3000);
     };
-
-    window.handle2 = () => {
-        spin.show({
-            content: `<i class="rab-icon rab-icon-loading1 rab-load-loop" 
-						 style="font-size: 22px;height: 30px"
-					  ></i>
-           			  <div>Loading...</div>`
-        });
+    
+	const content = `<i class="rab-icon rab-icon-loading1 rab-load-loop" 
+						style="font-size: 22px;height: 30px"></i>
+           			 <div>Loading...</div>`;
+    
+    handleHide = () => {
+        spin.show({ content });
         setTimeout(() => {
             spin.hide();
         }, 3000);

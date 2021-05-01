@@ -155,6 +155,10 @@ export default () =>
             {
                 path: '/components/modal',
                 component: () => import('pages/components/modal/Index.vue')
+            },
+            {
+                path: '/components/spin',
+                component: () => import('pages/components/spin/Index.vue')
             }
         ]
     });

@@ -167,6 +167,22 @@
 - 可以自定义 Modal 的对话框样式 以及 对话框 Wrap 的 class 名称，从而实现更多自定义的样式，比如垂直居中。
 
 ```html
+<style>
+    .vertical-center-modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vertical-center-modal .rab-modal {
+        top: 0;
+    }
+
+    .demo-custom-modal .rab-modal {
+        top: 20px;
+    }
+</style>
+
 <button class="rab-btn" onclick="handleModal8()">垂直居中</button>
 <button class="rab-btn" onclick="handleModal9()">距离顶部20px</button>
 

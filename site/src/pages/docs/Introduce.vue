@@ -2,7 +2,7 @@
     <article class="markdown">
         <h1>关于 Rabbit UI</h1>
         <p>
-            <code>Rabbit UI</code> 是一个基于 Javascript 编写的轻量级开源 UI 插件库，主要使用于 PC
+            <code>Rabbit UI</code> 是一个基于 Typescript 编写的轻量级开源 UI 插件库，主要使用于 PC
             端界面。
         </p>
     </article>
