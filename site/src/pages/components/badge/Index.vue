@@ -167,8 +167,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Badge from '../../../../../src/components/badge';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import {
     Code1,
     Code2,

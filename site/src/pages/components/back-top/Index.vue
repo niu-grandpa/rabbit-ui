@@ -28,8 +28,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import BackTop from '../../../../../src/components/back-top';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import { Code1, Code2, Code3 } from '../markdown-code/back-top';
 
 onMounted(() => {

@@ -156,8 +156,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import Radio from '../../../../../src/components/radio';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import {
     Code1,
     Code2,

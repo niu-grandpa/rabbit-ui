@@ -155,8 +155,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Dropdown from '../../../../../src/components/dropdown';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import { Code1, Code2, Code3, Code4, Code5 } from '../markdown-code/dropdown';
 
 const list1 = [

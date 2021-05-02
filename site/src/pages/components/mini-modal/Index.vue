@@ -34,7 +34,7 @@
             </template>
             <template #code><Code2 /></template>
         </Example>
-        <Tip />
+        <Tip api1="title" api2="content" />
         <Code3 />
     </article>
 </template>
@@ -42,9 +42,8 @@
 <script lang="ts" setup>
 import MiniModal from '../../../../../src/components/mini-modal';
 import Message from '../../../../../src/components/message';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
-import { Code1, Code2, Code3, Tip } from '../markdown-code/mini-modal';
+import { Describe, Example, Tip } from '../../../components/index';
+import { Code1, Code2, Code3 } from '../markdown-code/mini-modal';
 
 const title = '对话框标题';
 const content = '这是一段对话框的内容';

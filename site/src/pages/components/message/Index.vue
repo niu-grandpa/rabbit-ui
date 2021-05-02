@@ -86,14 +86,14 @@
             </template>
             <template #code><Code8 /></template>
         </Example>
+        <Tip api1="content" />
         <Code9 />
     </article>
 </template>
 
 <script lang="ts" setup>
 import Message from '../../../../../src/components/message';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example, Tip } from '../../../components/index';
 import {
     Code1,
     Code2,

@@ -23,8 +23,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import CountDown from '../../../../../src/components/count-down';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import { Code1, Code2 } from '../markdown-code/count-down';
 
 onMounted(() => {

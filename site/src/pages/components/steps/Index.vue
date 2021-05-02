@@ -83,8 +83,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import Steps from '../../../../../src/components/steps';
-import Describe from '../../../components/comps-describe/Index.vue';
-import Example from '../../../components/comps-code-box/Index.vue';
+import { Describe, Example } from '../../../components/index';
 import { Code1, Code2, Code3, Code4, Code5, Code6, Code7 } from '../markdown-code/steps';
 
 let steps: any,
