@@ -167,6 +167,10 @@ export default () =>
             {
                 path: '/components/message',
                 component: () => import('pages/components/message/Index.vue')
+            },
+            {
+                path: '/components/notice',
+                component: () => import('pages/components/notice/Index.vue')
             }
         ]
     });

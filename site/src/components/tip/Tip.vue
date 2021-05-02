@@ -18,11 +18,11 @@
                     <span>。因此在 </span>
                     <code>dangerouslyUseHTMLString</code>
                     <span> 打开的情况下，请确保 </span>
-                    <code>{{ props.api2 }}</code>
+                    <code>{{ props.api2 || props.api1 }}</code>
                     <span> 的内容是可信的，</span>
                     <strong><span>永远不要</span></strong>
                     <span>将用户提交的内容赋值给 </span>
-                    <code>{{ props.api2 }}</code>
+                    <code>{{ props.api2 || props.api1 }}</code>
                     <span> 属性。</span>
                 </p>
             </blockquote>
