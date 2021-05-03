@@ -2,22 +2,20 @@
     "name": "rabbit-simple-ui",
     "version": "1.4.0",
     "title": "RabbitUI",
-    "description": "A lightweight UI plugin library written in TypeScript and based on JavaScript",
+    "description": "A lightweight JavaScript UI library written in TypeScript",
     "homepage": "www.rabbitui.xyz",
     "keywords": [
         "ui",
         "jsui",
-        "jsUI库",
-        "jsui插件库",
-        "rabbit-simple-ui",
         "rabbitui",
-        "rabbit-ui",
         "RabbitUI",
+        "rabbit-simple-ui",
+        "library",
+        "ui-library",
         "component",
-        "ui-plugin",
+        "framework",
         "javascript",
-        "typescript",
-        "framework"
+        "typescript"
     ],
     "main": "src/index.ts",
     "files": [
