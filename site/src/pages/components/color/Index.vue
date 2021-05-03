@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Describe, Example } from '../../../components/index';
+import { Describe, Example, Anchor } from '../../../components/index';
+import ColorCard from './ColorCard.vue';
 
 interface ColorsProps {
     name: string;
@@ -29,71 +30,71 @@ interface ColorsProps {
     dark?: boolean;
 }
 
-const mainColors = [
+const mainColors: ColorsProps[] = [
     {
         name: 'Primary',
         desc: '#1890ff'
-    } as ColorsProps,
+    },
     {
         name: 'Light Primary',
         desc: '#5cadff'
-    } as ColorsProps,
+    },
     {
         name: 'Dark Primary',
         desc: '#2b85e4'
-    } as ColorsProps
+    }
 ];
 
-const auxiliaryColors = [
+const auxiliaryColors: ColorsProps[] = [
     {
         name: 'Info',
         desc: '#2db7f5'
-    } as ColorsProps,
+    },
     {
         name: 'Success',
         desc: '#52c41a'
-    } as ColorsProps,
+    },
     {
         name: 'Warning',
         desc: '#faad14'
-    } as ColorsProps,
+    },
     {
         name: 'Error',
         desc: '#ff4d4f'
     }
 ];
 
-const neutralColors = [
+const neutralColors: ColorsProps[] = [
     {
         name: '标题',
         desc: '#2c3e50'
-    } as ColorsProps,
+    },
     {
         name: '正文',
         desc: '#55585e'
-    } as ColorsProps,
+    },
     {
         name: '辅助/图标',
         desc: '#808695'
-    } as ColorsProps,
+    },
     {
         name: '失效',
         desc: '#c5c8ce'
-    } as ColorsProps,
+    },
     {
         name: '边框',
         desc: '#dcdee2',
         dark: true
-    } as ColorsProps,
+    },
     {
         name: '分割线',
         desc: '#e8eaec',
         dark: true
-    } as ColorsProps,
+    },
     {
         name: '背景',
         desc: '#fafafa',
         dark: true
-    } as ColorsProps
+    }
 ];
 </script>

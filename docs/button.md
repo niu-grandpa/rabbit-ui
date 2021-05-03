@@ -42,9 +42,9 @@
 
 - 图标按钮及按钮形状
 
-通过设置`icon`属性在`button`内嵌入一个`icon`，或者直接在`button`内添加 `icon` 标签。
+通过设置`icon`属性在`button`内嵌入一个`icon`，或者直接在`button`内添加 `i` 标签。
 
-使用`button`的`icon`属性，图标位置将添加在最左边，如果需要自定义位置，则直接在`Button`内添加 `icon` 标签。
+使用`button`的`icon`属性，图标位置将添加在最左边，如果需要自定义位置，则直接在`Button`内添加 `i` 标签。
 
 通过添加类名 `rab-btn-circle`，可将按钮置为圆的形状。
 
@@ -59,7 +59,6 @@
 <button type="button" icon="ios-search" class="rab-btn">搜索</button>
 <button type="button" icon="ios-search" class="rab-btn rab-btn-circle">搜索</button>
 <button type="button" class="rab-btn rab-btn-circle">圆角按钮</button>
-
 ```
 
 - 按钮尺寸
@@ -210,7 +209,6 @@
   <button type="button" class="rab-btn">Small</button>
   <button type="button" class="rab-btn">Small</button>
 </div>
-
 ```
 
 - 按钮组纵向排列
@@ -248,9 +246,9 @@
 
 - `loading`
 
-| 返回值  | 说明                           | 类型   | 默认值 |
-| ------- | ------------------------------ | ------ | ------ |
-| loading | 响应式设置设置按钮为加载中状态 | String | -      |
+| 返回值  | 说明                           | 类型    | 默认值 |
+| ------- | ------------------------------ | ------- | ------ |
+| loading | 响应式设置设置按钮为加载中状态 | Boolean | false  |
 
 ### 动态设置按钮加载中状态
 

@@ -31,8 +31,8 @@ import CompsOpts from '../../comps-opts';
 
 const route = useRoute();
 
-const show = ref(false);
-const fixed = ref(false);
+const show = ref<boolean>(false);
+const fixed = ref<boolean>(false);
 
 const changeList = () => {
     const isDocsPage: boolean = route.path.indexOf('/docs') === 0;
@@ -52,8 +52,6 @@ watchEffect(() => changeList());
 onMounted(() => window.addEventListener('scroll', handleScroll));
 
 onUnmounted(() => window.removeEventListener('scroll', handleScroll));
-
-window.addEventListener;
 </script>
 
 <style lang="less" scope>

@@ -2,8 +2,8 @@
     <article class="markdown">
         <h1>关于 Rabbit UI</h1>
         <p>
-            <code>Rabbit UI</code> 是一个基于 Typescript 编写的轻量级开源 UI 插件库，主要使用于 PC
-            端界面。
+            <code>Rabbit UI</code>
+            是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于 PC 端界面。
         </p>
     </article>
     <article class="markdown">
@@ -14,10 +14,10 @@
             </li>
         </ul>
         <Anchor title="安装" />
-        <span
-            >使用 npm 安装 ，请阅读安装章节的<router-link to="install">NPM安装</router-link
-            >部分</span
-        >
+        <span>
+            使用 npm 安装 ，请阅读安装章节的
+            <router-link to="install">NPM安装</router-link>部分
+        </span>
         <Code1 />
         <p>或使用 <code>&lt;script&gt;</code> 全局引用，并使用全局变量 <code>Rabbit</code></p>
         <Code2 />

@@ -12,13 +12,11 @@ import HomeContent from './Content.vue';
 import HomeFooter from './Footer.vue';
 </script>
 
-<style lang="less" >
-@import '../../src/styles/custom';
-
+<style lang="less" scope>
 .app-index-home {
     &-main {
         padding: 0 !important;
-        color: @text-color;
+        color: #55585e;
         text-align: center;
         line-height: 160px;
     }
@@ -44,8 +42,8 @@ import HomeFooter from './Footer.vue';
         .title {
             font-size: 3rem;
             margin-top: 2.2rem;
-            color: @title-color;
             line-height: 1.25;
+            color: #2c3e50;
         }
 
         .desc {
@@ -76,7 +74,7 @@ import HomeFooter from './Footer.vue';
         height: auto !important;
         background: #475050;
         text-align: center;
-        color: @white;
+        color: #fff;
         padding: 40px 0;
 
         p {
@@ -85,7 +83,7 @@ import HomeFooter from './Footer.vue';
         }
 
         a {
-            color: @white;
+            color: #fff;
         }
 
         .social-icon {

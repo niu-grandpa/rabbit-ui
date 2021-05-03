@@ -37,6 +37,30 @@ export default () =>
                 component: () => import('pages/components/color/Index.vue')
             },
             {
+                path: '/components/button',
+                component: () => import('pages/components/button/Index.vue')
+            },
+            {
+                path: '/components/icon',
+                component: () => import('pages/components/icon/Index.vue')
+            },
+            {
+                path: '/components/card',
+                component: () => import('pages/components/card/Index.vue')
+            },
+            {
+                path: '/components/collapse',
+                component: () => import('pages/components/collapse/Index.vue')
+            },
+            {
+                path: '/components/divider',
+                component: () => import('pages/components/divider/Index.vue')
+            },
+            {
+                path: '/components/page-header',
+                component: () => import('pages/components/page-header/Index.vue')
+            },
+            {
                 path: '/components/alert',
                 component: () => import('pages/components/alert/Index.vue')
             },
@@ -65,10 +89,6 @@ export default () =>
                 component: () => import('pages/components/badge/Index.vue')
             },
             {
-                path: '/components/card',
-                component: () => import('pages/components/card/Index.vue')
-            },
-            {
                 path: '/components/carousel',
                 component: () => import('pages/components/carousel/Index.vue')
             },
@@ -85,10 +105,6 @@ export default () =>
                 component: () => import('pages/components/steps/Index.vue')
             },
             {
-                path: '/components/page-header',
-                component: () => import('pages/components/page-header/Index.vue')
-            },
-            {
                 path: '/components/switch',
                 component: () => import('pages/components/switch/Index.vue')
             },
@@ -99,14 +115,6 @@ export default () =>
             {
                 path: '/components/loading-bar',
                 component: () => import('pages/components/loading-bar/Index.vue')
-            },
-            {
-                path: '/components/collapse',
-                component: () => import('pages/components/collapse/Index.vue')
-            },
-            {
-                path: '/components/divider',
-                component: () => import('pages/components/divider/Index.vue')
             },
             {
                 path: '/components/time',

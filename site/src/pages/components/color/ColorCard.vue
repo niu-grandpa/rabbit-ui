@@ -9,7 +9,7 @@
     </el-row>
 </template>
 
-<script setup>
+<script  setup>
 import { defineProps } from 'vue';
 
 const props = defineProps({
@@ -17,11 +17,11 @@ const props = defineProps({
         type: Number,
         default: 8
     },
-    data: Object
+    data: Array
 });
 </script>
 
-<style lang="less" scope>
+<style lang="less">
 .demo-color {
     &-card {
         height: 84px;

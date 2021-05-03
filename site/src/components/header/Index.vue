@@ -25,9 +25,9 @@ import NavBar from './NavBar.vue';
 
 .app-header {
     height: 65px !important;
-    background: @white;
-    color: @text-color;
-    border-bottom: 1px solid @border-color-split;
+    background: #fff;
+    color: #55585e;
+    border-bottom: 1px solid #e8eaec;
     z-index: 10;
 
     .el-row {
@@ -44,11 +44,11 @@ import NavBar from './NavBar.vue';
         #logo {
             height: 64px;
             overflow: hidden;
-            color: @title-color;
+            color: #2c3e50;
             font-size: 18px;
             line-height: 64px;
             white-space: nowrap;
-            padding-right: @padding-md;
+            padding-right: 16px;
             padding-left: 40px;
 
             img {

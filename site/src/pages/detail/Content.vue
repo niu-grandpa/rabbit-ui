@@ -6,7 +6,7 @@
     </el-main>
 </template>
 
-<style lang="less" scoped>
+<style lang="less" scope>
 .app {
     &-right {
         max-width: 960px;
