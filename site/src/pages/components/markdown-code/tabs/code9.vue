@@ -14,8 +14,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span>defaultActiveKey</span></td>
-                            <td><span>初始化选中面板的 key</span></td>
+                            <td><span>active-key</span></td>
+                            <td><span>初始化选中面板的 index</span></td>
                             <td><span>第一个面板</span></td>
                         </tr>
                         <tr>
@@ -63,7 +63,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span>key</span></td>
+                            <td><span>index</span></td>
                             <td>
                                 <span>用于标识当前面板，对应 defaultActiveKey，默认为其索引值</span>
                             </td>
@@ -122,7 +122,7 @@
             </figure>
             <p><span>该方法返回以下两个值：</span></p>
             <ul>
-                <li><code>activeKey</code></li>
+                <li><code>activeIndex</code></li>
                 <li><code>events(options)</code></li>
             </ul>
             <figure>
@@ -137,8 +137,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span>activeKey</span></td>
-                            <td><span>响应式设置当前激活面板的 key</span></td>
+                            <td><span>activeIndex</span></td>
+                            <td><span>响应式设置当前激活面板的 index</span></td>
                             <td><span>String</span></td>
                             <td><span>-</span></td>
                         </tr>
@@ -167,12 +167,12 @@
                         <tr>
                             <td style="text-align: left"><span>onClick</span></td>
                             <td style="text-align: left"><span>tab 被点击时触发</span></td>
-                            <td style="text-align: left"><span>(key:String) =&gt; void</span></td>
+                            <td style="text-align: left"><span>(index:String) =&gt; void</span></td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><span>onTabRemove</span></td>
                             <td style="text-align: left"><span>tab 被关闭时触发</span></td>
-                            <td style="text-align: left"><span>(key:String) =&gt; void</span></td>
+                            <td style="text-align: left"><span>(index:String) =&gt; void</span></td>
                         </tr>
                     </tbody>
                 </table>

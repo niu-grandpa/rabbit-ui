@@ -17,19 +17,19 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 基础用法
 
-- `defaultActiveKey` 与 `r-tab-pane` 的 `key` 对应，用于标识当前激活的是哪一项，key 值默认从 0 开始，默认激活第一项。可以使用提供的 `config` 方法返回的 `activeKey` 进行动态改变
+- `active-index` 与 `r-tab-pane` 的 `index` 对应，用于标识当前激活的是哪一项，key 值默认从 0 开始，默认激活第一项。可以使用提供的 `config` 方法返回的 `activeIndex` 进行动态改变
 
 ```html
-<r-tabs defaultActiveKey="1" id="a">
-  <r-tab-pane tab="标签一" key="1">标签一的内容</r-tab-pane>
-  <r-tab-pane tab="标签二" key="2">标签二的内容</r-tab-pane>
-  <r-tab-pane tab="标签三" key="3">标签三的内容</r-tab-pane>
+<r-tabs active-index="1" id="a">
+  <r-tab-pane tab="标签一" index="1">标签一的内容</r-tab-pane>
+  <r-tab-pane tab="标签二" index="2">标签二的内容</r-tab-pane>
+  <r-tab-pane tab="标签三" index="3">标签三的内容</r-tab-pane>
 </r-tabs>
 
 <script>
 	const tabs = new Rabbit.Tabs();
     setTimeout(() => {
-      tabs.config('#a').activeKey = '2';
+      tabs.config('#a').activeIndex = '2';
     }, 1500);
 </script>
 ```
@@ -175,7 +175,7 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 | 属性             | 说明                                                         | 默认值     |
 | ---------------- | ------------------------------------------------------------ | ---------- |
-| defaultActiveKey | 初始化选中面板的 key                                         | 第一个面板 |
+| active-index | 初始化选中面板的 index                                         | 第一个面板 |
 | type             | 页签的基本样式，可选值为 `line` 和 `card`                    | line       |
 | size             | 尺寸，可选值为 `default` 和 `small`，仅在 `type="line"` 时有效 | default    |
 | closable         | 是否可以关闭页签，仅在 `type="card"` 时有效                  | false      |
@@ -185,7 +185,7 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 | 属性     | 说明                                                    | 默认值 |
 | -------- | ------------------------------------------------------- | ------ |
-| key      | 用于标识当前面板，对应 defaultActiveKey，默认为其索引值 | index  |
+| index      | 用于标识当前面板，对应 defaultActiveKey，默认为其索引值 | index  |
 | tab      | 选项卡头显示文字                                        | 空     |
 | icon     | 选项卡图标                                              | -      |
 | disabled | 是否禁用该选项卡                                        | false  |
@@ -201,18 +201,18 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 该方法返回以下两个值：
 
-- `activeKey`
+- `activeIndex`
 
 - `events(options)`
 
 | 返回值    | 说明                          | 类型     | 默认值 |
 | --------- | ----------------------------- | -------- | ------ |
-| activeKey | 响应式设置当前激活面板的 key  | String   | -      |
+| activeIndex | 响应式设置当前激活面板的 index  | String   | -      |
 | events    | 非响应式API，添加选项卡事件， | Function | -      |
 
 - `events`的参数 options 为对象，具体说明如下：
 
 | 属性        | 说明             | 回调参数             |
 | :---------- | :--------------- | :------------------- |
-| onClick     | tab 被点击时触发 | (key:String) => void |
-| onTabRemove | tab 被关闭时触发 | (key:String) => void |
+| onClick     | tab 被点击时触发 | (index:String) => void |
+| onTabRemove | tab 被关闭时触发 | (index:String) => void |

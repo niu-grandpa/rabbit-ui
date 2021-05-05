@@ -6,18 +6,18 @@
         </Describe>
         <Example next-title="手风琴">
             <template #content>
-                <r-collapse defaultActiveKey="1" id="demoCollapse">
-                    <r-collapse-panel key="1" title="面板标题1">
+                <r-collapse active-index="1" id="demoCollapse">
+                    <r-collapse-panel index="1" title="面板标题1">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="2" title="面板标题2">
+                    <r-collapse-panel index="2" title="面板标题2">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="3" title="面板标题3">
+                    <r-collapse-panel index="3" title="面板标题3">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
@@ -25,25 +25,25 @@
                 </r-collapse>
                 <p>
                     通过设置属性
-                    <code>defaultActiveKey</code> 可以同时展开多个面板，这个例子默认展开了第一个。
+                    <code>active-index</code> 可以同时展开多个面板，这个例子默认展开了第一个。
                 </p>
             </template>
             <template #code><Code1 /></template>
         </Example>
         <Example next-title="简洁风格">
             <template #content>
-                <r-collapse defaultActiveKey="1" accordion="true">
-                    <r-collapse-panel key="1" title="面板标题1">
+                <r-collapse active-index="1" accordion="true">
+                    <r-collapse-panel index="1" title="面板标题1">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="2" title="面板标题2">
+                    <r-collapse-panel index="2" title="面板标题2">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="3" title="面板标题3">
+                    <r-collapse-panel index="3" title="面板标题3">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
@@ -57,18 +57,18 @@
         </Example>
         <Example next-title="隐藏箭头">
             <template #content>
-                <r-collapse defaultActiveKey="1" simple="true">
-                    <r-collapse-panel key="1" title="面板标题1">
+                <r-collapse active-index="1" simple="true">
+                    <r-collapse-panel index="1" title="面板标题1">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="2" title="面板标题2">
+                    <r-collapse-panel index="2" title="面板标题2">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="3" title="面板标题3">
+                    <r-collapse-panel index="3" title="面板标题3">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
@@ -80,13 +80,13 @@
         </Example>
         <Example next-title="幽灵折叠面板">
             <template #content>
-                <r-collapse defaultActiveKey="1">
-                    <r-collapse-panel key="1" title="面板标题1">
+                <r-collapse active-index="1">
+                    <r-collapse-panel index="1" title="面板标题1">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="2" title="面板标题2" hide-arrow="true">
+                    <r-collapse-panel index="2" title="面板标题2" hide-arrow="true">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
@@ -101,18 +101,18 @@
         </Example>
         <Example>
             <template #content>
-                <r-collapse defaultActiveKey="1" ghost="true">
-                    <r-collapse-panel key="1" title="面板标题1">
+                <r-collapse active-index="1" ghost="true">
+                    <r-collapse-panel index="1" title="面板标题1">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="2" title="面板标题2">
+                    <r-collapse-panel index="2" title="面板标题2">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
                     </r-collapse-panel>
-                    <r-collapse-panel key="3" title="面板标题3">
+                    <r-collapse-panel index="3" title="面板标题3">
                         <p>
                             狗是一种家养动物。它以忠诚和忠诚而闻名，在世界各地的许多家庭中，它都是受欢迎的客人。
                         </p>
@@ -135,8 +135,8 @@ import { Code1, Code2, Code3, Code4, Code5, Code6 } from '../markdown-code/colla
 onMounted(() => {
     const collapse = new Collapse();
     collapse.config('#demoCollapse').events({
-        onChange: (key: string[]) => {
-            console.log(key);
+        onChange: (index: string[]) => {
+            console.log(index);
         }
     });
 });

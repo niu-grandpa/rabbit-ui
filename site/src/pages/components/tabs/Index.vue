@@ -7,14 +7,14 @@
         </Describe>
         <Example next-title="图标">
             <template #content>
-                <r-tabs defaultActiveKey="1">
-                    <r-tab-pane tab="标签一" key="1">标签一的内容</r-tab-pane>
-                    <r-tab-pane tab="标签二" key="2">标签二的内容</r-tab-pane>
-                    <r-tab-pane tab="标签三" key="3">标签三的内容</r-tab-pane>
+                <r-tabs active-index="0">
+                    <r-tab-pane tab="标签一" index="1">标签一的内容</r-tab-pane>
+                    <r-tab-pane tab="标签二" index="2">标签二的内容</r-tab-pane>
+                    <r-tab-pane tab="标签三" index="3">标签三的内容</r-tab-pane>
                 </r-tabs>
                 <p>
-                    <code>defaultActiveKey</code> 与 <code>r-tab-pane</code> 的
-                    <code>key</code> 对应，用于标识当前激活的是哪一项，key 值默认从 0
+                    <code>active-index</code> 与 <code>r-tab-pane</code> 的
+                    <code>index</code> 对应，用于标识当前激活的是哪一项，key 值默认从 0
                     开始，默认激活第一项。可以使用提供的 <code>config</code> 方法返回的
                     <code>activeKey</code>
                     进行动态改变

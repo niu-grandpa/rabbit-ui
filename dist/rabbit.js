@@ -3759,6 +3759,7 @@ var Checkbox = /** @class */ (function () {
 // EXTERNAL MODULE: ./src/dom-utils/elem.ts
 var elem = __webpack_require__("./src/dom-utils/elem.ts");
 ;// CONCATENATED MODULE: ./src/components/collapse/collapse.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
@@ -3773,13 +3774,13 @@ var Collapse = /** @class */ (function () {
         var target = (0,dom_utils.$el)(el);
         validComps(target, 'collapse');
         var _a = Collapse.prototype, _attrs = _a._attrs, _dataSetActiveKey = _a._dataSetActiveKey, _openByKey = _a._openByKey;
-        var activeKey = JSON.parse(target.dataset.activeKey);
+        var activeIndex = JSON.parse(target.dataset['activeIndex']);
         return {
-            get activeKey() {
-                return activeKey;
+            get activeIndex() {
+                return activeIndex;
             },
-            set activeKey(newVal) {
-                if (newVal == activeKey)
+            set activeIndex(newVal) {
+                if (newVal == activeIndex)
                     return;
                 _dataSetActiveKey(target, newVal);
                 _openByKey(target, newVal, target.getAttribute('accordion'));
@@ -3826,19 +3827,21 @@ var Collapse = /** @class */ (function () {
     Collapse.prototype._create = function (COMPONENTS) {
         var _this = this;
         COMPONENTS.forEach(function (node) {
-            var _a = _this._attrs(node), simple = _a.simple, ghost = _a.ghost, defaultactivekey = _a.defaultactivekey, accordion = _a.accordion;
-            _this._dataSetActiveKey(node, defaultactivekey);
+            var _a = _this._attrs(node), simple = _a.simple, ghost = _a.ghost, activekey = _a.activekey, accordion = _a.accordion;
+            _this._dataSetActiveKey(node, activekey);
             _this._setGhost(node, ghost);
             _this._setSimple(node, simple);
             _this._createChildNodes(node);
-            _this._openByKey(node, defaultactivekey, accordion);
-            (0,dom_utils.removeAttrs)(node, ['simple', 'ghost', 'defaultactivekey']);
+            _this._openByKey(node, activekey, accordion);
+            (0,dom_utils.removeAttrs)(node, ['simple', 'ghost', 'active-key']);
         });
     };
-    Collapse.prototype._dataSetActiveKey = function (node, activeKey) {
-        if (activeKey) {
+    Collapse.prototype._dataSetActiveKey = function (node, activeIndex) {
+        if (activeIndex) {
             // @ts-ignore
-            node.dataset['activeKey'] = Array.isArray(activeKey) ? "[" + activeKey + "]" : activeKey;
+            node.dataset['activeIndex'] = Array.isArray(activeIndex)
+                ? "[" + activeIndex + "]"
+                : activeIndex;
         }
     };
     Collapse.prototype._setGhost = function (node, ghost) {
@@ -3855,7 +3858,7 @@ var Collapse = /** @class */ (function () {
         var _this = this;
         // 遍历所有面板节点
         panels.forEach(function (panel, index) {
-            var _a = _this._attrs(panel), key = _a.key, title = _a.title, hideArrow = _a.hideArrow;
+            var _a = _this._attrs(panel), key = _a.index, title = _a.title, hideArrow = _a.hideArrow;
             // @ts-ignore
             // 面板的 key 如果没填则默认为索引值
             panel.dataset.panelKey = !key ? index : key;
@@ -3872,7 +3875,7 @@ var Collapse = /** @class */ (function () {
             content ? panelContentBox === null || panelContentBox === void 0 ? void 0 : panelContentBox.appendChild(content) : null;
             (0,elem.setCss)(panel, 'display', 'block');
             _this._handleToggle(parent, panel);
-            (0,dom_utils.removeAttrs)(panel, ['key', 'title', 'hide-arrow']);
+            (0,dom_utils.removeAttrs)(panel, ['index', 'title', 'hide-arrow']);
         });
     };
     Collapse.prototype._handleToggle = function (parent, panel) {
@@ -3919,7 +3922,7 @@ var Collapse = /** @class */ (function () {
                 }
             }
         };
-        // 如果 activeKey 是数组则对其进行遍历获取所有面板
+        // 如果 activeIndex 是数组则对其进行遍历获取所有面板
         // 且如果是手风琴模式则只选取数组的第一项，只展开一个面板
         if (Array.isArray(key)) {
             var length_1 = key.length;
@@ -3943,14 +3946,13 @@ var Collapse = /** @class */ (function () {
     };
     Collapse.prototype._attrs = function (node) {
         return {
-            key: (0,elem.getStrTypeAttr)(node, 'key', ''),
+            index: (0,elem.getStrTypeAttr)(node, 'index', ''),
             title: (0,elem.getStrTypeAttr)(node, 'title', ''),
             ghost: (0,elem.getBooleanTypeAttr)(node, 'ghost'),
             simple: (0,elem.getBooleanTypeAttr)(node, 'simple'),
             hideArrow: (0,elem.getBooleanTypeAttr)(node, 'hide-arrow'),
             accordion: (0,elem.getBooleanTypeAttr)(node, 'accordion'),
-            defaultactivekey: (0,elem.getStrTypeAttr)(node, 'defaultactivekey', '') &&
-                (0,elem.getArrTypeAttr)(node, 'defaultactivekey')
+            activekey: (0,elem.getStrTypeAttr)(node, 'active-index', '') && (0,elem.getArrTypeAttr)(node, 'active-index')
         };
     };
     return Collapse;
@@ -5385,10 +5387,10 @@ var Modal = /** @class */ (function () {
                 if (isStr(newVal))
                     (0,dom_utils.setHtml)(M_Child.modalTitle, newVal);
             },
-            get visable() {
+            get visible() {
                 return false;
             },
-            set visable(newVal) {
+            set visible(newVal) {
                 if (isBol(newVal)) {
                     // 当设置modal为隐藏状态并且确定按钮是加载中的状态则初始化它
                     if (!newVal) {
@@ -5452,7 +5454,7 @@ var Modal = /** @class */ (function () {
                 'class-name',
                 'cancel-text',
                 'mask',
-                'visable',
+                'visible',
                 'scrollable',
                 'fullscreen',
                 'lock-scroll',
@@ -5480,11 +5482,11 @@ var Modal = /** @class */ (function () {
         this._handleClose(node);
     };
     Modal.prototype._initVisable = function (node) {
-        var _a = this._attrs(node), visable = _a.visable, scrollable = _a.scrollable;
+        var _a = this._attrs(node), visible = _a.visible, scrollable = _a.scrollable;
         var _b = this._getModalNode(node), modalMask = _b.modalMask, modalWrap = _b.modalWrap, modal = _b.modal;
         var lockScroll = this._attrs(node).lockScroll;
         !node.getAttribute('lock-scroll') ? (lockScroll = true) : lockScroll;
-        if (visable) {
+        if (visible) {
             (0,dom_utils.setCss)(modalMask, 'display', '');
             modalWrap.classList.remove(prefix.default.modal + "-hidden");
             (0,dom_utils.setCss)(modal, 'display', '');
@@ -5497,7 +5499,7 @@ var Modal = /** @class */ (function () {
         }
         // @ts-ignore
         // 设置初始显示状态
-        node.dataset.modalVisable = visable;
+        node.dataset.modalVisable = visible;
     };
     Modal.prototype._setHeader = function (node) {
         var title = this._attrs(node).title;
@@ -5542,9 +5544,9 @@ var Modal = /** @class */ (function () {
             modalFooter === null || modalFooter === void 0 ? void 0 : modalFooter.remove();
         }
     };
-    Modal.prototype._handleVisable = function (visable, target, children) {
+    Modal.prototype._handleVisable = function (visible, target, children) {
         var _a = Modal.prototype, _show = _a._show, _hide = _a._hide;
-        visable ? _show(target, children) : _hide(target, children);
+        visible ? _show(target, children) : _hide(target, children);
     };
     Modal.prototype._handleClose = function (parent) {
         var _a = this, _attrs = _a._attrs, _hide = _a._hide, _getModalNode = _a._getModalNode;
@@ -5649,7 +5651,7 @@ var Modal = /** @class */ (function () {
             cancelText: (0,dom_utils.getStrTypeAttr)(node, 'cancel-text', '取消'),
             maskClosable: (0,dom_utils.getStrTypeAttr)(node, 'mask-closable', 'true'),
             zIndex: (0,dom_utils.getNumTypeAttr)(node, 'z-index', 1000),
-            visable: (0,dom_utils.getBooleanTypeAttr)(node, 'visable'),
+            visible: (0,dom_utils.getBooleanTypeAttr)(node, 'visible'),
             loading: (0,dom_utils.getBooleanTypeAttr)(node, 'loading'),
             scrollable: (0,dom_utils.getBooleanTypeAttr)(node, 'scrollable'),
             lockScroll: (0,dom_utils.getBooleanTypeAttr)(node, 'lock-scroll'),
@@ -6597,16 +6599,16 @@ var Radio = /** @class */ (function () {
                     });
                 }
                 else {
-                    var item_1 = Object.create(null);
+                    var data_1 = Object.create(null);
                     (0,dom_utils.bind)(target, 'click', function () {
                         Array.from(target.children).forEach(function (child, index) {
                             if (_isDisabled(child))
                                 return false;
-                            item_1['index'] = index;
-                            item_1['label'] = child.getAttribute('label');
-                            item_1['current'] = child;
+                            data_1['index'] = index;
+                            data_1['label'] = child.getAttribute('label');
+                            data_1['current'] = child;
                             if (_isChecked(child))
-                                onChange && isFn(onChange, item_1);
+                                onChange && isFn(onChange, data_1);
                         });
                     });
                 }
@@ -7409,6 +7411,7 @@ var Switch = /** @class */ (function () {
 
 ;// CONCATENATED MODULE: ./src/components/tabs/tabs.ts
 
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
@@ -7423,12 +7426,13 @@ var Tabs = /** @class */ (function () {
         validComps(target, 'tabs');
         var TabTabs = target.querySelectorAll("." + prefix.default.tabs + "-tab");
         var TabPanes = target.querySelectorAll('r-tab-pane');
-        var _a = Tabs.prototype, _changeTab = _a._changeTab, _changePane = _a._changePane;
+        var _a = Tabs.prototype, _attrs = _a._attrs, _changeTab = _a._changeTab, _changePane = _a._changePane;
+        var activeIndex = _attrs(target).activeIndex;
         return {
-            get activeKey() {
-                return '0';
+            get activeIndex() {
+                return activeIndex;
             },
-            set activeKey(newVal) {
+            set activeIndex(newVal) {
                 if (!isStr(newVal))
                     return;
                 TabPanes.forEach(function (pane, i) {
@@ -7463,13 +7467,13 @@ var Tabs = /** @class */ (function () {
         var _this = this;
         COMPONENTS.forEach(function (node) {
             var tabPanes = node.querySelectorAll('r-tab-pane');
-            var _a = _this._attrs(node), defaultActivekey = _a.defaultActivekey, size = _a.size, type = _a.type, closable = _a.closable, animated = _a.animated;
+            var _a = _this._attrs(node), activeIndex = _a.activeIndex, size = _a.size, type = _a.type, closable = _a.closable, animated = _a.animated;
             _this._setType(node, type);
             _this._setSize(node, type, size);
             _this._setNoAnimation(node, animated);
             _this._setBodyTemplate(node);
-            _this._setTabPane([node, tabPanes, defaultActivekey, type, animated, closable]);
-            (0,dom_utils.removeAttrs)(node, ['defaultActivekey', 'type', 'size', 'closable', 'animated']);
+            _this._setTabPane([node, tabPanes, activeIndex, type, animated, closable]);
+            (0,dom_utils.removeAttrs)(node, ['active-index', 'type', 'size', 'closable', 'animated']);
         });
     };
     Tabs.prototype._setType = function (node, type) {
@@ -7498,7 +7502,7 @@ var Tabs = /** @class */ (function () {
         var TabPaneContainer = node.querySelector("." + prefix.default.tabs + "-content");
         var Fragment = document.createDocumentFragment();
         panes.forEach(function (pane, idx) {
-            var _a = _this._paneAttrs(pane), key = _a.key, tab = _a.tab, icon = _a.icon, separateClose = _a.closable, disabled = _a.disabled;
+            var _a = _this._paneAttrs(pane), key = _a.index, tab = _a.tab, icon = _a.icon, separateClose = _a.closable, disabled = _a.disabled;
             var TabsTab = _this._setTab(TabNav, tab);
             _this._setTabIcon(TabsTab, icon);
             _this._setTabClosable([TabsTab, type, closable, separateClose]);
@@ -7523,7 +7527,7 @@ var Tabs = /** @class */ (function () {
     Tabs.prototype._setTabIcon = function (tabElm, icon) {
         if (!icon)
             return;
-        var Icon = (0,dom_utils.createElem)('icon');
+        var Icon = (0,dom_utils.createElem)('i');
         Icon.className = prefix.default.icon + " " + prefix.default.icon + "-" + icon;
         tabElm.prepend(Icon);
     };
@@ -7637,7 +7641,7 @@ var Tabs = /** @class */ (function () {
     };
     Tabs.prototype._attrs = function (node) {
         return {
-            defaultActivekey: (0,dom_utils.getStrTypeAttr)(node, 'defaultActivekey', '0'),
+            activeIndex: (0,dom_utils.getStrTypeAttr)(node, 'active-index', '0'),
             type: (0,dom_utils.getStrTypeAttr)(node, 'type', 'line'),
             size: (0,dom_utils.getStrTypeAttr)(node, 'size', 'default'),
             animated: (0,dom_utils.getStrTypeAttr)(node, 'animated', 'true'),
@@ -7647,7 +7651,7 @@ var Tabs = /** @class */ (function () {
     Tabs.prototype._paneAttrs = function (pane) {
         return {
             tab: (0,dom_utils.getStrTypeAttr)(pane, 'tab', ''),
-            key: (0,dom_utils.getStrTypeAttr)(pane, 'key', ''),
+            index: (0,dom_utils.getStrTypeAttr)(pane, 'index', ''),
             icon: (0,dom_utils.getStrTypeAttr)(pane, 'icon', ''),
             closable: (0,dom_utils.getStrTypeAttr)(pane, 'closable', 'true'),
             disabled: (0,dom_utils.getBooleanTypeAttr)(pane, 'disabled')
