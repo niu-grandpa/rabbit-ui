@@ -3,7 +3,12 @@
         <!-- <el-input v-model="inputVal" size="medium" placeholder="输入英文关键词搜索，比如 warning" /> -->
         <p class="sub-title">点击下面的图标可以直接复制代码</p>
         <ul class="icons-list" ref="ul">
-            <li class="icons-item" v-for="cls in allIcons" :key="cls" @click="handleCopy(cls, i)">
+            <li
+                class="icons-item"
+                v-for="(cls, i) in allIcons"
+                :key="cls"
+                @click="handleCopy(cls, i)"
+            >
                 <i :class="'rab-icon rab-icon-' + cls"></i>
                 <p class="icons-class">{{ cls }}</p>
             </li>

@@ -1,7 +1,7 @@
 <template>
     <el-menu mode="horizontal" :default-active="current">
         <el-menu-item index="0">
-            <router-link to="/docs/guide">指南</router-link>
+            <router-link to="/guide/design">指南</router-link>
         </el-menu-item>
         <el-menu-item index="1">
             <router-link to="/docs/introduce">文档</router-link>
@@ -18,23 +18,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
+import { nextTick, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const current = ref('');
+const current = ref<string>('');
 
 const setActiveLink = () => {
-    if (route.path.indexOf('/docs/guide') === 0) {
+    const { path } = route;
+    if (path.indexOf('/guide/design') === 0) {
         current.value = '0';
-    } else if (route.path.indexOf('/docs/introduce') === 0) {
+    } else if (path.indexOf('/docs/introduce') === 0) {
         current.value = '1';
-    } else if (route.path.indexOf('/components') === 0) {
+    } else if (path.indexOf('/components/color') === 0) {
         current.value = '2';
     } else {
         current.value = '';
     }
 };
 
-watchEffect(() => setActiveLink());
+nextTick(setActiveLink);
 </script>

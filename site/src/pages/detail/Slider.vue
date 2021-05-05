@@ -2,7 +2,7 @@
     <el-aside width="320px" class="app-left" :class="{ 'aside-fixed': fixed }">
         <el-menu :default-active="route.path">
             <div class="comp-link-menu">
-                <template v-if="show">
+                <template v-if="show1">
                     <!-- 文档列表选项 -->
                     <router-link v-for="item in DocsOpts" :to="item.path" :key="item.value">
                         <el-menu-item :index="item.path" class="comp-link-item">
@@ -10,9 +10,17 @@
                         </el-menu-item>
                     </router-link>
                 </template>
-                <template v-else>
+                <template v-if="show2">
                     <!-- 组件列表选项 -->
                     <router-link v-for="item in CompsOpts" :to="item.path" :key="item.value">
+                        <el-menu-item :index="item.path" class="comp-link-item">
+                            {{ item.value }}
+                        </el-menu-item>
+                    </router-link>
+                </template>
+                <template v-if="show3">
+                    <!-- 指南列表选项 -->
+                    <router-link v-for="item in GuideOpts" :to="item.path" :key="item.value">
                         <el-menu-item :index="item.path" class="comp-link-item">
                             {{ item.value }}
                         </el-menu-item>
@@ -28,15 +36,23 @@ import { onMounted, watchEffect, onUnmounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DocsOpts from '../../docs-opts';
 import CompsOpts from '../../comps-opts';
+import GuideOpts from '../../guide-opts';
 
 const route = useRoute();
 
-const show = ref<boolean>(false);
+const show1 = ref<boolean>(false);
+const show2 = ref<boolean>(false);
+const show3 = ref<boolean>(false);
 const fixed = ref<boolean>(false);
 
 const changeList = () => {
     const isDocsPage: boolean = route.path.indexOf('/docs') === 0;
-    isDocsPage ? (show.value = true) : (show.value = false);
+    const isCompsPage: boolean = route.path.indexOf('/components') === 0;
+    const isGuidePage: boolean = route.path.indexOf('/guide') === 0;
+
+    isDocsPage ? (show1.value = true) : (show1.value = false);
+    isCompsPage ? (show2.value = true) : (show2.value = false);
+    isGuidePage ? (show3.value = true) : (show3.value = false);
 };
 
 const handleScroll = () => {
@@ -47,10 +63,8 @@ const handleScroll = () => {
     scrollTop >= 20 ? (fixed.value = true) : (fixed.value = false);
 };
 
-watchEffect(() => changeList());
-
+watchEffect(changeList);
 onMounted(() => window.addEventListener('scroll', handleScroll));
-
 onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 </script>
 

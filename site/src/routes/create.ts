@@ -13,6 +13,10 @@ export default () =>
                 redirect: '/'
             },
             {
+                path: '/guide',
+                redirect: '/'
+            },
+            {
                 path: '/components',
                 redirect: '/'
             },
@@ -31,6 +35,10 @@ export default () =>
             {
                 path: '/docs/update',
                 component: () => import('pages/docs/Update.vue')
+            },
+            {
+                path: '/guide/design',
+                component: () => import('pages/guide/Design.vue')
             },
             {
                 path: '/components/color',
