@@ -1,4 +1,5 @@
-import PREFIX from '../prefix';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { $el, bind, removeAttrs, siblings, slider } from '../../dom-utils';
 import {
     getArrTypeAttr,
     getBooleanTypeAttr,
@@ -6,18 +7,18 @@ import {
     setCss,
     setHtml
 } from '../../dom-utils/elem';
-import { $el, bind, removeAttrs, siblings, slider } from '../../dom-utils';
 import { type, validComps } from '../../utils';
+import PREFIX from '../prefix';
 
 interface CollapseEvents {
-    onChange?: (key: []) => void;
+    onChange?: (index: []) => void;
 }
 
 interface Config {
     config(
         el: string
     ): {
-        activeKey: string | number | string[] | number[];
+        activeIndex: string | number | string[] | number[];
         events({ onChange }: CollapseEvents): void;
     };
 }
@@ -35,7 +36,7 @@ class Collapse implements Config {
     public config(
         el: string
     ): {
-        activeKey: string | number | string[] | number[];
+        activeIndex: string | number | string[] | number[];
         events({ onChange }: { onChange: (key: []) => void }): void;
     } {
         const target = $el(el);
@@ -44,14 +45,14 @@ class Collapse implements Config {
 
         const { _attrs, _dataSetActiveKey, _openByKey } = Collapse.prototype;
 
-        const activeKey = JSON.parse(target.dataset.activeKey);
+        const activeIndex = JSON.parse(target.dataset['activeIndex']);
 
         return {
-            get activeKey() {
-                return activeKey;
+            get activeIndex() {
+                return activeIndex;
             },
-            set activeKey(newVal: string | number | string[] | number[]) {
-                if (newVal == activeKey) return;
+            set activeIndex(newVal: string | number | string[] | number[]) {
+                if (newVal == activeIndex) return;
 
                 _dataSetActiveKey(target, newVal);
                 _openByKey(target, newVal, target.getAttribute('accordion'));
@@ -103,25 +104,27 @@ class Collapse implements Config {
 
     private _create(COMPONENTS: NodeListOf<Element>): void {
         COMPONENTS.forEach((node) => {
-            const { simple, ghost, defaultactivekey, accordion } = this._attrs(node);
+            const { simple, ghost, activekey, accordion } = this._attrs(node);
 
-            this._dataSetActiveKey(node, defaultactivekey);
+            this._dataSetActiveKey(node, activekey);
             this._setGhost(node, ghost);
             this._setSimple(node, simple);
             this._createChildNodes(node);
-            this._openByKey(node, defaultactivekey, accordion);
+            this._openByKey(node, activekey, accordion);
 
-            removeAttrs(node, ['simple', 'ghost', 'defaultactivekey']);
+            removeAttrs(node, ['simple', 'ghost', 'active-key']);
         });
     }
 
     private _dataSetActiveKey(
         node: Element,
-        activeKey: string | number | string[] | number[]
+        activeIndex: string | number | string[] | number[]
     ): void {
-        if (activeKey) {
+        if (activeIndex) {
             // @ts-ignore
-            node.dataset['activeKey'] = Array.isArray(activeKey) ? `[${activeKey}]` : activeKey;
+            node.dataset['activeIndex'] = Array.isArray(activeIndex)
+                ? `[${activeIndex}]`
+                : activeIndex;
         }
     }
 
@@ -141,7 +144,7 @@ class Collapse implements Config {
     private _setPanel(parent: Element, panels: NodeListOf<Element>): void {
         // 遍历所有面板节点
         panels.forEach((panel, index) => {
-            const { key, title, hideArrow } = this._attrs(panel);
+            const { index: key, title, hideArrow } = this._attrs(panel);
 
             // @ts-ignore
             // 面板的 key 如果没填则默认为索引值
@@ -174,7 +177,7 @@ class Collapse implements Config {
 
             this._handleToggle(parent, panel);
 
-            removeAttrs(panel, ['key', 'title', 'hide-arrow']);
+            removeAttrs(panel, ['index', 'title', 'hide-arrow']);
         });
     }
 
@@ -234,7 +237,7 @@ class Collapse implements Config {
             }
         };
 
-        // 如果 activeKey 是数组则对其进行遍历获取所有面板
+        // 如果 activeIndex 是数组则对其进行遍历获取所有面板
         // 且如果是手风琴模式则只选取数组的第一项，只展开一个面板
         if (Array.isArray(key)) {
             const { length } = key;
@@ -257,15 +260,14 @@ class Collapse implements Config {
 
     private _attrs(node: Element) {
         return {
-            key: getStrTypeAttr(node, 'key', ''),
+            index: getStrTypeAttr(node, 'index', ''),
             title: getStrTypeAttr(node, 'title', ''),
             ghost: getBooleanTypeAttr(node, 'ghost'),
             simple: getBooleanTypeAttr(node, 'simple'),
             hideArrow: getBooleanTypeAttr(node, 'hide-arrow'),
             accordion: getBooleanTypeAttr(node, 'accordion'),
-            defaultactivekey:
-                getStrTypeAttr(node, 'defaultactivekey', '') &&
-                getArrTypeAttr(node, 'defaultactivekey')
+            activekey:
+                getStrTypeAttr(node, 'active-index', '') && getArrTypeAttr(node, 'active-index')
         };
     }
 }

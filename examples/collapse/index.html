@@ -18,37 +18,18 @@
 
 <body>
     <div class="example">
-        <r-collapse defaultActiveKey="1" id="demoCollapse">
-            <r-collapse-panel key="1" title="史蒂夫·乔布斯">
+        <r-collapse active-index="1" id="demoCollapse">
+            <r-collapse-panel index="1" title="史蒂夫·乔布斯">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
                 </p>
             </r-collapse-panel>
-            <r-collapse-panel key="2" title="斯蒂夫·盖瑞·沃兹尼亚克">
+            <r-collapse-panel index="2" title="斯蒂夫·盖瑞·沃兹尼亚克">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
                 </p>
             </r-collapse-panel>
-            <r-collapse-panel key="3" title="乔纳森·伊夫">
-                <p>
-                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
-                </p>
-            </r-collapse-panel>
-        </r-collapse>
-    </div>
-    <div class="example">
-        <r-collapse defaultActiveKey="1" accordion="true">
-            <r-collapse-panel key="1" title="史蒂夫·乔布斯">
-                <p>
-                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
-                </p>
-            </r-collapse-panel>
-            <r-collapse-panel key="2" title="斯蒂夫·盖瑞·沃兹尼亚克">
-                <p>
-                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
-                </p>
-            </r-collapse-panel>
-            <r-collapse-panel key="3" title="乔纳森·伊夫">
+            <r-collapse-panel index="3" title="乔纳森·伊夫">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
                 </p>
@@ -56,7 +37,26 @@
         </r-collapse>
     </div>
     <div class="example">
-        <r-collapse simple="true" defaultActiveKey="0">
+        <r-collapse active-index="1" accordion="true">
+            <r-collapse-panel index="1" title="史蒂夫·乔布斯">
+                <p>
+                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
+                </p>
+            </r-collapse-panel>
+            <r-collapse-panel index="2" title="斯蒂夫·盖瑞·沃兹尼亚克">
+                <p>
+                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
+                </p>
+            </r-collapse-panel>
+            <r-collapse-panel index="3" title="乔纳森·伊夫">
+                <p>
+                    A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
+                </p>
+            </r-collapse-panel>
+        </r-collapse>
+    </div>
+    <div class="example">
+        <r-collapse simple="true" active-index="0">
             <r-collapse-panel title="史蒂夫·乔布斯">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
@@ -75,7 +75,7 @@
         </r-collapse>
     </div>
     <div class="example">
-        <r-collapse ghost="true" defaultActiveKey="0">
+        <r-collapse ghost="true" active-index="0">
             <r-collapse-panel title="史蒂夫·乔布斯">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.
@@ -94,7 +94,7 @@
         </r-collapse>
     </div>
     <div class="example">
-        <r-collapse defaultActiveKey="0">
+        <r-collapse active-index="0">
             <r-collapse-panel title="史蒂夫·乔布斯">
                 <p>
                     A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.

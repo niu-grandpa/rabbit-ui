@@ -1,4 +1,4 @@
-import { type, validComps } from '../../utils';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     $el,
     bind,
@@ -10,20 +10,21 @@ import {
     setHtml,
     siblings
 } from '../../dom-utils';
+import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
 interface Config {
     config(
         el: string
     ): {
-        activeKey: string;
+        activeIndex: string;
         events: ({ onClick, onTabRemove }: TabsEvents) => void;
     };
 }
 
 interface TabsEvents {
-    onClick?: (key?: string) => void;
-    onTabRemove?: (key?: string) => void;
+    onClick?: (index?: string) => void;
+    onTabRemove?: (index?: string) => void;
 }
 
 class Tabs implements Config {
@@ -39,7 +40,7 @@ class Tabs implements Config {
     public config(
         el: string
     ): {
-        activeKey: string;
+        activeIndex: string;
         events({ onClick, onTabRemove }: TabsEvents): void;
     } {
         const target = $el(el) as HTMLElement;
@@ -49,14 +50,14 @@ class Tabs implements Config {
         const TabTabs = target.querySelectorAll(`.${PREFIX.tabs}-tab`);
         const TabPanes = target.querySelectorAll('r-tab-pane');
 
-        const { _changeTab, _changePane } = Tabs.prototype;
-
+        const { _attrs, _changeTab, _changePane } = Tabs.prototype;
+        const { activeIndex } = _attrs(target);
         return {
-            get activeKey() {
-                return '0';
+            get activeIndex() {
+                return activeIndex;
             },
 
-            set activeKey(newVal: string) {
+            set activeIndex(newVal: string) {
                 if (!type.isStr(newVal)) return;
 
                 TabPanes.forEach((pane, i) => {
@@ -95,15 +96,15 @@ class Tabs implements Config {
     private _create(COMPONENTS: NodeListOf<Element>): void {
         COMPONENTS.forEach((node) => {
             const tabPanes = node.querySelectorAll('r-tab-pane');
-            const { defaultActivekey, size, type, closable, animated } = this._attrs(node);
+            const { activeIndex, size, type, closable, animated } = this._attrs(node);
 
             this._setType(node, type);
             this._setSize(node, type, size);
             this._setNoAnimation(node, animated);
             this._setBodyTemplate(node);
-            this._setTabPane([node, tabPanes, defaultActivekey, type, animated, closable]);
+            this._setTabPane([node, tabPanes, activeIndex, type, animated, closable]);
 
-            removeAttrs(node, ['defaultActivekey', 'type', 'size', 'closable', 'animated']);
+            removeAttrs(node, ['active-index', 'type', 'size', 'closable', 'animated']);
         });
     }
 
@@ -147,7 +148,9 @@ class Tabs implements Config {
         const Fragment = document.createDocumentFragment();
 
         panes.forEach((pane, idx) => {
-            const { key, tab, icon, closable: separateClose, disabled } = this._paneAttrs(pane);
+            const { index: key, tab, icon, closable: separateClose, disabled } = this._paneAttrs(
+                pane
+            );
 
             const TabsTab: HTMLElement = this._setTab(TabNav!, tab);
 
@@ -323,7 +326,7 @@ class Tabs implements Config {
 
     private _attrs(node: Element) {
         return {
-            defaultActivekey: getStrTypeAttr(node, 'defaultActivekey', '0'),
+            activeIndex: getStrTypeAttr(node, 'active-index', '0'),
             type: getStrTypeAttr(node, 'type', 'line'),
             size: getStrTypeAttr(node, 'size', 'default'),
             animated: getStrTypeAttr(node, 'animated', 'true'),
@@ -334,7 +337,7 @@ class Tabs implements Config {
     private _paneAttrs(pane: Element) {
         return {
             tab: getStrTypeAttr(pane, 'tab', ''),
-            key: getStrTypeAttr(pane, 'key', ''),
+            index: getStrTypeAttr(pane, 'index', ''),
             icon: getStrTypeAttr(pane, 'icon', ''),
             closable: getStrTypeAttr(pane, 'closable', 'true'),
             disabled: getBooleanTypeAttr(pane, 'disabled')
