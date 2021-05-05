@@ -5,7 +5,12 @@
             <code>Rabbit UI</code>
             是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于 PC 端界面。
         </p>
+        <p>
+            Custom Elements
+            标准对自定义元素的名字做了限制，自定义元素的名字必须包含一个破折号（-）<code>&lt;r-tags&gt;</code>、<code>&lt;r-element&gt;</code>和<code>&lt;r-awesome-app&gt;</code>都是正确的名字，而<code>&lt;tabs&gt;</code>和<code>&lt;foo_bar&gt;</code>是不正确的。
+        </p>
     </article>
+
     <article class="markdown">
         <Anchor title="特性" />
         <ul>
@@ -68,9 +73,9 @@ const version = '1.4.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [
-    '优雅、简洁，与庞大且臃肿令人眼花缭乱的结构 Say goodbye',
+    '使用语义化的自定义元素',
+    '优雅、简洁，与庞大且臃肿令人眼花缭乱的结构 say goodbye',
     '不依赖任何第三方框架，底层基于原生 Javascript，引入即用',
-    '使用少量 HTML 代码且语义化可读性高的自定义标签',
     '能够在 Vue、JQuery或者其他现有项目中配合使用',
     '丰富的组件和功能，满足大部分网站场景',
     '细致、漂亮的 UI',

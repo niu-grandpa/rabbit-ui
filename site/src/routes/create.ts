@@ -37,8 +37,12 @@ export default () =>
                 component: () => import('pages/docs/Update.vue')
             },
             {
-                path: '/guide/design',
-                component: () => import('pages/guide/Design.vue')
+                path: '/docs/guide/design',
+                component: () => import('pages/docs/guide/Design.vue')
+            },
+            {
+                path: '/docs/guide/standard',
+                component: () => import('pages/docs/guide/Standard.vue')
             },
             {
                 path: '/components/color',

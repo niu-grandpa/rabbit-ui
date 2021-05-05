@@ -1,15 +1,12 @@
 <template>
     <el-menu mode="horizontal" :default-active="current">
         <el-menu-item index="0">
-            <router-link to="/guide/design">指南</router-link>
-        </el-menu-item>
-        <el-menu-item index="1">
             <router-link to="/docs/introduce">文档</router-link>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="1">
             <router-link to="/components/color">组件</router-link>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="2">
             <a href="https://github.com/niu-grandpa/rabbit-ui" target="_blank">
                 GitHub <i class="el-icon-top-right g-icon"></i>
             </a>
@@ -26,12 +23,10 @@ const current = ref<string>('');
 
 const setActiveLink = () => {
     const { path } = route;
-    if (path.indexOf('/guide/design') === 0) {
+    if (path.indexOf('/docs/introduce') === 0) {
         current.value = '0';
-    } else if (path.indexOf('/docs/introduce') === 0) {
-        current.value = '1';
     } else if (path.indexOf('/components/color') === 0) {
-        current.value = '2';
+        current.value = '1';
     } else {
         current.value = '';
     }
