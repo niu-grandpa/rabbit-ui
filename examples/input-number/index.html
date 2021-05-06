@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-input-number class="rab-input-number">
+            <div class="rab-input-number-handler-wrap">
+                <a class="rab-input-number-handler rab-input-number-handler-up">
+                    <span class="rab-input-number-handler-up-inner rab-icon rab-icon-ios-arrow-up"></span>
+                </a>
+                <a class="rab-input-number-handler rab-input-number-handler-down rab-input-number-handler-down-disabled">
+                    <span class="rab-input-number-handler-down-inner rab-icon rab-icon-ios-arrow-down"></span>
+                </a>
+            </div>
+            <div class="rab-input-number-input-wrap">
+                <input type="number" class="rab-input-number-input">
+            </div>
+        </r-input-number>
+
+        <r-input-number class="rab-input-number rab-input-number-controls-outside">
+            <div class="rab-input-number-controls-outside-btn rab-input-number-controls-outside-down">
+                <i class="rab-icon rab-icon-ios-remove"></i>
+            </div>
+            <div class="rab-input-number-controls-outside-btn rab-input-number-controls-outside-up">
+                <i class="rab-icon rab-icon-ios-add"></i>
+            </div>
+            <div class="rab-input-number-input-wrap">
+                <input type="number" class="rab-input-number-input" value="1" step="1.2" max="10" min="1">
+            </div>
+        </r-input-number>
+    </div>
+
+</body>
+
+</html>

@@ -13,6 +13,7 @@ import Divider from './components/divider';
 import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
 import Empty from './components/empty';
+import InputNumber from './components/input-number';
 import Jumbotron from './components/jumbotron';
 import Loading from './components/loading-bar';
 import Message from './components/message';
@@ -49,6 +50,7 @@ export {
     Drawer,
     Dropdown,
     Empty,
+    InputNumber,
     Jumbotron,
     Loading,
     Message,

@@ -1,0 +1,322 @@
+.input-group-error-prepend,
+.input-group-error-append {
+  background-color: #fff;
+  border: 1px solid #ff4d4f;
+}
+.input-group-error-prepend .rab-select-selection,
+.input-group-error-append .rab-select-selection {
+  background-color: inherit;
+  border: 1px solid transparent;
+}
+.input-group-error-prepend {
+  border-right: 0;
+}
+.input-group-error-append {
+  border-left: 0;
+}
+.rab-input-number {
+  display: inline-block;
+  width: 100%;
+  line-height: 1.5;
+  padding: 4px 7px;
+  font-size: 14px;
+  color: #55585e;
+  background-color: #fff;
+  background-image: none;
+  position: relative;
+  cursor: text;
+  transition: border 0.2s ease-in-out, background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin: 0;
+  padding: 0;
+  width: 80px;
+  height: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  border: 1px solid #dcdee2;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: default;
+}
+.rab-input-number::-moz-placeholder {
+  color: #c5c8ce;
+  opacity: 1;
+}
+.rab-input-number:-ms-input-placeholder {
+  color: #c5c8ce;
+}
+.rab-input-number::-webkit-input-placeholder {
+  color: #c5c8ce;
+}
+.rab-input-number:hover {
+  border-color: #46a6ff;
+}
+.rab-input-number:focus {
+  border-color: #46a6ff;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+.rab-input-number[disabled],
+fieldset[disabled] .rab-input-number {
+  background-color: #f3f3f3;
+  opacity: 1;
+  cursor: not-allowed;
+  color: #ccc;
+}
+.rab-input-number[disabled]:hover,
+fieldset[disabled] .rab-input-number:hover {
+  border-color: #e3e5e8;
+}
+textarea.rab-input-number {
+  max-width: 100%;
+  height: auto;
+  min-height: 32px;
+  vertical-align: bottom;
+  font-size: 14px;
+}
+.rab-input-number-large {
+  font-size: 16px;
+  padding: 6px 7px;
+  height: 40px;
+}
+.rab-input-number-small {
+  padding: 1px 7px;
+  height: 24px;
+  border-radius: 1px;
+}
+.rab-input-number-handler-wrap {
+  width: 22px;
+  height: 100%;
+  border-left: 1px solid #dcdee2;
+  border-radius: 0 2px 2px 0;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.rab-input-number:hover .rab-input-number-handler-wrap {
+  opacity: 1;
+}
+.rab-input-number-handler-up {
+  cursor: pointer;
+}
+.rab-input-number-handler-up-inner {
+  top: 0;
+}
+.rab-input-number-handler-down {
+  border-top: 1px solid #dcdee2;
+  top: -1px;
+  cursor: pointer;
+}
+.rab-input-number-handler {
+  display: block;
+  width: 100%;
+  height: 16px;
+  line-height: 0;
+  text-align: center;
+  overflow: hidden;
+  color: #999;
+  position: relative;
+}
+.rab-input-number-handler:hover .rab-input-number-handler-up-inner,
+.rab-input-number-handler:hover .rab-input-number-handler-down-inner {
+  color: #46a6ff;
+}
+.rab-input-number-handler-up-inner,
+.rab-input-number-handler-down-inner {
+  width: 12px;
+  height: 12px;
+  line-height: 12px;
+  font-size: 14px;
+  color: #999;
+  user-select: none;
+  position: absolute;
+  right: 5px;
+  transition: all 0.2s linear;
+}
+.rab-input-number:hover {
+  border-color: #46a6ff;
+}
+.rab-input-number-focused {
+  border-color: #46a6ff;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+.rab-input-number-disabled {
+  background-color: #f3f3f3;
+  opacity: 1;
+  cursor: not-allowed;
+  color: #ccc;
+}
+.rab-input-number-disabled:hover {
+  border-color: #e3e5e8;
+}
+.rab-input-number-input-wrap {
+  overflow: hidden;
+  height: 32px;
+}
+.rab-input-number-input {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 7px;
+  text-align: left;
+  outline: 0;
+  -moz-appearance: textfield;
+  color: #666;
+  border: 0;
+  border-radius: 2px;
+  transition: all 0.2s linear;
+}
+.rab-input-number-input::-webkit-outer-spin-button,
+.rab-input-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.rab-input-number-input[disabled] {
+  background-color: #f3f3f3;
+  opacity: 1;
+  cursor: not-allowed;
+  color: #ccc;
+}
+.rab-input-number-input[disabled]:hover {
+  border-color: #e3e5e8;
+}
+.rab-input-number-input::placeholder {
+  color: #c5c8ce;
+}
+.rab-input-number-large {
+  padding: 0;
+}
+.rab-input-number-large .rab-input-number-input-wrap {
+  height: 40px;
+}
+.rab-input-number-large .rab-input-number-handler {
+  height: 20px;
+}
+.rab-input-number-large input {
+  height: 40px;
+  line-height: 40px;
+}
+.rab-input-number-large .rab-input-number-handler-up-inner {
+  top: 1px;
+}
+.rab-input-number-large .rab-input-number-handler-down-inner {
+  bottom: 5px;
+}
+.rab-input-number-small {
+  padding: 0;
+}
+.rab-input-number-small .rab-input-number-input-wrap {
+  height: 24px;
+}
+.rab-input-number-small .rab-input-number-handler {
+  height: 12px;
+}
+.rab-input-number-small input {
+  height: 24px;
+  line-height: 24px;
+  margin-top: -1px;
+  vertical-align: top;
+}
+.rab-input-number-small .rab-input-number-handler-up-inner {
+  top: -4px;
+}
+.rab-input-number-small .rab-input-number-handler-down-inner {
+  bottom: 2px;
+}
+.rab-input-number-handler-down-disabled .rab-input-number-handler-down-inner,
+.rab-input-number-handler-up-disabled .rab-input-number-handler-down-inner,
+.rab-input-number-disabled .rab-input-number-handler-down-inner,
+.rab-input-number-handler-down-disabled .rab-input-number-handler-up-inner,
+.rab-input-number-handler-up-disabled .rab-input-number-handler-up-inner,
+.rab-input-number-disabled .rab-input-number-handler-up-inner {
+  opacity: 0.72;
+  color: #ccc !important;
+  cursor: not-allowed;
+}
+.rab-input-number-disabled .rab-input-number-input {
+  opacity: 0.72;
+  cursor: not-allowed;
+  background-color: #f3f3f3;
+}
+.rab-input-number-disabled .rab-input-number-handler-wrap {
+  display: none;
+}
+.rab-input-number-disabled .rab-input-number-handler {
+  opacity: 0.72;
+  color: #ccc !important;
+  cursor: not-allowed;
+}
+.rab-input-number-controls-outside {
+  width: 144px;
+  padding: 0 32px;
+}
+.rab-input-number-controls-outside .rab-input-number-input {
+  border-radius: 0;
+  text-align: center;
+}
+.rab-input-number-controls-outside-btn {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  background-color: #f8f8f9;
+  color: #55585e;
+  cursor: pointer;
+}
+.rab-input-number-controls-outside-btn i {
+  font-size: 16px;
+}
+.rab-input-number-controls-outside-btn:hover i {
+  color: #1890ff;
+}
+.rab-input-number-controls-outside-btn-disabled,
+.rab-input-number-controls-outside-btn-disabled:hover {
+  cursor: not-allowed;
+}
+.rab-input-number-controls-outside-btn-disabled i,
+.rab-input-number-controls-outside-btn-disabled:hover i {
+  color: #ccc;
+}
+.rab-input-number-controls-outside-up {
+  right: 0;
+  border-left: 1px solid #dcdee2;
+}
+.rab-input-number-controls-outside-down {
+  left: 0;
+  border-right: 1px solid #dcdee2;
+}
+.rab-input-number-disabled.rab-input-number-controls-outside .rab-input-number-controls-outside-btn {
+  cursor: not-allowed;
+}
+.rab-input-number-disabled.rab-input-number-controls-outside .rab-input-number-controls-outside-btn i {
+  color: #ccc;
+}
+.rab-input-number-large.rab-input-number-controls-outside {
+  width: 160px;
+  padding: 0 40px;
+}
+.rab-input-number-large.rab-input-number-controls-outside .rab-input-number-controls-outside-btn {
+  width: 40px;
+  height: 40px;
+  line-height: 38px;
+}
+.rab-input-number-large.rab-input-number-controls-outside .rab-input-number-controls-outside-btn i {
+  font-size: 20px;
+}
+.rab-input-number-small.rab-input-number-controls-outside {
+  width: 128px;
+  padding: 0 24px;
+}
+.rab-input-number-small.rab-input-number-controls-outside .rab-input-number-controls-outside-btn {
+  width: 24px;
+  height: 24px;
+  line-height: 22px;
+}
+.rab-input-number-small.rab-input-number-controls-outside .rab-input-number-controls-outside-btn i {
+  font-size: 14px;
+}
