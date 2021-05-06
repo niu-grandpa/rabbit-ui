@@ -13,14 +13,13 @@
 [![](https://img.shields.io/badge/npm-v1.4.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui)
 [![](https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge)](https://www.jsdelivr.com/package/npm/rabbit-simple-ui) 
 
-
 ### 特性
 
-- 优雅、简洁，与庞大且臃肿让人看了眼花缭乱的结构 Say goodbye
+- 使用语义化的自定义元素，易于分辨
+
+- 优雅、简洁，与庞大且臃肿令人眼花缭乱的结构 say goodbye
 
 - 不依赖任何第三方框架，底层基于原生 Javascript，引入即用
-
-- 使用少量 HTML 代码且语义化可读性高的自定义标签
 
 - 能够在 Vue、JQuery或者其他现有项目中配合使用
 

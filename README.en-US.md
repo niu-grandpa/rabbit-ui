@@ -11,24 +11,21 @@ RabbitUI
     <h3>A lightweight JavaScript UI library written in TypeScript</h3>
 </h1>
 
-
-> The official documentation website is in the works
-
 ### Features
 
-- Elegant, concise, and huge and bloated let people see the dazzling structure Say goodbye
+- Use semantic custom elements for easy resolution
 
-- It does not rely on any third party framework, and is based on native JavaScript at the bottom, out-of-the-box
+- Elegant and simple, say goodbye to the huge and bloated dazzling structure
 
-- Custom tags that use small amounts of HTML code and are semantically readable
+- Does not rely on any third party framework, the underlying base is native JavaScript, import out of the box
 
-- Can be used directly in Vue, React, or other existing projects
+- Can be used in Vue, jQuery or other existing projects
 
-- Rich components and features to meet most site scenarios
+- Rich components and features to suit most site scenarios
 
 - Careful, beautiful UI
 
--Documentation in detail
+- Documents that are minutiae
 
 ### Install
 
