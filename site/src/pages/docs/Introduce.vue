@@ -2,11 +2,15 @@
     <article class="markdown">
         <h1>关于 Rabbit UI</h1>
         <p>
-            <code>Rabbit UI</code>
-            是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于 PC 端界面。
+            <b>Rabbit UI</b>，是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于 PC
+            端界面。
         </p>
         <p>
-            Custom Elements
+            如果您并不打算搭建响应式布局页面，又不想使用 Boostrap 那么选择 RabbitUI
+            是个非常不错的选择。
+        </p>
+        <p>
+            <b>Custom Elements</b>
             标准对自定义元素的名字做了限制，自定义元素的名字必须包含一个破折号（-）<code>&lt;r-tags&gt;</code>、<code>&lt;r-element&gt;</code>和<code>&lt;r-awesome-app&gt;</code>都是正确的名字，而<code>&lt;tabs&gt;</code>和<code>&lt;foo_bar&gt;</code>是不正确的。
         </p>
     </article>
@@ -73,7 +77,7 @@ const version = '1.4.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [
-    '使用语义化的自定义元素',
+    '使用语义化的自定义元素，易于分辨',
     '优雅、简洁，与庞大且臃肿令人眼花缭乱的结构 say goodbye',
     '不依赖任何第三方框架，底层基于原生 Javascript，引入即用',
     '能够在 Vue、JQuery或者其他现有项目中配合使用',
@@ -83,10 +87,10 @@ const features = [
 ];
 
 const compatibility = [
-    '支持在所有能用 JavaScript 的地方',
-    '支持 JQuery',
-    '支持 Vue.js（不推荐）',
+    '支持一切能够运行 JavaScript 的地方',
     '支持 TypeScript',
+    '能在 JQuery、Vue 等第三方库或框架中配合使用（React 除外）',
+    '能与 Boostrap、JQuery UI 等其他 UI 库搭配使用',
     '支持 IE9 及以上浏览器'
 ];
 

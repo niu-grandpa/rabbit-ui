@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -23,14 +23,14 @@ const current = ref<string>('');
 
 const setActiveLink = () => {
     const { path } = route;
-    if (path.indexOf('/docs/introduce') === 0) {
+    if (path.match('/docs/introduce')) {
         current.value = '0';
-    } else if (path.indexOf('/components/color') === 0) {
+    } else if (path.match('/components/color')) {
         current.value = '1';
     } else {
         current.value = '';
     }
 };
 
-nextTick(setActiveLink);
+watchEffect(setActiveLink);
 </script>

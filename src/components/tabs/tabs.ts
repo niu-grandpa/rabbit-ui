@@ -168,7 +168,7 @@ class Tabs implements Config {
 
             Fragment.appendChild(pane);
 
-            removeAttrs(pane, ['key', 'tab', 'icon', 'disabled', 'closable']);
+            removeAttrs(pane, ['index', 'tab', 'icon', 'disabled', 'closable']);
         });
 
         TabPaneContainer?.appendChild(Fragment);
