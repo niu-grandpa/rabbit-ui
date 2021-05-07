@@ -16,7 +16,7 @@ export default {
     dropdown: `${prefixCls}dropdown`,
     empty: `${prefixCls}empty`,
     jumbotron: `${prefixCls}jumbotron`,
-    inputNumber: `${prefixCls}input-number`,
+    inputnb: `${prefixCls}input-number`,
     icon: `${prefixCls}icon`,
     loadingBar: `${prefixCls}loading-bar`,
     message: `${prefixCls}message`,

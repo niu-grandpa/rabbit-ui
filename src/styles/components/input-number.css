@@ -102,7 +102,7 @@ textarea.rab-input-number {
   cursor: pointer;
 }
 .rab-input-number-handler-up-inner {
-  top: 0;
+  top: -1px;
 }
 .rab-input-number-handler-down {
   border-top: 1px solid #dcdee2;

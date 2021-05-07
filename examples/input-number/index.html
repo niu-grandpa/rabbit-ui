@@ -17,32 +17,36 @@
 </style>
 
 <body>
-    <div class="example">
-        <r-input-number class="rab-input-number">
-            <div class="rab-input-number-handler-wrap">
-                <a class="rab-input-number-handler rab-input-number-handler-up">
-                    <span class="rab-input-number-handler-up-inner rab-icon rab-icon-ios-arrow-up"></span>
-                </a>
-                <a class="rab-input-number-handler rab-input-number-handler-down rab-input-number-handler-down-disabled">
-                    <span class="rab-input-number-handler-down-inner rab-icon rab-icon-ios-arrow-down"></span>
-                </a>
-            </div>
-            <div class="rab-input-number-input-wrap">
-                <input type="number" class="rab-input-number-input">
-            </div>
-        </r-input-number>
 
-        <r-input-number class="rab-input-number rab-input-number-controls-outside">
-            <div class="rab-input-number-controls-outside-btn rab-input-number-controls-outside-down">
-                <i class="rab-icon rab-icon-ios-remove"></i>
-            </div>
-            <div class="rab-input-number-controls-outside-btn rab-input-number-controls-outside-up">
-                <i class="rab-icon rab-icon-ios-add"></i>
-            </div>
-            <div class="rab-input-number-input-wrap">
-                <input type="number" class="rab-input-number-input" value="1" step="1.2" max="10" min="1">
-            </div>
-        </r-input-number>
+    <div class="example">
+        <r-input-number value="1" min="1" max="10" precision="1"></r-input-number>
+    </div>
+
+    <div class="example">
+        <r-input-number value="1" min="1" max="10" step="1.2"></r-input-number>
+    </div>
+
+    <div class="example">
+        <r-input-number value="3" size="small"></r-input-number>
+        <r-input-number value="3"></r-input-number>
+        <r-input-number value="3" size="large"></r-input-number>
+    </div>
+
+    <div class="example">
+        <r-input-number value="1" disabled="true"></r-input-number>
+        <button class="rab-btn rab-btn-primary">禁用状态</button>
+    </div>
+
+    <div class="example">
+        <r-input-number value="1" readonly="true"></r-input-number>
+    </div>
+
+    <div class="example">
+        <r-input-number value="1" editable="true"></r-input-number>
+    </div>
+
+    <div class="example">
+        <r-input-number value="1" controls-outside="true"></r-input-number>
     </div>
 
 </body>
