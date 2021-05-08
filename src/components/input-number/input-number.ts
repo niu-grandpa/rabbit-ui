@@ -8,15 +8,47 @@ import {
     removeAttrs,
     setHtml
 } from '../../dom-utils';
+import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
-interface InputNumberEvents {
-    onChange: (value: number) => void;
-    onFocus: () => void;
-    onBlur: () => void;
+interface Config {
+    config(
+        el: string
+    ): {
+        value: number;
+        step: number;
+        disabled: boolean;
+        readOnly: boolean;
+        editable: boolean;
+        events({ onChange, onFocus, onBlur }: InputNumberEvents): void;
+    };
 }
 
-class InputNumber {
+interface InputNumberEvents {
+    onChange?: (value: number) => void;
+    onFocus?: (event: InputEvent) => void;
+    onBlur?: () => void;
+}
+
+function addNum(num1: number, num2: number): number {
+    let sq1: number, sq2: number;
+
+    try {
+        sq1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+        sq1 = 0;
+    }
+    try {
+        sq2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+        sq2 = 0;
+    }
+
+    const m = Math.pow(10, Math.max(sq1, sq2));
+    return (Math.round(num1 * m) + Math.round(num2 * m)) / m;
+}
+
+class InputNumber implements Config {
     readonly VERSION: string;
     readonly COMPONENTS: NodeListOf<HTMLElement>;
 
@@ -24,6 +56,111 @@ class InputNumber {
         this.VERSION = 'v1.0';
         this.COMPONENTS = $el('r-input-number', { all: true });
         this._create(this.COMPONENTS);
+    }
+
+    public config(
+        el: string
+    ): {
+        value: number;
+        step: number;
+        disabled: boolean;
+        readOnly: boolean;
+        editable: boolean;
+        events({ onChange, onFocus, onBlur }: InputNumberEvents): void;
+    } {
+        const target = $el(el) as HTMLElement;
+
+        validComps(target, 'input-number');
+
+        const { _attrs, _setValue, _setDisabled } = InputNumber.prototype;
+        const { min, max, step, disabled, readOnly, editable, precision } = _attrs(target);
+
+        const Input = target.querySelector(`.${PREFIX.inputnb}-input`)! as HTMLInputElement;
+        const ArrowUp = target.querySelector(`.${PREFIX.inputnb}-handler-up`);
+        const ArrowDown = target.querySelector(`.${PREFIX.inputnb}-handler-down`);
+        const BtnUp = target.querySelector(`.${PREFIX.inputnb}-controls-outside-up`);
+        const BtnDown = target.querySelector(`.${PREFIX.inputnb}-controls-outside-down`);
+
+        return {
+            get value() {
+                return Number(Input.value);
+            },
+            set value(newVal: number) {
+                if (newVal && !type.isNum(newVal)) return;
+                _setValue(Input, newVal, precision, min, max);
+            },
+            get step() {
+                return step;
+            },
+            set step(newVal: number) {
+                if (newVal && !type.isNum(newVal)) return;
+                Input.step = step;
+            },
+            get disabled() {
+                return disabled;
+            },
+            set disabled(newVal: boolean) {
+                if (newVal && !type.isBol(newVal)) return;
+                _setDisabled(target, Input, newVal);
+            },
+            get readOnly() {
+                return readOnly;
+            },
+            set readOnly(newVal: boolean) {
+                if (newVal && !type.isBol(newVal)) return;
+
+                Input.readOnly = newVal;
+
+                const disableArrow = (elem1: Element | null, elem2: Element | null) => {
+                    if (elem1) {
+                        // @ts-ignore
+                        elem1.style.pointerEvents = newVal ? 'none' : '';
+                        // @ts-ignore
+                        elem2.style.pointerEvents = newVal ? 'none' : '';
+                    }
+                };
+
+                disableArrow(ArrowUp, ArrowDown);
+                disableArrow(BtnUp, BtnDown);
+            },
+            get editable() {
+                return editable;
+            },
+            set editable(newVal: boolean) {
+                if (newVal && !type.isBol(newVal)) return;
+                Input.style.pointerEvents = !newVal ? 'none' : '';
+            },
+            events({ onChange, onFocus, onBlur }) {
+                let value: number;
+
+                const changeEv = () => {
+                    value = Number(Input.value);
+                    onChange && type.isFn(onChange, value);
+                };
+
+                if (ArrowUp) {
+                    bind(ArrowUp, 'click', changeEv);
+                    bind(ArrowDown, 'click', changeEv);
+                }
+                if (BtnUp) {
+                    bind(BtnUp, 'click', changeEv);
+                    bind(BtnDown, 'click', changeEv);
+                }
+
+                bind(Input, 'keydown', (e: KeyboardEvent) => {
+                    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        changeEv();
+                    }
+                });
+                bind(Input, 'input', (e: InputEvent) => {
+                    e.stopPropagation();
+                    changeEv();
+                });
+                bind(Input, 'focus', (e: InputEvent) => onFocus && type.isFn(onFocus, e));
+                bind(Input, 'blur', () => onBlur && type.isFn(onBlur));
+            }
+        };
     }
 
     private _create(COMPONENTS: NodeListOf<HTMLElement>) {
@@ -37,7 +174,8 @@ class InputNumber {
                 inputId,
                 precision,
                 disabled,
-                readonly,
+                editable,
+                readOnly,
                 size,
                 placeholder,
                 controlsOutside
@@ -49,14 +187,14 @@ class InputNumber {
             const Input = node.querySelector(`.${PREFIX.inputnb}-input`)! as HTMLInputElement;
             const ArrowUp = node.querySelector(`.${PREFIX.inputnb}-handler-up`);
             const ArrowDown = node.querySelector(`.${PREFIX.inputnb}-handler-down`);
-            const BtnUp = node.querySelector(`.${PREFIX.inputnb}-handler-controls-outside-up`);
-            const BtnDown = node.querySelector(`.${PREFIX.inputnb}-handler-controls-outside-down`);
+            const BtnUp = node.querySelector(`.${PREFIX.inputnb}-controls-outside-up`);
+            const BtnDown = node.querySelector(`.${PREFIX.inputnb}-controls-outside-down`);
 
             this._setInput(Input, min, max, step, name, inputId, placeholder);
-            this._setValue(Input, value, precision, min, max, step);
+            this._setValue(Input, value, precision, min, max);
             this._setSize(node, size);
             this._setDisabled(node, Input, disabled);
-            this._setReadonly(Input, readonly);
+            this._setReadonlyAndEditable(Input, readOnly, editable);
             this._setHandler(ArrowUp, ArrowDown, BtnUp, BtnDown, value, min, max);
             this._handleChange(
                 Input,
@@ -68,8 +206,7 @@ class InputNumber {
                 max,
                 step,
                 precision,
-                disabled,
-                readonly
+                readOnly
             );
 
             removeAttrs(node, [
@@ -130,26 +267,18 @@ class InputNumber {
         handlerWrap.remove();
     }
 
-    private _setInput(
-        input: HTMLInputElement,
-        min: number,
-        max: number,
-        step: number,
-        name: string,
-        inputId: string,
-        placeholder: string
-    ): void {
-        min || min === 0 ? (input.min = `${min}`) : '';
-        max || min === 0 ? (input.max = `${max}`) : '';
-        step && step !== 1 ? (input.step = `${step}`) : '';
-        name ? (input.name = name) : '';
-        inputId ? (input.id = inputId) : '';
-        placeholder ? (input.placeholder = placeholder) : '';
-    }
-
     private _setSize(node: Element, size: string): void {
         if (!size) return;
         node.classList.add(`${PREFIX.inputnb}-${size}`);
+    }
+
+    private _setReadonlyAndEditable(
+        input: HTMLInputElement,
+        readOnly: boolean,
+        editable: string
+    ): void {
+        if (readOnly) input.readOnly = true;
+        if (readOnly || editable === 'false') input.style.pointerEvents = 'none';
     }
 
     private _setDisabled(node: HTMLElement, input: HTMLInputElement, disabled: boolean): void {
@@ -162,6 +291,24 @@ class InputNumber {
         }
     }
 
+    private _setInput(
+        input: HTMLInputElement,
+        min: number,
+        max: number,
+        step: number,
+        name: string,
+        inputId: string,
+        placeholder: string
+    ): void {
+        isNaN(min) || min === 0 ? (input.min = `${min}`) : '';
+        isNaN(max) || min === 0 ? (input.max = `${max}`) : '';
+        isNaN(step) && step !== 1 ? (input.step = `${step}`) : '';
+
+        name ? (input.name = name) : '';
+        inputId ? (input.id = inputId) : '';
+        placeholder ? (input.placeholder = placeholder) : '';
+    }
+
     private _handleChange(
         input: HTMLInputElement,
         aUp: Element | null,
@@ -172,48 +319,61 @@ class InputNumber {
         max: number,
         step: number,
         precision: number,
-        disabled: boolean,
         readOnly: boolean
     ): void {
-        if (disabled || readOnly) return;
+        if (readOnly) return;
 
-        const setHandlerState = () => {
-            setTimeout(() => {
-                this._setHandler(aUp, aDown, btnUp, btnDown, Number(input.value), min, max);
-            }, 0);
-        };
         const setValue = (val: number) => {
-            this._setValue(input, val, precision, min, max, step);
-            setHandlerState();
+            this._setValue(input, val, precision, min, max);
+            this._setHandler(aUp, aDown, btnUp, btnDown, val, min, max);
         };
-        const addAndSubtractValues = (type: string) => {
-            let val = Number(input.value);
-            if (type === 'add') {
-                val >= max ? (val = max) : val++;
-                setValue(val);
-            } else {
-                val <= min ? (val = min) : val--;
-                setValue(val);
+        const changeStep = (type: 'up' | 'down'): false | undefined => {
+            const targetVal = Number(input.value);
+
+            if (type === 'up') {
+                if (addNum(targetVal, step) <= max) {
+                    setValue(targetVal);
+                } else {
+                    return false;
+                }
+
+                setValue(addNum(targetVal, step));
+            } else if (type === 'down') {
+                if (addNum(targetVal, step) >= min) {
+                    setValue(targetVal);
+                } else {
+                    return false;
+                }
+
+                setValue(addNum(targetVal, -step));
             }
         };
         const handleKeyBoardChange = () => {
             bind(input, 'keydown', (e: KeyboardEvent) => {
-                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                    setHandlerState();
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    changeStep('up');
+                }
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    changeStep('down');
                 }
             });
         };
         const handleInputChange = () => {
-            bind(input, 'input', () => setValue(Number(input.value)));
+            bind(input, 'input', (e: InputEvent) => {
+                e.stopPropagation();
+                setValue(Number(input.value));
+            });
         };
         const handleArrowChange = () => {
             if (aUp && aDown) {
-                bind(aUp, 'click', () => addAndSubtractValues('add'));
-                bind(aDown, 'click', () => addAndSubtractValues('subtract'));
+                bind(aUp, 'click', () => changeStep('up'));
+                bind(aDown, 'click', () => changeStep('down'));
             }
             if (btnUp && btnDown) {
-                bind(btnUp, 'click', () => addAndSubtractValues('add'));
-                bind(btnDown, 'click', () => addAndSubtractValues('subtract'));
+                bind(btnUp, 'click', () => changeStep('up'));
+                bind(btnDown, 'click', () => changeStep('down'));
             }
         };
 
@@ -227,26 +387,19 @@ class InputNumber {
         value: number,
         precision: number,
         min: number,
-        max: number,
-        step: number
+        max: number
     ): void {
-        if (value || value === 0) {
-            if (value <= min) {
-                value = min;
-            }
-            if (value >= max) {
-                value = max;
-            }
+        let targetVal: any = !isNaN(precision) ? value.toFixed(precision) : value;
 
-            const newVal: string | number = precision ? value.toFixed(precision) : value;
-            input.value = `${newVal}`;
+        if (targetVal || targetVal === 0) {
+            if (targetVal > max && !isNaN(max)) {
+                targetVal = max;
+            } else if (targetVal < min && !isNaN(min)) {
+                targetVal = min;
+            }
         }
-    }
 
-    private _setReadonly(input: HTMLInputElement, readonly: boolean): void {
-        if (readonly) {
-            input.readOnly = true;
-        }
+        input.value = `${targetVal}`;
     }
 
     private _setHandler(
@@ -258,7 +411,7 @@ class InputNumber {
         min: number,
         max: number
     ): void {
-        const isSetDisabled = (elm1: Element, elm2: Element, outside: boolean) => {
+        const isSetDisable = (elm1: Element, elm2: Element, outside: boolean) => {
             const upDisabledCls = outside ? 'controls-outside-btn' : 'handler-up';
             const downDisabledCls = outside ? 'controls-outside-btn' : 'handler-down';
 
@@ -274,18 +427,14 @@ class InputNumber {
             }
         };
 
-        if (aUp && aDown) {
-            isSetDisabled(aUp, aDown, false);
-        }
-        if (btnUp && btnDown) {
-            isSetDisabled(btnUp, btnDown, true);
-        }
+        if (aUp && aDown) isSetDisable(aUp, aDown, false);
+        if (btnUp && btnDown) isSetDisable(btnUp, btnDown, true);
     }
 
     private _attrs(node: HTMLElement) {
         return {
-            min: getNumTypeAttr(node, 'min'),
-            max: getNumTypeAttr(node, 'max'),
+            min: getNumTypeAttr(node, 'min', -Infinity),
+            max: getNumTypeAttr(node, 'max', Infinity),
             step: getNumTypeAttr(node, 'step', 1),
             value: getNumTypeAttr(node, 'value', 0),
             precision: getNumTypeAttr(node, 'precision'),
@@ -294,7 +443,8 @@ class InputNumber {
             inputId: getStrTypeAttr(node, 'input-id', ''),
             placeholder: getStrTypeAttr(node, 'placeholder', ''),
             disabled: getBooleanTypeAttr(node, 'disabled'),
-            readonly: getBooleanTypeAttr(node, 'readonly'),
+            readOnly: getBooleanTypeAttr(node, 'readonly'),
+            editable: getStrTypeAttr(node, 'editable', 'true'),
             controlsOutside: getBooleanTypeAttr(node, 'controls-outside')
         };
     }
