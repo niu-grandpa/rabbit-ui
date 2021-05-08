@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     $el,
+    bind,
     getBooleanTypeAttr,
     getNumTypeAttr,
     getStrTypeAttr,
@@ -36,7 +37,6 @@ class InputNumber {
                 inputId,
                 precision,
                 disabled,
-                editable,
                 readonly,
                 size,
                 placeholder,
@@ -47,12 +47,30 @@ class InputNumber {
             this._setOutSide(node, controlsOutside);
 
             const Input = node.querySelector(`.${PREFIX.inputnb}-input`)! as HTMLInputElement;
+            const ArrowUp = node.querySelector(`.${PREFIX.inputnb}-handler-up`);
+            const ArrowDown = node.querySelector(`.${PREFIX.inputnb}-handler-down`);
+            const BtnUp = node.querySelector(`.${PREFIX.inputnb}-handler-controls-outside-up`);
+            const BtnDown = node.querySelector(`.${PREFIX.inputnb}-handler-controls-outside-down`);
 
             this._setInput(Input, min, max, step, name, inputId, placeholder);
-            this._setValue(Input, value, precision, min, max);
+            this._setValue(Input, value, precision, min, max, step);
             this._setSize(node, size);
             this._setDisabled(node, Input, disabled);
-            this._setReadonly(Input, readonly, !editable);
+            this._setReadonly(Input, readonly);
+            this._setHandler(ArrowUp, ArrowDown, BtnUp, BtnDown, value, min, max);
+            this._handleChange(
+                Input,
+                ArrowUp,
+                ArrowDown,
+                BtnUp,
+                BtnDown,
+                min,
+                max,
+                step,
+                precision,
+                disabled,
+                readonly
+            );
 
             removeAttrs(node, [
                 'min',
@@ -80,7 +98,7 @@ class InputNumber {
             <a class="${PREFIX.inputnb}-handler ${PREFIX.inputnb}-handler-up">
                 <span class="${PREFIX.inputnb}-handler-up-inner ${PREFIX.icon} ${PREFIX.icon}-ios-arrow-up"></span>
             </a>
-            <a class="${PREFIX.inputnb}-handler ${PREFIX.inputnb}-handler-down ${PREFIX.inputnb}-handler-down-disabled">
+            <a class="${PREFIX.inputnb}-handler ${PREFIX.inputnb}-handler-down">
                 <span class="${PREFIX.inputnb}-handler-down-inner ${PREFIX.icon} ${PREFIX.icon}-ios-arrow-down"></span>
             </a>
         </div>
@@ -113,7 +131,7 @@ class InputNumber {
     }
 
     private _setInput(
-        inputElem: HTMLInputElement,
+        input: HTMLInputElement,
         min: number,
         max: number,
         step: number,
@@ -121,20 +139,96 @@ class InputNumber {
         inputId: string,
         placeholder: string
     ): void {
-        min || min === 0 ? (inputElem.min = `${min}`) : '';
-        max || min === 0 ? (inputElem.max = `${max}`) : '';
-        step && step !== 1 ? (inputElem.step = `${step}`) : '';
-        name ? (inputElem.name = name) : '';
-        inputId ? (inputElem.id = inputId) : '';
-        placeholder ? (inputElem.placeholder = placeholder) : '';
+        min || min === 0 ? (input.min = `${min}`) : '';
+        max || min === 0 ? (input.max = `${max}`) : '';
+        step && step !== 1 ? (input.step = `${step}`) : '';
+        name ? (input.name = name) : '';
+        inputId ? (input.id = inputId) : '';
+        placeholder ? (input.placeholder = placeholder) : '';
+    }
+
+    private _setSize(node: Element, size: string): void {
+        if (!size) return;
+        node.classList.add(`${PREFIX.inputnb}-${size}`);
+    }
+
+    private _setDisabled(node: HTMLElement, input: HTMLInputElement, disabled: boolean): void {
+        if (!disabled) {
+            node.classList.remove(`${PREFIX.inputnb}-disabled`);
+            input.disabled = false;
+        } else {
+            node.classList.add(`${PREFIX.inputnb}-disabled`);
+            input.disabled = true;
+        }
+    }
+
+    private _handleChange(
+        input: HTMLInputElement,
+        aUp: Element | null,
+        aDown: Element | null,
+        btnUp: Element | null,
+        btnDown: Element | null,
+        min: number,
+        max: number,
+        step: number,
+        precision: number,
+        disabled: boolean,
+        readOnly: boolean
+    ): void {
+        if (disabled || readOnly) return;
+
+        const setHandlerState = () => {
+            setTimeout(() => {
+                this._setHandler(aUp, aDown, btnUp, btnDown, Number(input.value), min, max);
+            }, 0);
+        };
+        const setValue = (val: number) => {
+            this._setValue(input, val, precision, min, max, step);
+            setHandlerState();
+        };
+        const addAndSubtractValues = (type: string) => {
+            let val = Number(input.value);
+            if (type === 'add') {
+                val >= max ? (val = max) : val++;
+                setValue(val);
+            } else {
+                val <= min ? (val = min) : val--;
+                setValue(val);
+            }
+        };
+        const handleKeyBoardChange = () => {
+            bind(input, 'keydown', (e: KeyboardEvent) => {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    setHandlerState();
+                }
+            });
+        };
+        const handleInputChange = () => {
+            bind(input, 'input', () => setValue(Number(input.value)));
+        };
+        const handleArrowChange = () => {
+            if (aUp && aDown) {
+                bind(aUp, 'click', () => addAndSubtractValues('add'));
+                bind(aDown, 'click', () => addAndSubtractValues('subtract'));
+            }
+            if (btnUp && btnDown) {
+                bind(btnUp, 'click', () => addAndSubtractValues('add'));
+                bind(btnDown, 'click', () => addAndSubtractValues('subtract'));
+            }
+        };
+
+        handleKeyBoardChange();
+        handleInputChange();
+        handleArrowChange();
     }
 
     private _setValue(
-        inputElem: HTMLInputElement,
+        input: HTMLInputElement,
         value: number,
         precision: number,
         min: number,
-        max: number
+        max: number,
+        step: number
     ): void {
         if (value || value === 0) {
             if (value <= min) {
@@ -145,28 +239,46 @@ class InputNumber {
             }
 
             const newVal: string | number = precision ? value.toFixed(precision) : value;
-            inputElem.value = `${newVal}`;
+            input.value = `${newVal}`;
         }
     }
 
-    private _setSize(node: Element, size: string): void {
-        if (!size) return;
-        node.classList.add(`${PREFIX.inputnb}-${size}`);
-    }
-
-    private _setDisabled(node: HTMLElement, inputElem: HTMLInputElement, disabled: boolean): void {
-        if (!disabled) {
-            node.classList.remove(`${PREFIX.inputnb}-disabled`);
-            inputElem.disabled = false;
-        } else {
-            node.classList.add(`${PREFIX.inputnb}-disabled`);
-            inputElem.disabled = true;
+    private _setReadonly(input: HTMLInputElement, readonly: boolean): void {
+        if (readonly) {
+            input.readOnly = true;
         }
     }
 
-    private _setReadonly(inputElem: HTMLInputElement, readonly: boolean, editable: boolean): void {
-        if (readonly || !editable) {
-            inputElem.readOnly = true;
+    private _setHandler(
+        aUp: Element | null,
+        aDown: Element | null,
+        btnUp: Element | null,
+        btnDown: Element | null,
+        value: number,
+        min: number,
+        max: number
+    ): void {
+        const isSetDisabled = (elm1: Element, elm2: Element, outside: boolean) => {
+            const upDisabledCls = outside ? 'controls-outside-btn' : 'handler-up';
+            const downDisabledCls = outside ? 'controls-outside-btn' : 'handler-down';
+
+            if (Math.ceil(value) >= max) {
+                elm1.classList.add(`${PREFIX.inputnb}-${upDisabledCls}-disabled`);
+            } else {
+                elm1.classList.remove(`${PREFIX.inputnb}-${upDisabledCls}-disabled`);
+            }
+            if (Math.ceil(value) <= min) {
+                elm2.classList.add(`${PREFIX.inputnb}-${downDisabledCls}-disabled`);
+            } else {
+                elm2.classList.remove(`${PREFIX.inputnb}-${downDisabledCls}-disabled`);
+            }
+        };
+
+        if (aUp && aDown) {
+            isSetDisabled(aUp, aDown, false);
+        }
+        if (btnUp && btnDown) {
+            isSetDisabled(btnUp, btnDown, true);
         }
     }
 
@@ -182,7 +294,6 @@ class InputNumber {
             inputId: getStrTypeAttr(node, 'input-id', ''),
             placeholder: getStrTypeAttr(node, 'placeholder', ''),
             disabled: getBooleanTypeAttr(node, 'disabled'),
-            editable: getBooleanTypeAttr(node, 'editable'),
             readonly: getBooleanTypeAttr(node, 'readonly'),
             controlsOutside: getBooleanTypeAttr(node, 'controls-outside')
         };
