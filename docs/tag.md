@@ -139,7 +139,7 @@
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性     | 说明               | 回调参数                  |
-| :------- | :----------------- | :------------------------ |
-| onClose  | 关闭时触发         | ($this:Element) => void   |
-| onChange | 切换选中状态时触发 | (checked:Boolean) => void |
+| 属性     | 说明               | 回调参数                   |
+| :------- | :----------------- | :------------------------- |
+| onClose  | 关闭时触发         | ($this: element) => void   |
+| onChange | 切换选中状态时触发 | (checked: boolean) => void |

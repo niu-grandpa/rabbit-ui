@@ -221,9 +221,9 @@
 
 - `events`的参数 options 为对象，具体说明如下：
 
-| 属性                    | 说明                                             | 回调参数                  |
-| :---------------------- | :----------------------------------------------- | :------------------------ |
-| onClick `1.3.0`         | 点击菜单项时触发，返回 r-dropdown-item 的 key 值 | (key:String)  =>  void    |
-| onVisibleChange `1.3.0` | 菜单显示状态改变时调用                           | (visible:Boolean) => void |
-| onClickOutside `1.3.0`  | 点击外部关闭下拉菜单时触发                       | (event:Event) => void     |
+| 属性                    | 说明                                             | 回调参数                   |
+| :---------------------- | :----------------------------------------------- | :------------------------- |
+| onClick `1.3.0`         | 点击菜单项时触发，返回 r-dropdown-item 的 key 值 | (key: string)  =>  void    |
+| onVisibleChange `1.3.0` | 菜单显示状态改变时调用                           | (visible: boolean) => void |
+| onClickOutside `1.3.0`  | 点击外部关闭下拉菜单时触发                       | (event: Event) => void     |
 

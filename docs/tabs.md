@@ -214,5 +214,5 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 | 属性        | 说明             | 回调参数             |
 | :---------- | :--------------- | :------------------- |
-| onClick     | tab 被点击时触发 | (index:String) => void |
-| onTabRemove | tab 被关闭时触发 | (index:String) => void |
+| onClick     | tab 被点击时触发 | (index: string) => void |
+| onTabRemove | tab 被关闭时触发 | (index: string) => void |
