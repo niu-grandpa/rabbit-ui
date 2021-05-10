@@ -54,7 +54,6 @@ import NavBar from './NavBar.vue';
             img {
                 position: relative;
                 top: 9px;
-                height: 32px;
                 margin-right: 12px;
             }
         }

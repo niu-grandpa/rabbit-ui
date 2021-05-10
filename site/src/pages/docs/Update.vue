@@ -28,6 +28,11 @@ onMounted(() => {
 
 const updateInfo = [
     {
+        version: '1.5.0',
+        date: '2021-5-10',
+        info: ['新增 input-number']
+    },
+    {
         version: '1.4.0',
         date: '2021-4-29',
         info: [

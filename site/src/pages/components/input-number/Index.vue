@@ -23,13 +23,9 @@
         </Example>
         <Example next-title="尺寸">
             <template #content>
-                <r-input-number
-                    value="1000"
-                    formatter="`$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                    parser="[/\$\s?|(,*)/g, '']"
-                >
+                <r-input-number value="1000" :formatter="formatter1" parser="[/\$\s?|(,*)/g, '']">
                 </r-input-number>
-                <r-input-number value="100" formatter="`${value}%`"></r-input-number>
+                <r-input-number value="100" :formatter="formatter2"></r-input-number>
                 <p>
                     通过<code>formatter</code>格式化数字，以展示具有具体含义的数据，往往需要配合<code>parser</code>一起使用。
                 </p>
@@ -116,6 +112,9 @@ onMounted(() => {
         }
     });
 });
+
+const formatter1 = "`$ ${value}`.replace(/B(?=(d{3})+(?!d))/g, ',')";
+const formatter2 = '`${value}%`';
 
 const handleClick = () => {
     flag ? (flag = !flag) : (flag = true);

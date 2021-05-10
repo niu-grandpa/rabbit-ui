@@ -17,7 +17,7 @@ const props = defineProps({
         type: Number,
         default: 8
     },
-    data: Array
+    data: Object
 });
 </script>
 

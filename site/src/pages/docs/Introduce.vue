@@ -2,15 +2,11 @@
     <article class="markdown">
         <h1>关于 Rabbit UI</h1>
         <p>
-            <b>Rabbit UI</b>，是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于 PC
-            端界面。
+            <code>Rabbit UI</code>，是一个基于 TypeScript 编写的轻量级 JavaScript UI 库，主要使用于
+            PC 端界面。
         </p>
         <p>
-            如果您并不打算搭建响应式布局页面，又不想使用 Boostrap 那么选择 RabbitUI
-            是个非常不错的选择。
-        </p>
-        <p>
-            <b>Custom Elements</b>
+            Tip: Custom Elements
             标准对自定义元素的名字做了限制，自定义元素的名字必须包含一个破折号（-）<code>&lt;r-tags&gt;</code>、<code>&lt;r-element&gt;</code>和<code>&lt;r-awesome-app&gt;</code>都是正确的名字，而<code>&lt;tabs&gt;</code>和<code>&lt;foo_bar&gt;</code>是不正确的。
         </p>
     </article>
