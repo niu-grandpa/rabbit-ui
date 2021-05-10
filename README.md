@@ -3,6 +3,7 @@
         <img width="200" src="./assets/logo.svg">
     </a>
 </p>
+
 简体中文 | [English](./README.en-US.md)
 
 # RabbitUI
