@@ -8,6 +8,7 @@ import {
     removeAttrs,
     setHtml
 } from '../../dom-utils';
+import { warn } from '../../mixins';
 import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
@@ -73,7 +74,9 @@ class InputNumber implements Config {
         validComps(target, 'input-number');
 
         const { _attrs, _setValue, _setDisabled } = InputNumber.prototype;
-        const { min, max, step, disabled, readOnly, editable, precision } = _attrs(target);
+        const { min, max, step, disabled, readOnly, editable, precision, formatter } = _attrs(
+            target
+        );
 
         const Input = target.querySelector(`.${PREFIX.inputnb}-input`)! as HTMLInputElement;
         const ArrowUp = target.querySelector(`.${PREFIX.inputnb}-handler-up`);
@@ -87,7 +90,7 @@ class InputNumber implements Config {
             },
             set value(newVal: number) {
                 if (newVal && !type.isNum(newVal)) return;
-                _setValue(Input, newVal, precision, min, max);
+                _setValue(Input, newVal, formatter, precision, min, max);
             },
             get step() {
                 return step;
@@ -133,9 +136,15 @@ class InputNumber implements Config {
             events({ onChange, onFocus, onBlur }) {
                 let value: number;
 
-                const changeEv = () => {
+                const changeEv = (e: Event) => {
+                    e.stopPropagation();
                     value = Number(Input.value);
-                    onChange && type.isFn(onChange, value);
+                    if (!isNaN(value)) {
+                        onChange && type.isFn(onChange, value);
+                    } else {
+                        warn(`Invalid input value --> '${Input.value}' at '${el}'`);
+                        return;
+                    }
                 };
 
                 if (ArrowUp) {
@@ -148,17 +157,17 @@ class InputNumber implements Config {
                 }
 
                 bind(Input, 'keydown', (e: KeyboardEvent) => {
-                    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                        e.preventDefault();
-                        changeEv();
-                    }
+                    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') changeEv(e);
                 });
-                bind(Input, 'input', (e: InputEvent) => {
+                bind(Input, 'input', (e: InputEvent) => changeEv(e));
+                bind(Input, 'focus', (e: InputEvent) => {
                     e.stopPropagation();
-                    changeEv();
+                    onFocus && type.isFn(onFocus, e);
                 });
-                bind(Input, 'focus', (e: InputEvent) => onFocus && type.isFn(onFocus, e));
-                bind(Input, 'blur', () => onBlur && type.isFn(onBlur));
+                bind(Input, 'blur', (e: InputEvent) => {
+                    e.stopPropagation();
+                    onBlur && type.isFn(onBlur);
+                });
             }
         };
     }
@@ -172,6 +181,8 @@ class InputNumber implements Config {
                 value,
                 name,
                 inputId,
+                parser,
+                formatter,
                 precision,
                 disabled,
                 editable,
@@ -191,7 +202,7 @@ class InputNumber implements Config {
             const BtnDown = node.querySelector(`.${PREFIX.inputnb}-controls-outside-down`);
 
             this._setInput(Input, min, max, step, name, inputId, placeholder);
-            this._setValue(Input, value, precision, min, max);
+            this._setValue(Input, value, formatter, precision, min, max);
             this._setSize(node, size);
             this._setDisabled(node, Input, disabled);
             this._setReadonlyAndEditable(Input, readOnly, editable);
@@ -206,7 +217,9 @@ class InputNumber implements Config {
                 max,
                 step,
                 precision,
-                readOnly
+                readOnly,
+                parser,
+                formatter
             );
 
             removeAttrs(node, [
@@ -217,11 +230,13 @@ class InputNumber implements Config {
                 'precision',
                 'size',
                 'name',
+                'parser',
+                'formatter',
                 'input-id',
                 'placeholder',
                 'disabled',
                 'editable',
-                'readonly',
+                'readOnly',
                 'controls-outside'
             ]);
         });
@@ -240,7 +255,7 @@ class InputNumber implements Config {
             </a>
         </div>
         <div class="${PREFIX.inputnb}-input-wrap">
-           <input type="number" class="${PREFIX.inputnb}-input">
+           <input autocomplete="off" spellcheck="false" class="${PREFIX.inputnb}-input">
         </div>
         `;
 
@@ -267,6 +282,146 @@ class InputNumber implements Config {
         handlerWrap.remove();
     }
 
+    private _setInput(
+        input: HTMLInputElement,
+        min: number,
+        max: number,
+        step: number,
+        name: string,
+        inputId: string,
+        placeholder: string
+    ): void {
+        isNaN(min) || min === 0 ? (input.min = `${min}`) : '';
+        isNaN(max) || min === 0 ? (input.max = `${max}`) : '';
+        isNaN(step) && step !== 1 ? (input.step = `${step}`) : '';
+
+        name ? (input.name = name) : '';
+        inputId ? (input.id = inputId) : '';
+        placeholder ? (input.placeholder = placeholder) : '';
+    }
+
+    private _formatterVal(input: HTMLInputElement, formatter: string, val: number): void {
+        // `约定的 ${value}`替换为 `${val}`
+        const resVal = formatter.replace('value', 'val');
+        input.value = `${formatter ? eval(resVal) : val}`;
+    }
+
+    private _parserVal(parser: string, val: string): string {
+        if (parser) {
+            const _parser = eval(parser) as any[];
+            return val.replace(_parser[0], _parser[1]);
+        } else {
+            // 如果没有指定从 formatter 里转换回数字的方式，则使用默认正则方式
+            return val.replace(/[^\d.-]/g, '');
+        }
+    }
+
+    private _handleChange(
+        input: HTMLInputElement,
+        aUp: Element | null,
+        aDown: Element | null,
+        btnUp: Element | null,
+        btnDown: Element | null,
+        min: number,
+        max: number,
+        step: number,
+        precision: number,
+        readOnly: boolean,
+        parser: string,
+        formatter: string
+    ): void {
+        if (readOnly) return;
+
+        const setValue = (val: number) => {
+            this._setValue(input, val, formatter, precision, min, max);
+            this._setHandler(aUp, aDown, btnUp, btnDown, val, min, max);
+        };
+
+        const changeStep = (type: 'up' | 'down'): false | undefined => {
+            // 如果指定了输入框展示值的格式，那么这里就要用 parser 的值转换为原来的值
+            const val = this._parserVal(parser, input.value);
+            const targetVal = Number(val);
+
+            if (type === 'up') {
+                if (addNum(targetVal, step) <= max) {
+                    setValue(targetVal);
+                } else {
+                    return false;
+                }
+
+                setValue(addNum(targetVal, step));
+            } else if (type === 'down') {
+                if (addNum(targetVal, step) >= min) {
+                    setValue(targetVal);
+                } else {
+                    return false;
+                }
+
+                setValue(addNum(targetVal, -step));
+            }
+        };
+
+        const handleKeyBoardChange = () => {
+            bind(input, 'keydown', (e: KeyboardEvent) => {
+                if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return false;
+
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    changeStep('up');
+                }
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    changeStep('down');
+                }
+            });
+        };
+
+        const handleInputChange = () => {
+            bind(input, 'input', (e: InputEvent) => {
+                e.stopPropagation();
+                // 当输入框输入时只匹配数字、小数点和减号
+                const val = input.value.replace(/[^\d.-]/g, '');
+                setValue(Number(val));
+            });
+        };
+
+        const handleArrowChange = () => {
+            if (aUp && aDown) {
+                bind(aUp, 'click', () => changeStep('up'));
+                bind(aDown, 'click', () => changeStep('down'));
+            }
+            if (btnUp && btnDown) {
+                bind(btnUp, 'click', () => changeStep('up'));
+                bind(btnDown, 'click', () => changeStep('down'));
+            }
+        };
+
+        handleKeyBoardChange();
+        handleInputChange();
+        handleArrowChange();
+    }
+
+    private _setValue(
+        input: HTMLInputElement,
+        value: number,
+        formatter: string,
+        precision: number,
+        min: number,
+        max: number
+    ): void {
+        let targetVal: any = !isNaN(precision) ? value.toFixed(precision) : value;
+
+        if ((targetVal && !isNaN(targetVal)) || targetVal === 0) {
+            if (targetVal > max && !isNaN(max)) {
+                targetVal = max;
+            } else if (targetVal < min && !isNaN(min)) {
+                targetVal = min;
+            }
+            // 如果指定了输入框展示值的格式则使用它，否则反之
+            this._formatterVal(input, formatter, targetVal);
+        }
+    }
+
     private _setSize(node: Element, size: string): void {
         if (!size) return;
         node.classList.add(`${PREFIX.inputnb}-${size}`);
@@ -289,117 +444,6 @@ class InputNumber implements Config {
             node.classList.add(`${PREFIX.inputnb}-disabled`);
             input.disabled = true;
         }
-    }
-
-    private _setInput(
-        input: HTMLInputElement,
-        min: number,
-        max: number,
-        step: number,
-        name: string,
-        inputId: string,
-        placeholder: string
-    ): void {
-        isNaN(min) || min === 0 ? (input.min = `${min}`) : '';
-        isNaN(max) || min === 0 ? (input.max = `${max}`) : '';
-        isNaN(step) && step !== 1 ? (input.step = `${step}`) : '';
-
-        name ? (input.name = name) : '';
-        inputId ? (input.id = inputId) : '';
-        placeholder ? (input.placeholder = placeholder) : '';
-    }
-
-    private _handleChange(
-        input: HTMLInputElement,
-        aUp: Element | null,
-        aDown: Element | null,
-        btnUp: Element | null,
-        btnDown: Element | null,
-        min: number,
-        max: number,
-        step: number,
-        precision: number,
-        readOnly: boolean
-    ): void {
-        if (readOnly) return;
-
-        const setValue = (val: number) => {
-            this._setValue(input, val, precision, min, max);
-            this._setHandler(aUp, aDown, btnUp, btnDown, val, min, max);
-        };
-        const changeStep = (type: 'up' | 'down'): false | undefined => {
-            const targetVal = Number(input.value);
-
-            if (type === 'up') {
-                if (addNum(targetVal, step) <= max) {
-                    setValue(targetVal);
-                } else {
-                    return false;
-                }
-
-                setValue(addNum(targetVal, step));
-            } else if (type === 'down') {
-                if (addNum(targetVal, step) >= min) {
-                    setValue(targetVal);
-                } else {
-                    return false;
-                }
-
-                setValue(addNum(targetVal, -step));
-            }
-        };
-        const handleKeyBoardChange = () => {
-            bind(input, 'keydown', (e: KeyboardEvent) => {
-                if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    changeStep('up');
-                }
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    changeStep('down');
-                }
-            });
-        };
-        const handleInputChange = () => {
-            bind(input, 'input', (e: InputEvent) => {
-                e.stopPropagation();
-                setValue(Number(input.value));
-            });
-        };
-        const handleArrowChange = () => {
-            if (aUp && aDown) {
-                bind(aUp, 'click', () => changeStep('up'));
-                bind(aDown, 'click', () => changeStep('down'));
-            }
-            if (btnUp && btnDown) {
-                bind(btnUp, 'click', () => changeStep('up'));
-                bind(btnDown, 'click', () => changeStep('down'));
-            }
-        };
-
-        handleKeyBoardChange();
-        handleInputChange();
-        handleArrowChange();
-    }
-
-    private _setValue(
-        input: HTMLInputElement,
-        value: number,
-        precision: number,
-        min: number,
-        max: number
-    ): void {
-        let targetVal: any = !isNaN(precision) ? value.toFixed(precision) : value;
-
-        if (targetVal || targetVal === 0) {
-            if (targetVal > max && !isNaN(max)) {
-                targetVal = max;
-            } else if (targetVal < min && !isNaN(min)) {
-                targetVal = min;
-            }
-        }
-
-        input.value = `${targetVal}`;
     }
 
     private _setHandler(
@@ -441,6 +485,8 @@ class InputNumber implements Config {
             size: getStrTypeAttr(node, 'size', ''),
             name: getStrTypeAttr(node, 'name', ''),
             inputId: getStrTypeAttr(node, 'input-id', ''),
+            parser: getStrTypeAttr(node, 'parser', ''),
+            formatter: getStrTypeAttr(node, 'formatter', ''),
             placeholder: getStrTypeAttr(node, 'placeholder', ''),
             disabled: getBooleanTypeAttr(node, 'disabled'),
             readOnly: getBooleanTypeAttr(node, 'readonly'),
