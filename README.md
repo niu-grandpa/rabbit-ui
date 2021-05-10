@@ -10,7 +10,7 @@
 ### 一个基于 TypeScript 编写的轻量级 JavaScript UI 库
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
-[![](https://img.shields.io/badge/npm-v1.4.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui)
+[![](https://img.shields.io/badge/npm-v1.5.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui)
 [![](https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge)](https://www.jsdelivr.com/package/npm/rabbit-simple-ui) 
 
 ### 特性

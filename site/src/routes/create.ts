@@ -121,6 +121,10 @@ export default () =>
                 component: () => import('pages/components/switch/Index.vue')
             },
             {
+                path: '/components/input-number',
+                component: () => import('pages/components/input-number/Index.vue')
+            },
+            {
                 path: '/components/timeline',
                 component: () => import('pages/components/timeline/Index.vue')
             },

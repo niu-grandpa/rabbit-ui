@@ -19,6 +19,7 @@ export default [
     { value: 'Radio 单选框', path: `${prefix}radio` },
     { value: 'Checkbox 多选框', path: `${prefix}checkbox` },
     { value: 'Switch 开关', path: `${prefix}switch` },
+    { value: 'InputNumber 数字输入框', path: `${prefix}input-number` },
     { value: 'Alert 警告', path: `${prefix}alert` },
     { value: 'Message 全局提示', path: `${prefix}message` },
     { value: 'Notice 通知提醒', path: `${prefix}notice` },

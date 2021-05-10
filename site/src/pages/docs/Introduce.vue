@@ -73,7 +73,7 @@ import { Code1, Code2, Code3 } from './markdown-code/introduce';
 import Alert from '../../../../src/components/alert';
 import Tooltip from '../../../../src/components/tooltip';
 
-const version = '1.4.0';
+const version = '1.5.0';
 const npmVersionImg = `https://img.shields.io/badge/npm-v${version}-orange`;
 
 const features = [
