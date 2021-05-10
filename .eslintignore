@@ -1,4 +1,5 @@
 dist
 site
 config
+example-static
 node_modules

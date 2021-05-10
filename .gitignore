@@ -1,4 +1,5 @@
 # dependencies
 debug.log
 /node_modules
+/examples-static
 /site/node_modules
