@@ -187,8 +187,8 @@
                                 >
                             </td>
                             <td style="text-align: left">
-                                <span>(state:Boolean </span><span>|</span
-                                ><span> item:Object) =&gt; void</span>
+                                <span>(state: boolean </span><span>|</span
+                                ><span> item: object) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

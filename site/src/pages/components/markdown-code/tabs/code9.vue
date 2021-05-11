@@ -167,12 +167,16 @@
                         <tr>
                             <td style="text-align: left"><span>onClick</span></td>
                             <td style="text-align: left"><span>tab 被点击时触发</span></td>
-                            <td style="text-align: left"><span>(index:String) =&gt; void</span></td>
+                            <td style="text-align: left">
+                                <span>(index: string) =&gt; void</span>
+                            </td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><span>onTabRemove</span></td>
                             <td style="text-align: left"><span>tab 被关闭时触发</span></td>
-                            <td style="text-align: left"><span>(index:String) =&gt; void</span></td>
+                            <td style="text-align: left">
+                                <span>(index: string) =&gt; void</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

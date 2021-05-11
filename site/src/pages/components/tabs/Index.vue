@@ -7,7 +7,7 @@
         </Describe>
         <Example next-title="图标">
             <template #content>
-                <r-tabs active-index="1">
+                <r-tabs active-index="2">
                     <r-tab-pane tab="标签一" index="1">标签一的内容</r-tab-pane>
                     <r-tab-pane tab="标签二" index="2">标签二的内容</r-tab-pane>
                     <r-tab-pane tab="标签三" index="3">标签三的内容</r-tab-pane>

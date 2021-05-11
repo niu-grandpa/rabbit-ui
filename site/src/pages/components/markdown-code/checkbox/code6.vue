@@ -190,8 +190,8 @@
                                 >
                             </td>
                             <td style="text-align: left">
-                                <span>(checked:Boolean </span><span>|</span
-                                ><span> data:String[ ]) =&gt; void</span>
+                                <span>(checked: boolean </span><span>|</span
+                                ><span> data: string[]) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

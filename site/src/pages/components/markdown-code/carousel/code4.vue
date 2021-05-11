@@ -141,7 +141,9 @@
                             <td style="text-align: left">
                                 <span>点击幻灯片时触发，返回索引值</span>
                             </td>
-                            <td style="text-align: left"><span>(index:Number) =&gt; void</span></td>
+                            <td style="text-align: left">
+                                <span>(index: number) =&gt; void</span>
+                            </td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><span>onChange</span></td>
@@ -151,7 +153,7 @@
                                 >
                             </td>
                             <td style="text-align: left">
-                                <span>([ oldValue, value ]: [Number,Number]) =&gt; void</span>
+                                <span>([ oldValue, value ]: [number, number]) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

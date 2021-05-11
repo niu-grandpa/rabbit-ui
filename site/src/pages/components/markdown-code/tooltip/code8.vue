@@ -44,7 +44,7 @@
                             <td style="text-align: left"><span>false</span></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left"><span>theme</span></td>
+                            <td style="text-align: left"><span>theme </span><code>1.1.0</code></td>
                             <td style="text-align: left"><span>背景颜色</span></td>
                             <td style="text-align: left"><span>dark</span></td>
                         </tr>
@@ -88,7 +88,7 @@
                     </tbody>
                 </table>
             </figure>
-            <p><span>该方法返回以下两个值：</span></p>
+            <p><span>该方法返回以下四个值：</span></p>
             <ul>
                 <li><code>content</code></li>
                 <li><code>disabled</code></li>
@@ -113,16 +113,16 @@
                             <td><span>-</span></td>
                         </tr>
                         <tr>
-                            <td><span>disabled</span></td>
+                            <td><span>disabled </span><code>1.1.0</code></td>
                             <td><span>响应式设置是否禁用提示框</span></td>
                             <td><span>Boolean</span></td>
-                            <td><span>-</span></td>
+                            <td><span>false</span></td>
                         </tr>
                         <tr>
-                            <td><span>always</span></td>
+                            <td><span>always </span><code>1.1.0</code></td>
                             <td><span>响应式设置是否总是可见</span></td>
                             <td><span>Boolean</span></td>
-                            <td><span>-</span></td>
+                            <td><span>false</span></td>
                         </tr>
                         <tr>
                             <td><span>events</span></td>
@@ -147,10 +147,12 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="text-align: left"><span>onVisibleChange</span></td>
+                            <td style="text-align: left">
+                                <span>onVisibleChange </span><code>1.1.0</code>
+                            </td>
                             <td style="text-align: left"><span>显示隐藏的回调</span></td>
                             <td style="text-align: left">
-                                <span>(visible:boolean) =&gt; void</span>
+                                <span>(visible: boolean) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

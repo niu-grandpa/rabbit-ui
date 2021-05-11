@@ -130,14 +130,14 @@
                             <td style="text-align: left"><span>onClose</span></td>
                             <td style="text-align: left"><span>关闭时触发</span></td>
                             <td style="text-align: left">
-                                <span>($this:Element) =&gt; void</span>
+                                <span>($this: Element) =&gt; void</span>
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: left"><span>onChange</span></td>
                             <td style="text-align: left"><span>切换选中状态时触发</span></td>
                             <td style="text-align: left">
-                                <span>(checked:Boolean) =&gt; void</span>
+                                <span>(checked: boolean) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

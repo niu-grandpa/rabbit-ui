@@ -116,9 +116,9 @@
                             <td><span>activeIndex</span></td>
                             <td><span>响应式设置当前激活面板的 index</span></td>
                             <td>
-                                <span>String </span><span>|</span><span> String[ ] </span
+                                <span>String </span><span>|</span><span> String[] </span
                                 ><span>|</span><span> Number </span><span>|</span
-                                ><span> Number[ ]</span>
+                                ><span> Number[]</span>
                             </td>
                             <td><span>-</span></td>
                         </tr>
@@ -152,7 +152,7 @@
                                 >
                             </td>
                             <td style="text-align: left">
-                                <span>(index:string[]) =&gt; void</span>
+                                <span>(index: string[]) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

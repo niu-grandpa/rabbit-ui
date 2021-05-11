@@ -153,7 +153,7 @@
                                 <span>开关变化时触发，返回当前的状态</span>
                             </td>
                             <td style="text-align: left">
-                                <span>(checked:Boolean) =&gt; void</span>
+                                <span>(checked: boolean) =&gt; void</span>
                             </td>
                         </tr>
                     </tbody>

@@ -7,7 +7,12 @@ import styleImport from 'vite-plugin-style-import';
 export default defineConfig({
     build: {
         rollupOptions: {
+            external: ['vue'],
             output: {
+                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                globals: {
+                    vue: 'Vue'
+                },
                 assetFileNames: 'css/[name].[hash].css',
                 chunkFileNames: 'js/[name].[hash].js',
                 entryFileNames: 'js/[name].[hash].js'
