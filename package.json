@@ -2,8 +2,8 @@
     "name": "rabbit-simple-ui",
     "version": "1.5.0",
     "title": "RabbitUI",
-    "description": "A lightweight JavaScript UI library written in TypeScript",
-    "homepage": "www.rabbitui.xyz",
+    "description": "A simple UI component library based on JavaScript",
+    "homepage": "www.rabbitui.cn",
     "keywords": [
         "ui",
         "jsui",

@@ -1,3 +1,4 @@
-import Header from './Header.vue'
+import NavLogo from './NavLogo.vue'
+import SearchInput from './SearchInput.vue'
 
-export { Header }
+export { NavLogo, SearchInput }

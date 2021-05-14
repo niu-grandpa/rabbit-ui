@@ -8,7 +8,7 @@ English | [简体中文](./README.md)
 
 <h1>
 RabbitUI
-    <h3>A lightweight JavaScript UI library written in TypeScript</h3>
+    <h3>A simple UI component library based on JavaScript</h3>
 </h1>
 
 ### Features

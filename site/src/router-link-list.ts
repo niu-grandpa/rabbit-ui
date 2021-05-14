@@ -7,6 +7,8 @@ export const DOCSLIST: A[] = [
   { text: '介绍', path: '/docs/introduce' },
   { text: '安装', path: '/docs/install' },
   { text: '快速上手', path: '/docs/start' },
+  { text: '常见问题', path: '/docs/faq' },
+  { text: '支持我们', path: '/docs/sponsor' },
   { text: '更新日志', path: '/docs/update' }
 ]
 
@@ -21,6 +23,7 @@ export const COMPONENTSLIST: A[] = [
   { text: 'Carousel 走马灯', path: '/components/carousel' },
   { text: 'Checkbox 多选框', path: '/components/checkbox' },
   { text: 'Collapse 折叠面板', path: '/components/collapse' },
+  { text: 'Color 色彩', path: '/components/color' },
   { text: 'CountDown 倒计时', path: '/components/count-down' },
   { text: 'Divider 分割线', path: '/components/divider' },
   { text: 'Drawer 抽屉', path: '/components/drawer' },

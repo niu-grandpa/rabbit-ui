@@ -1,5 +1,4 @@
 <template>
-  <Header />
   <HomePage v-if="show" />
   <AppPage v-else />
   <r-back-top />
@@ -9,7 +8,6 @@
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import BackTop from '../../src/components/back-top'
-import { Header } from './components'
 import { HomePage, AppPage } from './pages'
 
 const route = useRoute()
@@ -32,4 +30,23 @@ watchEffect(changePage)
 
 <style lang="less">
 @import '../../dist/styles/rabbit.css';
+@import 'ant-design-vue/dist/antd.css';
+
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  background: #e8eaec;
+}
+
+::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 10px;
+  background: transparent;
+}
 </style>

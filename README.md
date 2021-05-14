@@ -8,7 +8,7 @@
 
 # RabbitUI
 
-### 一个基于 TypeScript 编写的轻量级 JavaScript UI 库
+### 一个基于 JavaScript 的简洁 UI 组件库
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
 [![](https://img.shields.io/badge/npm-v1.5.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui)
