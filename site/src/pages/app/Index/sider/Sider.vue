@@ -1,17 +1,19 @@
 <template>
-  <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="5" :xxl="4" id="app-sider">
-    <section class="app-sider-menu-inner">
-      <SiderMenu />
-      <a-drawer class="drawer-left" placement="left" :closable="false" :visible="visible">
+  <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="5" :xxl="4">
+    <div id="app-sider">
+      <section class="app-sider-menu-inner">
         <SiderMenu />
-        <template #handle>
-          <div class="drawer-handle" @click="handleVisible">
-            <MenuOutlined v-if="!visible" />
-            <CloseOutlined v-else />
-          </div>
-        </template>
-      </a-drawer>
-    </section>
+        <a-drawer class="drawer-left" placement="left" :closable="false" :visible="visible">
+          <SiderMenu />
+          <template #handle>
+            <div class="drawer-handle" @click="handleVisible">
+              <MenuOutlined v-if="!visible" />
+              <CloseOutlined v-else />
+            </div>
+          </template>
+        </a-drawer>
+      </section>
+    </div>
   </a-col>
 </template>
 
@@ -26,16 +28,13 @@ const handleVisible = () => (visible.value ? (visible.value = false) : (visible.
 
 <style lang="less" scope>
 #app-sider {
-  width: 100%;
+  width: 20.8%;
   position: fixed;
   top: 75px;
   bottom: 0;
   left: 0;
   border-right: 1px solid #e8eaec;
-
-  &:hover {
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 
   .app-sider-menu-inner {
     height: 100%;

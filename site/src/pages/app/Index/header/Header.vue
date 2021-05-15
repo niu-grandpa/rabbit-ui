@@ -5,7 +5,7 @@
       <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="4" :xxl="4">
         <NavLogo />
       </a-col>
-      <a-col :xs="0" :sm="0" :md="18" :lg="18" :xl="19" :xxl="20" class="menu-row">
+      <a-col :xs="0" :sm="0" :md="18" :lg="18" :xl="20" :xxl="20" class="menu-row">
         <div id="search-box">
           <SearchOutlined />
           <span class="algolia-autocomplete">

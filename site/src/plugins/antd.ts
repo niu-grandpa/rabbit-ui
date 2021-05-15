@@ -1,3 +1,3 @@
-import { Button, Select, Row, Col, Menu, Dropdown, Popover,Drawer } from 'ant-design-vue'
+import { Button, Select, Row, Col, Menu, Dropdown, Popover, Drawer, Anchor } from 'ant-design-vue'
 
-export default [Button, Select, Row, Col, Menu, Dropdown, Popover,Drawer]
+export default [Button, Select, Row, Col, Menu, Dropdown, Popover, Drawer, Anchor]
