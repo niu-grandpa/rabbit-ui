@@ -9,10 +9,9 @@
 </template>
 
 <script lang="ts" setup>
-import AppHeader from './Header.vue'
-import AppSider from './Sider.vue'
-import AppContent from './Content.vue'
-import { NavLogo, SearchInput } from '../../../components'
+import AppHeader from './header/Header.vue'
+import AppSider from './sider/Sider.vue'
+import AppContent from './content/Content.vue'
 </script>
 
 <style lang="less" scope>
