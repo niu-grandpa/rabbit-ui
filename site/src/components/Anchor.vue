@@ -33,8 +33,7 @@ const props = defineProps({
     max-width: 110px;
 
     &-link {
-      border-left: 2px solid #f0f0f0;
-      padding: 4px 0 4px 16px;
+      padding-right: 16px;
     }
   }
 }
