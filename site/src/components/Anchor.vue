@@ -1,11 +1,6 @@
 <template>
   <a-anchor wrapperClass="toc-affix" showInkInFixed :affix="false">
-    <a-anchor-link
-      v-for="link in props.linkList"
-      :href="link.href"
-      :title="link.title"
-      :key="link.title"
-    />
+    <a-anchor-link v-for="link in linkList" :href="'#' + link" :title="link" :key="link" />
   </a-anchor>
 </template>
 
@@ -24,8 +19,8 @@ const props = defineProps({
 .toc-affix {
   position: fixed;
   z-index: 10;
-  top: 90px;
-  right: -50px;
+  top: 100px;
+  right: -90px;
   width: 213px;
 
   .ant-anchor {
@@ -34,6 +29,9 @@ const props = defineProps({
 
     &-link {
       padding-right: 16px;
+      &-title {
+        color: #55585e;
+      }
     }
   }
 }

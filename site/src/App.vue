@@ -29,12 +29,13 @@ watchEffect(changePage)
 
 
 <style lang="less">
-@import '../../dist/styles/rabbit.css';
+@import './markdown.css';
 @import 'ant-design-vue/dist/antd.css';
+@import '../../dist/styles/rabbit.css';
 
 ::-webkit-scrollbar {
   /*滚动条整体样式*/
-  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
 }
 
@@ -48,5 +49,9 @@ watchEffect(changePage)
   /*滚动条里面轨道*/
   border-radius: 10px;
   background: transparent;
+}
+
+.rab-btn {
+  margin-right: 6px;
 }
 </style>

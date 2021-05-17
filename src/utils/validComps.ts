@@ -5,7 +5,9 @@ export default function validComps(target: Element, compName: string): void {
     const r = '[Rabbit] Error: ';
 
     if (!target) {
-        throw (new Error().message = `${r}The target element you selected for configuration does not exist --> "${target}"`);
+        throw new Error(
+            `The target element you selected for configuration does not exist -- > '${target}'. This error occurred in the ${compName} component`
+        );
     }
 
     const targetName = target.tagName.toLowerCase().replace(/r-/, '');
