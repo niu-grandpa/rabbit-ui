@@ -5,18 +5,18 @@
       在开始之前，推荐先学习 TypeScript 和 ES2015，并正确安装和配置了
       <a href="https://nodejs.org/en/" target="_blank">Node.js</a>。 官方指南假设你已了解关于
       HTML、CSS 、JavaScript 和 TypeScript 的基础知识。如果你刚开始学习前端，将 UI
-      框架作为你的第一步可能不是最好的主意。
+      库作为你的第一步可能不是最好的主意。
     </blockquote>
     <h2 id="引入-RabbitUI">引入 RabbitUI</h2>
     <div>
       一般会想到在 webpack 入口页面
       <code>main.ts</code>
-      中会直接引入整个包，但请不要这样做，在你需要用到的页面的对应 ts
+      中直接引入整个包，但请不要这样做，在你需要用到的页面的对应 ts
       文件中引入对应组件的构造函数，配置如下：
-      <h3>方式1：</h3>
+      <h3>方式一</h3>
       <p>从源文件路径引入</p>
       <Code1 />
-      <h3>方式2：</h3>
+      <h3>方式二</h3>
       <p>
         按需引用，借助插件
         <a href="https://github.com/ant-design/babel-plugin-import" target="_blank">

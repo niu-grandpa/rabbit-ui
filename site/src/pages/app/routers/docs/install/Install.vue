@@ -13,6 +13,7 @@
     <CDNAZ />
     <h3>示例</h3>
     <p>通过 CDN 可以快速使用 Rabbit UI 写出一个示例：</p>
+    <SL />
     <h2 id="Npm 或 Yarn 安装">Npm 或 Yarn 安装</h2>
     <p>
       我们推荐使用 npm 或 yarn
@@ -38,7 +39,7 @@
 
 <script lang="ts" setup>
 import { AZCode } from '../../../../../examples-code/docs/introduce'
-import { CDNAZ } from '../../../../../examples-code/docs/install'
+import { CDNAZ, SL } from '../../../../../examples-code/docs/install'
 import { Anchor } from '../../../../../components'
 
 const anchors: string[] = ['CDN-引入', 'Npm 或 Yarn 安装']

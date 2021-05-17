@@ -17,11 +17,16 @@ const props = defineProps({
 
 <style lang="less" scope>
 .toc-affix {
+  @media (max-width: 420px) {
+    display: none;
+  }
+
   position: fixed;
   z-index: 10;
   top: 100px;
   right: -90px;
   width: 213px;
+  display: inherit;
 
   .ant-anchor {
     font-size: 12px;
