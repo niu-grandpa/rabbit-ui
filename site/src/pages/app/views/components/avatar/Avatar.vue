@@ -79,7 +79,7 @@ import { Basic, Type, AutoFontSize, APITable } from '../../../../../examples-cod
 
 onMounted(() => new Avatar())
 
-const anchors: string[] = ['基础用法', '类型', '自动调整字符大小', '自定义图标', 'API']
+const anchors: string[] = ['基础用法', '类型', '自动调整字符大小', 'API']
 </script>
 
 <style lang="less" scoped>
