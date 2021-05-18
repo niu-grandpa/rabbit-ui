@@ -65,21 +65,14 @@
         list-style-type: circle;
       }
 
-      code,
-      kbd,
-      pre,
-      samp {
-        font-family: 'Lucida Console', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-      }
-
       code {
         margin: 0 1px;
         padding: 0.2em 0.4em;
         font-size: 0.9em;
-        background: #f2f4f5;
-        border: 1px solid #f0f0f0;
+        background-color: #fff5f5;
+        color: #fa795e;
+        border: 1px solid #fff5f5;
         border-radius: 3px;
-        color: #55585e;
       }
 
       blockquote {

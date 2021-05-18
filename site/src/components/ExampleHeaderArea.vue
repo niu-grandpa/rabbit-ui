@@ -5,10 +5,12 @@
     特别提醒：使用前需要先初始化组件 <code>new Rabbit.{{ props.name }}()</code>，如果为 NPM
     环境则无需添加 <code>Rabbit</code> 前缀
   </blockquote>
-  <h2 v-if="props.showWhenToUse">何时使用</h2>
-  <ul>
-    <slot />
-  </ul>
+  <template v-if="props.showWhenToUse">
+    <h2>何时使用</h2>
+    <ul>
+      <slot />
+    </ul>
+  </template>
   <h2>代码示例</h2>
 </template>
 

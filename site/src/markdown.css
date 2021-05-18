@@ -639,7 +639,7 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-keyword {
-    color: rgb(119, 0, 136);
+    color: #708;
 }
 
 .cm-s-inner .cm-atom,
@@ -648,7 +648,7 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-number {
-    color: rgb(17, 102, 68);
+    color: #fc1e70;
 }
 
 .cm-s-inner .cm-def {
@@ -672,16 +672,16 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-property {
-    color: #525252;
+    color: #9b1dea;
 }
 
 .cm-s-inner .cm-operator {
-    color: rgb(152, 26, 26);
+    color: #55585e;
 }
 
 .cm-s-inner .cm-comment,
 .cm-s-inner.cm-comment {
-    color: rgb(170, 85, 0);
+    color: #b3b3b3;
 }
 
 .cm-s-inner .cm-string-2 {
@@ -1025,9 +1025,7 @@ blockquote blockquote {
 .md-fences,
 code,
 tt {
-    border: 1px solid #e7eaed;
-    background-color: #f8f8f8;
-    border-radius: 3px;
+    background-color: #f5f5f5;
     padding: 0;
     padding: 2px 4px 0px 4px;
     font-size: 0.95em;
@@ -1039,10 +1037,10 @@ code {
 }
 
 .md-fences {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    padding-top: 8px;
-    padding-bottom: 6px;
+    font-size: 14px;
+    overflow: auto;
+    margin: 16px 0;
+    padding: 12px;
 }
 
 .md-task-list-item>input {
