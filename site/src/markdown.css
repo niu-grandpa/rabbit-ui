@@ -1,18 +1,10 @@
-html {
-    overflow-x: initial !important;
-}
-
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;
     --select-text-bg-color: #b5d6fc;
     --select-text-font-color: auto;
-    --monospace: 'Lucida Console', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --monospace: Consolas, Menlo, Courier, monospace;
     --title-bar-height: 20px;
-}
-
-.mac-os-11 {
-    --title-bar-height: 28px;
 }
 
 #write {
@@ -585,7 +577,7 @@ a.md-print-anchor {
 
 mark {
     background: rgb(255, 255, 0);
-    color: rgb(0, 0, 0);
+    color: #525252;
 }
 
 .md-html-inline .md-plain,
@@ -596,7 +588,7 @@ mark strong {
 }
 
 mark .md-meta {
-    color: rgb(0, 0, 0);
+    color: #525252;
     opacity: 0.3 !important;
 }
 
@@ -652,7 +644,7 @@ mark .md-meta {
 
 .cm-s-inner .cm-atom,
 .cm-s-inner.cm-atom {
-    color: rgb(34, 17, 153);
+    color: #fc1e70;
 }
 
 .cm-s-inner .cm-number {
@@ -664,7 +656,7 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-variable {
-    color: rgb(0, 0, 0);
+    color: #e96900;
 }
 
 .cm-s-inner .cm-variable-2 {
@@ -676,11 +668,11 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-string {
-    color: rgb(170, 17, 17);
+    color: #42b983;
 }
 
 .cm-s-inner .cm-property {
-    color: rgb(0, 0, 0);
+    color: #525252;
 }
 
 .cm-s-inner .cm-operator {
@@ -713,11 +705,11 @@ mark .md-meta {
 }
 
 .cm-s-inner .cm-tag {
-    color: rgb(17, 119, 0);
+    color: #3e76f6;
 }
 
 .cm-s-inner .cm-attribute {
-    color: rgb(0, 0, 204);
+    color: #e96900;
 }
 
 .cm-s-inner .cm-header,
@@ -1038,7 +1030,7 @@ tt {
     border-radius: 3px;
     padding: 0;
     padding: 2px 4px 0px 4px;
-    font-size: 0.9em;
+    font-size: 0.95em;
 }
 
 code {
@@ -1055,6 +1047,92 @@ code {
 
 .md-task-list-item>input {
     margin-left: -1.3em;
+}
+
+h4 {
+    font-size: 1.25em;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+figure {
+    overflow-x: auto;
+    margin: 1.2em 0px;
+    max-width: calc(100% + 16px);
+    padding: 0px;
+}
+
+figure>table {
+    margin: 0px;
+}
+
+tr {
+    break-inside: avoid;
+    break-after: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    width: 100%;
+    overflow: auto;
+    break-inside: auto;
+    text-align: left;
+}
+
+table.md-table td {
+    min-width: 32px;
+}
+
+table tr th {
+    border-bottom: 0px;
+}
+
+table {
+    margin: 0.8em 0;
+    padding: 0;
+    word-break: initial;
+}
+
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
 }
 
 @media print {
