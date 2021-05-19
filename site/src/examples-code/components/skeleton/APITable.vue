@@ -1,0 +1,61 @@
+<template>
+  <div class=""
+    ><h3><a name="skeleton" class="md-header-anchor"></a><span>Skeleton</span></h3
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>属性</span></th
+            ><th><span>说明</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>active</span></td
+            ><td><span>是否展示动画效果</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>avatar</span></td
+            ><td><span>是否显示头像占位图</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>paragraph</span></td
+            ><td><span>是否显示段落占位图</span></td
+            ><td><span>true</span></td></tr
+          ><tr
+            ><td><span>title</span></td
+            ><td><span>是否显示标题占位图</span></td
+            ><td><span>true</span></td></tr
+          ><tr
+            ><td><span>title-width</span></td
+            ><td><span>设置标题占位图的宽度</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>paragraph-rows</span></td
+            ><td><span>设置段落占位图的行数</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>paragraph-width</span></td
+            ><td
+              ><span
+                >设置段落占位图的宽度，若为数组时则为对应的每行宽度，反之则是首行的宽度</span
+              ></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>avatar-size</span></td
+            ><td
+              ><span>设置头像占位图的大小，可选值为 </span><code>small</code><span>、</span
+              ><code>large</code></td
+            ><td><span>large</span></td></tr
+          ><tr
+            ><td><span>avatar-shape</span></td
+            ><td
+              ><span>指定头像的形状，可选值为 </span><code>circle</code><span>、</span
+              ><code>square</code></td
+            ><td><span>circle</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ></div
+  >
+</template>

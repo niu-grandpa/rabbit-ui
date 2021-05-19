@@ -47,7 +47,6 @@
   </article>
 </template>
 
-
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import Jumbotron from '../../../../../../../src/components/jumbotron'
