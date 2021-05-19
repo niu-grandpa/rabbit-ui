@@ -1,4 +1,4 @@
-Badge 徽标数
+# Badge 徽标数
 
 图标右上角的圆形徽标数字。
 
@@ -104,8 +104,6 @@ Badge 徽标数
   <a class="demo-badge"></a>
 </r-badge>
 ```
-
-
 
 状态点 
 

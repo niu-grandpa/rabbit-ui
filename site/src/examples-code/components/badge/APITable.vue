@@ -1,0 +1,116 @@
+<template>
+  <div class=""
+    ><h3><a name="badge" class="md-header-anchor"></a><span>Badge</span></h3
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>属性</span></th
+            ><th><span>说明</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>count</span></td
+            ><td
+              ><span>显示的数字，大于</span><code>maxCount</code><span>时，显示</span
+              ><code>${maxCount}+</code><span>，为 0 时隐藏</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>max-count</span></td
+            ><td><span>展示封顶的数字值</span></td
+            ><td><span>99</span></td></tr
+          ><tr
+            ><td><span>dot</span></td
+            ><td><span>不展示数字，只有一个小红点，如需隐藏 dot，详见下方 config 方法</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>type</span></td
+            ><td
+              ><span
+                >使用预设的颜色，可选值为 success、primary、normal、error、warning、info</span
+              ></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>show-zero</span></td
+            ><td><span>当数值为 0 时，是否展示 Badge</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>status</span></td
+            ><td
+              ><span
+                >设置 Badge 为状态点，可选值为 success、processing、default、error、warning</span
+              ></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>text</span></td
+            ><td><span>自定义内容，如果设置了 status，则为状态点的文本</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>offset</span></td
+            ><td><span>设置状态点的位置偏移，格式为 [x, y]</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>color</span></td
+            ><td><span>设置更多状态点的颜色或自定义颜色</span></td
+            ><td><span>-</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ><p
+      ><span
+        >配置指定的组件，并提供一些必要的响应式更新DOM内容或其他操作的
+        API。（并不是每个组件都会有）</span
+      ></p
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>参数</span></th
+            ><th><span>说明</span></th
+            ><th><span>类型</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>el</span></td
+            ><td><span>配置当前选定的 badge，必须是选择器名称或者元素名</span></td
+            ><td><span>String</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ><p><span>该方法返回以下值：</span></p
+    ><ul
+      ><li><code>count</code></li
+      ><li><code>text</code></li
+      ><li><code>dot</code></li></ul
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>返回值</span></th
+            ><th><span>说明</span></th
+            ><th><span>类型</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>count</span></td
+            ><td><span>响应式设置或更新警告徽标显示的数字</span></td
+            ><td><span>Number</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>text</span></td
+            ><td><span>响应式设置或更新徽标自定义内容</span></td
+            ><td><span>String</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>dot</span></td
+            ><td><span>响应式设置或更新是否为为点状</span></td
+            ><td><span>Boolean</span></td
+            ><td><span>-</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ></div
+  >
+</template>
