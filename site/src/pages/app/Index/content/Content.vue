@@ -26,7 +26,7 @@
       font-size: 14px;
       line-height: 2;
 
-      h1 {
+      h1:not(.rab-jumbotron-title) {
         margin-top: 8px;
         margin-bottom: 20px;
         font-weight: 500;

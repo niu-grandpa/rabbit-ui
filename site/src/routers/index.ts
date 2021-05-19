@@ -99,7 +99,7 @@ const router = createRouter({
     },
     {
       path: '/components/empty',
-      component: () => import('pages/app/views/components/empty/Alert.vue')
+      component: () => import('pages/app/views/components/empty/Empty.vue')
     },
     {
       path: '/components/input-number',
