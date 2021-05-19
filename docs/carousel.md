@@ -19,6 +19,17 @@
 - 最基本的用法。
 
 ```html
+<style>
+    .demo-carousel {
+        height: 250px;
+        color: #fff;
+        line-height: 250px;
+        text-align: center;
+        font-size: 20px;
+        background: #364d79;
+    }
+</style>
+
 <r-carousel>
   <div>
       <div class="demo-carousel">1</div>
