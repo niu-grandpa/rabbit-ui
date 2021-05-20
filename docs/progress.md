@@ -85,7 +85,7 @@
 
 - 分段进度条
 
-标准的进度条。
+标准的分段进度条。
 
 ```html
 <r-progress percent="60" success-percent="30"></r-progress>
@@ -123,34 +123,4 @@
 | -------------- | ---------------------------------- | ------ | ------ |
 | percent        | 响应式设置或更新进度条百分比       | Number | -      |
 | successPercent | 响应式设置或更新已完成的分段百分比 | Number | -      |
-
-### 使用示例
-
-- 动态设置进度
-
-进度条的进度不可能是固定不变的，这就需要在异步场景下使用组件内置的方法 `config(el).percent`  进行设置，以  jQuery 的 ajax 为例：
-
-```html
-<r-progress percent="0" id="upload"></r-progress>
-<script>
-    const progress = new Rabbit.Progress();
-    let num = 0;
-	// 假设场景是在下载数据    
-	$.ajax({
-        url: '/api/someurl',
-        type: 'get',
-        // ....相关代码省略
-        success() {
-           // ...相关代码省略
-           num++;
-           progress.config('#upload').percent = num;
-           if(num >= 100) $('#upload').attr('status','success');
-        }
-        error() {
-       	   // 设置进度的状态为wrong
-           $('#upload').attr('status','wrong');
-        }        
-    })
-</script>
-```
 

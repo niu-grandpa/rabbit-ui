@@ -218,7 +218,7 @@ class MiniModal {
         CssTransition(elem2, {
             inOrOut: type,
             ...modalAniCls,
-            timeout: 300,
+            timeout: 200,
             rmCls: true
         });
     }

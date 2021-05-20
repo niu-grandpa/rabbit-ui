@@ -15,175 +15,175 @@ const router = createRouter({
     },
     {
       path: '/docs/introduce',
-      component: () => import('pages/app/views/docs/introduce/Introduce.vue')
+      component: () => import('pages/app/views/docs/Introduce.vue')
     },
     {
       path: '/docs/install',
-      component: () => import('pages/app/views/docs/install/Install.vue')
+      component: () => import('pages/app/views/docs/Install.vue')
     },
     {
       path: '/docs/start',
-      component: () => import('pages/app/views/docs/start/Start.vue')
+      component: () => import('pages/app/views/docs/Start.vue')
     },
     {
       path: '/docs/update',
-      component: () => import('pages/app/views/docs/update/Update.vue')
+      component: () => import('pages/app/views/docs/Update.vue')
     },
     {
       path: '/docs/sponsor',
-      component: () => import('pages/app/views/docs/sponsor/Sponsor.vue')
+      component: () => import('pages/app/views/docs/Sponsor.vue')
     },
     {
       path: '/docs/faq',
-      component: () => import('pages/app/views/docs/faq/FAQ.vue')
+      component: () => import('pages/app/views/docs/FAQ.vue')
     },
     {
       path: '/components/alert',
-      component: () => import('pages/app/views/components/alert/Alert.vue')
+      component: () => import('pages/app/views/componentst/Alert.vue')
     },
     {
       path: '/components/avatar',
-      component: () => import('pages/app/views/components/avatar/Avatar.vue')
+      component: () => import('pages/app/views/components/Avatar.vue')
     },
     {
       path: '/components/back-top',
-      component: () => import('pages/app/views/components/back-top/BackTop.vue')
+      component: () => import('pages/app/views/components/BackTop.vue')
     },
     {
       path: '/components/badge',
-      component: () => import('pages/app/views/components/badge/Badge.vue')
+      component: () => import('pages/app/views/components/Badge.vue')
     },
     {
       path: '/components/breadcrumb',
-      component: () => import('pages/app/views/components/breadcrumb/Breadcrumb.vue')
+      component: () => import('pages/app/views/components/Breadcrumb.vue')
     },
     {
       path: '/components/button',
-      component: () => import('pages/app/views/components/button/Button.vue')
+      component: () => import('pages/app/views/components/Button.vue')
     },
     {
       path: '/components/card',
-      component: () => import('pages/app/views/components/card/Card.vue')
+      component: () => import('pages/app/views/components/Card.vue')
     },
     {
       path: '/components/carousel',
-      component: () => import('pages/app/views/components/carousel/Carousel.vue')
+      component: () => import('pages/app/views/components/Carousel.vue')
     },
     {
       path: '/components/checkbox',
-      component: () => import('pages/app/views/components/checkbox/Checkbox.vue')
+      component: () => import('pages/app/views/components/Checkbox.vue')
     },
     {
       path: '/components/collapse',
-      component: () => import('pages/app/views/components/collapse/Collapse.vue')
+      component: () => import('pages/app/views/components/Collapse.vue')
     },
     {
       path: '/components/color',
-      component: () => import('pages/app/views/components/color/Color.vue')
+      component: () => import('pages/app/views/components/Color.vue')
     },
     {
       path: '/components/count-down',
-      component: () => import('pages/app/views/components/count-down/CountDown.vue')
+      component: () => import('pages/app/views/components/CountDown.vue')
     },
     {
       path: '/components/divider',
-      component: () => import('pages/app/views/components/divider/Divider.vue')
+      component: () => import('pages/app/views/components/Divider.vue')
     },
     {
       path: '/components/drawer',
-      component: () => import('pages/app/views/components/drawer/Drawer.vue')
+      component: () => import('pages/app/views/components/Drawer.vue')
     },
     {
       path: '/components/dropdown',
-      component: () => import('pages/app/views/components/dropdown/Dropdown.vue')
+      component: () => import('pages/app/views/components/Dropdown.vue')
     },
     {
       path: '/components/empty',
-      component: () => import('pages/app/views/components/empty/Empty.vue')
+      component: () => import('pages/app/views/components/Empty.vue')
     },
     {
       path: '/components/input-number',
-      component: () => import('pages/app/views/components/input-number/InputNumber.vue')
+      component: () => import('pages/app/views/components/InputNumber.vue')
     },
     {
       path: '/components/jumbotron',
-      component: () => import('pages/app/views/components/jumbotron/Jumbotron.vue')
+      component: () => import('pages/app/views/components/Jumbotron.vue')
     },
     {
       path: '/components/loading-bar',
-      component: () => import('pages/app/views/components/loading-bar/LoadingBar.vue')
+      component: () => import('pages/app/views/components/LoadingBar.vue')
     },
     {
       path: '/components/message',
-      component: () => import('pages/app/views/components/message/Message.vue')
+      component: () => import('pages/app/views/components/Message.vue')
     },
     {
       path: '/components/mini-modal',
-      component: () => import('pages/app/views/components/mini-modal/MiniModal.vue')
+      component: () => import('pages/app/views/components/MiniModal.vue')
     },
     {
       path: '/components/modal',
-      component: () => import('pages/app/views/components/modal/Modal.vue')
+      component: () => import('pages/app/views/components/Modal.vue')
     },
     {
       path: '/components/notice',
-      component: () => import('pages/app/views/components/notice/Notice.vue')
+      component: () => import('pages/app/views/components/Notice.vue')
     },
     {
       path: '/components/page-header',
-      component: () => import('pages/app/views/components/page-header/PageHeader.vue')
+      component: () => import('pages/app/views/components/PageHeader.vue')
     },
     {
       path: '/components/poptip',
-      component: () => import('pages/app/views/components/poptip/Poptip.vue')
+      component: () => import('pages/app/views/components/Poptip.vue')
     },
     {
       path: '/components/progress',
-      component: () => import('pages/app/views/components/progress/Progress.vue')
+      component: () => import('pages/app/views/components/Progress.vue')
     },
     {
       path: '/components/radio',
-      component: () => import('pages/app/views/components/radio/Radio.vue')
+      component: () => import('pages/app/views/components/Radio.vue')
     },
     {
       path: '/components/result',
-      component: () => import('pages/app/views/components/result/Result.vue')
+      component: () => import('pages/app/views/components/Result.vue')
     },
     {
       path: '/components/skeleton',
-      component: () => import('pages/app/views/components/skeleton/Skeleton.vue')
+      component: () => import('pages/app/views/components/Skeleton.vue')
     },
     {
       path: '/components/spin',
-      component: () => import('pages/app/views/components/spin/Spin.vue')
+      component: () => import('pages/app/views/components/Spin.vue')
     },
     {
       path: '/components/steps',
-      component: () => import('pages/app/views/components/steps/Steps.vue')
+      component: () => import('pages/app/views/components/Steps.vue')
     },
     {
       path: '/components/switch',
-      component: () => import('pages/app/views/components/switch/Switch.vue')
+      component: () => import('pages/app/views/components/Switch.vue')
     },
     {
       path: '/components/tabs',
-      component: () => import('pages/app/views/components/tabs/Tabs.vue')
+      component: () => import('pages/app/views/components/Tabs.vue')
     },
     {
       path: '/components/tag',
-      component: () => import('pages/app/views/components/tag/Tag.vue')
+      component: () => import('pages/app/views/components/Tag.vue')
     },
     {
       path: '/components/time',
-      component: () => import('pages/app/views/components/time/Time.vue')
+      component: () => import('pages/app/views/components/Time.vue')
     },
     {
       path: '/components/timeline',
-      component: () => import('pages/app/views/components/timeline/Timeline.vue')
+      component: () => import('pages/app/views/components/Timeline.vue')
     },
     {
       path: '/components/tooltip',
-      component: () => import('pages/app/views/components/tooltip/Tooltip.vue')
+      component: () => import('pages/app/views/components/Tooltip.vue')
     }
   ]
 })

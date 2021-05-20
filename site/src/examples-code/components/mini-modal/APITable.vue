@@ -1,0 +1,81 @@
+<template>
+  <div class=""
+    ><h2><a name="api" class="md-header-anchor"></a><span>API</span></h2
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>属性</span></th
+            ><th><span>说明</span></th
+            ><th><span>类型</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>title</span></td
+            ><td><span>标题</span></td
+            ><td><span>String</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>content</span></td
+            ><td><span>内容</span></td
+            ><td><span>String</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>width</span></td
+            ><td><span>宽度，单位 px</span></td
+            ><td><span>Number </span><span>|</span><span> String</span></td
+            ><td><span>416</span></td></tr
+          ><tr
+            ><td><span>okText</span></td
+            ><td><span>确定按钮的文字</span></td
+            ><td><span>String</span></td
+            ><td><span>确定</span></td></tr
+          ><tr
+            ><td><span>cancelText</span></td
+            ><td
+              ><span>取消按钮的文字，只在</span><code>Modal.confirm()</code><span>下有效</span></td
+            ><td><span>String</span></td
+            ><td><span>取消</span></td></tr
+          ><tr
+            ><td><span>loading</span></td
+            ><td
+              ><span>点击确定按钮时是否显示 loading 状态，开启则需手动调用</span
+              ><code>Modal.remove()</code><span>来关闭对话框</span></td
+            ><td><span>Boolean</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>scrollable</span></td
+            ><td><span>页面是否可以滚动</span></td
+            ><td><span>Boolean</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>keyboard</span></td
+            ><td><span>是否可以按 Esc 键关闭</span></td
+            ><td><span>Boolean</span></td
+            ><td><span>false</span></td></tr
+          ><tr
+            ><td><span>onOk</span></td
+            ><td><span>点击确定的回调</span></td
+            ><td><span>Function</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>onCancel</span></td
+            ><td
+              ><span>点击取消的回调，只在</span><code>Modal.confirm()</code><span>下有效</span></td
+            ><td><span>Function</span></td
+            ><td><span>-</span></td></tr
+          ><tr
+            ><td><span>lockScroll</span></td
+            ><td><span>是否禁止对页面滚动条的修改</span></td
+            ><td><span>Boolean</span></td
+            ><td><span>true</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ><p><span>另外提供了全局关闭对话框的方法：</span></p
+    ><ul
+      ><li><code>Rabbit.MiniModal.remove()</code></li></ul
+    ></div
+  >
+</template>

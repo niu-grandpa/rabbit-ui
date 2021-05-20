@@ -1,7 +1,7 @@
 <template>
   <h1>{{ props.name }} {{ props.title }}</h1>
   <p>{{ desc }}</p>
-  <blockquote>
+  <blockquote v-if="props.showTip">
     特别提醒：使用前需要先初始化组件 <code>new Rabbit.{{ props.name }}()</code>，如果为 NPM
     环境则无需添加 <code>Rabbit</code> 前缀
   </blockquote>
@@ -37,6 +37,10 @@ const props: Readonly<Props> = defineProps({
     require: true
   },
   showWhenToUse: {
+    type: Boolean,
+    default: true
+  },
+  showTip: {
     type: Boolean,
     default: true
   }

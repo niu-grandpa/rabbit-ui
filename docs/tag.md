@@ -26,7 +26,7 @@
 	const tag = new Rabbit.Tag();
     tag.config('#closeTag').events({
         onClose: ($this) => {
-            //....
+            console.log($this);
         }
     })
 </script>
