@@ -70,14 +70,14 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Breadcrumb from '../../../../../../../src/components/breadcrumb'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Breadcrumb from '../../../../../../src/components/breadcrumb'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Basic,
   WithIcon,
   Separator,
   APITable
-} from '../../../../../examples-code/components/breadcrumb'
+} from '../../../../examples-code/components/breadcrumb'
 
 onMounted(() => new Breadcrumb())
 

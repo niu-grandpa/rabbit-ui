@@ -49,9 +49,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Jumbotron from '../../../../../../../src/components/jumbotron'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
-import { Basic, Appearance, APITable } from '../../../../../examples-code/components/jumbotron'
+import Jumbotron from '../../../../../../src/components/jumbotron'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import { Basic, Appearance, APITable } from '../../../../examples-code/components/jumbotron'
 
 onMounted(() => new Jumbotron())
 

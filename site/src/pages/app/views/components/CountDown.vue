@@ -23,10 +23,10 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import CountDown from '../../../../../../../src/components/count-down'
-import Message from '../../../../../../../src/components/message'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
-import { Basic, APITable } from '../../../../../examples-code/components/count-down'
+import CountDown from '../../../../../../src/components/count-down'
+import Message from '../../../../../../src/components/message'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import { Basic, APITable } from '../../../../examples-code/components/count-down'
 
 let countDown: CountDown
 

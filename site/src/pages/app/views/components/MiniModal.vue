@@ -58,10 +58,10 @@
 </template>
 
 <script lang="ts" setup>
-import Message from '../../../../../../../src/components/message'
-import MiniModal from '../../../../../../../src/components/mini-modal'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
-import { Basic, Confirm, APITable } from '../../../../../examples-code/components/mini-modal'
+import Message from '../../../../../../src/components/message'
+import MiniModal from '../../../../../../src/components/mini-modal'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import { Basic, Confirm, APITable } from '../../../../examples-code/components/mini-modal'
 
 const anchors: string[] = ['基础用法', '确认对话框', 'API']
 

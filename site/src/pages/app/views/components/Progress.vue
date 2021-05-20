@@ -67,15 +67,15 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Progress from '../../../../../../../src/components/progress'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Progress from '../../../../../../src/components/progress'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Basic,
   FDJDT,
   Percent,
   StrokeColor,
   APITable
-} from '../../../../../examples-code/components/progress'
+} from '../../../../examples-code/components/progress'
 
 onMounted(() => new Progress())
 

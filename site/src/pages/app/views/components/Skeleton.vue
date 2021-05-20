@@ -76,8 +76,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import Skeleton from '../../../../../../../src/components/skeleton'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Skeleton from '../../../../../../src/components/skeleton'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Basic,
   Custom,
@@ -85,7 +85,7 @@ import {
   Loading,
   WithAnimation,
   APITable
-} from '../../../../../examples-code/components/skeleton'
+} from '../../../../examples-code/components/skeleton'
 
 onMounted(() => new Skeleton())
 

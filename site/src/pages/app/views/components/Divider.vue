@@ -84,15 +84,15 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Divider from '../../../../../../../src/components/divider'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Divider from '../../../../../../src/components/divider'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Vertical,
   Horizontal,
   TextStyle,
   HeaderPosition,
   APITable
-} from '../../../../../examples-code/components/divider'
+} from '../../../../examples-code/components/divider'
 
 onMounted(() => new Divider())
 

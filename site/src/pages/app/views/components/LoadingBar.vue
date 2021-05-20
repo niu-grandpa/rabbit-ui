@@ -36,14 +36,14 @@
 </template>
 
 <script lang="ts" setup>
-import Loading from '../../../../../../../src/components/loading-bar'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Loading from '../../../../../../src/components/loading-bar'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Basic,
   UsedInRoute,
   UseInAsync,
   APITable
-} from '../../../../../examples-code/components/loading-bar'
+} from '../../../../examples-code/components/loading-bar'
 
 const anchors: string[] = ['基础用法', 'API']
 const start = () => {

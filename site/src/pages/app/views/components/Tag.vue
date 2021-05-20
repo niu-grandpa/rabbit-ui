@@ -106,8 +106,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Tag from '../../../../../../../src/components/tag'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
+import Tag from '../../../../../../src/components/tag'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
 import {
   Basic,
   Size,
@@ -115,7 +115,7 @@ import {
   Colors,
   CanSelect,
   APITable
-} from '../../../../../examples-code/components/tag'
+} from '../../../../examples-code/components/tag'
 
 onMounted(() => {
   const tag = new Tag()

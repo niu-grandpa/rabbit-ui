@@ -32,9 +32,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import PageHeader from '../../../../../../../src/components/page-header'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
-import { Basic, APITable } from '../../../../../examples-code/components/page-header'
+import PageHeader from '../../../../../../src/components/page-header'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import { Basic, APITable } from '../../../../examples-code/components/page-header'
 
 let ph: PageHeader
 onMounted(() => {

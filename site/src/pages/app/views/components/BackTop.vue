@@ -29,9 +29,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import BackTop from '../../../../../../../src/components/back-top'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../../components'
-import { Basic, CustomStyle, APITable } from '../../../../../examples-code/components/back-top'
+import BackTop from '../../../../../../src/components/back-top'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import { Basic, CustomStyle, APITable } from '../../../../examples-code/components/back-top'
 
 onMounted(() => new BackTop())
 
