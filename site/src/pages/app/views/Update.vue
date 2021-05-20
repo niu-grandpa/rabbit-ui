@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Timeline from '../../../../../../../src/components/timeline'
+import Timeline from '../../../../../src/components/timeline'
 
 onMounted(() => new Timeline())
 

@@ -47,9 +47,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Empty from '../../../../../../src/components/empty'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
-import { Basic, Custom, NoDesc, APITable } from '../../../../examples-code/components/empty'
+import Empty from '../../../../../src/components/empty'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
+import { Basic, Custom, NoDesc, APITable } from '../../../examples-code/components/empty'
 
 onMounted(() => new Empty())
 

@@ -174,8 +174,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Badge from '../../../../../../src/components/badge'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import Badge from '../../../../../src/components/badge'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
 import {
   Basic,
   RedDot,
@@ -187,7 +187,7 @@ import {
   Colors,
   PresetColor,
   APITable
-} from '../../../../../examples-code/components/badge'
+} from '../../../examples-code/components/badge'
 
 onMounted(() => new Badge())
 

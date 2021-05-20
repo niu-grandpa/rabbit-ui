@@ -73,9 +73,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Avatar from '../../../../../../src/components/avatar'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
-import { Basic, Type, AutoFontSize, APITable } from '../../../../examples-code/components/avatar'
+import Avatar from '../../../../../src/components/avatar'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
+import { Basic, Type, AutoFontSize, APITable } from '../../../examples-code/components/avatar'
 
 onMounted(() => new Avatar())
 

@@ -39,5 +39,5 @@
 </template>
 
 <script lang="ts" setup>
-import { Code1, Code2, Code3 } from '../../../../../examples-code/docs/start/'
+import { Code1, Code2, Code3 } from '../../../examples-code/docs/start/'
 </script>

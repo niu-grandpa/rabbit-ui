@@ -54,15 +54,15 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Time from '../../../../../../src/components/time'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import Time from '../../../../../src/components/time'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
 import {
   Basic,
   AutoUpdate,
   Types,
   WithAnchor,
   APITable
-} from '../../../../examples-code/components/time'
+} from '../../../examples-code/components/time'
 
 onMounted(() => new Time())
 

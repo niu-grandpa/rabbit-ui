@@ -124,8 +124,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Alert from '../../../../../../src/components/alert'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import Alert from '../../../../../src/components/alert'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
 import {
   Basic,
   WithDesc,
@@ -133,7 +133,7 @@ import {
   WithClose,
   WithBanner,
   APITable
-} from '../../../../examples-code/components/alert'
+} from '../../../examples-code/components/alert'
 
 onMounted(() => {
   const alert = new Alert()

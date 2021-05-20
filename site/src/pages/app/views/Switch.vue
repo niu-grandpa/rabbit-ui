@@ -79,9 +79,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Message from '../../../../../../src/components/message'
-import Switch from '../../../../../../src/components/switch'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
+import Message from '../../../../../src/components/message'
+import Switch from '../../../../../src/components/switch'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
 import {
   Basic,
   Size,
@@ -90,7 +90,7 @@ import {
   CustomColor,
   TextAndIcon,
   APITable
-} from '../../../../examples-code/components/switch'
+} from '../../../examples-code/components/switch'
 
 onMounted(() => {
   const _switch = new Switch()

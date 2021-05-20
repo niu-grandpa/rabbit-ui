@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts" setup>
-import { AZCode } from '../../../../../examples-code/docs/introduce'
-import { CDNAZ, SL } from '../../../../../examples-code/docs/install'
-import { Anchor } from '../../../../../components'
+import { AZCode } from '../../../examples-code/docs/introduce'
+import { CDNAZ, SL } from '../../../examples-code/docs/install'
+import { Anchor } from '../../../components'
 
 const anchors: string[] = ['CDN-引入', 'Npm 或 Yarn 安装']
 </script>

@@ -48,15 +48,15 @@
         </a>
       </li>
     </ul>
+    <Anchor :linkList="anchors" />
   </article>
-  <Anchor :linkList="anchors" />
 </template>
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Progress from '../../../../../../../src/components/progress'
-import { Anchor } from '../../../../../components'
-import { AZCode, AZCode2, SLCode } from '../../../../../examples-code/docs/introduce'
+import Progress from '../../../../../src/components/progress'
+import { Anchor } from '../../../components'
+import { AZCode, AZCode2, SLCode } from '../../../examples-code/docs/introduce'
 
 const features: string[] = [
   '使用简洁且语义化的自定义标签',

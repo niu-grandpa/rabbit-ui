@@ -67,9 +67,9 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import Carousel from '../../../../../../src/components/carousel'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../../components'
-import { Basic, AutoPlay, Fade, APITable } from '../../../../examples-code/components/carousel'
+import Carousel from '../../../../../src/components/carousel'
+import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
+import { Basic, AutoPlay, Fade, APITable } from '../../../examples-code/components/carousel'
 
 let carousel: Carousel
 
