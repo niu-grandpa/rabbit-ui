@@ -16,6 +16,19 @@
 最简单定义一个时间轴的用法。
 
 ```html
+<style>
+    .time {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 !important;
+    }
+
+    .content {
+      padding-left: 5px;
+      margin: 0 !important;
+    }
+</style>
+
 <r-timeline>
   <r-timeline-item>
       <p class="time">1976s</p>

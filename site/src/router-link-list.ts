@@ -43,7 +43,7 @@ export const COMPONENTSLIST: A[] = [
   { text: 'Result 结果', path: '/components/result' },
   { text: 'Skeleton 骨架屏', path: '/components/skeleton' },
   { text: 'Spin 加载中', path: '/components/spin' },
-  { text: 'Steps 步骤条', path: '/components/steos' },
+  { text: 'Steps 步骤条', path: '/components/steps' },
   { text: 'Switch 开关', path: '/components/switch' },
   { text: 'Tabs 选项卡', path: '/components/tabs' },
   { text: 'Tag 标签', path: '/components/tag' },

@@ -1,0 +1,46 @@
+<template>
+  <div class=""
+    ><h3><a name="timeline" class="md-header-anchor"></a><span>Timeline</span></h3
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>属性</span></th
+            ><th><span>说明</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>pending</span></td
+            ><td><span>指定是否最后一个节点为幽灵节点</span></td
+            ><td><span>-</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ><h3><a name="timeline-item" class="md-header-anchor"></a><span>Timeline-item </span></h3
+    ><figure
+      ><table
+        ><thead
+          ><tr
+            ><th><span>属性</span></th
+            ><th><span>说明</span></th
+            ><th><span>默认值</span></th></tr
+          ></thead
+        ><tbody
+          ><tr
+            ><td><span>color</span></td
+            ><td
+              ><span>圆圈颜色，可选值为</span><code>blue</code><span>、</span><code>red</code
+              ><span>、</span><code>green</code><span>、</span><code>gray</code
+              ><span>，或自定义色值</span></td
+            ><td><span>blue</span></td></tr
+          ><tr
+            ><td><span>dot</span></td
+            ><td><span>自定义时间轴点</span></td
+            ><td><span>-</span></td></tr
+          ></tbody
+        ></table
+      ></figure
+    ><p>&nbsp;</p><p>&nbsp;</p></div
+  >
+</template>
