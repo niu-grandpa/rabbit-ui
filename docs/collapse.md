@@ -32,8 +32,8 @@
 <script>
     const collapse = new Rabbit.Collapse();
     collapse.config('#demoCollapse').events({
-        onChange: (index) => {
-            console.log(index);
+        onChange: (key) => {
+            console.log(key);
         }
     });
 </script>
