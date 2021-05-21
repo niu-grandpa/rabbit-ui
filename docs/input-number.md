@@ -132,7 +132,11 @@
 
 该方法返回以下值：
 
-- `endTime`
+- `value`
+- `step`
+- `disabled`
+- `readOnly`
+- `editable`
 - `events(options)`
 
 | 返回值   | 说明                                   | 类型      |
