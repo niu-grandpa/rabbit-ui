@@ -33,18 +33,18 @@
 </r-modal>
 
 <script>
-		const modal = new Rabbit.Modal();
-        handleModal1 = () => {
-            modal.config('#m1').visible = true;
-            modal.config('#m1').events({
-                onOk: () => {
-                    Rabbit.Message.info('点击了确定');
-                },
-                onCancel: () => {
-                    Rabbit.Message.info('点击了取消');
-                }
-            });
-   	    };
+	const modal = new Rabbit.Modal();
+    handleModal1 = () => {
+       modal.config('#m1').visible = true;
+       modal.config('#m1').events({
+           onOk: () => {
+                Rabbit.Message.info('点击了确定');
+            },
+           onCancel: () => {
+                Rabbit.Message.info('点击了取消');
+           }
+        });
+   	  };
 </script>
 ```
 

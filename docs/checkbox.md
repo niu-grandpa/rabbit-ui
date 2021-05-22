@@ -85,16 +85,14 @@
     checkAll.events({
         onChange: (checked) => {
             if (checkAll.indeterminate) {
+                checkAllGroup.value = [];
                 checkAll.checked = false;
-            } else {
-                checkAll.checked = true;
-            }
-            checkAll.indeterminate = false;
-
-            if (checked) {
-                checkAllGroup.value = ['香蕉', '苹果', '西瓜'];
+                checkAll.indeterminate = false;
+            } else if (checked) {
+                checkAllGroup.value = ['苹果', '西瓜', '猕猴桃'];
             } else {
                 checkAllGroup.value = [];
+                checkAll.indeterminate = false;
             }
         }
     });
