@@ -19,7 +19,7 @@
       <template #case>
         <r-input-number value="1" min="1" max="10" step="1.2" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="小数">小数</span></template>
       <template #desc>通过设置<code>step</code>属性控制每次改变的精度。</template>
       <template #code><Step /></template>
     </CodeBox>
@@ -32,7 +32,7 @@
         />
         <r-input-number value="100" formatter="`${value}%`" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="格式化展示">格式化展示</span></template>
       <template #desc>
         <p>
           通过<code>formatter</code>格式化数字，以展示具有具体含义的数据，往往需要配合<code>parser</code>一起使用。
@@ -51,7 +51,7 @@
         <r-input-number value="3" />
         <r-input-number value="3" size="large" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="尺寸">尺寸</span></template>
       <template #desc>
         <p>
           通过设置<code>size</code>属性为<code>large</code>和<code>small</code>将输入框设置为大和小尺寸，不设置为默认尺寸。
@@ -64,7 +64,7 @@
         <r-input-number value="1" disabled="true" id="test2" />
         <button class="rab-btn rab-btn-primary" @click="handleClick">禁用状态</button>
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="不可用">不可用</span></template>
       <template #desc>
         通过设置<code>disabled="true"</code>属性禁用输入框，点击按钮切换状态。
       </template>
@@ -74,7 +74,7 @@
       <template #case>
         <r-input-number value="1" readOnly="true" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="只读">只读</span></template>
       <template #desc>通过设置<code>readonly="true"</code>属性开启只读。</template>
       <template #code><ReadOnly /></template>
     </CodeBox>
@@ -82,7 +82,7 @@
       <template #case>
         <r-input-number value="1" editable="false" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="不可编辑">不可编辑</span></template>
       <template #desc>通过设置<code>editable="false"</code>属性控制是否能编辑。</template>
       <template #code><Editable /></template>
     </CodeBox>
@@ -90,7 +90,7 @@
       <template #case>
         <r-input-number value="1" controls-outside="true" />
       </template>
-      <template #header><span id="基础用法">基础用法</span></template>
+      <template #header><span id="按钮位置">按钮位置</span></template>
       <template #desc>
         通过设置<code>controls-outside="true"</code>属性可以将按钮位置置于输入框两侧。
       </template>
