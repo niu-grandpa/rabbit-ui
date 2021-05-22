@@ -237,16 +237,12 @@ class Checkbox implements Config {
 
         if (length == 0) {
             Checkboxs.forEach((elm) => _setChecked(elm, false));
-        } else if (length == 1) {
-            _setChecked(Checkboxs[0], true);
         } else {
             let i = 0;
-
             for (; i < length; i++) {
                 const currentCheckbox = checkboxGroupWrapper.querySelector(
                     `[data-label="${value[i]}"]`
                 );
-
                 currentCheckbox ? _setChecked(currentCheckbox, true) : '';
             }
         }
