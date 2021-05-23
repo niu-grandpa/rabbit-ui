@@ -1,6 +1,6 @@
 /*!
 * RabbitUI
-* Web: https://www.rabbitui.xyz (待)
+* Web: https://www.rabbitui.cn
 * Github: https://github.com/niu-grandpa/rabbit-ui
 * Author: 钟瑞鸿 (Ryan Jhon)
 */.rab-load-loop{-webkit-animation:ani-load-loop 1s linear infinite;animation:ani-load-loop 1s linear infinite}@-webkit-keyframes ani-load-loop{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes ani-load-loop{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.input-group-error-append,.input-group-error-prepend{background-color:#fff;border:1px solid #ff4d4f}.input-group-error-append .rab-select-selection,.input-group-error-prepend .rab-select-selection{background-color:inherit;border:1px solid rgba(0,0,0,0)}.input-group-error-prepend{border-right:0}.input-group-error-append{border-left:0}

@@ -27,10 +27,10 @@
       <template #case>
         <r-input-number
           value="1000"
-          formatter="`$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :formatter="formatter1"
           parser="[/\$\s?|(,*)/g, '']"
         />
-        <r-input-number value="100" formatter="`${value}%`" />
+        <r-input-number value="100" :formatter="formatter2" />
       </template>
       <template #header><span id="格式化展示">格式化展示</span></template>
       <template #desc>
@@ -103,9 +103,9 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import InputNumber from '../../../../../src/components/input-number'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
+import { onMounted } from "vue";
+import InputNumber from "../../../../../src/components/input-number";
+import { Anchor, ExampleHeaderArea, CodeBox } from "../../../components";
 import {
   Basic,
   Size,
@@ -115,37 +115,40 @@ import {
   ReadOnly,
   Disabled,
   ControlsOutside,
-  APITable
-} from '../../../examples-code/components/input-number'
+  APITable,
+} from "../../../examples-code/components/input-number";
 
 let inputNumber: InputNumber,
-  flag = true
+  flag = true;
 
 onMounted(() => {
-  inputNumber = new InputNumber()
-  inputNumber.config('#test1').events({
+  inputNumber = new InputNumber();
+  inputNumber.config("#test1").events({
     onChange: (value) => {
-      console.log('changed!', value)
-    }
-  })
-})
+      console.log("changed!", value);
+    },
+  });
+});
+
+const formatter1 = "`$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')";
+const formatter2 = "`${value}%`";
 
 const handleClick = () => {
-  flag ? (flag = !flag) : (flag = true)
-  inputNumber.config('#test2').disabled = flag
-}
+  flag ? (flag = !flag) : (flag = true);
+  inputNumber.config("#test2").disabled = flag;
+};
 
 const anchors: string[] = [
-  '基础用法',
-  '小数',
-  '格式化展示',
-  '尺寸',
-  '不可用',
-  '只读',
-  '不可编辑',
-  '按钮位置',
-  'API'
-]
+  "基础用法",
+  "小数",
+  "格式化展示",
+  "尺寸",
+  "不可用",
+  "只读",
+  "不可编辑",
+  "按钮位置",
+  "API",
+];
 </script>
 
 <style scoped>

@@ -10,7 +10,7 @@
 #app-content {
   .main-container {
     position: relative;
-    min-height: 1500px;
+    min-height: 500px;
     padding: 20px 170px 32px 64px;
     background: #fff;
 

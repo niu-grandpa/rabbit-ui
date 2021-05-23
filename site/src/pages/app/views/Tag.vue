@@ -105,32 +105,32 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import Tag from '../../../../../src/components/tag'
-import { Anchor, ExampleHeaderArea, CodeBox } from '../../../components'
+import { onMounted } from "vue";
+import Tag from "../../../../../src/components/tag";
+import { Anchor, ExampleHeaderArea, CodeBox } from "../../../components";
 import {
   Basic,
   Size,
   StyleTypes,
   Colors,
   CanSelect,
-  APITable
-} from '../../../examples-code/components/tag'
+  APITable,
+} from "../../../examples-code/components/tag";
 
 onMounted(() => {
-  const tag = new Tag()
+  const tag = new Tag();
 
-  tag.config('#closeTag').events({
-    onClose: ($this) => {
-      console.log($this)
-    }
-  })
-  tag.config('#checkedTag').events({
+  tag.config("#closeTag").events({
+    onClose: (el) => {
+      console.log(el);
+    },
+  });
+  tag.config("#checkedTag").events({
     onChange: (checked) => {
-      console.log(checked)
-    }
-  })
-})
+      console.log(checked);
+    },
+  });
+});
 
-const anchors: string[] = ['基础用法', '样式类型', '各种颜色', '可选择', '尺寸', 'API']
+const anchors: string[] = ["基础用法", "样式类型", "各种颜色", "可选择", "尺寸", "API"];
 </script>

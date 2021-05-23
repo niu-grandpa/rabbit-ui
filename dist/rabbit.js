@@ -726,7 +726,7 @@ var Breadcrumb = /** @class */ (function () {
 
 var Button = /** @class */ (function () {
     function Button() {
-        this.VERSION = '1.0';
+        this.VERSION = '1.1.0';
         this.COMPONENTS = (0,dom_utils.$el)("." + prefix.default.button, { all: true });
         this._getAllBtns(this.COMPONENTS);
     }
@@ -738,64 +738,70 @@ var Button = /** @class */ (function () {
                 return false;
             },
             set loading(newVal) {
-                if (!utils.type.isBol(newVal))
+                if (newVal && !utils.type.isBol(newVal))
                     return;
-                var loadingIcon = target.querySelector("." + prefix.default.icon + "-loading-solid");
-                if (newVal) {
-                    if (!loadingIcon) {
-                        target.classList.add(prefix.default.button + "-loading");
-                        target.prepend(Button.prototype._loadIcon());
-                    }
-                }
-                else {
-                    target.classList.remove(prefix.default.button + "-loading");
-                    loadingIcon ? loadingIcon.remove() : '';
-                }
+                Button.prototype._setLoading(target, false, newVal);
             }
         };
     };
     Button.prototype._getAllBtns = function (COMPONENTS) {
         var _this = this;
         COMPONENTS.forEach(function (node) {
-            _this._setLoading(node);
-            _this._setIcon(node);
+            var _a = _this._attrs(node), icon = _a.icon, loading = _a.loading;
+            _this._setIcon(node, icon);
+            _this._setLoading(node, true, loading);
             (0,dom_utils.removeAttrs)(node, ['icon', 'loading']);
         });
     };
-    Button.prototype._setLoading = function (node) {
-        if (this._isLoading(node)) {
-            if (node.innerHTML === '')
-                node.classList.add(prefix.default.button + "-icon-only");
-            node.classList.add(prefix.default.button + "-loading");
-            node.prepend(this._loadIcon());
-        }
-    };
-    Button.prototype._setIcon = function (node) {
-        if (!this._getIcon(node))
+    Button.prototype._setIcon = function (node, icon) {
+        if (!icon)
             return;
         if (node.innerHTML === '') {
-            var btnIcon = "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + this._getIcon(node) + "\"></i>";
             node.classList.add(prefix.default.button + "-icon-only");
-            (0,dom_utils.setHtml)(node, btnIcon);
+            var ButtonIcon = "\n              <i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + icon + "\"></i>\n            ";
+            (0,dom_utils.setHtml)(node, ButtonIcon);
         }
         else {
             var Icon = (0,dom_utils.createElem)('i');
-            Icon.className = prefix.default.icon + " " + prefix.default.icon + "-" + this._getIcon(node);
+            Icon.className = prefix.default.icon + " " + prefix.default.icon + "-" + icon;
             node.prepend(Icon);
         }
     };
-    Button.prototype._isLoading = function (node) {
-        return node.getAttribute('loading') === 'true';
+    // 2021.5.23
+    // v1.1.0 修复按钮 loading 状态下加载中图标和原有图标并列显示的 bug
+    Button.prototype._setLoading = function (node, firstRender, loading) {
+        var _a;
+        var OriginalIcon = node.querySelector('.rab-icon');
+        var LoadingIcon = (0,dom_utils.createElem)('i');
+        LoadingIcon.className = "rab-load-loop " + prefix.default.icon + " " + prefix.default.icon + "-loading-solid";
+        if (loading) {
+            if (OriginalIcon) {
+                (0,dom_utils.setCss)(OriginalIcon, 'display', 'none');
+            }
+            if (node.innerHTML === '') {
+                node.classList.add(prefix.default.button + "-icon-only");
+            }
+            node.classList.add(prefix.default.button + "-loading");
+            node.prepend(LoadingIcon);
+        }
+        else {
+            if (firstRender)
+                return;
+            (0,dom_utils.setCss)(node.children[1], 'display', '');
+            (_a = node.firstElementChild) === null || _a === void 0 ? void 0 : _a.remove();
+            if (node.classList.contains(prefix.default.button + "-loading")) {
+                node.classList.remove(prefix.default.button + "-loading");
+            }
+            if (node.classList.contains(prefix.default.button + "-icon-only")) {
+                node.classList.remove(prefix.default.button + "-icon-only");
+            }
+        }
     };
-    Button.prototype._loadIcon = function () {
-        var LoadIcon = (0,dom_utils.createElem)('i');
-        LoadIcon.className = "rab-load-loop " + prefix.default.icon + " " + prefix.default.icon + "-loading-solid";
-        // v1.0.2 取消样式高度，否则加载中图标会和文字不在同一水平线上
-        // setCss(LoadIcon, 'height', '25px');
-        return LoadIcon;
-    };
-    Button.prototype._getIcon = function (node) {
-        return node.getAttribute('icon') || '';
+    Button.prototype._attrs = function (node) {
+        return {
+            icon: (0,dom_utils.getStrTypeAttr)(node, 'icon', ''),
+            loading: (0,dom_utils.getBooleanTypeAttr)(node, 'loading')
+        };
     };
     return Button;
 }());
@@ -1335,9 +1341,6 @@ var Checkbox = /** @class */ (function () {
         var length = value.length;
         if (length == 0) {
             Checkboxs.forEach(function (elm) { return _setChecked(elm, false); });
-        }
-        else if (length == 1) {
-            _setChecked(Checkboxs[0], true);
         }
         else {
             var i = 0;
@@ -3422,7 +3425,7 @@ var MiniModal = /** @class */ (function () {
         var maskAniCls = type === 'in' ? { enterCls: 'rab-fade-in' } : { leaveCls: 'rab-fade-out' };
         var modalAniCls = type === 'in' ? { enterCls: 'zoom-big-enter' } : { leaveCls: 'zoom-big-leave' };
         (0,mixins.CssTransition)(elem1, __assign(__assign({ inOrOut: type }, maskAniCls), { timeout: 250, rmCls: true }));
-        (0,mixins.CssTransition)(elem2, __assign(__assign({ inOrOut: type }, modalAniCls), { timeout: 300, rmCls: true }));
+        (0,mixins.CssTransition)(elem2, __assign(__assign({ inOrOut: type }, modalAniCls), { timeout: 200, rmCls: true }));
     };
     MiniModal.prototype._setScrollable = function (scrollable, lockScroll) {
         (0,mixins.Scrollable)({ scroll: scrollable, lock: lockScroll });
@@ -9111,7 +9114,7 @@ function isUseHTMLString(elem, content, use) {
 function validComps(target, compName) {
     var r = '[Rabbit] Error: ';
     if (!target) {
-        throw (new Error().message = r + "The target element you selected for configuration does not exist --> \"" + target + "\"");
+        throw new Error("The target element you selected for configuration does not exist -- > '" + target + "'. This error occurred in the " + compName + " component");
     }
     var targetName = target.tagName.toLowerCase().replace(/r-/, '');
     if (targetName !== compName) {

@@ -30,14 +30,16 @@
 幽灵按钮将其他按钮的内容反色，背景变为透明，常用在有色背景上。
 
 ```html
-<button type="button" class="rab-btn rab-btn-ghost">默认按钮</button>
-<button type="button" class="rab-btn rab-btn-primary rab-btn-ghost">主要按钮</button>
-<button type="button" class="rab-btn rab-btn-dashed rab-btn-ghost">虚线按钮</button>
-<button type="button" class="rab-btn rab-btn-text rab-btn-ghost">文本按钮</button>
-<button type="button" class="rab-btn rab-btn-info rab-btn-ghost">信息按钮</button>
-<button type="button" class="rab-btn rab-btn-success rab-btn-ghost">成功按钮</button>
-<button type="button" class="rab-btn rab-btn-warning rab-btn-ghost">警告按钮</button>
-<button type="button" class="rab-btn rab-btn-error rab-btn-ghost">危险按钮</button>
+<div style="background: rgb(190, 200, 200); padding: 20px;">
+    <button type="button" class="rab-btn rab-btn-ghost">默认按钮</button>
+    <button type="button" class="rab-btn rab-btn-primary rab-btn-ghost">主要按钮</button>
+    <button type="button" class="rab-btn rab-btn-dashed rab-btn-ghost">虚线按钮</button>
+    <button type="button" class="rab-btn rab-btn-text rab-btn-ghost">文本按钮</button>
+    <button type="button" class="rab-btn rab-btn-info rab-btn-ghost">信息按钮</button>
+    <button type="button" class="rab-btn rab-btn-success rab-btn-ghost">成功按钮</button>
+    <button type="button" class="rab-btn rab-btn-warning rab-btn-ghost">警告按钮</button>
+    <button type="button" class="rab-btn rab-btn-error rab-btn-ghost">危险按钮</button>
+</div>
 ```
 
 - 图标按钮及按钮形状

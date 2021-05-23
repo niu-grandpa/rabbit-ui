@@ -22,6 +22,8 @@ interface Props {
   name: string;
   title: string;
   desc: string;
+  showTip: boolean;
+  showWhenToUse: boolean;
 }
 
 const props: Readonly<Props> = defineProps({

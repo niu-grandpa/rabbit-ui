@@ -40,6 +40,11 @@ const updateInfo: {
   content: string[];
 }[] = [
   {
+    version: "1.5.1",
+    time: "2021-05-2x",
+    content: ["修复 Button 组件在 loading 状态下，原有图标和加载中图标并列显示的问题。"],
+  },
+  {
     version: "1.5.0",
     time: "2021-05-10",
     content: ["新增组件 InputNumber。"],
