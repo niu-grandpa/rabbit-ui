@@ -1,4 +1,12 @@
-import { $el, createElem, removeAttrs, setHtml } from '../../dom-utils';
+import {
+    $el,
+    createElem,
+    getBooleanTypeAttr,
+    getStrTypeAttr,
+    removeAttrs,
+    setCss,
+    setHtml
+} from '../../dom-utils';
 import { type, validComps } from '../../utils';
 import PREFIX from '../prefix';
 
@@ -15,7 +23,7 @@ class Button implements Config {
     readonly COMPONENTS: NodeListOf<Element>;
 
     constructor() {
-        this.VERSION = '1.0';
+        this.VERSION = '1.1.0';
         this.COMPONENTS = $el(`.${PREFIX.button}`, { all: true });
         this._getAllBtns(this.COMPONENTS);
     }
@@ -34,70 +42,76 @@ class Button implements Config {
                 return false;
             },
             set loading(newVal) {
-                if (!type.isBol(newVal)) return;
-
-                const loadingIcon = target.querySelector(`.${PREFIX.icon}-loading-solid`);
-
-                if (newVal) {
-                    if (!loadingIcon) {
-                        target.classList.add(`${PREFIX.button}-loading`);
-                        target.prepend(Button.prototype._loadIcon());
-                    }
-                } else {
-                    target.classList.remove(`${PREFIX.button}-loading`);
-                    loadingIcon ? loadingIcon.remove() : '';
-                }
+                if (newVal && !type.isBol(newVal)) return;
+                Button.prototype._setLoading(target, false, newVal);
             }
         };
     }
 
     private _getAllBtns(COMPONENTS: NodeListOf<Element>): void {
         COMPONENTS.forEach((node) => {
-            this._setLoading(node);
-            this._setIcon(node);
+            const { icon, loading } = this._attrs(node);
+
+            this._setIcon(node, icon);
+            this._setLoading(node, true, loading);
+
             removeAttrs(node, ['icon', 'loading']);
         });
     }
 
-    private _setLoading(node: Element): void {
-        if (this._isLoading(node)) {
-            if (node.innerHTML === '') node.classList.add(`${PREFIX.button}-icon-only`);
-
-            node.classList.add(`${PREFIX.button}-loading`);
-            node.prepend(this._loadIcon());
-        }
-    }
-
-    private _setIcon(node: Element): void {
-        if (!this._getIcon(node)) return;
+    private _setIcon(node: Element, icon: string): void {
+        if (!icon) return;
 
         if (node.innerHTML === '') {
-            const btnIcon = `<i class="${PREFIX.icon} ${PREFIX.icon}-${this._getIcon(node)}"></i>`;
-
             node.classList.add(`${PREFIX.button}-icon-only`);
-
-            setHtml(node, btnIcon);
+            const ButtonIcon = `
+              <i class="${PREFIX.icon} ${PREFIX.icon}-${icon}"></i>
+            `;
+            setHtml(node, ButtonIcon);
         } else {
             const Icon = createElem('i');
-            Icon.className = `${PREFIX.icon} ${PREFIX.icon}-${this._getIcon(node)}`;
+            Icon.className = `${PREFIX.icon} ${PREFIX.icon}-${icon}`;
             node.prepend(Icon);
         }
     }
 
-    private _isLoading(node: Element): boolean {
-        return node.getAttribute('loading') === 'true';
+    // 2021.5.23
+    // v1.1.0 修复按钮 loading 状态下加载中图标和原有图标并列显示的 bug
+    private _setLoading(node: Element, firstRender: boolean, loading: boolean): void {
+        const OriginalIcon = node.querySelector('.rab-icon');
+        const LoadingIcon = createElem('i');
+        LoadingIcon.className = `rab-load-loop ${PREFIX.icon} ${PREFIX.icon}-loading-solid`;
+
+        if (loading) {
+            if (OriginalIcon) {
+                setCss(OriginalIcon, 'display', 'none');
+            }
+            if (node.innerHTML === '') {
+                node.classList.add(`${PREFIX.button}-icon-only`);
+            }
+
+            node.classList.add(`${PREFIX.button}-loading`);
+            node.prepend(LoadingIcon);
+        } else {
+            if (firstRender) return;
+
+            setCss(node.children[1], 'display', '');
+            node.firstElementChild?.remove();
+
+            if (node.classList.contains(`${PREFIX.button}-loading`)) {
+                node.classList.remove(`${PREFIX.button}-loading`);
+            }
+            if (node.classList.contains(`${PREFIX.button}-icon-only`)) {
+                node.classList.remove(`${PREFIX.button}-icon-only`);
+            }
+        }
     }
 
-    private _loadIcon(): HTMLElement {
-        const LoadIcon = createElem('i');
-        LoadIcon.className = `rab-load-loop ${PREFIX.icon} ${PREFIX.icon}-loading-solid`;
-        // v1.0.2 取消样式高度，否则加载中图标会和文字不在同一水平线上
-        // setCss(LoadIcon, 'height', '25px');
-        return LoadIcon;
-    }
-
-    private _getIcon(node: Element): string {
-        return node.getAttribute('icon') || '';
+    private _attrs(node: Element) {
+        return {
+            icon: getStrTypeAttr(node, 'icon', ''),
+            loading: getBooleanTypeAttr(node, 'loading')
+        };
     }
 }
 
