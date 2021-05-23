@@ -78,7 +78,7 @@
       blockquote {
         margin: 1em 0;
         padding-left: 0.8em;
-        font-size: 90%;
+        font-size: 100%;
       }
     }
   }

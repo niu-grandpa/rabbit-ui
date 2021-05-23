@@ -126,24 +126,5 @@
         </tbody>
       </table>
     </figure>
-    <h2><a name="faq" class="md-header-anchor"></a><span>FAQ</span></h2>
-    <h3>
-      <a
-        name="通过异步或者关闭按钮关闭消息后为什么-then--接口的回调事件不生效"
-        class="md-header-anchor"
-      ></a
-      ><span>通过异步或者关闭按钮关闭消息后，为什么 </span><code>then</code
-      ><span> 接口的回调事件不生效</span>
-    </h3>
-    <p>
-      <span
-        >组件提供的
-        Promise接口是当实例自动关闭时才会触发的，并不是通过任意方式关闭组件都会调用该接口。</span
-      >
-    </p>
-    <p>
-      <span>如果您想通过手动移除消息后接着添加回调事件，请使用 </span><code>onClose</code
-      ><span> api，至于要在异步移除后添加事件，建议是在异步的那个时机里添加</span>
-    </p>
   </div>
 </template>
