@@ -99,8 +99,23 @@
 
 ```html
 <button type="button" loading="true" class="rab-btn rab-btn-primary">Loading...</button>
+<button type="button" id="testBtn1" class="rab-btn rab-btn-circle"></button>
+<button type="button" id="testBtn2" class="rab-btn rab-btn-circle" icon="ios-power"></button>
 <button type="button" loading="true" class="rab-btn rab-btn-circle"></button>
 <button type="button" loading="true" class="rab-btn rab-btn-primary rab-btn-circle"></button>
+
+<script>
+	const button = new Rabbit.Button();
+    const btn1 = document.querySelector('#testBtn1');
+    const btn2 = document.querySelector('#testBtn2');
+    
+    btn1.onclick = () => {
+        button.config('#testBtn1').loading = true;
+    };
+    btn2.onclick = () => {
+        button.config('#testBtn1').loading = true;
+    }
+</script>
 ```
 
 - 按钮组合
