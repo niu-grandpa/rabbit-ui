@@ -34,6 +34,27 @@
 - 组件提供了12个不同的方向显示Tooltip，具体配置可查看API。
 
 ```html
+<style>
+    top,
+   .bottom {
+        text-align: center;
+    }
+    
+    .center {
+        width: 300px;
+        margin: 10px auto;
+        overflow: hidden;
+    }
+    
+    .center-left {
+        float: left;
+    }
+    
+    .center-right {
+        float: right;
+    }
+</style>
+
 <div class="top">
   <r-tooltip content="Top Left 文字提示" placement="top-start">
       <button class="rab-btn">上左</button>
