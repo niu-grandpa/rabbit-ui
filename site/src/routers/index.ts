@@ -6,6 +6,10 @@ const router = createRouter({
   history: routerHistory,
   routes: [
     {
+      path: '/',
+      component: () => import('@/App.vue')
+    },
+    {
       path: '/docs',
       redirect: '/'
     },
