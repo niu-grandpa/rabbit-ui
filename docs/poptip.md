@@ -55,6 +55,27 @@
 - 组件提供了12个不同的方向显示`Poptip`，具体配置可查看`API`。
 
 ```html
+<style>
+    .top,
+    .bottom {
+      text-align: center;
+    }
+
+    .center {
+      width: 300px;
+      margin: 10px auto;
+      overflow: hidden;
+    }
+
+    .center-left {
+      float: left;
+    }
+
+    .center-right {
+      float: right;
+    }
+</style>
+
 <div class="top">
   <r-poptip title="提示标题" content="提示内容" placement="top-start">
       <button class="rab-btn">上左</button>
