@@ -20,7 +20,7 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 - `active-index` 与 `r-tab-pane` 的 `index` 对应，用于标识当前激活的是哪一项，key 值默认从 0 开始，默认激活第一项。可以使用提供的 `config` 方法返回的 `activeIndex` 进行动态改变
 
 ```html
-<r-tabs active-index="1" id="a">
+<r-tabs active-index="1" id="test">
   <r-tab-pane tab="标签一" index="1">标签一的内容</r-tab-pane>
   <r-tab-pane tab="标签二" index="2">标签二的内容</r-tab-pane>
   <r-tab-pane tab="标签三" index="3">标签三的内容</r-tab-pane>
@@ -28,9 +28,11 @@ RabbitUI 依次提供了三级选项卡，分别用于不同的场景。
 
 <script>
 	const tabs = new Rabbit.Tabs();
-    setTimeout(() => {
-      tabs.config('#a').activeIndex = '2';
-    }, 1500);
+    tabs.config('#test').events({
+        onClick: (index) => {
+            console.log('当前点击的tab',index);
+        }
+    });
 </script>
 ```
 
