@@ -30,7 +30,10 @@
       </div>
     </section>
     <footer class="home-copyright">
-      <span>MIT Licensed | Copyright © 2021-present Ryan John</span>
+      <span>
+        Copyright © 2021-present Ryan John |
+        <a href="https://beian.miit.gov.cn" target="_blank">粤ICP备2021036489号</a>
+      </span>
     </footer>
   </main>
 </template>
@@ -66,17 +69,15 @@ import { GithubOutlined } from "@ant-design/icons-vue";
   }
 
   &-header {
-    @media (max-width: 420px) {
-      width: 100%;
-      margin-left: -5%;
-    }
-
     width: 1380px;
     height: 70px;
     margin-left: 8%;
     line-height: 70px;
 
     &-nav-logo {
+      @media (max-width: 420px) {
+        display: none;
+      }
       display: inline;
     }
   }
@@ -174,7 +175,8 @@ import { GithubOutlined } from "@ant-design/icons-vue";
     margin-left: 32px;
 
     @media (max-width: 420px) {
-      margin-left: 0;
+      margin-left: 4%;
+      text-align: center;
     }
 
     .ant-select {
