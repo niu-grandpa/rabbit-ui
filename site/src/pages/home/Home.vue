@@ -12,7 +12,7 @@
       <div class="home-middle">
         <div class="home-hero">
           <figure class="figure">
-            <img src="src/assets/logo.svg" width="200" height="200" alt="logo" />
+            <img src="/src/assets/logo.svg" width="190" height="190" alt="logo" />
           </figure>
           <h1 class="title">Rabbit UI</h1>
           <p class="desc">一个基于 JavaScript 的简洁 UI 组件库</p>
@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts" setup>
-import { NavLogo, SearchInput } from '../../components/index'
-import { GithubOutlined } from '@ant-design/icons-vue'
+import { NavLogo, SearchInput } from "../../components/index";
+import { GithubOutlined } from "@ant-design/icons-vue";
 </script>
 
 <style lang="less" scope>
@@ -113,7 +113,7 @@ import { GithubOutlined } from '@ant-design/icons-vue'
 
     .title {
       margin-top: 1rem;
-      font-size: 2rem;
+      font-size: 1.85rem;
       color: #2c3e50;
 
       @media (min-width: 420px) {
@@ -128,7 +128,7 @@ import { GithubOutlined } from '@ant-design/icons-vue'
     .desc {
       color: #476582;
       font-size: 1.2rem;
-      margin-top: 10px;
+      margin-top: 24px;
       padding-left: 16px;
 
       @media (min-width: 420px) {
@@ -138,11 +138,10 @@ import { GithubOutlined } from '@ant-design/icons-vue'
     }
 
     .nav-link-group {
-      margin-top: 1.3rem;
+      margin-top: 0.8rem;
       display: inline-block;
 
       @media (min-width: 420px) {
-        margin-top: 1.8rem;
         display: inline-block;
       }
 

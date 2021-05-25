@@ -106,6 +106,10 @@ const router = createRouter({
       component: () => import('pages/app/views/Empty.vue')
     },
     {
+      path: '/components/icon',
+      component: () => import('pages/app/views/Icon.vue')
+    },
+    {
       path: '/components/input-number',
       component: () => import('pages/app/views/InputNumber.vue')
     },

@@ -29,6 +29,7 @@ export const COMPONENTSLIST: A[] = [
   { text: 'Drawer 抽屉', path: '/components/drawer' },
   { text: 'Dropdown 下拉菜单', path: '/components/dropdown' },
   { text: 'Empty 空状态', path: '/components/empty' },
+  { text: 'Icon 图标', path: '/components/icon' },
   { text: 'InputNumber 数字输入框', path: '/components/input-number' },
   { text: 'Jumbotron 巨幕', path: '/components/jumbotron' },
   { text: 'LoadingBar 加载进度条', path: '/components/loading-bar' },
