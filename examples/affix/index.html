@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        height: 2000px;
+    }
+    
+    .example {
+        width: 520px;
+        padding: 42px 24px 50px;
+        border: 1px solid #f0f0f0;
+        margin: 20px auto;
+        margin-bottom: 250px;
+    }
+    
+    .demo-affix {
+        display: inline-block;
+        color: #fff;
+        padding: 10px 30px;
+        text-align: center;
+        background: #1890ff;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <r-affix>
+            <span class="demo-affix">固定在最顶部</span>
+        </r-affix>
+    </div>
+    <div class="example">
+        <r-affix offset-top="50">
+            <span class="demo-affix">固定在顶部 50px 的位置</span>
+        </r-affix>
+    </div>
+    <div class="example">
+        <r-affix offset-bottom="20">
+            <span class="demo-affix">固定在底部 20px 的位置</span>
+        </r-affix>
+    </div>
+    <div class="example">
+        <r-affix offset-top="100" id="test">
+            <span class="demo-affix">固定在顶部 100px 的位置</span>
+        </r-affix>
+    </div>
+</body>
+
+</html>
