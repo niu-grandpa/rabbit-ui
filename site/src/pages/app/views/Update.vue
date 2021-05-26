@@ -40,6 +40,11 @@ const updateInfo: {
   content: string[];
 }[] = [
   {
+    version: "1.6.0",
+    time: "2021-05-26",
+    content: ["新增 Affix 组件"],
+  },
+  {
     version: "1.5.1",
     time: "2021-05-24",
     content: ["修复 Button 组件在 loading 状态下，原有图标和加载中图标并列显示的问题。"],

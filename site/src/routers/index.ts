@@ -42,6 +42,10 @@ const router = createRouter({
       component: () => import('pages/app/views/FAQ.vue')
     },
     {
+      path: '/components/affix',
+      component: () => import('pages/app/views/Affix.vue')
+    },
+    {
       path: '/components/alert',
       component: () => import('pages/app/views/Alert.vue')
     },

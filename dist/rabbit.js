@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!***************************************!*\
-  !*** ./src/build-umd.ts + 77 modules ***!
+  !*** ./src/build-umd.ts + 79 modules ***!
   \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -63,6 +63,7 @@ __webpack_require__.d(__webpack_exports__, {
 var rabbit_simple_ui_namespaceObject = {};
 __webpack_require__.r(rabbit_simple_ui_namespaceObject);
 __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
+  "Affix": function() { return components_affix; },
   "Alert": function() { return components_alert; },
   "Avatar": function() { return components_avatar; },
   "BackTop": function() { return components_back_top; },
@@ -103,12 +104,190 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
 
 // EXTERNAL MODULE: ./src/dom-utils/index.ts + 5 modules
 var dom_utils = __webpack_require__("./src/dom-utils/index.ts");
-// EXTERNAL MODULE: ./src/mixins/index.ts + 63 modules
-var mixins = __webpack_require__("./src/mixins/index.ts");
 // EXTERNAL MODULE: ./src/utils/index.ts + 3 modules
 var utils = __webpack_require__("./src/utils/index.ts");
 // EXTERNAL MODULE: ./src/components/prefix.ts
 var prefix = __webpack_require__("./src/components/prefix.ts");
+;// CONCATENATED MODULE: ./src/components/affix/affix.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+function getScroll(target, top) {
+    var prop = top ? 'pageYOffset' : 'pageXOffset';
+    var method = top ? 'scrollTop' : 'scrollLeft';
+    var ret = target[prop];
+    if (typeof ret !== 'number') {
+        ret = window.document.documentElement[method];
+    }
+    return ret;
+}
+function getOffset(element) {
+    var rect = element.getBoundingClientRect();
+    var scrollTop = getScroll(window, true);
+    var scrollLeft = getScroll(window);
+    var docEl = window.document.body;
+    var clientTop = docEl.clientTop || 0;
+    var clientLeft = docEl.clientLeft || 0;
+    return {
+        top: rect.top + scrollTop - clientTop,
+        left: rect.left + scrollLeft - clientLeft
+    };
+}
+var Affix = /** @class */ (function () {
+    function Affix() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-affix', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Affix.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        var _a = Affix.prototype._attrs(target), offsetTop = _a.offsetTop, offsetBottom = _a.offsetBottom;
+        var elOffset = getOffset(target);
+        var elHeight = target.offsetHeight;
+        var windowHeight = window.innerHeight;
+        var affixed = false, offsetType = 'top';
+        if (offsetBottom >= 0) {
+            offsetType = 'bottom';
+        }
+        return {
+            events: function (_a) {
+                var onChange = _a.onChange;
+                var handler = function () {
+                    var isAffix = target.classList.contains("" + prefix.default.affix);
+                    var scrollTop = getScroll(window, true);
+                    // 固定到顶部时触发事件
+                    if (elOffset.top - offsetTop < scrollTop && offsetType == 'top' && !isAffix) {
+                        affixed = true;
+                        onChange && utils.type.isFn(onChange, affixed);
+                    }
+                    else if (elOffset.top - offsetTop > scrollTop &&
+                        offsetType == 'top' &&
+                        affixed) {
+                        affixed = false;
+                        onChange && utils.type.isFn(onChange, affixed);
+                    }
+                    // 固定到底部时触发事件
+                    if (elOffset.top + offsetBottom + elHeight > scrollTop + windowHeight &&
+                        offsetType == 'bottom' &&
+                        !affixed) {
+                        affixed = true;
+                        onChange && utils.type.isFn(onChange, affixed);
+                    }
+                    else if (elOffset.top + offsetBottom + elHeight < scrollTop + windowHeight &&
+                        offsetType == 'bottom' &&
+                        affixed) {
+                        affixed = false;
+                        onChange && utils.type.isFn(onChange, affixed);
+                    }
+                };
+                handler();
+                // 这里 useCapture 选项设置为 true 解决了被下面同样的滚动监听覆盖的 bug
+                // 相当于提高了事件触发优先级
+                window.addEventListener('scroll', handler, true);
+                window.addEventListener('resize', handler, true);
+            }
+        };
+    };
+    Affix.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            var _a = _this._attrs(node), offsetTop = _a.offsetTop, offsetBottom = _a.offsetBottom, useCapture = _a.useCapture;
+            var wrapper = (0,dom_utils.createElem)('div');
+            var cloneElm = _this._createCloneElm(wrapper);
+            node.after(wrapper);
+            wrapper.appendChild(node);
+            _this._handleScroll(node, cloneElm, offsetTop, offsetBottom, useCapture);
+            (0,dom_utils.removeAttrs)(node, ['offset-top', 'offset-bottom', 'use-capture']);
+        });
+    };
+    Affix.prototype._createCloneElm = function (node) {
+        var element = (0,dom_utils.createElem)('div');
+        (0,dom_utils.setCss)(element, 'display', 'none');
+        node.after(element);
+        return element;
+    };
+    Affix.prototype._handleScroll = function (node, cloneElm, offsetTop, offsetBottom, useCapture) {
+        var container = node.parentElement;
+        var elOffset = getOffset(node);
+        var elHeight = node.offsetHeight;
+        var windowHeight = window.innerHeight;
+        var affix = false, top, left, width, bottom, offsetType = 'top', cloneElmWidth, cloneElmHeight, display;
+        if (offsetBottom >= 0) {
+            offsetType = 'bottom';
+        }
+        var scroll = function () {
+            var isAffix = node.classList.contains("" + prefix.default.affix);
+            var scrollTop = getScroll(window, true);
+            // 固定到顶部
+            if (elOffset.top - offsetTop < scrollTop && offsetType == 'top' && !isAffix) {
+                affix = true;
+                display = '';
+                top = offsetTop + "px";
+                left = elOffset.left + "px";
+                width = container.offsetWidth + "px";
+                cloneElmWidth = node.clientWidth + "px";
+                cloneElmHeight = node.clientHeight + "px";
+                node.classList.add("" + prefix.default.affix);
+            }
+            else if (elOffset.top - offsetTop > scrollTop && offsetType == 'top' && affix) {
+                top = '';
+                left = '';
+                width = '';
+                affix = false;
+                display = 'none';
+                cloneElmWidth = '';
+                cloneElmHeight = '';
+                node.classList.remove("" + prefix.default.affix);
+            }
+            // 固定到底部
+            if (elOffset.top + offsetBottom + elHeight > scrollTop + windowHeight &&
+                offsetType == 'bottom' &&
+                !affix) {
+                affix = true;
+                left = elOffset.left + "px";
+                width = container.offsetWidth + "px";
+                bottom = offsetBottom + "px";
+                node.classList.add("" + prefix.default.affix);
+            }
+            else if (elOffset.top + offsetBottom + elHeight < scrollTop + windowHeight &&
+                offsetType == 'bottom' &&
+                affix) {
+                affix = false;
+                left = '';
+                width = '';
+                bottom = '';
+                node.classList.remove("" + prefix.default.affix);
+            }
+            (0,dom_utils.setCss)(node, 'top', top);
+            (0,dom_utils.setCss)(node, 'left', left);
+            (0,dom_utils.setCss)(node, 'width', width);
+            (0,dom_utils.setCss)(node, 'bottom', bottom);
+            (0,dom_utils.setCss)(cloneElm, 'width', cloneElmWidth);
+            (0,dom_utils.setCss)(cloneElm, 'height', cloneElmHeight);
+            (0,dom_utils.setCss)(cloneElm, 'display', display);
+        };
+        scroll();
+        window.addEventListener('scroll', scroll, useCapture);
+        window.addEventListener('resize', scroll, useCapture);
+    };
+    Affix.prototype._attrs = function (node) {
+        return {
+            offsetTop: (0,dom_utils.getNumTypeAttr)(node, 'offset-top', 0),
+            offsetBottom: (0,dom_utils.getNumTypeAttr)(node, 'offset-bottom'),
+            useCapture: (0,dom_utils.getBooleanTypeAttr)(node, 'use-capture')
+        };
+    };
+    return Affix;
+}());
+/* harmony default export */ var affix = (Affix);
+
+;// CONCATENATED MODULE: ./src/components/affix/index.ts
+
+/* harmony default export */ var components_affix = (affix);
+
+// EXTERNAL MODULE: ./src/mixins/index.ts + 63 modules
+var mixins = __webpack_require__("./src/mixins/index.ts");
 ;// CONCATENATED MODULE: ./src/components/alert/alert.ts
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
@@ -5753,6 +5932,7 @@ var Tooltip = /** @class */ (function () {
 
 
 
+
 ;// CONCATENATED MODULE: ./src/styles/index.less
 // extracted by mini-css-extract-plugin
 
@@ -6142,6 +6322,7 @@ var InputNumber = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 var prefixCls = 'rab-';
 /* harmony default export */ __webpack_exports__["default"] = ({
+    affix: prefixCls + "affix",
     alert: prefixCls + "alert",
     avatar: prefixCls + "avatar",
     backtop: prefixCls + "back-top",

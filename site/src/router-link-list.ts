@@ -13,6 +13,7 @@ export const DOCSLIST: A[] = [
 ]
 
 export const COMPONENTSLIST: A[] = [
+  { text: 'Affix 图钉', path: '/components/affix' },
   { text: 'Alert 警告提示', path: '/components/alert' },
   { text: 'Avatar 头像', path: '/components/avatar' },
   { text: 'BackTop 返回顶部', path: '/components/back-top' },

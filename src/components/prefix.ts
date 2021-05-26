@@ -1,6 +1,7 @@
 const prefixCls = 'rab-';
 
 export default {
+    affix: `${prefixCls}affix`,
     alert: `${prefixCls}alert`,
     avatar: `${prefixCls}avatar`,
     backtop: `${prefixCls}back-top`,
