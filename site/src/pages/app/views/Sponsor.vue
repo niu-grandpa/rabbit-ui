@@ -10,6 +10,6 @@
     <p>你可以通过以下任意一种方式赞助:</p>
     <a href="/zfb-money.jpg" target="_blank">支付宝</a>
     <br />
-    <a href="/assets/wechat-money.png" target="_blank">微信</a>
+    <a href="/wechat-money.png" target="_blank">微信</a>
   </article>
 </template>

@@ -210,3 +210,5 @@ router.afterEach(() => {
   Loading.finish()
   window.scrollTo(0, 0)
 })
+
+window.addEventListener('load', () => router.replace('/'))
