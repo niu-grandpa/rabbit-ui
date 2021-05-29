@@ -1,4 +1,4 @@
-import { randomStr } from '../../utils';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
     $el,
     createElem,
@@ -10,9 +10,19 @@ import {
     setHtml
 } from '../../dom-utils';
 import { moreThanOneNode } from '../../mixins';
+import { randomStr, type } from '../../utils';
 import PREFIX from '../prefix';
 
-class Circle {
+interface Config {
+    config(
+        el: string
+    ): {
+        percent: number;
+        strokeColor: string | string[];
+    };
+}
+
+class Circle implements Config {
     readonly VERSION: string;
     readonly COMPONENTS: NodeListOf<HTMLElement>;
 
@@ -20,6 +30,35 @@ class Circle {
         this.VERSION = 'v1.0';
         this.COMPONENTS = $el('r-circle', { all: true });
         this._create(this.COMPONENTS);
+    }
+
+    public config(
+        el: string
+    ): {
+        percent: number;
+        strokeColor: string | string[];
+    } {
+        const target = $el(el) as HTMLElement;
+        const innerCircle = target.querySelectorAll('path')[1] as SVGPathElement;
+
+        const { _attrs, _setPercent } = Circle.prototype;
+        const { percent, strokeWidth, dashboard, strokeColor } = _attrs(target);
+
+        return {
+            get percent() {
+                return percent;
+            },
+            set percent(newVal: number) {
+                if (newVal && !type.isNum(newVal)) return;
+                _setPercent(innerCircle, newVal, strokeWidth, dashboard);
+            },
+            get strokeColor() {
+                return strokeColor;
+            },
+            set strokeColor(newVal: string | string[]) {
+                if (newVal && !type.isStr(newVal) && !type.isArr(newVal)) return;
+            }
+        };
     }
 
     private _create(COMPONENTS: NodeListOf<HTMLElement>): void {
@@ -49,6 +88,10 @@ class Circle {
                 strokeColor,
                 dashboard
             );
+
+            const InnerCircle = node.querySelectorAll('path')[1]! as SVGPathElement;
+
+            this._setPercent(InnerCircle, percent, strokeWidth, dashboard);
             this._setInnerContent(node, CircleContent);
 
             removeAttrs(node, [
@@ -82,7 +125,7 @@ class Circle {
         const id = `${PREFIX.circle}-${randomStr(3)}`;
 
         const pathString = this._getPathString(strokeWidth, dashboard);
-        const { trailStyle, pathStyle } = this._getStyle(percent, strokeWidth, dashboard);
+        const { trailStyle, pathStyle } = this._getStyle(strokeWidth, dashboard);
 
         const computedStrokeWidth = percent === 0 && dashboard ? 0 : strokeWidth;
 
@@ -118,35 +161,22 @@ class Circle {
         setHtml(node, template);
     }
 
-    private _setPercent(percent: number): void {
-        //
-    }
-
-    private _setInnerContent(node: HTMLElement, content: Element | null): void {
-        if (!content) return;
-
-        const CircleInner = createElem('div');
-
-        CircleInner.className = `${PREFIX.circle}-inner`;
-
-        CircleInner.appendChild(content);
-        node.appendChild(CircleInner);
-    }
-
-    private showDefs(c: boolean, id: string, color: string) {
-        if (!c) return '';
-
-        return `<defs>
-                   <linearGradient id="${id}" x1="100%" y1="0%" x2="0%" y2="0%">
-                       <stop offset="0%" stop-color="${JSON.parse(color)[0]}"></stop>
-                       <stop offset="100%" stop-color="${JSON.parse(color)[1]}"></stop>
-                   </linearGradient>
-                </defs>
-                `;
-    }
-
     private _radius(strokeWidth: number): number {
         return 50 - strokeWidth / 2;
+    }
+
+    private _setPercent(
+        innerCircle: SVGPathElement,
+        percent: number,
+        strokeWidth: number,
+        dashboard: boolean
+    ): void {
+        const len = Math.floor(Math.PI * 2 * this._radius(strokeWidth));
+        if (dashboard) {
+            setCss(innerCircle, 'strokeDasharray', `${(percent / 100) * (len - 75)}px ${len}px`);
+        } else {
+            setCss(innerCircle, 'strokeDashoffset', `${((100 - percent) / 100) * len}px`);
+        }
     }
 
     private _getPathString(strokeWidth: number, dashboard: boolean): string {
@@ -163,7 +193,6 @@ class Circle {
     }
 
     private _getStyle(
-        percent: number,
         strokeWidth: number,
         dashboard: boolean
     ): {
@@ -180,7 +209,6 @@ class Circle {
             transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s
             `;
             pathStyle = `
-            stroke-dasharray: ${Math.floor(percent / 100) * (len - 75)}px ${len}px;
             stroke-dashoffset: -${75 / 2}px;
             transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .6s ease 0s, stroke .6s, stroke-width .06s ease .6s
             `;
@@ -188,12 +216,34 @@ class Circle {
             trailStyle = '';
             pathStyle = `
               stroke-dasharray: ${len}px ${len}px;
-              stroke-dashoffset: ${((100 - percent) / 100) * len}px;
               transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease
               `;
         }
 
         return { trailStyle, pathStyle };
+    }
+
+    private showDefs(c: boolean, id: string, color: string) {
+        if (!c) return '';
+
+        return `<defs>
+                 <linearGradient id="${id}" x1="100%" y1="0%" x2="0%" y2="0%">
+                     <stop offset="0%" stop-color="${JSON.parse(color)[0]}"></stop>
+                     <stop offset="100%" stop-color="${JSON.parse(color)[1]}"></stop>
+                 </linearGradient>
+              </defs>
+              `;
+    }
+
+    private _setInnerContent(node: HTMLElement, content: Element | null): void {
+        if (!content) return;
+
+        const CircleInner = createElem('div');
+
+        CircleInner.className = `${PREFIX.circle}-inner`;
+
+        CircleInner.appendChild(content);
+        node.appendChild(CircleInner);
     }
 
     private _attrs(node: HTMLElement) {
