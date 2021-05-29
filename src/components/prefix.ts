@@ -11,6 +11,7 @@ export default {
     card: `${prefixCls}card`,
     carousel: `${prefixCls}carousel`,
     checkbox: `${prefixCls}checkbox`,
+    circle: `${prefixCls}chart-circle`,
     collapse: `${prefixCls}collapse`,
     divider: `${prefixCls}divider`,
     drawer: `${prefixCls}drawer`,

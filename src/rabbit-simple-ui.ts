@@ -8,6 +8,7 @@ import Button from './components/button';
 import Card from './components/card';
 import Carousel from './components/carousel';
 import Checkbox from './components/checkbox';
+import Circle from './components/circle';
 import Collapse from './components/collapse';
 import CountDown from './components/count-down';
 import Divider from './components/divider';
@@ -46,6 +47,8 @@ export {
     Button,
     Card,
     Carousel,
+    Checkbox,
+    Circle,
     Collapse,
     CountDown,
     Divider,
@@ -72,6 +75,5 @@ export {
     Tag,
     Time,
     Timeline,
-    Tooltip,
-    Checkbox
+    Tooltip
 };

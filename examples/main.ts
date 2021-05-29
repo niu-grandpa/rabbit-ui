@@ -8,6 +8,7 @@ import buttonTest from './button';
 import cardTest from './card';
 import carouselTest from './carousel';
 import checkboxTest from './checkbox';
+import circleTest from './circle';
 import collapseTest from './collapse';
 import countDownTest from './count-down';
 import dividerTest from './divider';
@@ -38,7 +39,7 @@ import tooltipTest from './tooltip';
 
 import '../src/styles/index.less';
 
-affixTest();
+// affixTest();
 // alertTest();
 // avatarTest();
 // backtopTest();
@@ -48,6 +49,7 @@ affixTest();
 // cardTest();
 // carouselTest();
 // checkboxTest();
+circleTest();
 // collapseTest();
 // countDownTest();
 // dividerTest();
