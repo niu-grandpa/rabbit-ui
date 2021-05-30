@@ -1660,14 +1660,27 @@ var Circle = /** @class */ (function () {
     };
     Circle.prototype._setStrokeColor = function (innerCircle, color) {
         var id = prefix.default.circle + "-" + (0,utils.randomStr)(3);
-        var strokeValue;
-        if (typeof color === 'string') {
-            strokeValue = color;
-        }
-        else if (Array.isArray(color) && color.length <= 2) {
+        var addDefs = function (color) {
+            if (color.length > 2) {
+                (0,mixins.warn)('👇 The stroke-color attribute of circle cannot pass an array of length greater than 2');
+                console.error(innerCircle.parentElement.parentElement);
+                return;
+            }
             strokeValue = "url(#" + id + ")";
             var defs = Circle.prototype.showDefs(id, color);
             innerCircle.parentElement.insertAdjacentHTML('beforeend', defs);
+        };
+        var strokeValue;
+        if (typeof color === 'string') {
+            if (color.startsWith('[') && color.endsWith(']')) {
+                addDefs(JSON.parse(color));
+            }
+            else {
+                strokeValue = color;
+            }
+        }
+        else if (Array.isArray(color)) {
+            addDefs(color);
         }
         innerCircle.setAttribute('stroke', strokeValue);
     };
