@@ -14,6 +14,43 @@
         border: 1px solid #f0f0f0;
         margin: 20px auto;
     }
+    
+    .demo-circle-custom h1 {
+        display: inline-block;
+        color: #3f414d;
+        font-size: 28px;
+        font-weight: normal;
+        margin: 24px 0;
+    }
+    
+    .demo-circle-custom p {
+        color: #657180;
+        margin: 16px;
+        font-size: 14px;
+    }
+    
+    .demo-circle-custom span {
+        display: block;
+        padding-top: 15px;
+        color: #657180;
+        font-size: 14px;
+    }
+    
+    .demo-circle-custom span:before {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 1px;
+        margin: 0 auto;
+        background: #e0e3e6;
+        position: relative;
+        top: -15px;
+    }
+    
+    .demo-circle-custom span i {
+        font-style: normal;
+        color: #3f414d;
+    }
 </style>
 
 <body>
@@ -22,10 +59,43 @@
             <span style="font-size: 24px">80%</span>
         </r-circle>
         <r-circle percent="100" stroke-color="#5cb85c">
-            <i class="rab-icon rab-icon-ios-checkmark" style="font-size: 60px; color: #52c41a"></i>
+            <i class="rab-icon rab-icon-ios-checkmark" style="font-size: 60px; color: #5cb85c"></i>
         </r-circle>
         <r-circle percent="35" stroke-color="#ff5500">
-            <i class="rab-icon rab-icon-ios-close" style="font-size: 50px; color: #ff4d4f"></i>
+            <i class="rab-icon rab-icon-ios-close" style="font-size: 50px; color: #ff5500"></i>
+        </r-circle>
+    </div>
+
+    <div class="example">
+        <r-circle percent="0" id="test">
+            <span id="percentText" style="font-size: 24px">0%</span>
+        </r-circle>
+        <div class="rab-btn-group rab-btn-group-lg">
+            <button type="button" class="rab-btn rab-btn-icon-only" onclick="add()">
+                <i class="rab-icon rab-icon-ios-add"></i>
+            </button>
+            <button type="button" class="rab-btn rab-btn-icon-only" onclick="minus()">
+                <i class="rab-icon rab-icon-ios-remove"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="example">
+        <r-circle size="250" trail-width="4" stroke-width="5" percent="75" stroke-linecap="square" stroke-color="#43a3fb">
+            <div class="demo-circle-custom">
+                <h1>42,001,776</h1>
+                <p>消费人群规模</p>
+                <span>
+                    总占人数
+                    <i>75%</i>
+                </span>
+            </div>
+        </r-circle>
+    </div>
+
+    <div class="example">
+        <r-circle percent="80" dashboard="true">
+            <span style="font-size: 24px">80%</span>
         </r-circle>
     </div>
 </body>

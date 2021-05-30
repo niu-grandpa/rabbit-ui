@@ -39,9 +39,9 @@ class Circle implements Config {
         strokeColor: string | string[];
     } {
         const target = $el(el) as HTMLElement;
-        const innerCircle = target.querySelectorAll('path')[1] as SVGPathElement;
+        const InnerCircle = target.querySelectorAll('path')[1] as SVGPathElement;
 
-        const { _attrs, _setPercent } = Circle.prototype;
+        const { _attrs, _setPercent, _setStrokeColor } = Circle.prototype;
         const { percent, strokeWidth, dashboard, strokeColor } = _attrs(target);
 
         return {
@@ -50,13 +50,14 @@ class Circle implements Config {
             },
             set percent(newVal: number) {
                 if (newVal && !type.isNum(newVal)) return;
-                _setPercent(innerCircle, newVal, strokeWidth, dashboard);
+                _setPercent(InnerCircle, newVal, strokeWidth, dashboard);
             },
             get strokeColor() {
                 return strokeColor;
             },
             set strokeColor(newVal: string | string[]) {
                 if (newVal && !type.isStr(newVal) && !type.isArr(newVal)) return;
+                _setStrokeColor(InnerCircle, newVal);
             }
         };
     }
@@ -92,6 +93,7 @@ class Circle implements Config {
             const InnerCircle = node.querySelectorAll('path')[1]! as SVGPathElement;
 
             this._setPercent(InnerCircle, percent, strokeWidth, dashboard);
+            this._setStrokeColor(InnerCircle, strokeColor);
             this._setInnerContent(node, CircleContent);
 
             removeAttrs(node, [
@@ -122,23 +124,12 @@ class Circle implements Config {
         strokeColor: string,
         dashboard: boolean
     ): void {
-        const id = `${PREFIX.circle}-${randomStr(3)}`;
-
         const pathString = this._getPathString(strokeWidth, dashboard);
         const { trailStyle, pathStyle } = this._getStyle(strokeWidth, dashboard);
-
         const computedStrokeWidth = percent === 0 && dashboard ? 0 : strokeWidth;
-
-        const isColorArr =
-            strokeColor.startsWith('[') && strokeColor.endsWith(']')
-                ? Array.isArray(JSON.parse(strokeColor))
-                : false;
-
-        const strokeValue = isColorArr ? `url(#${id})` : strokeColor;
 
         const template = `
         <svg viewBox="0 0 100 100">
-          ${this.showDefs(isColorArr, id, strokeColor)}
           <path
             d="${pathString}"
             stroke="${trailColor}"
@@ -150,7 +141,6 @@ class Circle implements Config {
           <path
             d="${pathString}"
             stroke-linecap="${strokeLinecap}"
-            stroke="${strokeValue}"
             stroke-width="${computedStrokeWidth}"
             fill-opacity="0"
             style="${pathStyle}"
@@ -171,12 +161,29 @@ class Circle implements Config {
         strokeWidth: number,
         dashboard: boolean
     ): void {
-        const len = Math.floor(Math.PI * 2 * this._radius(strokeWidth));
+        const { _radius } = Circle.prototype;
+        const len = Math.floor(Math.PI * 2 * _radius(strokeWidth));
+
         if (dashboard) {
             setCss(innerCircle, 'strokeDasharray', `${(percent / 100) * (len - 75)}px ${len}px`);
         } else {
             setCss(innerCircle, 'strokeDashoffset', `${((100 - percent) / 100) * len}px`);
         }
+    }
+
+    private _setStrokeColor(innerCircle: SVGPathElement, color: string | string[]): void {
+        const id = `${PREFIX.circle}-${randomStr(3)}`;
+
+        let strokeValue: string;
+        if (typeof color === 'string') {
+            strokeValue = color;
+        } else if (Array.isArray(color) && color.length <= 2) {
+            strokeValue = `url(#${id})`;
+            const defs = Circle.prototype.showDefs(id, color);
+            innerCircle.parentElement!.insertAdjacentHTML('beforeend', defs);
+        }
+
+        innerCircle.setAttribute('stroke', strokeValue!);
     }
 
     private _getPathString(strokeWidth: number, dashboard: boolean): string {
@@ -223,13 +230,11 @@ class Circle implements Config {
         return { trailStyle, pathStyle };
     }
 
-    private showDefs(c: boolean, id: string, color: string) {
-        if (!c) return '';
-
+    private showDefs(id: string, color: string[]) {
         return `<defs>
                  <linearGradient id="${id}" x1="100%" y1="0%" x2="0%" y2="0%">
-                     <stop offset="0%" stop-color="${JSON.parse(color)[0]}"></stop>
-                     <stop offset="100%" stop-color="${JSON.parse(color)[1]}"></stop>
+                     <stop offset="0%" stop-color="${color[0]}"></stop>
+                     <stop offset="100%" stop-color="${color[1]}"></stop>
                  </linearGradient>
               </defs>
               `;
