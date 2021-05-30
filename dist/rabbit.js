@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!***************************************!*\
-  !*** ./src/build-umd.ts + 79 modules ***!
+  !*** ./src/build-umd.ts + 81 modules ***!
   \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -73,6 +73,7 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
   "Card": function() { return components_card; },
   "Carousel": function() { return components_carousel; },
   "Checkbox": function() { return components_checkbox; },
+  "Circle": function() { return components_circle; },
   "Collapse": function() { return components_collapse; },
   "CountDown": function() { return components_count_down; },
   "Divider": function() { return components_divider; },
@@ -104,7 +105,7 @@ __webpack_require__.d(rabbit_simple_ui_namespaceObject, {
 
 // EXTERNAL MODULE: ./src/dom-utils/index.ts + 5 modules
 var dom_utils = __webpack_require__("./src/dom-utils/index.ts");
-// EXTERNAL MODULE: ./src/utils/index.ts + 3 modules
+// EXTERNAL MODULE: ./src/utils/index.ts + 4 modules
 var utils = __webpack_require__("./src/utils/index.ts");
 // EXTERNAL MODULE: ./src/components/prefix.ts
 var prefix = __webpack_require__("./src/components/prefix.ts");
@@ -1571,6 +1572,157 @@ var Checkbox = /** @class */ (function () {
 ;// CONCATENATED MODULE: ./src/components/checkbox/index.ts
 
 /* harmony default export */ var components_checkbox = (checkbox_checkbox);
+
+;// CONCATENATED MODULE: ./src/components/circle/circle.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+
+var Circle = /** @class */ (function () {
+    function Circle() {
+        this.VERSION = 'v1.0';
+        this.COMPONENTS = (0,dom_utils.$el)('r-circle', { all: true });
+        this._create(this.COMPONENTS);
+    }
+    Circle.prototype.config = function (el) {
+        var target = (0,dom_utils.$el)(el);
+        var InnerCircle = target.querySelectorAll('path')[1];
+        var _a = Circle.prototype, _attrs = _a._attrs, _setPercent = _a._setPercent, _setStrokeColor = _a._setStrokeColor;
+        var _b = _attrs(target), percent = _b.percent, strokeWidth = _b.strokeWidth, dashboard = _b.dashboard, strokeColor = _b.strokeColor;
+        return {
+            get percent() {
+                return percent;
+            },
+            set percent(newVal) {
+                if (newVal && !utils.type.isNum(newVal))
+                    return;
+                _setPercent(InnerCircle, newVal, strokeWidth, dashboard);
+            },
+            get strokeColor() {
+                return strokeColor;
+            },
+            set strokeColor(newVal) {
+                if (newVal && !utils.type.isStr(newVal) && !utils.type.isArr(newVal))
+                    return;
+                _setStrokeColor(InnerCircle, newVal);
+            }
+        };
+    };
+    Circle.prototype._create = function (COMPONENTS) {
+        var _this = this;
+        COMPONENTS.forEach(function (node) {
+            if ((0,mixins.moreThanOneNode)(node))
+                return;
+            var CircleContent = node.firstElementChild;
+            var _a = _this._attrs(node), size = _a.size, percent = _a.percent, strokeLinecap = _a.strokeLinecap, strokeWidth = _a.strokeWidth, strokeColor = _a.strokeColor, trailColor = _a.trailColor, trailWidth = _a.trailWidth, dashboard = _a.dashboard;
+            _this._setSize(node, size);
+            _this._setMainTemplate(node, percent, trailColor, trailWidth, strokeLinecap, strokeWidth, strokeColor, dashboard);
+            var InnerCircle = node.querySelectorAll('path')[1];
+            _this._setPercent(InnerCircle, percent, strokeWidth, dashboard);
+            _this._setStrokeColor(InnerCircle, strokeColor);
+            _this._setInnerContent(node, CircleContent);
+            (0,dom_utils.removeAttrs)(node, [
+                'percent',
+                'size',
+                'stroke-linecap',
+                'stroke-width',
+                'stroke-color',
+                'trail-width',
+                'trail-color',
+                'dashboard'
+            ]);
+        });
+    };
+    Circle.prototype._setSize = function (node, size) {
+        (0,dom_utils.setCss)(node, 'width', size + "px");
+        (0,dom_utils.setCss)(node, 'height', size + "px");
+    };
+    Circle.prototype._setMainTemplate = function (node, percent, trailColor, trailWidth, strokeLinecap, strokeWidth, strokeColor, dashboard) {
+        var pathString = this._getPathString(strokeWidth, dashboard);
+        var _a = this._getStyle(strokeWidth, dashboard), trailStyle = _a.trailStyle, pathStyle = _a.pathStyle;
+        var computedStrokeWidth = percent === 0 && dashboard ? 0 : strokeWidth;
+        var template = "\n        <svg viewBox=\"0 0 100 100\">\n          <path\n            d=\"" + pathString + "\"\n            stroke=\"" + trailColor + "\"\n            stroke-width=\"" + trailWidth + "\"\n            fill-opacity=\"0\"\n            stroke-linecap=\"" + strokeLinecap + "\"\n            style=\"" + trailStyle + "\"\n          ></path>\n          <path\n            d=\"" + pathString + "\"\n            stroke-linecap=\"" + strokeLinecap + "\"\n            stroke-width=\"" + computedStrokeWidth + "\"\n            fill-opacity=\"0\"\n            style=\"" + pathStyle + "\"\n          ></path>\n        </svg>\n        ";
+        (0,dom_utils.setHtml)(node, template);
+    };
+    Circle.prototype._radius = function (strokeWidth) {
+        return 50 - strokeWidth / 2;
+    };
+    Circle.prototype._setPercent = function (innerCircle, percent, strokeWidth, dashboard) {
+        var _radius = Circle.prototype._radius;
+        var len = Math.floor(Math.PI * 2 * _radius(strokeWidth));
+        if (dashboard) {
+            (0,dom_utils.setCss)(innerCircle, 'strokeDasharray', (percent / 100) * (len - 75) + "px " + len + "px");
+        }
+        else {
+            (0,dom_utils.setCss)(innerCircle, 'strokeDashoffset', ((100 - percent) / 100) * len + "px");
+        }
+    };
+    Circle.prototype._setStrokeColor = function (innerCircle, color) {
+        var id = prefix.default.circle + "-" + (0,utils.randomStr)(3);
+        var strokeValue;
+        if (typeof color === 'string') {
+            strokeValue = color;
+        }
+        else if (Array.isArray(color) && color.length <= 2) {
+            strokeValue = "url(#" + id + ")";
+            var defs = Circle.prototype.showDefs(id, color);
+            innerCircle.parentElement.insertAdjacentHTML('beforeend', defs);
+        }
+        innerCircle.setAttribute('stroke', strokeValue);
+    };
+    Circle.prototype._getPathString = function (strokeWidth, dashboard) {
+        var radius = this._radius(strokeWidth);
+        if (dashboard) {
+            return "M 50,50 m 0," + radius + "\n          a " + radius + "," + radius + " 0 1 1 0,-" + 2 * radius + "\n          a " + radius + "," + radius + " 0 1 1 0," + 2 * radius;
+        }
+        else {
+            return "M 50,50 m 0,-" + radius + "\n          a " + radius + "," + radius + " 0 1 1 0," + 2 * radius + "\n          a " + radius + "," + radius + " 0 1 1 0,-" + 2 * radius;
+        }
+    };
+    Circle.prototype._getStyle = function (strokeWidth, dashboard) {
+        var len = Math.floor(Math.PI * 2 * this._radius(strokeWidth));
+        var trailStyle, pathStyle;
+        if (dashboard) {
+            trailStyle = "\n            stroke-dasharray: " + (len - 75) + "px " + len + "px;\n            stroke-dashoffset: -" + 75 / 2 + "px;\n            transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s\n            ";
+            pathStyle = "\n            stroke-dashoffset: -" + 75 / 2 + "px;\n            transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .6s ease 0s, stroke .6s, stroke-width .06s ease .6s\n            ";
+        }
+        else {
+            trailStyle = '';
+            pathStyle = "\n              stroke-dasharray: " + len + "px " + len + "px;\n              transition: stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease\n              ";
+        }
+        return { trailStyle: trailStyle, pathStyle: pathStyle };
+    };
+    Circle.prototype.showDefs = function (id, color) {
+        return "<defs>\n                 <linearGradient id=\"" + id + "\" x1=\"100%\" y1=\"0%\" x2=\"0%\" y2=\"0%\">\n                     <stop offset=\"0%\" stop-color=\"" + color[0] + "\"></stop>\n                     <stop offset=\"100%\" stop-color=\"" + color[1] + "\"></stop>\n                 </linearGradient>\n              </defs>\n              ";
+    };
+    Circle.prototype._setInnerContent = function (node, content) {
+        if (!content)
+            return;
+        var CircleInner = (0,dom_utils.createElem)('div');
+        CircleInner.className = prefix.default.circle + "-inner";
+        CircleInner.appendChild(content);
+        node.appendChild(CircleInner);
+    };
+    Circle.prototype._attrs = function (node) {
+        return {
+            size: (0,dom_utils.getNumTypeAttr)(node, 'size', 120),
+            percent: (0,dom_utils.getNumTypeAttr)(node, 'percent', 0),
+            strokeWidth: (0,dom_utils.getNumTypeAttr)(node, 'stroke-width', 6),
+            trailWidth: (0,dom_utils.getNumTypeAttr)(node, 'trail-width', 5),
+            trailColor: (0,dom_utils.getStrTypeAttr)(node, 'trail-color', '#eaeef2'),
+            strokeColor: (0,dom_utils.getStrTypeAttr)(node, 'stroke-color', '#1890ff'),
+            strokeLinecap: (0,dom_utils.getStrTypeAttr)(node, 'stroke-linecap', 'round'),
+            dashboard: (0,dom_utils.getBooleanTypeAttr)(node, 'dashboard')
+        };
+    };
+    return Circle;
+}());
+/* harmony default export */ var circle = (Circle);
+
+;// CONCATENATED MODULE: ./src/components/circle/index.ts
+
+/* harmony default export */ var components_circle = (circle);
 
 // EXTERNAL MODULE: ./src/dom-utils/elem.ts
 var elem = __webpack_require__("./src/dom-utils/elem.ts");
@@ -5933,6 +6085,7 @@ var Tooltip = /** @class */ (function () {
 
 
 
+
 ;// CONCATENATED MODULE: ./src/styles/index.less
 // extracted by mini-css-extract-plugin
 
@@ -6332,6 +6485,7 @@ var prefixCls = 'rab-';
     card: prefixCls + "card",
     carousel: prefixCls + "carousel",
     checkbox: prefixCls + "checkbox",
+    circle: prefixCls + "chart-circle",
     collapse: prefixCls + "collapse",
     divider: prefixCls + "divider",
     drawer: prefixCls + "drawer",
@@ -9205,7 +9359,7 @@ var isArr = function (r) {
 
 /***/ "./src/utils/index.ts":
 /*!****************************************!*\
-  !*** ./src/utils/index.ts + 3 modules ***!
+  !*** ./src/utils/index.ts + 4 modules ***!
   \****************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -9217,6 +9371,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
   "destroyElem": function() { return /* reexport */ destroyElem; },
   "destroyElemByKey": function() { return /* reexport */ destroyElemByKey; },
+  "randomStr": function() { return /* reexport */ random_str; },
   "type": function() { return /* reexport */ check_type; },
   "useHTMLString": function() { return /* reexport */ isUseHTMLString; },
   "validComps": function() { return /* reexport */ validComps; }
@@ -9274,6 +9429,19 @@ function destroyElemByKey(options) {
     target ? destroyElem(target, options) : (0,mixins.warn)("The key value is invalid --> \"" + key + "\"");
 }
 
+;// CONCATENATED MODULE: ./src/utils/random-str.ts
+// 生成随机字符串
+/* harmony default export */ function random_str(len) {
+    if (len === void 0) { len = 32; }
+    var $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    var maxPos = $chars.length;
+    var str = '', i = 0;
+    for (; i < len; i++) {
+        str += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return str;
+}
+
 // EXTERNAL MODULE: ./src/dom-utils/index.ts + 5 modules
 var dom_utils = __webpack_require__("./src/dom-utils/index.ts");
 ;// CONCATENATED MODULE: ./src/utils/use-html-string.ts
@@ -9304,6 +9472,7 @@ function validComps(target, compName) {
 }
 
 ;// CONCATENATED MODULE: ./src/utils/index.ts
+
 
 
 
