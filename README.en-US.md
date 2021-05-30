@@ -6,10 +6,13 @@
 
 English | [简体中文](./README.md)
 
-<h1>
-RabbitUI
-    <h3>A simple UI component library based on JavaScript</h3>
-</h1>
+# RabbitUI
+
+### A simple UI component library based on JavaScrip
+
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
+[![](https://img.shields.io/npm/v/rabbit-simple-ui.svg?style=flat-square)](https://www.npmjs.com/package/rabbit-simple-ui)
+[![](https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge)](https://www.jsdelivr.com/package/npm/rabbit-simple-ui) 
 
 ### Features
 

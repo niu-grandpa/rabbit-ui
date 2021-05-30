@@ -11,7 +11,7 @@
 ### 一个基于 JavaScript 的简洁 UI 组件库
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
-[![](https://img.shields.io/badge/npm-v1.5.0-orange)](https://www.npmjs.com/package/rabbit-simple-ui)
+[![](https://img.shields.io/npm/v/rabbit-simple-ui.svg?style=flat-square)](https://www.npmjs.com/package/rabbit-simple-ui)
 [![](https://data.jsdelivr.com/v1/package/npm/rabbit-simple-ui/badge)](https://www.jsdelivr.com/package/npm/rabbit-simple-ui) 
 
 ### 特性
