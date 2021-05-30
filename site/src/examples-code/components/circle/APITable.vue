@@ -1,0 +1,122 @@
+<template>
+  <div class="">
+    <p style="font-size: 32px">API</p>
+    <h3><a name="circle" class="md-header-anchor"></a><span>Circle</span></h3>
+    <figure>
+      <table>
+        <thead>
+          <tr>
+            <th><span>属性</span></th>
+            <th><span>说明</span></th>
+            <th><span>默认值</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>percent</span></td>
+            <td><span>百分比</span></td>
+            <td><span>0</span></td>
+          </tr>
+          <tr>
+            <td><span>size</span></td>
+            <td><span>图表的宽度和高度，单位 px</span></td>
+            <td><span>120</span></td>
+          </tr>
+          <tr>
+            <td><span>stroke-linecap</span></td>
+            <td>
+              <span>进度环顶端的形状，可选值为</span><code>square</code
+              ><span>（方）和</span><code>round</code><span>（圆）</span>
+            </td>
+            <td><span>round</span></td>
+          </tr>
+          <tr>
+            <td><span>stroke-width</span></td>
+            <td><span>进度环的线宽，单位 px</span></td>
+            <td><span>6</span></td>
+          </tr>
+          <tr>
+            <td><span>stroke-color</span></td>
+            <td>
+              <span
+                >进度环的颜色，支持传入数组显示为渐变色，标签属性上设置数组的格式的值为</span
+              ><code>'["xxxx","xxx"]'</code>
+            </td>
+            <td><span>#</span><span>1890ff</span></td>
+          </tr>
+          <tr>
+            <td><span>trail-width</span></td>
+            <td><span>进度环背景的线宽，单位 px</span></td>
+            <td><span>5</span></td>
+          </tr>
+          <tr>
+            <td><span>trail-color</span></td>
+            <td><span>进度环背景的颜色</span></td>
+            <td><span>#</span><span>eaeef2</span></td>
+          </tr>
+          <tr>
+            <td><span>dashboard</span></td>
+            <td><span>是否显示为仪表盘</span></td>
+            <td><span>false</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </figure>
+    <h3><a name="config--方法" class="md-header-anchor"></a><span>Config 方法</span></h3>
+    <p>
+      <span
+        >配置指定的组件，并提供一些必要的响应式更新DOM内容或其他操作的
+        API。（并不是每个组件都会有）</span
+      >
+    </p>
+    <figure>
+      <table>
+        <thead>
+          <tr>
+            <th><span>参数</span></th>
+            <th><span>说明</span></th>
+            <th><span>类型</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>el</span></td>
+            <td><span>配置当前选定的 circle，必须是选择器名称或者元素名</span></td>
+            <td><span>String</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </figure>
+    <p><span>该方法返回以下两个值：</span></p>
+    <ul>
+      <li><code>percent</code></li>
+      <li><code>strokeColor</code></li>
+    </ul>
+    <figure>
+      <table>
+        <thead>
+          <tr>
+            <th><span>返回值</span></th>
+            <th><span>说明</span></th>
+            <th><span>类型</span></th>
+            <th><span>默认值</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>percent</span></td>
+            <td><span>响应式设置百分比</span></td>
+            <td><span>Number</span></td>
+            <td><span>0</span></td>
+          </tr>
+          <tr>
+            <td><span>strokeColor</span></td>
+            <td><span>响应式设置进度环的颜色</span></td>
+            <td><span>String </span><span>|</span><span> String[ ]</span></td>
+            <td><span>#1890ff</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </figure>
+  </div>
+</template>

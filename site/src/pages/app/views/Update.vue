@@ -34,15 +34,22 @@ import Timeline from "../../../../../src/components/timeline";
 
 onMounted(() => new Timeline());
 
-const updateInfo: {
+interface A {
   version: string;
   time: string;
   content: string[];
-}[] = [
+}
+
+const updateInfo: A[] = [
+  {
+    version: "1.7.0",
+    time: "2021-05-30",
+    content: ["新增组件 Circle"],
+  },
   {
     version: "1.6.0",
     time: "2021-05-26",
-    content: ["新增 Affix 组件"],
+    content: ["新增组件 Affix"],
   },
   {
     version: "1.5.1",

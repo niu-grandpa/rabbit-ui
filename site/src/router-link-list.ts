@@ -23,6 +23,7 @@ export const COMPONENTSLIST: A[] = [
   { text: 'Card 卡片', path: '/components/card' },
   { text: 'Carousel 走马灯', path: '/components/carousel' },
   { text: 'Checkbox 多选框', path: '/components/checkbox' },
+  { text: 'Circle 进度环', path: '/components/circle' },
   { text: 'Collapse 折叠面板', path: '/components/collapse' },
   { text: 'Color 色彩', path: '/components/color' },
   { text: 'CountDown 倒计时', path: '/components/count-down' },

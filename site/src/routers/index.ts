@@ -82,6 +82,10 @@ const router = createRouter({
       component: () => import('pages/app/views/Checkbox.vue')
     },
     {
+      path: '/components/circle',
+      component: () => import('pages/app/views/Circle.vue')
+    },
+    {
       path: '/components/collapse',
       component: () => import('pages/app/views/Collapse.vue')
     },
