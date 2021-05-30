@@ -9,7 +9,7 @@ import {
     setCss,
     setHtml
 } from '../../dom-utils';
-import { moreThanOneNode } from '../../mixins';
+import { moreThanOneNode, warn } from '../../mixins';
 import { randomStr, type } from '../../utils';
 import PREFIX from '../prefix';
 
@@ -174,13 +174,29 @@ class Circle implements Config {
     private _setStrokeColor(innerCircle: SVGPathElement, color: string | string[]): void {
         const id = `${PREFIX.circle}-${randomStr(3)}`;
 
-        let strokeValue: string;
-        if (typeof color === 'string') {
-            strokeValue = color;
-        } else if (Array.isArray(color) && color.length <= 2) {
+        const addDefs = (color: string[]) => {
+            if (color.length > 2) {
+                warn(
+                    '👇 The stroke-color attribute of circle cannot pass an array of length greater than 2'
+                );
+                console.error(innerCircle.parentElement!.parentElement);
+
+                return;
+            }
             strokeValue = `url(#${id})`;
             const defs = Circle.prototype.showDefs(id, color);
             innerCircle.parentElement!.insertAdjacentHTML('beforeend', defs);
+        };
+
+        let strokeValue: string;
+        if (typeof color === 'string') {
+            if (color.startsWith('[') && color.endsWith(']')) {
+                addDefs(JSON.parse(color));
+            } else {
+                strokeValue = color;
+            }
+        } else if (Array.isArray(color)) {
+            addDefs(color);
         }
 
         innerCircle.setAttribute('stroke', strokeValue!);
