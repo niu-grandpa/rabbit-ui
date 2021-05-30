@@ -80,6 +80,45 @@
 - 注意！标签容器下必须具有一个父元素。
 
 ```html
+<style>
+   .demo-circle-custom h1 {
+        display: inline-block;
+        color: #3f414d;
+        font-size: 28px;
+        font-weight: normal;
+        margin: 24px 0;
+    }
+    
+    .demo-circle-custom p {
+        color: #657180;
+        margin: 16px;
+        font-size: 14px;
+    }
+    
+    .demo-circle-custom span {
+        display: block;
+        padding-top: 15px;
+        color: #657180;
+        font-size: 14px;
+    }
+    
+    .demo-circle-custom span:before {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 1px;
+        margin: 0 auto;
+        background: #e0e3e6;
+        position: relative;
+        top: -15px;
+    }
+    
+    .demo-circle-custom span i {
+        font-style: normal;
+        color: #3f414d;
+    }
+</style>
+
 <r-circle 
   size="250" 
   trail-width="4" 
