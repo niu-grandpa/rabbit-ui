@@ -34,7 +34,7 @@
 
 - 使用 npm，你将需要使用`TypeScript`，并在ts文件里编写和使用代码。 请确保你了解过它，并能够大致使用
 
-```text
+```bash
 npm install rabbit-simple-ui --save
 ```
 
@@ -62,7 +62,7 @@ npm install rabbit-simple-ui --save
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rabbit-simple-ui/dist/styles/rabbit.css">
 </head>
 <body>
-    <button type="button" class="rab-btn" onclick="show">Hello Rabbit UI</button>
+    <button type="button" class="rab-btn" onclick="show()">Hello Rabbit UI</button>
     <r-modal title="Welcome" id="exampleModal">
        <p>Welcome to RabbitUI</p>
     </r-modal>
@@ -72,7 +72,7 @@ npm install rabbit-simple-ui --save
     // 初始化modal
     const modal = new Rabbit.Modal();
     show = function() {
-        modal.config('#exampleModal').visable = true;  
+        modal.config('#exampleModal').visible = true;  
     }
 </script>
 </html>

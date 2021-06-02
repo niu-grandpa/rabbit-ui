@@ -34,7 +34,7 @@ English | [简体中文](./README.md)
 
 - With NPM, you'll need to use 'TypeScript' and write and use code in TS files. Make sure you understand it and can use it in general
 
-```text
+```bash
 npm install rabbit-simple-ui --save
 ```
 
@@ -62,7 +62,7 @@ With a CDN we can easily write an example using Rabbit UI:
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rabbit-simple-ui/dist/styles/rabbit.css">
 </head>
 <body>
-    <button type="button" class="rab-btn" onclick="show">Hello Rabbit UI</button>
+    <button type="button" class="rab-btn" onclick="show()">Hello Rabbit UI</button>
     <r-modal title="Welcome" id="exampleModal">
        <p>Welcome to RabbitUI</p>
     </r-modal>
@@ -72,7 +72,7 @@ With a CDN we can easily write an example using Rabbit UI:
     // 初始化modal
     const modal = new Rabbit.Modal();
     show = function() {
-        modal.config('#exampleModal').visable = true;  
+        modal.config('#exampleModal').visible = true;  
     }
 </script>
 </html>
