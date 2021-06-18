@@ -48,7 +48,7 @@
       <li>支持所有能运行 Javascript 的地方</li>
       <li>支持与其他的 UI 库或框架一起使用</li>
       <li>支持 TypeScript</li>
-      <li>支持现代浏览器和 Internet Explorer 9+</li>
+      <li>支持现代浏览器和 Internet Explorer 10+</li>
     </ul>
     <h2 id="相关链接">相关链接</h2>
     <ul>
