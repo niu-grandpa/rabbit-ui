@@ -906,7 +906,7 @@ var Breadcrumb = /** @class */ (function () {
 
 var Button = /** @class */ (function () {
     function Button() {
-        this.VERSION = '1.1.0';
+        this.VERSION = '1.1.1';
         this.COMPONENTS = (0,dom_utils.$el)("." + prefix.default.button, { all: true });
         this._getAllBtns(this.COMPONENTS);
     }
@@ -915,7 +915,7 @@ var Button = /** @class */ (function () {
         (0,utils.validComps)(target, 'button');
         return {
             get loading() {
-                return false;
+                return this.loading;
             },
             set loading(newVal) {
                 if (newVal && !utils.type.isBol(newVal))
@@ -955,26 +955,26 @@ var Button = /** @class */ (function () {
         var LoadingIcon = (0,dom_utils.createElem)('i');
         LoadingIcon.className = "rab-load-loop " + prefix.default.icon + " " + prefix.default.icon + "-loading-solid";
         if (loading) {
-            if (OriginalIcon) {
+            if (OriginalIcon)
                 (0,dom_utils.setCss)(OriginalIcon, 'display', 'none');
-            }
-            if (node.innerHTML === '') {
+            if (node.innerHTML === '')
                 node.classList.add(prefix.default.button + "-icon-only");
-            }
             node.classList.add(prefix.default.button + "-loading");
             node.prepend(LoadingIcon);
         }
         else {
             if (firstRender)
                 return;
-            (0,dom_utils.setCss)(node.children[1], 'display', '');
-            (_a = node.firstElementChild) === null || _a === void 0 ? void 0 : _a.remove();
-            if (node.classList.contains(prefix.default.button + "-loading")) {
+            // 2021.6.18
+            // v1.1.1 修复在没有图标仅有文本的状态下，切换为loading状态并在状态结束后无法切换为原样 bug
+            // setCss(node.children[1], 'display', '');
+            if (node.children[1])
+                (0,dom_utils.setCss)(node.children[1], 'display', '');
+            if (node.classList.contains(prefix.default.button + "-loading"))
                 node.classList.remove(prefix.default.button + "-loading");
-            }
-            if (node.classList.contains(prefix.default.button + "-icon-only")) {
+            if (node.classList.contains(prefix.default.button + "-icon-only"))
                 node.classList.remove(prefix.default.button + "-icon-only");
-            }
+            (_a = node.firstElementChild) === null || _a === void 0 ? void 0 : _a.remove();
         }
     };
     Button.prototype._attrs = function (node) {
