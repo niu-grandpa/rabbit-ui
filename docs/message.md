@@ -13,54 +13,72 @@
 
 - 最基本的提示，默认在3秒后消失。
 
-```js
-Rabbit.Message.info('这是一条普通的提示');
+```html
+<button class="rab-btn rab-btn-primary" onclick="info()">显示消息提示</button>
+<script>
+	info = () => {
+        Rabbit.Message.info('这是一条普通的提示');
+    }
+</script>
 ```
 
 提示类型
 
 - 包括成功、失败、警告。
 
-```js
-Rabbit.Message.success('这是一条成功的提示');
-Rabbit.Message.warning('这是一条警告的提示');
-Rabbit.Message.error('这是一条错误的提示');
+```html
+<button class="rab-btn" onclick="success()">显示成功提示</button>
+<button class="rab-btn" onclick="warning()">显示警告提示</button>
+<button class="rab-btn" onclick="error()">显示错误提示</button>
+<script>
+	success = () => {
+      Rabbit.Message.success('这是一条成功的提示');
+    };
+    warning = () => {
+      Rabbit.Message.warning('这是一条警告的提示');
+    };
+    error = () => {
+      Rabbit.Message.error('这是一条错误的提示');
+    };
+</script>
 ```
 
 带背景色
 
 设置属性 `background`  为 true 后，通知提示会显示背景色。
 
-```js
-Rabbit.Message.info({
-  content: '这是一条带背景色的通知',
-  background: true,
-  duration: 5,
-});
-Rabbit.Message.success({
-  content: '这是一条带背景色的通知',
-  background: true,
-});
-Rabbit.Message.warning({
-  content: '这是一条带背景色的通知',
-  background: true,
-});
-Rabbit.Message.error({
-  content: '这是一条带背景色的通知',
-  background: true,
-});
+```html
+<button class="rab-btn" onclick="background('info')">显示消息提示</button>
+<button class="rab-btn" onclick="background('success')">显示成功提示</button>
+<button class="rab-btn" onclick="background('warning')">显示警告提示</button>
+<button class="rab-btn" onclick="background('error')">显示错误提示</button>
+<script>
+	background = (type: string) => {
+      Rabbit.Message[type]({
+          content: '这是一条带背景色的通知',
+          background: true,
+          duration: 5
+      });
+    };
+</script>
 ```
 
 加载中
 
-- 进行全局 loading，异步自行移除。需要手动调用 `destroy` 方法关闭
+- 进行全局 loading，异步自行移除。需要手动调用 `destroy` 方法关闭。
 
-```javascript
-Rabbit.Message.loading({
-  content: '正在加载中...',
-  duration: 0,
-});
-setTimeout(() => Rabbit.Message.destroy(), 3000);
+```html
+<button class="rab-btn" onclick="loading()">显示加载中...</button>
+<script>
+	loading = () => {
+      Rabbit.Message.loading({
+          content: '正在加载中...',
+          duration: 0,
+          // key: 'msgKey'	-> 在destroy方法里添加该key值，则仅移除该实例
+      });
+      setTimeout(() => Rabbit.Message.destroy(/*'msgKey'*/), 5000);
+    };
+</script>
 ```
 
 Promise 接口
@@ -68,46 +86,66 @@ Promise 接口
 - 可以通过 then 接口在关闭后运行 callback 。以上用例将在每个 Rabbit.Message 将要结束时通过 then 显示新的 Rabbit.Message 。
 - 如果手动通过关闭按钮结束则无效
 
-```js
-Rabbit.Message.loading('正在加载中...').then(() => {
-  Rabbit.Message.success('加载成功!').then(() => {
-    Rabbit.Message.info('加载成功后的提示');
-  });
-});
+```html
+<button class="rab-btn" onclick="promise()">Promise 接口</button>
+<script>
+    promise = () => {
+      Rabbit.Message.loading('正在加载中...').then(() => {
+          Rabbit.Message.success('加载成功!').then(() => {
+              Rabbit.Message.info('加载成功后的提示');
+          });
+      });
+    };
+</script>
 ```
 
 自定义时长 
 
 - 自定义时长，也可以在`Rabbit.Message.config()`中全局配置，详见API。
 
-```js
-Rabbit.Message.success({
-  content: '这是成功的提示信息，我将在10秒内消失',
-  duration: 10,
-});
+```html
+<button class="rab-btn" onclick="time()">显示10秒的提示</button>
+<script>
+    time = () => {
+      Rabbit.Message.success({
+          content: '这是成功的提示信息，我将在10秒内消失',
+          duration: 10
+      });
+    };
+</script>
 ```
 
 可关闭
 
 - 设置 `closable` 为 true 后可以手动关闭提示。
 
-```js
-Rabbit.Message.info({
-  content: '可手动关闭的提示',
-  duration: 8,
-  closable: true,
-});
+```html
+<button class="rab-btn" onclick="closable()">显示可关闭的提示</button>
+<script>
+    closable = () => {
+      Rabbit.Message.info({
+          content: '可手动关闭的提示',
+          duration: 8,
+          closable: true
+      });
+    };
+</script>
 ```
 
 使用 HTML 片段
 
 - 传入 HTML 片段
 
-```js
-Rabbit.Message.info({
-  content: `<strong>这是 <i>HTML</i> 片段</strong>`,
-  dangerouslyUseHTMLString: true
-});
+```html
+<button class="rab-btn" onclick="useHTML()">使用 HTML 片段</button>
+<script>
+    useHTML = () => {
+      Rabbit.Message.info({
+          content: '<strong>这是 <i>HTML</i> 片段</strong>',
+          dangerouslyUseHTMLString: true
+      });
+    };
+</script>
 ```
 
 > `content` 属性虽然支持传入 HTML 片段，但是在网站上动态渲染任意 HTML 是非常危险的，因为容易导致 [XSS 攻击](https://en.wikipedia.org/wiki/Cross-site_scripting)。因此在 `dangerouslyUseHTMLString` 打开的情况下，请确保`content`的内容是可信的，**永远不要**将用户提交的内容赋值给 `content`  属性。
@@ -153,11 +191,11 @@ Rabbit.Message.info({
 
 ```js
 Rabbit.Message.loading({
-  key: 'exampleKey',
+  key: 'msgKey',
   content: '正在加载中...',
   duration: 0,
 });
-setTimeout(() => Rabbit.Message.destroy('exampleKey'), 3000);
+setTimeout(() => Rabbit.Message.destroy('msgKey'), 5000);
 ```
 
 ```js
