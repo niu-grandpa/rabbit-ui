@@ -62,11 +62,10 @@ export function destroyElem(
 }
 
 export function destroyElemByKey(options: Options): void {
-    const { prefixKey } = options;
-    let { key } = options;
-    // 统一转换为字符串
-    typeof key !== 'string' ? (key = key?.toString()) : key;
-    // 传入的key是否选取得到对应的元素
+    const { prefixKey, key } = options;
     const target = document.querySelector(`[${prefixKey}-key="${key}"]`);
-    target ? destroyElem(target, options) : warn(`The key value is invalid --> "${key}"`);
+    // 传入的key是否选取得到对应的元素
+    if (target) {
+        destroyElem(target, options);
+    }
 }
