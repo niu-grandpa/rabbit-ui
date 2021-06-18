@@ -128,7 +128,7 @@ import { Alert, Message } from 'rabbit-simple-ui';
 
 ## Browser Support
 
-Modern browsers and Internet Explorer 9+.
+Modern browsers and Internet Explorer 10+.
 
 ## Related links
 

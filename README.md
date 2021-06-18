@@ -128,7 +128,7 @@ import { Alert, Message } from 'rabbit-simple-ui';
 
 ## 浏览器支持
 
-现代浏览器和Internet Explorer 9+。
+现代浏览器和Internet Explorer 10+。
 
 ## 相关链接
 
