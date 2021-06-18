@@ -1,6 +1,6 @@
 {
     "name": "rabbit-simple-ui",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "title": "RabbitUI",
     "description": "A simple UI component library based on JavaScript",
     "homepage": "www.rabbitui.cn",
@@ -82,7 +82,7 @@
         "last 3 Chrome versions",
         "last 3 Firefox versions",
         "Safari >= 10",
-        "Explorer >= 9",
+        "Explorer >= 10",
         "Edge >= 12",
         "iOS >= 10",
         "Android >= 6"
