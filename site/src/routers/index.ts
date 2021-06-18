@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Loading from '../../../src/components/loading-bar'
+import App from '@/App.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -7,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/App.vue')
+      component: App
     },
     {
       path: '/docs',

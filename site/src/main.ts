@@ -8,7 +8,4 @@ const usePlugins = (plugins: [...any]) => plugins.forEach((plugin) => app.use(pl
 
 app.use(Routers)
 usePlugins(Antd)
-
 app.mount('#app')
-
-window.addEventListener('load', () => (window.location.href = '/'))
