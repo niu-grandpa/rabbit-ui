@@ -9,7 +9,7 @@ export default function usePromiseCallback(duration: number, compConfig?: any): 
     let timeout: number = duration;
 
     // 当组件参数以对象形式传递，并且设置了自己的 duration则修改 promise的触发时机
-    if (typeof compConfig === 'object') {
+    if (compConfig && typeof compConfig === 'object') {
         if (compConfig.duration || compConfig.duration === 0) {
             timeout = compConfig.duration;
         } else {

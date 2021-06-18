@@ -1,77 +1,56 @@
 // @ts-nocheck
 import Rabbit from '../../src';
 
-export default function messageTest(): void {
+export default function messaest(): void {
     // 全局配置
     // Rabbit.Message.config({
-    //   duration: 8,
-    //   top: 54
+    //     duration: 8,
+    //     top: 254
     // });
-
-    // 全局销毁
-    // setTimeout(() => Rabbit.Message.destroy(), 5000);
-
-    window.getInfo = () => {
+    window.info = () => {
         Rabbit.Message.info('这是一条普通的提示');
     };
 
-    window.getSuccess = () => {
+    window.success = () => {
         Rabbit.Message.success('这是一条成功的提示');
     };
-    window.getWarning = () => {
+    window.warning = () => {
         Rabbit.Message.warning('这是一条警告的提示');
     };
-    window.getError = () => {
+    window.error = () => {
         Rabbit.Message.error('这是一条错误的提示');
     };
 
-    window.getInfoBgc = () => {
-        Rabbit.Message.info({
+    window.background = (type: string) => {
+        Rabbit.Message[type]({
             content: '这是一条带背景色的通知',
             background: true,
             duration: 5
         });
     };
 
-    window.getSuccessBgc = () => {
-        Rabbit.Message.success({
-            content: '这是一条带背景色的通知',
-            background: true
-        });
-    };
-    window.getWarningBgc = () => {
-        Rabbit.Message.warning({
-            content: '这是一条带背景色的通知',
-            background: true
-        });
-    };
-    window.getErrorBgc = () => {
-        Rabbit.Message.error({
-            content: '这是一条带背景色的通知',
-            background: true
-        });
-    };
-    window.getLoading = () => {
+    window.loading = () => {
         Rabbit.Message.loading({
             content: '正在加载中...',
-            duration: 0
+            duration: 0,
+            key: 'msgkey'
         });
-        setTimeout(() => Rabbit.Message.destroy(), 5000);
+        setTimeout(() => Rabbit.Message.destroy('msgkey'), 5000);
     };
-    window.getPromise = () => {
+    window.promise = () => {
         Rabbit.Message.loading('正在加载中...').then(() => {
             Rabbit.Message.success('加载成功!').then(() => {
                 Rabbit.Message.info('加载成功后的提示');
             });
         });
     };
-    window.get10s = () => {
+    window.time = () => {
         Rabbit.Message.success({
             content: '这是成功的提示信息，我将在10秒内消失',
             duration: 10
         });
     };
-    window.getClosable = () => {
+    window.closable = () => {
         Rabbit.Message.info({
             content: '可手动关闭的提示',
             duration: 8,

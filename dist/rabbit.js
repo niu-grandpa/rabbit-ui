@@ -46,7 +46,7 @@ return /******/ (function() { // webpackBootstrap
 
 /***/ "./src/build-umd.ts":
 /*!***************************************!*\
-  !*** ./src/build-umd.ts + 81 modules ***!
+  !*** ./src/build-umd.ts + 82 modules ***!
   \***************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -3126,225 +3126,214 @@ var $LoadingBar = /** @class */ (function () {
 var Loading = new loading_bar();
 /* harmony default export */ var components_loading_bar = (Loading);
 
-;// CONCATENATED MODULE: ./src/components/message/message.ts
+;// CONCATENATED MODULE: ./src/components/message/instance.ts
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 
 
 
-var prefixKey = 'rab-message';
-var MsgMoveEnter = prefix.default.message + "-move-enter";
-var MsgMoveLeave = prefix.default.message + "-move-leave";
-var iconTypes = {
+var PREFIX_KEY = 'rab-message-instance';
+var EnterClass = prefix.default.message + "-move-enter";
+var LeaveClass = prefix.default.message + "-move-leave";
+var ICONTYPES = {
     info: 'ios-information-circle',
     success: 'ios-checkmark-circle',
     warning: 'ios-alert',
     error: 'ios-close-circle',
     loading: 'loading-solid'
 };
-var DEFAULT_MESSAGE = {
+var zIndex = 1010;
+var instance_name = 0;
+var CreateInstance = /** @class */ (function () {
+    function CreateInstance() {
+        this.INSTANCES = [];
+    }
+    CreateInstance.prototype._init = function (top) {
+        var Wrapper = (0,dom_utils.createElem)('div');
+        (0,dom_utils.setCss)(Wrapper, 'zIndex', "" + zIndex);
+        Wrapper.setAttribute('class', "" + prefix.default.message);
+        document.body.appendChild(Wrapper);
+        setTimeout(function () { return (0,dom_utils.setCss)(Wrapper, 'top', top + "px"); }, 0);
+    };
+    CreateInstance.prototype._create = function (type, config, duration) {
+        var Message = this._setMainTemplate(type);
+        var MessageContent = Message.querySelector("." + prefix.default.messageChild + "-content");
+        this._autoAddZIndex();
+        this._setIcon(type, Message);
+        this._setContent(Message, config);
+        if (typeof config === 'object') {
+            var key = config.key, closable = config.closable, onClose = config.onClose, background = config.background;
+            this._setKey(Message, key);
+            this._setClosable(Message, MessageContent, closable, onClose);
+            this._setBackground(Message, MessageContent, background);
+        }
+        this.INSTANCES.push(Message);
+        (0,dom_utils.$el)("." + prefix.default.message).appendChild(Message);
+        this._autoClose(Message, config, duration);
+    };
+    CreateInstance.prototype._setMainTemplate = function (type) {
+        var MessageNotice = (0,dom_utils.createElem)('div');
+        var template = "\n        <div class=\"" + prefix.default.messageChild + "-content " + prefix.default.messageChild + "-content-" + type + "\">\n            <div class=\"" + prefix.default.messageChild + "-content-text\">\n                <div class=\"" + prefix.default.message + "-" + type + "\">\n                    <i class=\"" + prefix.default.icon + "\"></i>\n                    <span id=\"" + prefix.default.messageChild + "-text\"></span>\n                </div>\n            </div>\n        </div>\n      ";
+        MessageNotice.dataset['thisName'] = "" + instance_name++;
+        MessageNotice.className = prefix.default.message + "-notice";
+        (0,dom_utils.setHtml)(MessageNotice, template);
+        (0,mixins.CssTransition)(MessageNotice, {
+            inOrOut: 'in',
+            enterCls: EnterClass,
+            rmCls: true,
+            timeout: 250
+        });
+        return MessageNotice;
+    };
+    CreateInstance.prototype._setIcon = function (type, elem) {
+        var MessageIcon = elem.querySelector("." + prefix.default.icon);
+        if (type === 'loading') {
+            MessageIcon.classList.add('rab-load-loop');
+        }
+        MessageIcon.classList.add(prefix.default.icon + "-" + ICONTYPES[type]);
+    };
+    CreateInstance.prototype._setContent = function (elem, content) {
+        var MessageText = elem.querySelector("#" + prefix.default.messageChild + "-text");
+        if (typeof content === 'string') {
+            (0,utils.useHTMLString)(MessageText, content, false);
+        }
+        else if (typeof content === 'object' && content.content) {
+            (0,utils.useHTMLString)(MessageText, content.content, content.dangerouslyUseHTMLString);
+        }
+    };
+    CreateInstance.prototype._setKey = function (elem, key) {
+        if (!key || (key && !utils.type.isStr(key) && !utils.type.isNum(key)))
+            return;
+        elem.setAttribute(PREFIX_KEY + "-key", "" + key);
+    };
+    CreateInstance.prototype._setClosable = function (elem, child, closable, onClose) {
+        if (!closable || (closable && !utils.type.isBol(closable)))
+            return;
+        var template = "\n        <a class=\"" + prefix.default.messageChild + "-close\">\n          <i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-ios-close\"></i>\n        </a>\n        ";
+        elem.classList.add(prefix.default.messageChild + "-closable");
+        child.insertAdjacentHTML('beforeend', template);
+        this._handleClose(elem, onClose);
+    };
+    CreateInstance.prototype._handleClose = function (elem, onClose) {
+        var _this = this;
+        var MessageCloseBtn = elem.querySelector("." + prefix.default.messageChild + "-close");
+        (0,dom_utils.bind)(MessageCloseBtn, 'click', function () {
+            _this._destroy(elem);
+            onClose && utils.type.isFn(onClose);
+        });
+    };
+    CreateInstance.prototype._setBackground = function (elem, child, background) {
+        if (!background || (background && !utils.type.isBol(background)))
+            return;
+        elem.classList.add(prefix.default.messageChild + "-with-background");
+        child.classList.add(prefix.default.messageChild + "-content-background");
+    };
+    CreateInstance.prototype._autoAddZIndex = function () {
+        zIndex++;
+        (0,dom_utils.setCss)((0,dom_utils.$el)("." + prefix.default.message), 'zIndex', "" + zIndex);
+    };
+    CreateInstance.prototype._autoClose = function (elem, config, duration) {
+        var _this = this;
+        if (duration || duration === 0 || !config) {
+            if (duration === 0)
+                return;
+            setTimeout(function () {
+                _this._destroy(elem);
+            }, duration * 1000);
+        }
+        else {
+            if (typeof config === 'object' && config.duration) {
+                setTimeout(function () {
+                    _this._destroy(elem);
+                }, config.duration * 1000);
+            }
+        }
+    };
+    CreateInstance.prototype._destroy = function (elem) {
+        (0,utils.destroyElem)(elem, {
+            duration: 0.1,
+            clsEnter: EnterClass,
+            clsLeave: LeaveClass
+        });
+        this.INSTANCES.splice(Number(elem.dataset['thisName']), 1);
+    };
+    return CreateInstance;
+}());
+
+
+;// CONCATENATED MODULE: ./src/components/message/message.ts
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+
+
+var DEFAULTS = {
     top: 24,
     duration: 3
 };
-var zIndex = 1010;
-// 创建实例的最外层父容器
-function createMessageInstanceWrapper() {
-    var MsgWrapper = (0,dom_utils.createElem)('div');
-    MsgWrapper.className = "" + prefix.default.message;
-    (0,dom_utils.setCss)(MsgWrapper, 'zIndex', "" + zIndex);
-    setTimeout(function () {
-        (0,dom_utils.setCss)(MsgWrapper, 'top', DEFAULT_MESSAGE.top + "px");
-    }, 0);
-    document.body.appendChild(MsgWrapper);
-    return MsgWrapper;
-}
-var $Message = /** @class */ (function () {
-    function $Message() {
-        this.VERSION = 'v1.0';
-        // 存储已经创建的实例，在 destroy方法里需要用到
-        this.INSTANCES = [];
-        createMessageInstanceWrapper();
+var Message = /** @class */ (function (_super) {
+    __extends(Message, _super);
+    function Message() {
+        var _this = _super.call(this) || this;
+        _this.VERSION = '2.0';
+        setTimeout(function () { return _this._init(DEFAULTS.top); }, 0);
+        return _this;
     }
-    $Message.prototype.info = function (config) {
-        this._createInstance('info', config);
-        // message 结束时提供 then 接口在关闭后运行 callback
-        return (0,mixins.usePromiseCallback)(DEFAULT_MESSAGE.duration, config);
+    Message.prototype.info = function (config) {
+        this._create('info', config, DEFAULTS.duration);
+        return (0,mixins.usePromiseCallback)(DEFAULTS.duration, config);
     };
-    $Message.prototype.success = function (config) {
-        this._createInstance('success', config);
-        return (0,mixins.usePromiseCallback)(DEFAULT_MESSAGE.duration, config);
+    Message.prototype.success = function (config) {
+        this._create('success', config, DEFAULTS.duration);
+        return (0,mixins.usePromiseCallback)(DEFAULTS.duration, config);
     };
-    $Message.prototype.warning = function (config) {
-        this._createInstance('warning', config);
-        return (0,mixins.usePromiseCallback)(DEFAULT_MESSAGE.duration, config);
+    Message.prototype.warning = function (config) {
+        this._create('warning', config, DEFAULTS.duration);
+        return (0,mixins.usePromiseCallback)(DEFAULTS.duration, config);
     };
-    $Message.prototype.error = function (config) {
-        this._createInstance('error', config);
-        return (0,mixins.usePromiseCallback)(DEFAULT_MESSAGE.duration, config);
+    Message.prototype.error = function (config) {
+        this._create('error', config, DEFAULTS.duration);
+        return (0,mixins.usePromiseCallback)(DEFAULTS.duration, config);
     };
-    $Message.prototype.loading = function (config) {
-        this._createInstance('loading', config);
-        return (0,mixins.usePromiseCallback)(DEFAULT_MESSAGE.duration, config);
+    Message.prototype.loading = function (config) {
+        this._create('loading', config, DEFAULTS.duration);
+        return (0,mixins.usePromiseCallback)(DEFAULTS.duration, config);
     };
-    $Message.prototype.config = function (options) {
+    Message.prototype.config = function (options) {
         if (options.top && utils.type.isNum(options.top)) {
-            DEFAULT_MESSAGE.top = options.top;
+            DEFAULTS.top = options.top;
         }
         if ((options.duration && utils.type.isNum(options.duration)) || options.duration === 0) {
-            DEFAULT_MESSAGE.duration = options.duration;
+            DEFAULTS.duration = options.duration;
         }
     };
-    $Message.prototype.destroy = function (key) {
-        // 通过设置的 key 消除
+    Message.prototype.destroy = function (key) {
         if (key && (utils.type.isStr(key) || utils.type.isNum(key))) {
             (0,utils.destroyElemByKey)({
                 key: key,
                 duration: 0.1,
-                prefixKey: prefixKey,
-                clsLeave: MsgMoveLeave
+                prefixKey: PREFIX_KEY,
+                clsLeave: LeaveClass
             });
         }
         else {
-            // 销毁所有实例
             this.INSTANCES.forEach(function (instance) {
                 (0,utils.destroyElem)(instance, {
                     duration: 0.1,
-                    clsLeave: MsgMoveLeave
+                    clsLeave: LeaveClass
                 });
             });
-            // 清空存放的所有实例
             this.INSTANCES.length = 0;
         }
     };
-    $Message.prototype._autoSetZindex = function () {
-        // 每次创建实例自动增加最外层父容器的层级
-        zIndex++;
-        (0,dom_utils.setCss)((0,dom_utils.$el)("." + prefix.default.message), 'zIndex', "" + zIndex);
-    };
-    $Message.prototype._createInstance = function (_type, config) {
-        var _a;
-        this._autoSetZindex();
-        var Message = (0,dom_utils.createElem)('div');
-        var MsgContentWrap = (0,dom_utils.createElem)('div');
-        var MsgContentBox = (0,dom_utils.createElem)('div');
-        var MsgInfoBox = (0,dom_utils.createElem)('div');
-        var MsgIcon = (0,dom_utils.createElem)('i');
-        var MsgText = (0,dom_utils.createElem)('span');
-        this._setCls(_type, [Message, MsgContentWrap, MsgContentBox, MsgInfoBox, MsgIcon]);
-        this._setContent(MsgText, config);
-        this._setIcon(_type, MsgIcon);
-        // 参数 config 为字符串
-        if (typeof config === 'string') {
-            this._autoClose(Message, DEFAULT_MESSAGE.duration);
-        }
-        // 参数 config 为对象
-        if (typeof config === 'object') {
-            var key = config.key;
-            var closable = config.closable, duration = config.duration, onClose = config.onClose, background = config.background;
-            if (utils.type.isUndef(closable))
-                closable = false;
-            if (utils.type.isUndef(onClose))
-                onClose = function () { return void 0; };
-            if (utils.type.isUndef(background))
-                background = false;
-            // 为每个实例自己的 duration 参数设置默认值，如果有传入值则使用自定义的值
-            if (utils.type.isUndef(duration))
-                duration = DEFAULT_MESSAGE.duration;
-            // 当全局的 duration 不为 3 时说明进行了全局配置进行改变
-            if (DEFAULT_MESSAGE.duration !== 3)
-                duration = DEFAULT_MESSAGE.duration;
-            this._setClosable(closable, Message, MsgContentWrap, onClose);
-            this._setBackground(Message, MsgContentWrap, background);
-            this._autoClose(Message, duration);
-            this._setKey(Message, key);
-        }
-        MsgContentWrap.appendChild(MsgContentBox);
-        MsgContentBox.append(MsgInfoBox);
-        MsgInfoBox.append(MsgIcon, MsgText);
-        Message.appendChild(MsgContentWrap);
-        (_a = (0,dom_utils.$el)("." + prefix.default.message)) === null || _a === void 0 ? void 0 : _a.appendChild(Message);
-        // 存放每次创建的实例
-        this.INSTANCES.push(Message);
-        (0,mixins.CssTransition)(Message, {
-            inOrOut: 'in',
-            enterCls: MsgMoveEnter,
-            rmCls: true,
-            timeout: 250
-        });
-        return Message;
-    };
-    $Message.prototype._setCls = function (type, elems) {
-        var nodesCls = [
-            "" + prefix.default.messageChild,
-            prefix.default.messageChild + "-content " + prefix.default.messageChild + "-content-" + type,
-            prefix.default.messageChild + "-content-text",
-            prefix.default.message + "-" + type,
-            "" + prefix.default.icon
-        ];
-        elems.forEach(function (elem, i) {
-            elem.className = nodesCls[i];
-        });
-    };
-    $Message.prototype._setIcon = function (type, icon) {
-        if (type === 'loading') {
-            icon.classList.add('rab-load-loop');
-        }
-        // @ts-ignore
-        icon.classList.add(prefix.default.icon + "-" + iconTypes[type]);
-    };
-    $Message.prototype._setContent = function (node, config) {
-        if (typeof config === 'string') {
-            (0,utils.useHTMLString)(node, config, false);
-        }
-        else if (typeof config === 'object' && config.content) {
-            (0,utils.useHTMLString)(node, config.content, config.dangerouslyUseHTMLString);
-        }
-    };
-    $Message.prototype._setClosable = function (closable, parent, children, onClose) {
-        if (!closable)
-            return;
-        parent.classList.add(prefix.default.messageChild + "-closable");
-        var MsgCloseBtn = (0,dom_utils.createElem)('a');
-        MsgCloseBtn.className = prefix.default.messageChild + "-close";
-        (0,dom_utils.setHtml)(MsgCloseBtn, "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-ios-close\"></i>");
-        this._handleClose(parent, MsgCloseBtn, onClose);
-        children.appendChild(MsgCloseBtn);
-    };
-    $Message.prototype._setKey = function (node, key) {
-        if (!key)
-            return;
-        node.setAttribute(prefixKey + "-key", key);
-    };
-    $Message.prototype._autoClose = function (node, duration) {
-        (0,utils.destroyElem)(node, {
-            duration: duration,
-            clsLeave: MsgMoveLeave
-        });
-    };
-    $Message.prototype._handleClose = function (parent, closeBtn, onClose) {
-        closeBtn.addEventListener('click', function () {
-            // 手动关闭后的回调
-            utils.type.isFn(onClose);
-            (0,utils.destroyElem)(parent, {
-                duration: 0.1,
-                clsEnter: MsgMoveEnter,
-                clsLeave: MsgMoveLeave
-            });
-        });
-    };
-    $Message.prototype._setBackground = function (node, children, background) {
-        if (!background)
-            return;
-        node.classList.add(prefix.default.messageChild + "-with-background");
-        children.classList.add(prefix.default.messageChild + "-content-background");
-    };
-    return $Message;
-}());
-/* harmony default export */ var message = ($Message);
+    return Message;
+}(CreateInstance));
+/* harmony default export */ var message = (Message);
 
 ;// CONCATENATED MODULE: ./src/components/message/index.ts
 
-var Message = new message();
-/* harmony default export */ var components_message = (Message);
+var message_Message = new message();
+/* harmony default export */ var components_message = (message_Message);
 
 ;// CONCATENATED MODULE: ./src/components/modal/modal.ts
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -3803,7 +3792,7 @@ var MiniModal = /** @class */ (function () {
 var NotPrefixKey = 'rab-notice';
 var NotMoveEnter = prefix.default.notice + "-move-enter";
 var NotMoveLeave = prefix.default.notice + "-move-leave";
-var notice_iconTypes = {
+var iconTypes = {
     info: 'ios-information-circle',
     success: 'ios-checkmark-circle',
     warning: 'ios-alert',
@@ -3966,7 +3955,7 @@ var $Notice = /** @class */ (function () {
         }
         else {
             // @ts-ignore
-            var defaultIcon = "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + notice_iconTypes[type] + isOutline + "\"></i>";
+            var defaultIcon = "<i class=\"" + prefix.default.icon + " " + prefix.default.icon + "-" + iconTypes[type] + isOutline + "\"></i>";
             (0,dom_utils.setHtml)(NoticeIcon, defaultIcon);
         }
         child_custom.prepend(NoticeIcon);
@@ -7078,7 +7067,7 @@ function usePromiseCallback(duration, compConfig) {
     // promise 触发的时机为默认时间
     var timeout = duration;
     // 当组件参数以对象形式传递，并且设置了自己的 duration则修改 promise的触发时机
-    if (typeof compConfig === 'object') {
+    if (compConfig && typeof compConfig === 'object') {
         if (compConfig.duration || compConfig.duration === 0) {
             timeout = compConfig.duration;
         }
@@ -9433,13 +9422,12 @@ function destroyElem(elem, _a) {
     }
 }
 function destroyElemByKey(options) {
-    var prefixKey = options.prefixKey;
-    var key = options.key;
-    // 统一转换为字符串
-    typeof key !== 'string' ? (key = key === null || key === void 0 ? void 0 : key.toString()) : key;
-    // 传入的key是否选取得到对应的元素
+    var prefixKey = options.prefixKey, key = options.key;
     var target = document.querySelector("[" + prefixKey + "-key=\"" + key + "\"]");
-    target ? destroyElem(target, options) : (0,mixins.warn)("The key value is invalid --> \"" + key + "\"");
+    // 传入的key是否选取得到对应的元素
+    if (target) {
+        destroyElem(target, options);
+    }
 }
 
 ;// CONCATENATED MODULE: ./src/utils/random-str.ts
