@@ -1,4 +1,4 @@
-import $Message from './message';
+import R_Message from './message';
 
-const Message = new $Message();
+const Message = new R_Message();
 export default Message;
