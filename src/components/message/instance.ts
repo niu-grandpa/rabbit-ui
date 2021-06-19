@@ -4,9 +4,14 @@ import { $el, bind, createElem, setCss, setHtml } from '../../dom-utils';
 import { destroyElem, type, useHTMLString } from '../../utils';
 import { CssTransition } from '../../mixins';
 
-export type MessageType = 'info' | 'success' | 'warning' | 'error' | 'loading';
 export type KeyType = string | number;
-export interface MessageConfig {
+export type MessageType = 'info' | 'success' | 'warning' | 'error' | 'loading';
+export type MessageConfig = string | Options;
+export const PREFIX_KEY = 'rab-message-instance';
+export const EnterClass = `${PREFIX.message}-move-enter`;
+export const LeaveClass = `${PREFIX.message}-move-leave`;
+
+interface Options {
     key?: string | number;
     content?: string;
     duration?: number;
@@ -15,11 +20,6 @@ export interface MessageConfig {
     background?: boolean;
     dangerouslyUseHTMLString?: boolean;
 }
-export const PREFIX_KEY = 'rab-message-instance';
-export const EnterClass = `${PREFIX.message}-move-enter`;
-export const LeaveClass = `${PREFIX.message}-move-leave`;
-
-type ConfigType = string | MessageConfig;
 
 const ICONTYPES = {
     info: 'ios-information-circle',
@@ -43,7 +43,7 @@ export class CreateInstance {
         document.body.appendChild(Wrapper);
         setTimeout(() => setCss(Wrapper, 'top', `${top}px`), 0);
     }
-    protected _create(type: MessageType, config: ConfigType, duration: number): void {
+    protected _create(type: MessageType, config: MessageConfig, duration: number): void {
         const Message = this._setMainTemplate(type);
         const MessageContent = Message.querySelector(`.${PREFIX.messageChild}-content`)!;
         this._autoAddZIndex();
@@ -89,7 +89,7 @@ export class CreateInstance {
         }
         MessageIcon.classList.add(`${PREFIX.icon}-${ICONTYPES[type]}`);
     }
-    private _setContent(elem: HTMLElement, content: ConfigType): void {
+    private _setContent(elem: HTMLElement, content: MessageConfig): void {
         const MessageText = elem.querySelector(`#${PREFIX.messageChild}-text`)!;
         if (typeof content === 'string') {
             useHTMLString(MessageText, content, false);
@@ -133,7 +133,7 @@ export class CreateInstance {
         zIndex++;
         setCss($el(`.${PREFIX.message}`), 'zIndex', `${zIndex}`);
     }
-    private _autoClose(elem: HTMLElement, config: ConfigType, duration: number): void {
+    private _autoClose(elem: HTMLElement, config: MessageConfig, duration: number): void {
         if (duration || duration === 0 || !config) {
             if (duration === 0) return;
             setTimeout(() => {

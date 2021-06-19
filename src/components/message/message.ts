@@ -1,11 +1,20 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { usePromiseCallback } from '../../mixins';
 import { destroyElem, destroyElemByKey, type } from '../../utils';
-import { CreateInstance, KeyType, MessageConfig, PREFIX_KEY, LeaveClass } from './instance';
+import { CreateInstance, MessageConfig, KeyType, PREFIX_KEY, LeaveClass } from './instance';
 
 interface GlobalConfigs {
     top?: number;
     duration?: number;
+}
+interface InstanceMethods {
+    info(config: MessageConfig): Promise<void>;
+    success(config: MessageConfig): Promise<void>;
+    warning(config: MessageConfig): Promise<void>;
+    error(config: MessageConfig): Promise<void>;
+    loading(config: MessageConfig): Promise<void>;
+    config(options: GlobalConfigs): void;
+    destroy(key?: KeyType): void;
 }
 
 const DEFAULTS = {
@@ -13,30 +22,30 @@ const DEFAULTS = {
     duration: 3
 };
 
-class Message extends CreateInstance {
+class Message extends CreateInstance implements InstanceMethods {
     readonly VERSION: string;
     constructor() {
         super();
         this.VERSION = '2.0';
         setTimeout(() => this._init(DEFAULTS.top), 0);
     }
-    public info(config: string | MessageConfig): Promise<void> {
+    public info(config: MessageConfig): Promise<void> {
         this._create('info', config, DEFAULTS.duration);
         return usePromiseCallback(DEFAULTS.duration, config);
     }
-    public success(config: string | MessageConfig): Promise<void> {
+    public success(config: MessageConfig): Promise<void> {
         this._create('success', config, DEFAULTS.duration);
         return usePromiseCallback(DEFAULTS.duration, config);
     }
-    public warning(config: string | MessageConfig): Promise<void> {
+    public warning(config: MessageConfig): Promise<void> {
         this._create('warning', config, DEFAULTS.duration);
         return usePromiseCallback(DEFAULTS.duration, config);
     }
-    public error(config: string | MessageConfig): Promise<void> {
+    public error(config: MessageConfig): Promise<void> {
         this._create('error', config, DEFAULTS.duration);
         return usePromiseCallback(DEFAULTS.duration, config);
     }
-    public loading(config: string | MessageConfig): Promise<void> {
+    public loading(config: MessageConfig): Promise<void> {
         this._create('loading', config, DEFAULTS.duration);
         return usePromiseCallback(DEFAULTS.duration, config);
     }
