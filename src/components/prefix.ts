@@ -32,6 +32,7 @@ export default {
     radio: `${prefixCls}radio`,
     rate: `${prefixCls}rate`,
     result: `${prefixCls}result`,
+    select: `${prefixCls}select`,
     skeleton: `${prefixCls}skeleton`,
     switch: `${prefixCls}switch`,
     tabs: `${prefixCls}tabs`,

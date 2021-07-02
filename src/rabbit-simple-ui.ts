@@ -27,6 +27,7 @@ import Poptip from './components/poptip';
 import Progress from './components/progress';
 import Radio from './components/radio';
 import Result from './components/result';
+import Select from './components/select';
 import Skeleton from './components/skeleton';
 import Spin from './components/spin';
 import Steps from './components/steps';
@@ -67,6 +68,7 @@ export {
     Progress,
     Radio,
     Result,
+    Select,
     Skeleton,
     Spin,
     Steps,
