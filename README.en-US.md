@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/niu-grandpa/rabbit-ui">
+    <a href="http://www.rabbitui.cn">
         <img width="200" src="./assets/logo.svg">
     </a>
 </p>
