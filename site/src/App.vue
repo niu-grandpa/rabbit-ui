@@ -1,37 +1,36 @@
 <template>
-  <HomePage v-if="show" />
-  <AppPage v-else />
+  <HomePage v-show="show" />
+  <AppPage v-show="!show" />
   <r-back-top />
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
-import BackTop from '../../src/components/back-top'
-import { HomePage, AppPage } from './pages'
+import { onMounted, ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import BackTop from "../../src/components/back-top";
+import { HomePage, AppPage } from "./pages";
 
-const route = useRoute()
-const show = ref<boolean>(true)
+const route = useRoute();
+const show = ref<boolean>(true);
 
 const changePage = () => {
-  const { path } = route
+  const { path } = route;
   // 显示文档的详情页面，隐藏首页
-  if (path.includes('/docs/') || path.includes('/components/')) {
-    show.value = false
+  if (path.includes("/docs/") || path.includes("/components/")) {
+    show.value = false;
   } else {
-    show.value = true
+    show.value = true;
   }
-}
+};
 
-onMounted(() => new BackTop())
-watchEffect(changePage)
+onMounted(() => new BackTop());
+watchEffect(changePage);
 </script>
 
-
 <style lang="less">
-@import './markdown.css';
-@import 'ant-design-vue/dist/antd.css';
-@import '../../dist/styles/rabbit.css';
+@import "./markdown.css";
+@import "ant-design-vue/dist/antd.css";
+@import "../../dist/styles/rabbit.css";
 
 ::-webkit-scrollbar {
   /*滚动条整体样式*/

@@ -42,6 +42,15 @@ interface A {
 
 const updateInfo: A[] = [
   {
+    version: "1.8.0",
+    time: "2021-06-18",
+    content: [
+      "重写并优化 Message 组件",
+      "修复 Button 在没有图标仅有文本的状态下，切换为loading状态并在状态结束后无法切换为原样的bug",
+      "修复 Modal 开启异步状态后，无法按照预期的逻辑关闭自己且报错，并且一直处于loading状态",
+    ],
+  },
+  {
     version: "1.7.0",
     time: "2021-05-30",
     content: ["新增组件 Circle"],
