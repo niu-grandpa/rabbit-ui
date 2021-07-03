@@ -5,14 +5,13 @@
  * 3.非业务逻辑代码要用的属性
  */
 export default function removeAttrs(elem: Element, attrs: Array<string>): void {
-    setTimeout(() => {
-        let i = 0;
-        const { length } = attrs;
-        for (; i < length; i++) {
-            const attr = attrs[i];
-            elem.getAttribute(attr) || elem.getAttribute(attr) === ''
-                ? elem.removeAttribute(attr)
-                : null;
+    const len = attrs.length;
+    let i = 0,
+        attrName = '';
+    for (; i < len; i++) {
+        attrName = attrs[i];
+        if (elem.hasAttribute(attrName)) {
+            elem.removeAttribute(attrName);
         }
-    }, 0);
+    }
 }

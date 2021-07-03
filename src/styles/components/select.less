@@ -5,8 +5,10 @@
 @import '../mixins/common.less';
 
 @select-tag-name: r-select;
+@select-list-tag-name: r-select-list;
 @select-option-tag-name: r-select-option;
 @select-option-group-tag-name: r-select-option-group;
+
 @select-prefix-cls: ~'@{css-prefix}select';
 @select-item-prefix-cls: ~'@{css-prefix}select-item';
 @select-group-prefix-cls: ~'@{css-prefix}select-group';
@@ -66,6 +68,11 @@
         box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
         position: absolute;
         z-index: 900;
+
+        @{select-list-tag-name} {
+            min-width: 100%;
+            display: block;
+        }
     }
 }
 
