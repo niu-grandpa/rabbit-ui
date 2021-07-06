@@ -15,6 +15,7 @@ class Select {
     private _create(COMPONENTS: NodeListOf<HTMLElement>): void {
         COMPONENTS.forEach((node) => {
             if (moreThanOneNode(node)) return;
+
             const placeholderNode = node.firstElementChild;
             const { size, prefix, placement, placeholder, disabled, clearable } = this._attrs(node);
 
