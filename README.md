@@ -8,6 +8,8 @@
 
 # RabbitUI
 
+> Tip：该项目于2021年完成，目前已不再更新，但具有学习意义，该组件库参考了各知名组件库进行开发
+
 ### 一个基于 JavaScript 的简洁 UI 组件库
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
